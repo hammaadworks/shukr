@@ -631,6 +631,11 @@ const AppContent = () => {
                                 onNextQuote={handleNextQuote}
                                 quoteFocused={focusedIndex === 5 + predictions.length + gridItems.length + (isSentenceBuilderActive ? 3 : 0) + displayCategories.length + 3}
                                 onLongPressItem={(item) => toggleFavorite(item.id)}
+                                onEditItem={(item) => {
+                                    setEditMode('edit');
+                                    setInitialEditingItem({...item, type: 'word'});
+                                    navigate('#settings');
+                                }}
                                 favorites={config?.favorites || []}
                             />
                         </div>

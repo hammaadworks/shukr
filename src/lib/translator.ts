@@ -1,3 +1,5 @@
+import dictionary from './data/dictionary.json';
+
 export interface TranslationMap {
   [key: string]: string;
 }
@@ -10,7 +12,7 @@ export interface TranslationResult {
 
 /**
  * A local-first translator that maps English words/phrases to Urdu script.
- * It uses the word universe (AppConfig) as its primary source of truth.
+ * Uses a hybrid approach: AppConfig (Truth) + Offline Dictionary (Fallback) + Transliteration (Last resort)
  */
 class Translator {
   private enToUr: TranslationMap = {};
@@ -18,24 +20,31 @@ class Translator {
   private idToRoman: TranslationMap = {};
 
   constructor() {
-    // Initial state is empty; will be hydrated by useAppConfig during bootstrap
+    this.hydrateFromDictionary();
+  }
+
+  private hydrateFromDictionary() {
+    Object.entries(dictionary).forEach(([en, ur]) => {
+      this.enToUr[en.toLowerCase()] = ur;
+      this.urToEn[ur] = en;
+    });
   }
 
   /**
    * Refreshes the internal lookup maps from a given application configuration.
    */
   refresh(config: any) {
+    // Reset to dictionary base
     this.enToUr = {};
     this.urToEn = {};
     this.idToRoman = {};
+    this.hydrateFromDictionary();
 
     if (!config || !config.categories) return;
 
     config.categories.forEach((cat: any) => {
       this.processCategory(cat);
     });
-
-    this.addCommonPhrases();
     
     if (config.quick_actions) this.processQuickActions(config.quick_actions);
     if (config.quotes) this.processQuotes(config.quotes);
@@ -89,23 +98,6 @@ class Translator {
         this.enToUr[en] = ur;
         this.urToEn[ur] = en;
       }
-    });
-  }
-
-  private addCommonPhrases() {
-    const commons: [string, string][] = [
-      ['hello', 'ہیلو'], ['how', 'کیسے'], ['when', 'کب'], ['where', 'کہاں'],
-      ['who', 'کون'], ['why', 'کیوں'], ['yes', 'ہاں'], ['no', 'نہیں'],
-      ['please', 'براہ کرم'], ['hospital', 'ہسپتال'], ['doctor', 'ڈاکٹر'],
-      ['medicine', 'دوائی'], ['pain', 'درد'], ['emergency', 'ہنگامی حالت'],
-      ['bathroom', 'باتھ روم'], ['water', 'پانی'], ['food', 'کھانا'],
-      ['sleep', 'سونا'], ['happy', 'خوش'], ['sad', 'اداس'], ['angry', 'غصہ'],
-      ['tired', 'تھکا ہوا']
-    ];
-
-    commons.forEach(([en, ur]) => {
-      if (!this.enToUr[en]) this.enToUr[en] = ur;
-      if (!this.urToEn[ur]) this.urToEn[ur] = en;
     });
   }
 

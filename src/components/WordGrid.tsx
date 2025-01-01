@@ -11,6 +11,7 @@ interface WordGridProps {
   onNextQuote?: () => void;
   quoteFocused: boolean;
   onLongPressItem?: (item: any) => void;
+  onEditItem?: (item: any) => void;
   favorites?: string[];
 }
 
@@ -22,20 +23,30 @@ export const WordGrid: React.FC<WordGridProps> = ({
   onNextQuote,
   quoteFocused,
   onLongPressItem,
+  onEditItem,
   favorites = [],
 }) => {
   const { isUrdu } = useLanguage();
+  const [pressTimer, setPressTimer] = React.useState<any>(null);
+
   return (
     <div className="smart-grid-apple">
       {gridItems.map((item, idx) => (
+        <div 
+            key={item.id}
+            onMouseDown={() => setPressTimer(setTimeout(() => onEditItem?.(item), 800))}
+            onMouseUp={() => clearTimeout(pressTimer)}
+            onTouchStart={() => setPressTimer(setTimeout(() => onEditItem?.(item), 800))}
+            onTouchEnd={() => clearTimeout(pressTimer)}
+        >
         <WordCard 
-          key={item.id}
           item={item}
           isFocused={focusedIndex === offset + idx}
           onClick={item.onClick}
           onLongPress={() => onLongPressItem && onLongPressItem(item)}
           isFavorite={favorites.includes(item.id)}
         />
+        </div>
       ))}
       {randomQuote && (
         <div

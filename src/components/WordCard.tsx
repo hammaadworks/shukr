@@ -3,7 +3,7 @@ import { Volume2, Plus, Heart, type LucideIcon } from 'lucide-react';
 import { useLanguage } from '../hooks/useLanguage';
 import { IconMap } from '../lib/icons';
 
-export type WordCardVariant = 1 | 2 | 3;
+export type WordCardVariant = 1 | 2 | 3 | 4;
 
 type WordCardItem = {
     en?: string;
@@ -50,27 +50,31 @@ const getFontSize = ({
 }): string => {
     if (variant === 1) {
         if (isUrdu) {
-            if (textLength > 10) return '1.1rem';
-            if (textLength > 6) return '1.4rem';
-            return '1.8rem';
+            if (textLength > 10) return '1.4rem';
+            if (textLength > 6) return '1.8rem';
+            return '2.2rem';
         }
 
-        if (textLength > 10) return '1.0rem';
-        if (textLength > 6) return '1.2rem';
-        return '1.4rem';
+        if (textLength > 10) return '1.2rem';
+        if (textLength > 6) return '1.4rem';
+        return '1.6rem';
     }
 
     if (variant === 2) {
         if (isUrdu) {
-            if (textLength > 10) return '0.85rem';
-            return '0.95rem';
+            if (textLength > 10) return '1.0rem';
+            return '1.2rem';
         }
 
-        if (textLength > 10) return '0.8rem';
-        return '0.9rem';
+        if (textLength > 10) return '0.9rem';
+        return '1.1rem';
     }
 
-    return isUrdu ? '1.1rem' : '1rem';
+    if (variant === 4) {
+        return isUrdu ? '1.2rem' : '1.1rem';
+    }
+
+    return isUrdu ? '1.4rem' : '1.2rem';
 };
 
 const getCardIcon = ({
@@ -212,7 +216,7 @@ export const WordCard: React.FC<WordCardProps> = ({
         </span>
             </div>
 
-            {variant !== 3 && (
+            {variant !== 3 && variant !== 4 && (
                 <div className="card-bottom-meta">
           <span className="card-transliteration">
             {item.roman || fallbackText}

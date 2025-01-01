@@ -26,7 +26,7 @@ import { WordEditor } from './WordEditor';
 export const SettingsPanel: React.FC<SettingsPanelProps> = ({ config, updateConfig, onOpenVoiceStudio, onClose, initialTab, initialEditingItem }) => {
   const [activeTab, setActiveTab] = useState<TabType>(initialTab || 'general');
   const [editingItem, setEditingItem] = useState<any | null>(initialEditingItem || null);
-  const [editingType, setEditingType] = useState<EditingType>(initialEditingItem ? (initialEditingItem.type === 'gesture' ? 'gesture' : 'quote') : 'word');
+  const [editingType, setEditingType] = useState<EditingType>(initialEditingItem ? (initialEditingItem.type || 'word') : 'word');
 
   const gestureMappings = config?.gesture_map || {
     mouth_open: 'SPEAK',
@@ -150,6 +150,23 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ config, updateConf
     const newConfig = { ...config };
 
     switch (editingType) {
+      case 'word':
+        // Check for duplicates
+        const allWords = newConfig.categories.flatMap((c: any) => c.items || []);
+        const isDuplicate = allWords.some((i: any) => 
+            i.id !== item.id && (i.en.toLowerCase() === item.en.toLowerCase() || i.ur === item.ur)
+        );
+        
+        if (isDuplicate) {
+            alert("This word already exists!");
+            return;
+        }
+
+        newConfig.categories = newConfig.categories.map((cat: any) => ({
+          ...cat,
+          items: cat.items.map((i: any) => i.id === item.id ? item : i)
+        }));
+        break;
       case 'quote':
         if (editMode === 'new') {
           newConfig.quotes = [item, ...quotes];
@@ -164,11 +181,17 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ config, updateConf
     setEditingItem(null);
   };
 
-  const handleDelete = (_itemId: string, itemEn?: string) => {
+  const handleDelete = (itemId: string, itemEn?: string) => {
     if (!window.confirm("حذف کریں؟ / Delete?")) return;
     const newConfig = { ...config };
 
     switch (editingType) {
+      case 'word':
+        newConfig.categories = newConfig.categories.map((cat: any) => ({
+          ...cat,
+          items: cat.items.filter((i: any) => i.id !== itemId)
+        }));
+        break;
       case 'quote':
         newConfig.quotes = quotes.filter((q: any) => q.en !== itemEn);
         break;

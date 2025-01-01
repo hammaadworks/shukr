@@ -97,7 +97,7 @@ export const WordEditor: React.FC<WordEditorProps> = ({ item, onChange, onSave, 
       {onSave && (
         <div className="editor-actions-brand">
           {onDelete && !isNew && (
-            <button className="btn-editor-danger" onClick={() => onDelete(item.id, item.oldEn || item.en)}>
+            <button className="btn-editor-danger" onClick={() => onDelete(item.id)}>
               <Trash2 size={24} />
             </button>
           )}

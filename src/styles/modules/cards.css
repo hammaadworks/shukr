@@ -109,7 +109,34 @@
 .word-card-root.variant-3 .card-word-display { flex: 0 0 auto; padding: 0; }
 .word-card-root.variant-3 .u-text { font-size: 1.2rem !important; line-height: 1 !important; }
 
+/* --- Variant 4: Action Pill Card --- */
+.word-card-root.variant-4 {
+  border-radius: 100px;
+  background: white;
+  border: 1.5px solid rgba(45, 90, 39, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.word-card-root.variant-4 .card-word-display {
+  padding: 0 12px;
+  min-height: unset;
+}
+
+.word-card-root.variant-4 .u-text {
+  font-weight: 800;
+  line-height: 1;
+}
+
 /* Specific Context Fixes */
+.yes-btn.variant-4 { background: #E8F5E9 !important; border-color: #2D5A27 !important; }
+.yes-btn.variant-4 .u-text { color: #2D5A27 !important; }
+
+.no-btn.variant-4 { background: #FFEBEE !important; border-color: #DC2626 !important; }
+.no-btn.variant-4 .u-text { color: #DC2626 !important; }
+
 .yes-btn { background: #e8f5e9 !important; border-color: #2D5A27 !important; }
 .no-btn { background: #ffebee !important; border-color: #DC2626 !important; }
 .prompt-card { background: var(--color-primary) !important; color: white !important; border-color: var(--color-accent) !important; }
