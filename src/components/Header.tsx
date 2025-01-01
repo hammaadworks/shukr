@@ -1,5 +1,5 @@
 import React from 'react';
-import {Camera, CameraOff, Megaphone, MessageCircleCode, Settings,} from 'lucide-react';
+import {Camera, Megaphone, ALargeSmall, Settings,} from 'lucide-react';
 import {ShukrButton} from './ShukrButton';
 import {useAudio} from '../hooks/useAudio';
 import {useLanguage} from '../hooks/useLanguage';
@@ -49,14 +49,15 @@ export const Header: React.FC<HeaderProps> = ({
                 {/* 1fr: Camera */}
                 <div className="header-cell">
                     <button
-                        className={`btn-icon-ios ${isTrackingEnabled ? 'active' : ''} ${focusedIndex === 0 ? 'focused-item' : ''}`}
+                        className={`btn-icon-ios ${isTrackingEnabled ? 'active' : 'inactive'} ${focusedIndex === 0 ? 'focused-item' : ''}`}
                         onClick={() => {
                             playClick();
                             toggleTracking();
                         }}
                         aria-label="Camera"
                     >
-                        {isTrackingEnabled ? <Camera size={22}/> : <CameraOff size={22}/>}
+                        <Camera size={22} color={isTrackingEnabled ? "var(--color-primary)" : "#9CA3AF"}/>
+                        {!isTrackingEnabled && <div className="inactive-slash"/>}
                         {isTrackingEnabled && !isModelLoaded && <div className="loading-dot-ios-mini"/>}
                     </button>
                 </div>
@@ -91,13 +92,12 @@ export const Header: React.FC<HeaderProps> = ({
                 {/* 1fr: Language */}
                 <div className="header-cell">
                     <button
-                        className={`btn-icon-ios lang-switcher-pill ${focusedIndex === 3 ? 'focused-item' : ''}`}
+                        className={`btn-icon-ios ${focusedIndex === 3 ? 'focused-item' : ''}`}
                         onClick={toggleLang}
                         aria-label="Switch Language"
                     >
-                        <div className={`lang-toggle-state ${isUrdu ? 'is-ur' : 'is-en'}`}>
-                            <MessageCircleCode size={14} className="lang-icon-mini"/>
-                            <span className="lang-label">{isUrdu ? 'اردو' : 'EN'}</span>
+                        <div className={`lang-toggle-container ${isUrdu ? 'is-ur' : 'is-en'}`}>
+                            <ALargeSmall size={22} className="lang-icon-mini"/>
                         </div>
                     </button>
                 </div>

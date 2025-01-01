@@ -19,6 +19,8 @@ interface WordCardProps {
     isFavorite?: boolean;
     onClick: () => void;
     onLongPress?: () => void;
+    onDelete?: () => void;
+    onToggleFavorite?: () => void;
     variant?: WordCardVariant;
     className?: string;
 }
@@ -79,18 +81,12 @@ const getFontSize = ({
 
 const getCardIcon = ({
                          isPrompt,
-                         isFavorite,
                          iconKey,
                      }: {
     isPrompt: boolean;
-    isFavorite: boolean;
     iconKey?: keyof typeof IconMap;
 }): React.ReactNode => {
     if (isPrompt) return <Plus size={18} />;
-
-    if (isFavorite) {
-        return <Heart size={18} fill="#ff3b30" color="#ff3b30" />;
-    }
 
     const Icon: LucideIcon = IconMap[iconKey ?? ''] || Volume2;
     return <Icon size={18} />;
@@ -126,6 +122,8 @@ export const WordCard: React.FC<WordCardProps> = ({
                                                       isFavorite = false,
                                                       onClick,
                                                       onLongPress,
+                                                      onDelete,
+                                                      onToggleFavorite,
                                                       variant = 1,
                                                       className = '',
                                                   }) => {
@@ -154,14 +152,22 @@ export const WordCard: React.FC<WordCardProps> = ({
     }, []);
 
     const handlePressStart = useCallback(() => {
-        if (!onLongPress) return;
+        // Delete timer (5s)
+        if (onDelete) {
+            timerRef.current = setTimeout(() => {
+                vibrate(200);
+                onDelete();
+            }, 5000);
+        }
 
-        timerRef.current = setTimeout(() => {
-            vibrate(LONG_PRESS_VIBRATION_MS);
-            onLongPress();
-            timerRef.current = null;
-        }, LONG_PRESS_DELAY);
-    }, [onLongPress]);
+        // Edit timer (0.8s) - Only if not deleting
+        if (onLongPress) {
+            timerRef.current = setTimeout(() => {
+                vibrate(LONG_PRESS_VIBRATION_MS);
+                onLongPress();
+            }, LONG_PRESS_DELAY);
+        }
+    }, [onLongPress, onDelete]);
 
     const handlePressEnd = useCallback(() => {
         clearLongPressTimer();
@@ -182,6 +188,19 @@ export const WordCard: React.FC<WordCardProps> = ({
         };
     }, [clearLongPressTimer]);
 
+    const handleDoubleClick = useCallback(
+        (e: React.MouseEvent<HTMLButtonElement>) => {
+            e.stopPropagation();
+            if (onToggleFavorite) {
+                vibrate(LONG_PRESS_VIBRATION_MS);
+                onToggleFavorite();
+            }
+        },
+        [onToggleFavorite]
+    );
+
+    // ...
+
     return (
         <button
             type="button"
@@ -193,6 +212,7 @@ export const WordCard: React.FC<WordCardProps> = ({
                 className,
             })}
             onClick={handleClick}
+            onDoubleClick={handleDoubleClick}
             onMouseDown={handlePressStart}
             onMouseUp={handlePressEnd}
             onMouseLeave={handlePressEnd}
@@ -201,13 +221,14 @@ export const WordCard: React.FC<WordCardProps> = ({
             onContextMenu={(e) => e.preventDefault()}
         >
             {variant === 1 && (
-                <div className="card-icon-top-left">
-                    {getCardIcon({
-                        isPrompt,
-                        isFavorite,
-                        iconKey: item.icon,
-                    })}
-                </div>
+                <>
+                  <div className="card-icon-top-left">
+                    {getCardIcon({ isPrompt, iconKey: item.icon })}
+                  </div>
+                  <div className="card-icon-top-right" onClick={(e) => { e.stopPropagation(); onToggleFavorite?.(); }} style={{ cursor: 'pointer', zIndex: 10, position: 'absolute', top: '8px', right: '8px' }}>
+                    <Heart size={18} fill={isFavorite ? "#ff3b30" : "none"} color={isFavorite ? "#ff3b30" : "#ccc"} />
+                  </div>
+                </>
             )}
 
             <div className="card-word-display">
@@ -216,12 +237,18 @@ export const WordCard: React.FC<WordCardProps> = ({
         </span>
             </div>
 
-            {variant !== 3 && variant !== 4 && (
+            {variant !== 3 && variant !== 4 && variant !== 5 && (
                 <div className="card-bottom-meta">
           <span className="card-transliteration">
             {item.roman || fallbackText}
           </span>
                     <span className="card-divider">|</span>
+                    <span className="card-translation">{fallbackText}</span>
+                </div>
+            )}
+
+            {variant === 5 && (
+                <div className="card-bottom-meta">
                     <span className="card-translation">{fallbackText}</span>
                 </div>
             )}

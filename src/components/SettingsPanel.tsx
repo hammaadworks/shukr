@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   ChevronLeft, Plus, X, 
-  Settings, Heart, Mic, Activity,
+  Settings, Heart, Mic,
   Download, Upload, RefreshCw
 } from 'lucide-react';
 import { translator } from '../lib/translator';
@@ -15,9 +15,9 @@ interface SettingsPanelProps {
   initialEditingItem?: any;
 }
 
-type EditingType = 'word' | 'category' | 'quote' | 'gesture';
+type EditingType = 'word' | 'category' | 'quote';
 
-type TabType = 'general' | 'motivate' | 'data' | 'gestures';
+type TabType = 'general' | 'motivate' | 'data';
 
 import { db } from '../recognition/db';
 import { universePorter } from '../lib/universePorter';
@@ -27,39 +27,6 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ config, updateConf
   const [activeTab, setActiveTab] = useState<TabType>(initialTab || 'general');
   const [editingItem, setEditingItem] = useState<any | null>(initialEditingItem || null);
   const [editingType, setEditingType] = useState<EditingType>(initialEditingItem ? (initialEditingItem.type || 'word') : 'word');
-
-  const gestureMappings = config?.gesture_map || {
-    mouth_open: 'SPEAK',
-    one_finger: 'DOODLE',
-    thumb_up: 'YES',
-    peace_sign: 'SALAM',
-    five_fingers: 'CALL_CONTACT_1'
-  };
-
-  const handleGestureChange = (key: string, action: string) => {
-    const newConfig = { ...config };
-    if (!newConfig.gesture_map) newConfig.gesture_map = { ...gestureMappings };
-    newConfig.gesture_map[key] = action;
-    updateConfig(newConfig);
-  };
-
-  const GESTURE_LABELS: Record<string, {en: string, ur: string}> = {
-    mouth_open: { en: 'Mouth Open', ur: 'منہ کھولیں' },
-    one_finger: { en: '1 Finger', ur: '1 انگلی' },
-    thumb_up: { en: 'Thumb Up', ur: 'انگوٹھا' },
-    peace_sign: { en: '2 Fingers', ur: '2 انگلیاں' },
-    five_fingers: { en: 'Full Palm', ur: 'ہتھیلی' }
-  };
-
-  const GESTURE_ACTIONS = [
-    { value: 'SPEAK', en: 'Speak Sentence', ur: 'جملہ بولیں' },
-    { value: 'DOODLE', en: 'Open Doodle', ur: 'ڈرائنگ' },
-    { value: 'YES', en: 'Say Yes', ur: 'جی ہاں' },
-    { value: 'SALAM', en: 'Say Salam', ur: 'سلام' },
-    { value: 'CALL_CONTACT_1', en: 'Emergency Call', ur: 'ایمرجنسی کال' },
-    { value: 'HOME', en: 'Go Home', ur: 'ہوم' },
-    { value: 'CLEAR', en: 'Clear Sentence', ur: 'صاف کریں' }
-  ];
   const [editMode, setEditMode] = useState<'edit' | 'new'>('edit');
   const [isExporting, setIsExporting] = useState(false);
 
@@ -220,7 +187,6 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ config, updateConf
             { id: 'general', label: 'General', urdu: 'عام', icon: Settings },
             { id: 'motivate', label: 'Motivate', urdu: 'خوشی', icon: Heart },
             { id: 'data', label: 'Data', urdu: 'ڈیٹا', icon: RefreshCw },
-            { id: 'gestures', label: 'Gestures', urdu: 'اشارے', icon: Activity }
           ].map(tab => (
             <button 
               key={tab.id}
@@ -394,36 +360,6 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ config, updateConf
                       />
                     </div>
                   </div>
-                </div>
-              </div>
-            )}
-
-            {/* Gestures Settings */}
-            {activeTab === 'gestures' && (
-              <div className="gestures-settings-container">
-                <p className="settings-hint">
-                  Customize what happens when Naani makes a gesture.
-                  <br/><i>جب نانی اشارہ کریں تو کیا ہونا چاہیے؟ یہاں منتخب کریں۔</i>
-                </p>
-                <div className="list-group">
-                  {Object.entries(GESTURE_LABELS).map(([key, labels]) => (
-                    <div key={key} className="list-item massive-item" style={{ flexDirection: 'column', alignItems: 'stretch', gap: 12 }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-primary)' }}>{labels.en} / {labels.ur}</span>
-                      </div>
-                      <select 
-                        className="massive-input"
-                        value={gestureMappings[key] || ''}
-                        onChange={(e) => handleGestureChange(key, e.target.value)}
-                      >
-                        {GESTURE_ACTIONS.map(action => (
-                          <option key={action.value} value={action.value}>
-                            {action.en} ({action.ur})
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  ))}
                 </div>
               </div>
             )}

@@ -14,7 +14,6 @@ interface WordGridProps {
   onEditItem?: (item: any) => void;
   favorites?: string[];
 }
-
 export const WordGrid: React.FC<WordGridProps> = ({
   gridItems,
   focusedIndex,
@@ -24,30 +23,48 @@ export const WordGrid: React.FC<WordGridProps> = ({
   quoteFocused,
   onLongPressItem,
   onEditItem,
+  onDeleteItem,
   favorites = [],
 }) => {
   const { isUrdu } = useLanguage();
-  const [pressTimer, setPressTimer] = React.useState<any>(null);
+  const [deleteId, setDeleteId] = React.useState<string | null>(null);
 
   return (
     <div className="smart-grid-apple">
       {gridItems.map((item, idx) => (
-        <div 
-            key={item.id}
-            onMouseDown={() => setPressTimer(setTimeout(() => onEditItem?.(item), 800))}
-            onMouseUp={() => clearTimeout(pressTimer)}
-            onTouchStart={() => setPressTimer(setTimeout(() => onEditItem?.(item), 800))}
-            onTouchEnd={() => clearTimeout(pressTimer)}
-        >
         <WordCard 
+          key={item.id}
           item={item}
           isFocused={focusedIndex === offset + idx}
           onClick={item.onClick}
-          onLongPress={() => onLongPressItem && onLongPressItem(item)}
+          onLongPress={() => {
+             if (item.isPrompt) return;
+             onEditItem?.(item);
+          }}
+          onToggleFavorite={() => onLongPressItem?.(item)}
+          onDelete={() => setDeleteId(item.id)}
           isFavorite={favorites.includes(item.id)}
         />
-        </div>
       ))}
+
+      {deleteId && (
+        <div className="delete-modal-overlay" onClick={() => setDeleteId(null)}>
+          <div className="delete-modal" onClick={e => e.stopPropagation()}>
+            <h3 style={{ marginBottom: '16px', fontSize: '1.2rem' }}>
+                {isUrdu ? 'کیا اس لفظ کو حذف کریں؟' : `Delete "${gridItems.find(i => i.id === deleteId)?.en || 'this word'}"?`}
+            </h3>
+            <div className="modal-actions" style={{ flexDirection: 'row-reverse' }}>
+              <button className="btn-danger" onClick={() => { onDeleteItem?.(deleteId); setDeleteId(null); }}>
+                {isUrdu ? 'حذف کریں' : 'Delete'}
+              </button>
+              <button onClick={() => setDeleteId(null)} style={{ background: '#f0f0f0' }}>
+                {isUrdu ? 'منسوخ' : 'Cancel'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {randomQuote && (
         <div
           className={`quote-banner ${quoteFocused ? 'focused-item' : ''}`}
