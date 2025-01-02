@@ -17,11 +17,12 @@
 
 .header-grid-layout {
   display: grid;
-  grid-template-columns: 44px 44px 1fr 56px 44px; /* Fixed widths for icons, flexible for brand */
+  grid-template-columns: 1fr 1fr 2fr 1fr 1fr; /* Use ratios for even distribution */
   width: 100%;
-  max-width: 600px; /* Reduced max-width to keep items together */
-  gap: 6px;
+  max-width: 100%; /* Use full width of app-viewport */
+  gap: 12px;
   align-items: center;
+  padding: 0 4px;
 }
 
 .header-cell {
@@ -30,6 +31,33 @@
   align-items: center;
   width: 100%;
   min-width: 0;
+}
+
+.header-cell.span-2 {
+  /* This matches the 2fr in grid-template-columns */
+}
+
+.brand-badge-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.brand-badge-btn.is-pressing {
+  transform: scale(0.92);
+}
+
+.brand-badge-btn.focused-item .brand-badge-inner {
+  box-shadow: 0 0 0 4px var(--color-accent);
+  transform: scale(0.96);
 }
 
 .brand-badge-inner {
@@ -43,6 +71,7 @@
   width: auto;
   max-width: 100%;
   justify-content: center;
+  transition: all 0.2s ease;
 }
 
 .brand-badge-text {
@@ -64,37 +93,45 @@
   border: 1.2px solid rgba(45, 90, 39, 0.08);
   color: var(--color-primary);
   box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  transition: all 0.2s ease;
 }
 
-/* Language Switcher Pill (Compact) */
-.lang-switcher-pill {
-  width: 54px !important;
-  height: 38px !important;
-  background: #f2f2f7 !important;
-  border: none !important;
-  border-radius: 10px !important;
-  padding: 0 !important;
+.apple-header.consistent-header .btn-icon-ios.focused-item {
+  box-shadow: 0 0 0 3px var(--color-accent);
+  transform: scale(0.96);
 }
 
-.lang-toggle-state {
+/* Language Switcher Overlay State */
+.lang-toggle-container {
+  position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  line-height: 1;
-  gap: 1px;
+  width: 100%;
+  height: 100%;
 }
 
 .lang-icon-mini {
-  color: var(--color-accent);
+  color: var(--color-primary);
   opacity: 0.8;
 }
 
-.lang-label { 
+.lang-label-overlay { 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-family: var(--font-ur); 
-  font-size: 0.65rem; 
+  font-size: 0.6rem; 
   font-weight: 800; 
-  color: var(--color-primary); 
+  color: var(--color-primary);
+  pointer-events: none;
+  margin-top: -1px; /* Optical adjustment inside Lucide circle */
+}
+
+.is-ur .lang-label-overlay {
+  font-size: 0.65rem;
+  margin-top: 1px;
 }
 
 .btn-icon-ios {
@@ -112,11 +149,11 @@
   top: 50%;
   left: 50%;
   width: 24px;
-  height: 2px;
+  height: 2.5px;
   background: #EF4444; /* Strike-through color */
   transform: translate(-50%, -50%) rotate(-45deg);
   border-radius: 100px;
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 /* --- Status Row --- */
@@ -126,7 +163,7 @@
   gap: 8px;
   margin-top: 4px;
   width: 100%;
-  max-width: 500px;
+  max-width: 100%; /* Fill the container */
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -134,10 +171,10 @@
 /* --- Legend Style (Adaptive) --- */
 .gesture-legend-container {
   display: flex;
-  gap: 4px;
+  gap: 8px;
   margin-top: 8px;
   width: 100%;
-  max-width: 500px;
+  max-width: 100%; /* Fill the container */
   justify-content: center;
   align-items: center;
   padding: 0 4px;
@@ -146,32 +183,10 @@
 .gesture-mini-card {
   flex: 1;
   min-width: 0 !important;
-  height: 56px !important; 
-  background: #FFFDE7 !important; 
-  border: 1.2px solid #FBC02D !important; 
-  border-radius: 10px !important;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  height: 68px !important; 
 }
 
-.gesture-mini-card .card-word-display {
-  padding: 2px !important;
-  flex: 1 !important;
+.gesture-mini-card.focused-item {
+  transform: scale(1.05) !important;
 }
 
-.gesture-mini-card .u-text {
-  font-size: 1.3rem !important;
-}
-
-.gesture-mini-card .card-bottom-meta {
-  height: 18px !important;
-  background: rgba(251, 192, 45, 0.1);
-  border-top: 1px solid rgba(251, 192, 45, 0.15);
-}
-
-.gesture-mini-card .card-translation, 
-.gesture-mini-card .card-transliteration { 
-  font-size: 0.55rem !important; 
-  font-weight: 700 !important;
-}

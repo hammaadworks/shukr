@@ -140,4 +140,34 @@
 .yes-btn { background: #e8f5e9 !important; border-color: #2D5A27 !important; }
 .no-btn { background: #ffebee !important; border-color: #DC2626 !important; }
 .prompt-card { background: var(--color-primary) !important; color: white !important; border-color: var(--color-accent) !important; }
-.prompt-card .u-text, .prompt-card .card-translation, .prompt-card .card-transliteration, .prompt-card .card-icon-top-left { color: white !important; opacity: 1 !important; }
+/* --- Variant 5: Gesture Index Card --- */
+.word-card-root.variant-5 {
+  min-width: 90px;
+  background: #FFFBEB; /* Light yellowish background */
+  border: 1.5px solid #FDE68A; /* Amber border */
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.08);
+}
+
+.word-card-root.variant-5 .card-word-display {
+  padding: 4px 4px;
+  min-height: 36px;
+}
+
+.word-card-root.variant-5 .card-bottom-meta {
+  height: 24px;
+  background: white;
+  border-top: 1px solid #FDE68A;
+}
+
+.word-card-root.variant-5 .card-translation {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #92400E;
+}
+
+.word-card-root.variant-5.focused-item {
+  transform: scale(1.02);
+  border-color: #F59E0B;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+}
