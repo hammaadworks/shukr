@@ -3,9 +3,18 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 interface CameraPreviewProps {
   isEnabled: boolean;
   videoRef: React.RefObject<HTMLVideoElement | null>;
+  onDragChange?: (isDragging: boolean) => void;
+  onDragMove?: (position: { x: number; y: number }) => void;
+  onDrop?: (position: { x: number; y: number }) => void;
 }
 
-export const CameraPreview: React.FC<CameraPreviewProps> = ({ isEnabled, videoRef }) => {
+export const CameraPreview: React.FC<CameraPreviewProps> = ({ 
+  isEnabled, 
+  videoRef,
+  onDragChange,
+  onDragMove,
+  onDrop
+}) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const offsetRef = useRef({ x: 0, y: 0 });
@@ -19,40 +28,40 @@ export const CameraPreview: React.FC<CameraPreviewProps> = ({ isEnabled, videoRe
         y: clientY - rect.top,
       };
       setIsDragging(true);
+      onDragChange?.(true);
     }
   };
 
   const handleMove = useCallback((clientX: number, clientY: number) => {
     if (isDragging) {
-      // We set the position relative to the initial fixed position (bottom/right)
-      // or we can just use fixed top/left once dragging starts.
-      // But simpler is to use transform from the origin.
-      
-      // Let's calculate new X and Y. 
-      // To keep it simple across screen resizes, we'll just track raw X/Y after first drag.
       const newX = clientX - offsetRef.current.x;
       const newY = clientY - offsetRef.current.y;
       
-      // Boundaries (stay within viewport)
       const maxX = window.innerWidth - (previewRef.current?.offsetWidth || 0);
       const maxY = window.innerHeight - (previewRef.current?.offsetHeight || 0);
       
-      setPosition({
+      const nextPos = {
         x: Math.max(0, Math.min(newX, maxX)),
         y: Math.max(0, Math.min(newY, maxY)),
-      });
+      };
+      setPosition(nextPos);
+      onDragMove?.(nextPos);
     }
-  }, [isDragging]);
+  }, [isDragging, onDragMove]);
 
-  const handleEnd = () => {
-    setIsDragging(false);
-  };
+  const handleEnd = useCallback(() => {
+    if (isDragging) {
+      setIsDragging(false);
+      onDragChange?.(false);
+      onDrop?.(position);
+    }
+  }, [isDragging, onDragChange, onDrop, position]);
 
   useEffect(() => {
     const onMouseMove = (e: MouseEvent) => handleMove(e.clientX, e.clientY);
     const onTouchMove = (e: TouchEvent) => handleMove(e.touches[0].clientX, e.touches[0].clientY);
-    const onMouseUp = handleEnd;
-    const onTouchEnd = handleEnd;
+    const onMouseUp = () => handleEnd();
+    const onTouchEnd = () => handleEnd();
 
     if (isDragging) {
       window.addEventListener('mousemove', onMouseMove);
@@ -67,7 +76,7 @@ export const CameraPreview: React.FC<CameraPreviewProps> = ({ isEnabled, videoRe
       window.removeEventListener('touchmove', onTouchMove);
       window.removeEventListener('touchend', onTouchEnd);
     };
-  }, [isDragging, handleMove]);
+  }, [isDragging, handleMove, handleEnd]);
 
   if (!isEnabled) return null;
 

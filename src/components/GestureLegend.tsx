@@ -1,36 +1,26 @@
 import React from 'react';
-import { WordCard } from './WordCard';
-import { useLanguage } from '../hooks/useLanguage';
+import {WordCard} from './WordCard';
+import {useLanguage} from '../hooks/useLanguage';
 
 interface GestureLegendProps {
-  lastGesture: string;
+    lastGesture: string;
 }
 
-export const GestureLegend: React.FC<GestureLegendProps> = ({ lastGesture }) => {
-  const { isUrdu } = useLanguage();
+export const GestureLegend: React.FC<GestureLegendProps> = ({lastGesture}) => {
+    const {isUrdu} = useLanguage();
 
-  const gestures = [
-    { id: 'SELECT', emoji: '😮', en: 'Select', ur: 'منتخب کریں' },
-    { id: 'YES', emoji: '👍', en: 'Yes', ur: 'جی ہاں' },
-    { id: 'CLEAR', emoji: '🖐️', en: 'Clear', ur: 'صاف کریں' },
-    { id: 'NEXT', emoji: '☝️', en: 'Next', ur: 'اگلا' },
-  ];
+    const gestures = [{id: 'SELECT', emoji: '😮', en: 'Select', ur: 'منتخب کریں'}, {
+        id: 'YES', emoji: '👍', en: 'Yes', ur: 'جی ہاں'}, {id: 'CLEAR', emoji: '🖐️', en: 'Clear', ur: 'صاف کریں'}, {id: 'NEXT', emoji: '☝️', en: 'Next', ur: 'اگلا'},];
 
-  return (
-    <div className="gesture-legend-container" dir="ltr">
-      {gestures.map((g) => (
-        <WordCard
-          key={g.id}
-          variant={5}
-          item={isUrdu 
-            ? { id: g.id, ur: g.emoji, en: g.ur } 
-            : { id: g.id, en: g.emoji, ur: g.en }
-          }
-          isFocused={lastGesture === g.id}
-          onClick={() => {}}
-          className="gesture-mini-card"
-        />
-      ))}
-    </div>
-  );
+    return (<div className="gesture-legend-container" dir="ltr">
+        {gestures.map((g) => (<WordCard
+            key={g.id}
+            variant={5}
+            item={isUrdu ? {ur: g.emoji, en: g.ur} : {en: g.emoji, ur: g.en}}
+            isFocused={lastGesture === g.id}
+            onClick={() => {
+            }}
+            className="gesture-mini-card"
+        />))}
+    </div>);
 };

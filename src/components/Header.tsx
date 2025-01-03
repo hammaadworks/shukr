@@ -1,5 +1,5 @@
 import React from 'react';
-import {Camera, Megaphone, ALargeSmall, Settings,} from 'lucide-react';
+import {Camera, Megaphone, ALargeSmall, Settings, X} from 'lucide-react';
 import {ShukrButton} from './ShukrButton';
 import {useAudio} from '../hooks/useAudio';
 import {useLanguage} from '../hooks/useLanguage';
@@ -19,6 +19,8 @@ interface HeaderProps {
     lastGesture: string;
     isUrdu: boolean;
     focusedIndex: number;
+    showCloseDropzone?: boolean;
+    cameraButtonRef?: React.RefObject<HTMLButtonElement | null>;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -33,7 +35,9 @@ export const Header: React.FC<HeaderProps> = ({
                                                   toggleSentenceBuilder,
                                                   lastGesture,
                                                   isUrdu,
-                                                  focusedIndex
+                                                  focusedIndex,
+                                                  showCloseDropzone = false,
+                                                  cameraButtonRef
                                               }) => {
     const {playClick} = useAudio();
     const {setLanguage, language} = useLanguage();
@@ -49,16 +53,23 @@ export const Header: React.FC<HeaderProps> = ({
                 {/* 1fr: Camera */}
                 <div className="header-cell">
                     <button
-                        className={`btn-icon-ios ${isTrackingEnabled ? 'active' : 'inactive'} ${focusedIndex === 0 ? 'focused-item' : ''}`}
+                        ref={cameraButtonRef}
+                        className={`btn-icon-ios ${isTrackingEnabled ? 'active' : 'inactive'} ${focusedIndex === 0 ? 'focused-item' : ''} ${showCloseDropzone ? 'drop-active' : ''}`}
                         onClick={() => {
                             playClick();
                             toggleTracking();
                         }}
                         aria-label="Camera"
                     >
-                        <Camera size={22} color={isTrackingEnabled ? "var(--color-primary)" : "#9CA3AF"}/>
-                        {!isTrackingEnabled && <div className="inactive-slash"/>}
-                        {isTrackingEnabled && !isModelLoaded && <div className="loading-dot-ios-mini"/>}
+                        {showCloseDropzone ? (
+                            <X size={30} color="#DC2626" strokeWidth={3} className="animate-pulse" />
+                        ) : (
+                            <>
+                                <Camera size={22} color={isTrackingEnabled ? "var(--color-primary)" : "#9CA3AF"}/>
+                                {!isTrackingEnabled && <div className="inactive-slash"/>}
+                                {isTrackingEnabled && !isModelLoaded && <div className="loading-dot-ios-mini"/>}
+                            </>
+                        )}
                     </button>
                 </div>
 
@@ -79,14 +90,16 @@ export const Header: React.FC<HeaderProps> = ({
 
                 {/* 2fr: Shukr (Branding) */}
                 <div className="header-cell span-2">
-                    <ShukrButton
-                        onSOS={onSOS}
-                        onHome={onHome}
-                        playClick={playClick}
-                        onOpenSettings={() => onOpenSettings('general')}
-                        hasUnsyncedChanges={hasUnsyncedChanges}
-                        isFocused={focusedIndex === 2}
-                    />
+                    <div className="shukr-button-wrapper">
+                        <ShukrButton
+                            onSOS={onSOS}
+                            onHome={onHome}
+                            playClick={playClick}
+                            onOpenSettings={() => onOpenSettings('contact')}
+                            hasUnsyncedChanges={hasUnsyncedChanges}
+                            isFocused={focusedIndex === 2}
+                        />
+                    </div>
                 </div>
 
                 {/* 1fr: Language */}
