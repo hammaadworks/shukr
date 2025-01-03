@@ -15,6 +15,7 @@ interface SentenceBuilderProps {
   canAddWords: boolean;
   builderScrollRef: React.RefObject<HTMLDivElement | null>;
   flashBorder: boolean;
+  currentlyPlayingId?: string | null;
 }
 
 export const SentenceBuilder: React.FC<SentenceBuilderProps> = ({
@@ -29,6 +30,7 @@ export const SentenceBuilder: React.FC<SentenceBuilderProps> = ({
   canAddWords,
   builderScrollRef,
   flashBorder,
+  currentlyPlayingId,
 }) => {
   const { isUrdu } = useLanguage();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -38,7 +40,14 @@ export const SentenceBuilder: React.FC<SentenceBuilderProps> = ({
       <div className="smart-input-area">
         <div className="builder-scroll" ref={builderScrollRef}>
           {words.map((w: any, i: number) => (
-            <WordCard key={`${w.id}-${i}`} item={w} variant={3} isFocused={false} onClick={() => {}} />
+            <WordCard 
+              key={`${w.id}-${i}`} 
+              item={w} 
+              variant={3} 
+              isFocused={false} 
+              isPlaying={currentlyPlayingId === w.id && i === words.length - 1}
+              onClick={() => {}} 
+            />
           ))}
           <input
             ref={inputRef}

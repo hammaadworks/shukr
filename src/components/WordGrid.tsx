@@ -1,30 +1,39 @@
 import React from 'react';
 import { WordCard } from './WordCard';
-import { Sparkles } from 'lucide-react';
 import { useLanguage } from '../hooks/useLanguage';
+import { MotivateCard } from './MotivateCard';
 
 interface WordGridProps {
   gridItems: any[];
   focusedIndex: number;
   offset: number;
   randomQuote: any;
+  quotes: any[];
   onNextQuote?: () => void;
+  updateConfig?: (newConfig: any) => void;
+  config?: any;
   quoteFocused: boolean;
   onLongPressItem?: (item: any) => void;
   onEditItem?: (item: any) => void;
+  onDeleteItem?: (id: string) => void;
   favorites?: string[];
+  currentlyPlayingId?: string | null;
 }
 export const WordGrid: React.FC<WordGridProps> = ({
   gridItems,
   focusedIndex,
   offset,
   randomQuote,
+  quotes,
   onNextQuote,
+  updateConfig,
+  config,
   quoteFocused,
   onLongPressItem,
   onEditItem,
   onDeleteItem,
   favorites = [],
+  currentlyPlayingId,
 }) => {
   const { isUrdu } = useLanguage();
   const [deleteId, setDeleteId] = React.useState<string | null>(null);
@@ -36,6 +45,7 @@ export const WordGrid: React.FC<WordGridProps> = ({
           key={item.id}
           item={item}
           isFocused={focusedIndex === offset + idx}
+          isPlaying={currentlyPlayingId === item.id}
           onClick={item.onClick}
           onLongPress={() => {
              if (item.isPrompt) return;
@@ -47,41 +57,44 @@ export const WordGrid: React.FC<WordGridProps> = ({
         />
       ))}
 
-      {deleteId && (
-        <div className="delete-modal-overlay" onClick={() => setDeleteId(null)}>
-          <div className="delete-modal" onClick={e => e.stopPropagation()}>
-            <h3 style={{ marginBottom: '16px', fontSize: '1.2rem' }}>
-                {isUrdu ? 'کیا اس لفظ کو حذف کریں؟' : `Delete "${gridItems.find(i => i.id === deleteId)?.en || 'this word'}"?`}
-            </h3>
-            <div className="modal-actions" style={{ flexDirection: 'row-reverse' }}>
-              <button className="btn-danger" onClick={() => { onDeleteItem?.(deleteId); setDeleteId(null); }}>
-                {isUrdu ? 'حذف کریں' : 'Delete'}
-              </button>
-              <button onClick={() => setDeleteId(null)} style={{ background: '#f0f0f0' }}>
-                {isUrdu ? 'منسوخ' : 'Cancel'}
-              </button>
+      {deleteId && (() => {
+        const item = gridItems.find(i => i.id === deleteId);
+        const label = isUrdu ? item?.ur : item?.en;
+        return (
+          <div className="delete-modal-overlay" onClick={() => setDeleteId(null)}>
+            <div className="delete-modal" onClick={e => e.stopPropagation()}>
+              <h3 style={{ marginBottom: '16px', fontSize: '1.2rem', textAlign: isUrdu ? 'right' : 'left' }}>
+                  {isUrdu ? `حذف کریں "${label}"؟` : `Delete "${label}"?`}
+              </h3>
+              <div className="modal-actions" style={{ flexDirection: 'row-reverse', gap: '8px' }}>
+                <button 
+                  className="btn-danger" 
+                  onClick={() => { onDeleteItem?.(deleteId); setDeleteId(null); }}
+                  style={{ borderRadius: '12px', padding: '10px 20px', backgroundColor: 'var(--color-danger)', color: 'white', border: 'none' }}
+                >
+                  {isUrdu ? 'حذف کریں' : 'Delete'}
+                </button>
+                <button 
+                  onClick={() => setDeleteId(null)} 
+                  style={{ background: '#f0f0f0', borderRadius: '12px', padding: '10px 20px', border: 'none' }}
+                >
+                  {isUrdu ? 'منسوخ' : 'Cancel'}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
-      {randomQuote && (
-        <div
-          className={`quote-banner ${quoteFocused ? 'focused-item' : ''}`}
-        >
-          <button 
-            className="quote-motivate-btn" 
-            onClick={(e) => {
-              e.stopPropagation();
-              onNextQuote?.();
-            }}
-            title="Motivate"
-          >
-            <Sparkles size={16} />
-            <span>{isUrdu ? 'ترغیب' : 'Motivate'}</span>
-          </button>
-          <div className="quote-banner-ur">{isUrdu ? randomQuote.ur : randomQuote.en}</div>
-        </div>
+      {randomQuote && onNextQuote && updateConfig && config && (
+        <MotivateCard 
+          quote={randomQuote}
+          quotes={quotes}
+          onNext={onNextQuote}
+          updateConfig={updateConfig}
+          config={config}
+          isFocused={quoteFocused}
+        />
       )}
     </div>
   );
