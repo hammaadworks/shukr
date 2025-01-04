@@ -1,17 +1,37 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState, useEffect } from 'react';
 import { useLanguage } from './useLanguage';
 import { useAppConfig } from './useAppConfig';
 import { audioStorage } from '../lib/audioStorage';
 
+// Singleton-like state to track what's playing across the whole app
+let globalPlayingId: string | null = null;
+const listeners = new Set<(id: string | null) => void>();
+
+const setGlobalPlayingId = (id: string | null) => {
+  globalPlayingId = id;
+  listeners.forEach(l => l(id));
+};
+
 export const useAudio = () => {
   const { language } = useLanguage();
   const { config } = useAppConfig();
+  const [currentlyPlayingId, setCurrentlyPlayingId] = useState<string | null>(globalPlayingId);
+
+  useEffect(() => {
+    const handler = (id: string | null) => setCurrentlyPlayingId(id);
+    listeners.add(handler);
+    return () => {
+      listeners.delete(handler);
+    };
+  }, []);
+
   const activeVoiceProfile = config?.activeVoiceProfile || 'default';
   const sosOscillatorRef = useRef<OscillatorNode | null>(null);
   const sosGainRef = useRef<GainNode | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
 
   const playClick = useCallback(() => {
+    // ... existing playClick logic ...
     try {
       const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
       const oscillator = audioCtx.createOscillator();
@@ -33,6 +53,7 @@ export const useAudio = () => {
   }, []);
 
   const playSOS = useCallback(() => {
+    // ... existing playSOS logic ...
     if (sosOscillatorRef.current) return;
 
     const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -41,7 +62,6 @@ export const useAudio = () => {
     const oscillator = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
 
-    // Very gentle, spiritual pulsing tone (Warm resonant frequencies)
     oscillator.type = 'sine';
     oscillator.frequency.setValueAtTime(329.63, audioCtx.currentTime); // E4 - Warm tone
     
@@ -49,7 +69,6 @@ export const useAudio = () => {
     
     const now = audioCtx.currentTime;
     for (let i = 0; i < 100; i++) {
-      // Gentle fade in/out pulses every 1.5 seconds
       gainNode.gain.linearRampToValueAtTime(0.2, now + i * 1.5 + 0.5);
       gainNode.gain.linearRampToValueAtTime(0, now + i * 1.5 + 1.2);
     }
@@ -63,6 +82,7 @@ export const useAudio = () => {
   }, []);
 
   const stopSOS = useCallback(() => {
+    // ... existing stopSOS logic ...
     if (sosOscillatorRef.current) {
       try {
         sosOscillatorRef.current.stop();
@@ -78,6 +98,7 @@ export const useAudio = () => {
   }, []);
 
   const toggleFlashlight = useCallback(async () => {
+    // ... existing toggleFlashlight logic ...
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
       const track = stream.getVideoTracks()[0];
@@ -92,26 +113,58 @@ export const useAudio = () => {
   }, []);
 
   const speak = useCallback(async (text: string, id?: string) => {
-    if (!text) return;
-    if (id) {
-      const recordedBlob = await audioStorage.get(`${activeVoiceProfile}_${id}`);
-      if (recordedBlob) {
-        const url = URL.createObjectURL(recordedBlob);
-        const audio = new Audio(url);
-        audio.play();
-        return;
+    return new Promise<void>(async (resolve) => {
+      if (!text) return resolve();
+      
+      let audio: HTMLAudioElement | null = null;
+      let objectUrl: string | null = null;
+
+      try {
+        if (id) {
+          setGlobalPlayingId(id);
+          const storageKey = `${activeVoiceProfile}_${id}_${language}`;
+          const recordedBlob = await audioStorage.get(storageKey);
+          
+          if (recordedBlob) {
+            objectUrl = URL.createObjectURL(recordedBlob);
+            audio = new Audio(objectUrl);
+          }
+        }
+
+        if (!audio) {
+          const fallbackPath = `/audio/${language}/${id || text.toLowerCase()}.mp3`;
+          audio = new Audio(fallbackPath);
+        }
+
+        audio.onended = () => {
+          if (objectUrl) URL.revokeObjectURL(objectUrl);
+          if (id && globalPlayingId === id) setGlobalPlayingId(null);
+          resolve();
+        };
+
+        audio.onerror = () => {
+          if (objectUrl) URL.revokeObjectURL(objectUrl);
+          if (id && globalPlayingId === id) setGlobalPlayingId(null);
+          resolve();
+        };
+
+        await audio.play();
+      } catch (e) {
+        console.warn('[useAudio] Playback failed:', e);
+        if (objectUrl) URL.revokeObjectURL(objectUrl);
+        if (id && globalPlayingId === id) setGlobalPlayingId(null);
+        resolve();
       }
-    }
-    const audio = new Audio(`/audio/${language}/${id || text.toLowerCase()}.mp3`);
-    audio.play().catch(() => {});
+    });
   }, [language, activeVoiceProfile]);
 
   const speakSequence = useCallback(async (words: any[]) => {
     for (const word of words) {
-      await speak(word.en, word.id);
-      await new Promise(r => setTimeout(r, 100));
+      const text = language === 'ur' ? word.ur : word.en;
+      await speak(text, word.id);
+      await new Promise(r => setTimeout(r, 150));
     }
-  }, [speak]);
+  }, [speak, language]);
 
-  return { speak, speakSequence, playClick, toggleFlashlight, playSOS, stopSOS };
+  return { speak, speakSequence, playClick, toggleFlashlight, playSOS, stopSOS, currentlyPlayingId };
 };

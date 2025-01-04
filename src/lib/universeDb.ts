@@ -25,6 +25,14 @@ export interface CategoryFolder {
   isSystem?: boolean;
 }
 
+export interface QuoteItem {
+  id: string;
+  ur: string;
+  en: string;
+  source: string;
+  createdAt: number;
+}
+
 export interface SketchTemplate {
   id: string;
   wordId: string;
@@ -38,6 +46,7 @@ export class WordUniverseDatabase extends Dexie {
   words!: Table<WordUniverseItem>;
   categories!: Table<CategoryFolder>;
   sketchTemplates!: Table<SketchTemplate>;
+  quotes!: Table<QuoteItem>;
 
   constructor() {
     super('shukr_universe_db');
@@ -45,6 +54,12 @@ export class WordUniverseDatabase extends Dexie {
       words: '++id, en, category, type, usageCount, lastUsedAt',
       categories: 'id, order',
       sketchTemplates: '++id, wordId, category, createdAt'
+    });
+    this.version(2).stores({
+      words: '++id, en, category, type, usageCount, lastUsedAt',
+      categories: 'id, order',
+      sketchTemplates: '++id, wordId, category, createdAt',
+      quotes: '++id, en, createdAt'
     });
   }
 }

@@ -153,6 +153,18 @@ export const useAppConfig = () => {
         })
       );
       await universeDb.words.bulkPut(words);
+
+      // 3. Sync Quotes (Motivations)
+      if (config.quotes && Array.isArray(config.quotes)) {
+        const quotesToSync = config.quotes.map((q: any, idx: number) => ({
+          id: q.id || `quote_sys_${idx}`,
+          en: q.en,
+          ur: q.ur,
+          source: q.source || '',
+          createdAt: q.createdAt || Date.now()
+        }));
+        await universeDb.quotes.bulkPut(quotesToSync);
+      }
     } catch (err) {
       console.error('[AppConfig] Error syncing to DB:', err);
     }

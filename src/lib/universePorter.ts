@@ -28,15 +28,17 @@ export const universePorter = {
     const words = await universeDb.words.toArray();
     const categories = await universeDb.categories.toArray();
     const sketches = await recognitionDb.templates.toArray();
+    const quotes = await universeDb.quotes.toArray();
     const audio = await this.serializeAllAudio();
 
     return {
       version: currentConfig.version || 1,
       timestamp: Date.now(),
-      ...currentConfig, // Include metadata like quotes, gestures, etc.
+      ...currentConfig, // Include metadata like gestures, etc.
       words,
       categories,
       sketches,
+      quotes,
       audio
     };
   },
@@ -52,6 +54,7 @@ export const universePorter = {
 
     await this.restoreCategoriesAndWords(snapshot);
     await this.restoreSketches(snapshot);
+    await this.restoreQuotes(snapshot);
     await this.restoreAudio(snapshot);
     
     console.log(`[Porter] Successfully imported universe snapshot from ${new Date(snapshot.timestamp).toLocaleString()}`);
@@ -112,6 +115,17 @@ export const universePorter = {
     }
   },
 
+  async restoreQuotes(snapshot: UniverseSnapshot) {
+    if (snapshot.quotes && snapshot.quotes.length > 0) {
+      // Create valid IDs if they are missing
+      const quotesToPut = snapshot.quotes.map((q: any, i: number) => ({
+        ...q,
+        id: q.id || `quote_imp_${Date.now()}_${i}`
+      }));
+      await universeDb.quotes.bulkPut(quotesToPut);
+    }
+  },
+
   async restoreAudio(snapshot: UniverseSnapshot) {
     if (!snapshot.audio) return;
 
@@ -125,6 +139,7 @@ export const universePorter = {
     await Promise.all([
       universeDb.words.clear(),
       universeDb.categories.clear(),
+      universeDb.quotes.clear(),
       recognitionDb.templates.clear(),
       audioStorage.clear()
     ]);
