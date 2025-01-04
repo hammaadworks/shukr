@@ -58,3 +58,144 @@ html, body, #root {
   width: 1px !important;
   height: 1px !important;
 }
+
+/* --- Generic Dialog Styles (Shukr Unified) --- */
+.shukr-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  padding: 24px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.shukr-dialog {
+  background: var(--color-surface);
+  width: 100%;
+  max-width: 400px;
+  border-radius: var(--radius-empathy, 24px);
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.shukr-dialog-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  font-family: var(--font-ur, inherit);
+}
+
+.shukr-dialog-desc {
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+}
+
+.shukr-dialog-input {
+  width: 100%;
+  background: var(--color-bg);
+  border: 2px solid rgba(45, 90, 39, 0.08);
+  padding: 16px;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  outline: none;
+  color: var(--color-text);
+  transition: border-color 0.2s;
+}
+
+.shukr-dialog-input:focus {
+  border-color: var(--color-primary);
+}
+
+.shukr-dialog-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.shukr-dialog-btn {
+  flex: 1;
+  padding: 16px;
+  border-radius: 16px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.2s;
+}
+
+.shukr-dialog-btn:active {
+  transform: scale(0.95);
+}
+
+.btn-cancel {
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+}
+
+.btn-confirm {
+  background: var(--color-primary);
+  color: white;
+}
+
+.btn-danger {
+  background: var(--color-danger);
+  color: white;
+}
+
+.shukr-dialog-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 50vh;
+  overflow-y: auto;
+  margin-top: 16px;
+  text-align: left;
+}
+
+html[lang="ur"] .shukr-dialog-options-list {
+  text-align: right;
+}
+
+.shukr-option-btn {
+  background: rgba(45, 90, 39, 0.05);
+  border: 2px solid transparent;
+  padding: 16px;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.shukr-option-btn:active {
+  transform: scale(0.98);
+}
+
+.shukr-option-btn.selected {
+  background: rgba(45, 90, 39, 0.1);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

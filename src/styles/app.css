@@ -16,6 +16,7 @@
 @import './modules/doodle.css';
 @import './modules/settings.css';
 @import './modules/word-editor.css';
+@import './modules/motivate.css';
 
 /* Extra Utility Classes */
 .listening-pulse {

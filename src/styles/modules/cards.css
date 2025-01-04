@@ -22,6 +22,24 @@
   border-color: var(--color-accent);
 }
 
+.word-card-root.is-playing {
+  border-color: var(--color-primary);
+  background: rgba(45, 90, 39, 0.05);
+  box-shadow: 0 0 20px rgba(45, 90, 39, 0.2);
+  transform: scale(1.02);
+  z-index: 10;
+}
+
+.word-card-root.is-playing .u-text {
+  animation: word-playing-pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes word-playing-pulse {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
 .word-card-root:active { transform: scale(0.94); }
 
 .card-word-display {
@@ -61,14 +79,33 @@
   aspect-ratio: 1.2 / 1; /* Taller vertically on small screens */
 }
 
-.word-card-root.variant-1 .card-word-display {
-  padding: 12px 8px;
+.word-card-root.variant-1 .u-text {
+  font-size: 1.6rem;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 300px) {
+  .word-card-root.variant-1 .u-text {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 650px) {
   .word-card-root.variant-1 { 
     aspect-ratio: 2.1 / 1; /* More landscape/smaller on larger screens */
   }
+  .word-card-root.variant-1 .u-text {
+    font-size: 2.4rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .word-card-root.variant-1 .u-text {
+    font-size: 2.8rem;
+  }
+}
+
+.word-card-root.variant-1 .card-word-display {
+  padding: 12px 8px;
 }
 
 .word-card-root.variant-1 .card-icon-top-left { position: absolute; top: 6px; left: 6px; color: var(--color-primary); opacity: 0.3; }
@@ -139,7 +176,37 @@
 
 .yes-btn { background: #e8f5e9 !important; border-color: #2D5A27 !important; }
 .no-btn { background: #ffebee !important; border-color: #DC2626 !important; }
-.prompt-card { background: var(--color-primary) !important; color: white !important; border-color: var(--color-accent) !important; }
+.prompt-card {
+  background: var(--color-primary) !important;
+  color: white !important;
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 8px 20px rgba(45, 90, 39, 0.2);
+}
+
+.prompt-card .u-text {
+  color: white !important;
+}
+
+.prompt-card .card-icon-top-left {
+  color: var(--color-accent) !important;
+  opacity: 1 !important;
+}
+
+.prompt-card .card-bottom-meta {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.prompt-card .card-translation,
+.prompt-card .card-transliteration {
+  color: white !important;
+  opacity: 1 !important;
+}
+
+.prompt-card .card-divider {
+  color: var(--color-accent) !important;
+  opacity: 0.8 !important;
+}
 /* --- Variant 5: Gesture Index Card --- */
 .word-card-root.variant-5 {
   min-width: 90px;
