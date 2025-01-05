@@ -63,10 +63,10 @@ const AppContent = () => {
     (window as any)._showSOS = () => setShowSOS(true);
   }, []);
 
-  const { isEnabled, isRecognitionActive, toggleTracking, videoRef, isModelLoaded } =
+  const { isEnabled, effectiveEnabled, isRecognitionActive, toggleTracking, videoRef, isModelLoaded } =
     useCameraGestures((action) => {
       actionHandlerRef.current(action);
-    });
+    }, route === '#voices');
 
   const handlePreviewDragMove = useCallback((_pos: { x: number; y: number }) => {
     // We no longer kill on move, just keep the prop for potential future visual feedback
@@ -737,7 +737,7 @@ const AppContent = () => {
       {isDraggingPreview && <div className="dragging-backdrop" />}
       <Header
         onOpenSettings={(tab) => navigate('#settings', tab)}
-        isTrackingEnabled={isEnabled}
+        isTrackingEnabled={effectiveEnabled}
         isRecognitionActive={isRecognitionActive}
         toggleTracking={toggleTracking}
         hasUnsyncedChanges={hasUnsyncedChanges}
@@ -784,7 +784,7 @@ const AppContent = () => {
           />
         ) : route === '#doodle' ? (
           <>
-            <CameraPreview isEnabled={isEnabled} videoRef={videoRef} onDragChange={setIsDraggingPreview} onDragMove={handlePreviewDragMove} onDrop={handlePreviewDrop} />
+            <CameraPreview isEnabled={effectiveEnabled} videoRef={videoRef} onDragChange={setIsDraggingPreview} onDragMove={handlePreviewDragMove} onDrop={handlePreviewDrop} />
             <DoodlePad
               config={config}
               focusedIndex={focusedIndex}
@@ -800,7 +800,7 @@ const AppContent = () => {
           </>
         ) : (
           <>
-            <CameraPreview isEnabled={isEnabled} videoRef={videoRef} onDragChange={setIsDraggingPreview} onDragMove={handlePreviewDragMove} onDrop={handlePreviewDrop} />
+            <CameraPreview isEnabled={effectiveEnabled} videoRef={videoRef} onDragChange={setIsDraggingPreview} onDragMove={handlePreviewDragMove} onDrop={handlePreviewDrop} />
 
             <div className="top-system-area">
               <WordPredictions

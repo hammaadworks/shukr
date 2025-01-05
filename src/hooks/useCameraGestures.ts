@@ -92,7 +92,7 @@ export const useCameraGestures = (onAction: (action: GestureAction) => void, for
   // 3. Optimized Prediction Loop - Stable loop assignment
   useEffect(() => {
     predictRef.current = () => {
-      if (!isEnabled || !isModelLoaded || !videoRef.current || !isComponentMounted.current) return;
+      if (!effectiveEnabled || !isModelLoaded || !videoRef.current || !isComponentMounted.current) return;
 
       // Save battery when tab is hidden
       if (document.visibilityState === 'hidden') {
@@ -143,11 +143,11 @@ export const useCameraGestures = (onAction: (action: GestureAction) => void, for
       
       requestRef.current = requestAnimationFrame(() => predictRef.current());
     };
-  }, [isEnabled, isModelLoaded, isRecognitionActive, handleDetectedGesture]);
+  }, [effectiveEnabled, isModelLoaded, isRecognitionActive, handleDetectedGesture]);
 
   // 4. Camera Stream Lifecycle (Robust & Cleanup-safe)
   useEffect(() => {
-    if (!isEnabled || !isModelLoaded) {
+    if (!effectiveEnabled || !isModelLoaded) {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
       return;
     }
@@ -208,10 +208,11 @@ export const useCameraGestures = (onAction: (action: GestureAction) => void, for
         requestRef.current = 0;
       }
     };
-  }, [isEnabled, isModelLoaded, handleDetectedGesture]);
+  }, [effectiveEnabled, isModelLoaded, handleDetectedGesture]);
 
   return { 
     isEnabled, 
+    effectiveEnabled,
     isRecognitionActive,
     toggleTracking: () => setIsEnabled(!isEnabled), 
     videoRef, 
