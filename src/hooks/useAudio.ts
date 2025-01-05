@@ -112,49 +112,53 @@ export const useAudio = () => {
     }
   }, []);
 
-  const speak = useCallback(async (text: string, id?: string) => {
-    return new Promise<void>(async (resolve) => {
-      if (!text) return resolve();
-      
-      let audio: HTMLAudioElement | null = null;
-      let objectUrl: string | null = null;
+  const speak = useCallback((text: string, id?: string) => {
+    return new Promise<void>((resolve) => {
+      const executeSpeak = async () => {
+        if (!text) return resolve();
+        
+        let audio: HTMLAudioElement | null = null;
+        let objectUrl: string | null = null;
 
-      try {
-        if (id) {
-          setGlobalPlayingId(id);
-          const storageKey = `${activeVoiceProfile}_${id}_${language}`;
-          const recordedBlob = await audioStorage.get(storageKey);
-          
-          if (recordedBlob) {
-            objectUrl = URL.createObjectURL(recordedBlob);
-            audio = new Audio(objectUrl);
+        try {
+          if (id) {
+            setGlobalPlayingId(id);
+            const storageKey = `${activeVoiceProfile}_${id}_${language}`;
+            const recordedBlob = await audioStorage.get(storageKey);
+            
+            if (recordedBlob) {
+              objectUrl = URL.createObjectURL(recordedBlob);
+              audio = new Audio(objectUrl);
+            }
           }
-        }
 
-        if (!audio) {
-          const fallbackPath = `/audio/${language}/${id || text.toLowerCase()}.mp3`;
-          audio = new Audio(fallbackPath);
-        }
+          if (!audio) {
+            const fallbackPath = `/audio/${language}/${id || text.toLowerCase()}.mp3`;
+            audio = new Audio(fallbackPath);
+          }
 
-        audio.onended = () => {
+          audio.onended = () => {
+            if (objectUrl) URL.revokeObjectURL(objectUrl);
+            if (id && globalPlayingId === id) setGlobalPlayingId(null);
+            resolve();
+          };
+
+          audio.onerror = () => {
+            if (objectUrl) URL.revokeObjectURL(objectUrl);
+            if (id && globalPlayingId === id) setGlobalPlayingId(null);
+            resolve();
+          };
+
+          await audio.play();
+        } catch (e) {
+          console.warn('[useAudio] Playback failed:', e);
           if (objectUrl) URL.revokeObjectURL(objectUrl);
           if (id && globalPlayingId === id) setGlobalPlayingId(null);
           resolve();
-        };
-
-        audio.onerror = () => {
-          if (objectUrl) URL.revokeObjectURL(objectUrl);
-          if (id && globalPlayingId === id) setGlobalPlayingId(null);
-          resolve();
-        };
-
-        await audio.play();
-      } catch (e) {
-        console.warn('[useAudio] Playback failed:', e);
-        if (objectUrl) URL.revokeObjectURL(objectUrl);
-        if (id && globalPlayingId === id) setGlobalPlayingId(null);
-        resolve();
-      }
+        }
+      };
+      
+      executeSpeak();
     });
   }, [language, activeVoiceProfile]);
 

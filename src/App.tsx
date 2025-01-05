@@ -115,7 +115,7 @@ const AppContent = () => {
   }, []);
 
   useEffect(() => {
-    refreshWords();
+    setTimeout(() => refreshWords(), 0);
   }, [config, refreshWords]);
 
   const triggerYesFlash = useCallback(() => {
@@ -216,7 +216,7 @@ const AppContent = () => {
 
   useEffect(() => {
     if (quotes.length > 0 && !randomQuote) {
-      setRandomQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+      setTimeout(() => setRandomQuote(quotes[Math.floor(Math.random() * quotes.length)]), 0);
     }
   }, [quotes, randomQuote]);
 
@@ -493,7 +493,7 @@ const AppContent = () => {
 
   const handleWordItemClick = useCallback(
     async (item: any) => {
-      speak(isUrdu ? item.ur : item.en, item.id);
+      const speakPromise = speak(isUrdu ? item.ur : item.en, item.id);
 
       if (isSentenceBuilderActive) {
         if (canAddWords) {
@@ -505,6 +505,7 @@ const AppContent = () => {
         }
       }
 
+      await speakPromise;
       await wordNetwork.recordUsage(item.id);
       refreshWords();
       setFocusedIndex(-1);
@@ -546,7 +547,7 @@ const AppContent = () => {
     return results.slice(0, 10).map((i: any) => ({
       ...i,
       onClick: async () => {
-        speak(isUrdu ? i.ur : i.en, i.id);
+        const speakPromise = speak(isUrdu ? i.ur : i.en, i.id);
 
         if (isSentenceBuilderActive) {
           if (canAddWords) {
@@ -558,6 +559,7 @@ const AppContent = () => {
           }
         }
 
+        await speakPromise;
         await wordNetwork.recordUsage(i.id);
         refreshWords();
         setFocusedIndex(-1);
@@ -800,7 +802,7 @@ const AppContent = () => {
           <>
             <CameraPreview isEnabled={isEnabled} videoRef={videoRef} onDragChange={setIsDraggingPreview} onDragMove={handlePreviewDragMove} onDrop={handlePreviewDrop} />
 
-            <div className="top-system-area" style={{ paddingBottom: 0 }}>
+            <div className="top-system-area">
               <WordPredictions
                 predictions={predictions}
                 focusedIndex={focusedIndex}
