@@ -13,6 +13,30 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   z-index: 1000;
   direction: ltr !important;
+  transition: all 0.2s;
+}
+
+/* When dragging, we let the header be dimmed by the backdrop, but elevate the drop-active button */
+.apple-header.consistent-header:has(.drop-active) {
+  z-index: auto; /* Break stacking context so children can go above backdrop */
+  backdrop-filter: none; /* backdrop-filter creates a stacking context, must remove */
+  background: transparent; /* Let backdrop handle the dimming */
+  padding-top: 25px; /* Increase top padding to accommodate scaling */
+  padding-bottom: 15px;
+  overflow: visible !important;
+}
+
+.apple-header.consistent-header:has(.drop-active) .header-grid-layout,
+.apple-header.consistent-header:has(.drop-active) .header-cell {
+  overflow: visible !important;
+}
+
+.apple-header.consistent-header:has(.drop-active) .btn-icon-ios:not(.drop-active),
+.apple-header.consistent-header:has(.drop-active) .shukr-button-wrapper,
+.apple-header.consistent-header:has(.drop-active) .gesture-legend-container {
+  opacity: 0.3;
+  filter: blur(2px);
+  pointer-events: none;
 }
 
 .header-grid-layout {
@@ -142,6 +166,24 @@
 .btn-icon-ios.active {
   background: rgba(45, 90, 39, 0.08);
   border-color: rgba(45, 90, 39, 0.2);
+}
+
+.btn-icon-ios.drop-active {
+  background: white !important; /* Prominent white background to be clear */
+  border: 3px solid var(--color-danger) !important;
+  box-shadow: 0 0 30px rgba(220, 38, 38, 0.5);
+  transform: scale(1.4); /* Slightly larger */
+  width: 55px !important; /* Larger base size */
+  height: 55px !important;
+  border-radius: 16px !important;
+  z-index: 2050; /* Above the 1900 backdrop */
+  position: relative; /* Make z-index work */
+  margin-top: 15px; /* Push down to avoid top clipping */
+}
+
+.btn-icon-ios.drop-active svg {
+  width: 28px !important;
+  height: 28px !important;
 }
 
 .inactive-slash {

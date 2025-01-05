@@ -7,7 +7,7 @@
   height: 130px; 
   border-radius: 16px;
   overflow: hidden; 
-  z-index: 1500; /* Increased to be above almost everything */
+  z-index: 1500; 
   border: 3px solid var(--color-primary); 
   box-shadow: 0 8px 30px rgba(0,0,0,0.2);
   background: black;
@@ -17,9 +17,28 @@
 }
 
 .apple-gesture-preview.dragging {
+  z-index: 2100;
   transition: none !important;
   box-shadow: 0 12px 40px rgba(0,0,0,0.3);
   opacity: 0.9;
+}
+
+.dragging-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 1900;
+  pointer-events: none;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .pip-drag-handle {
