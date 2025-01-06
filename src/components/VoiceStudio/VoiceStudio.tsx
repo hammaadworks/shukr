@@ -184,10 +184,11 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
     }
   }, [lastRecordedBlob, isRecording, recordingState]);
 
-  // Auto-play when buffer is ready
+  // Auto-play when buffer is ready (with 500ms loop delay)
   useEffect(() => {
     if (recordingState === 'reviewing' && audioBuffer && !isPlaying) {
-      setTimeout(() => playReviewAudio(), 0);
+      const timer = setTimeout(() => playReviewAudio(), 1000);
+      return () => clearTimeout(timer);
     }
   }, [recordingState, audioBuffer, isPlaying, playReviewAudio]);
 
@@ -280,6 +281,11 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
   const progressPercent = Math.round((recordedCount / totalWords) * 100) || 0;
   const isCurrentRecorded = currentWord && recordedKeys.some(k => k.startsWith(`${activeProfile}_`) && k.includes(currentWord.id));
 
+  const handleTrimChange = useCallback((s: number, e: number) => {
+    setTrimStart(s);
+    setTrimEnd(e);
+  }, []);
+
   return (
     <div className="voice-studio-fullscreen" dir="ltr">
       <main className="studio-main-brand">
@@ -336,7 +342,8 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
                     {recordingState === 'reviewing' ? (
                       <AudioTrimmer 
                           audioBuffer={audioBuffer}
-                          onTrimChange={(s, e) => { setTrimStart(s); setTrimEnd(e); }}
+                          onTrimChange={handleTrimChange}
+                          onDragStart={stopReviewAudio}
                           color="var(--color-primary)"
                           playbackProgress={playbackProgress}
                       />

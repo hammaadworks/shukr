@@ -4,6 +4,8 @@ import { getWaveformData } from '../../lib/audioUtils';
 interface AudioTrimmerProps {
   audioBuffer: AudioBuffer | null;
   onTrimChange: (start: number, end: number) => void;
+  onDragStart?: () => void;
+  onDragEnd?: () => void;
   color?: string;
   playbackProgress?: number; // 0 to 1
 }
@@ -11,30 +13,30 @@ interface AudioTrimmerProps {
 export const AudioTrimmer: React.FC<AudioTrimmerProps> = ({ 
   audioBuffer, 
   onTrimChange,
+  onDragStart,
+  onDragEnd,
   color = '#ff3b30',
   playbackProgress = 0
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [waveData, setWaveData] = useState<number[]>([]);
-  const [trimStart, setTrimStart] = useState(0); // 0 to 1
-  const [trimEnd, setTrimEnd] = useState(1); // 0 to 1
-  const [isDragging, setIsDragging] = useState<'start' | 'end' | null>(null);
+  
+  // Use REFS for ALL drag logic to ensure 0ms latency and no stale closures
+  const trimRef = useRef({ start: 0, end: 1 });
+  const [displayTrim, setDisplayTrim] = useState({ start: 0, end: 1 });
+  const draggingRef = useRef<'start' | 'end' | null>(null);
+  const dragOffsetRef = useRef(0);
 
   useEffect(() => {
     if (audioBuffer) {
       const data = getWaveformData(audioBuffer, 100);
-      setTimeout(() => {
-        setWaveData(data);
-        setTrimStart(0);
-        setTrimEnd(1);
-      }, 0);
+      setWaveData(data);
+      trimRef.current = { start: 0, end: 1 };
+      setDisplayTrim({ start: 0, end: 1 });
+      onTrimChange(0, 1);
     }
-  }, [audioBuffer]);
-
-  useEffect(() => {
-    onTrimChange(trimStart, trimEnd);
-  }, [trimStart, trimEnd, onTrimChange]);
+  }, [audioBuffer, onTrimChange]);
 
   const drawWaveform = useCallback(() => {
     const canvas = canvasRef.current;
@@ -42,33 +44,33 @@ export const AudioTrimmer: React.FC<AudioTrimmerProps> = ({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Handle high DPI displays
     const dpr = window.devicePixelRatio || 1;
     const rect = canvas.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return;
+
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
     ctx.scale(dpr, dpr);
 
     const width = rect.width;
     const height = rect.height;
-
     ctx.clearRect(0, 0, width, height);
 
     const barWidth = (width / waveData.length) * 0.8;
     const gap = (width / waveData.length) * 0.2;
     let x = 0;
 
+    const { start, end } = trimRef.current;
+
     for (let i = 0; i < waveData.length; i++) {
       const barHeight = waveData[i] * height * 0.9;
       const yPos = (height - barHeight) / 2;
-      
       const normalizedX = x / width;
       
-      // Determine if bar is within trim selection
-      if (normalizedX >= trimStart && normalizedX <= trimEnd) {
+      if (normalizedX >= start && normalizedX <= end) {
          ctx.fillStyle = color;
       } else {
-         ctx.fillStyle = '#e5e5ea'; // Disabled color
+         ctx.fillStyle = '#e5e5ea';
       }
 
       ctx.beginPath();
@@ -79,75 +81,106 @@ export const AudioTrimmer: React.FC<AudioTrimmerProps> = ({
       }
       ctx.fill();
 
-      // Playback progress indicator
-      if (playbackProgress > 0 && normalizedX <= playbackProgress && normalizedX >= trimStart && normalizedX <= trimEnd) {
+      if (playbackProgress > 0 && normalizedX <= playbackProgress && normalizedX >= start && normalizedX <= end) {
          ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
          ctx.fill();
       }
 
       x += barWidth + gap;
     }
-  }, [waveData, trimStart, trimEnd, color, playbackProgress]);
+  }, [waveData, color, playbackProgress]);
 
   useEffect(() => {
     drawWaveform();
-  }, [drawWaveform]);
+  }, [drawWaveform, displayTrim]);
 
-  // Drag logic
+  // Use raw DOM listeners on window for the most robust dragging possible
+  useEffect(() => {
+    const handleMove = (e: PointerEvent) => {
+      if (!draggingRef.current || !containerRef.current) return;
+      
+      const rect = containerRef.current.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) - dragOffsetRef.current;
+      const normalizedX = Math.max(0, Math.min(1, pos / rect.width));
+
+      if (draggingRef.current === 'start') {
+        const newStart = Math.min(normalizedX, trimRef.current.end - 0.05);
+        trimRef.current.start = newStart;
+        setDisplayTrim({ ...trimRef.current });
+      } else {
+        const newEnd = Math.max(normalizedX, trimRef.current.start + 0.05);
+        trimRef.current.end = newEnd;
+        setDisplayTrim({ ...trimRef.current });
+      }
+    };
+
+    const handleUp = () => {
+      if (draggingRef.current) {
+        onTrimChange(trimRef.current.start, trimRef.current.end);
+        draggingRef.current = null;
+        onDragEnd?.();
+      }
+    };
+
+    window.addEventListener('pointermove', handleMove);
+    window.addEventListener('pointerup', handleUp);
+    return () => {
+      window.removeEventListener('pointermove', handleMove);
+      window.removeEventListener('pointerup', handleUp);
+    };
+  }, [onTrimChange, onDragEnd]);
+
   const handlePointerDown = (type: 'start' | 'end') => (e: React.PointerEvent) => {
-    setIsDragging(type);
-    e.currentTarget.setPointerCapture(e.pointerId);
-  };
-
-  const handlePointerMove = (e: React.PointerEvent) => {
-    if (!isDragging || !containerRef.current) return;
+    onDragStart?.();
+    draggingRef.current = type;
     
-    const rect = containerRef.current.getBoundingClientRect();
-    let normalizedX = (e.clientX - rect.left) / rect.width;
-    normalizedX = Math.max(0, Math.min(1, normalizedX));
-
-    if (isDragging === 'start') {
-      setTrimStart(Math.min(normalizedX, trimEnd - 0.05)); // Minimum 5% gap
-    } else {
-      setTrimEnd(Math.max(normalizedX, trimStart + 0.05));
-    }
-  };
-
-  const handlePointerUp = (e: React.PointerEvent) => {
-    setIsDragging(null);
-    e.currentTarget.releasePointerCapture(e.pointerId);
+    const rect = containerRef.current!.getBoundingClientRect();
+    const currentPos = (type === 'start' ? trimRef.current.start : trimRef.current.end) * rect.width;
+    const clickPos = e.clientX - rect.left;
+    dragOffsetRef.current = clickPos - currentPos;
+    
+    e.stopPropagation();
+    // We don't need setPointerCapture because we use window listeners
   };
 
   return (
     <div 
         ref={containerRef}
         className="audio-trimmer-container"
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        onPointerCancel={handlePointerUp}
-        style={{ position: 'relative', width: '100%', height: '100%', cursor: isDragging ? 'ew-resize' : 'default' }}
+        style={{ 
+          position: 'relative', 
+          width: '100%', 
+          height: '100%', 
+          cursor: 'ew-resize',
+          touchAction: 'none',
+          userSelect: 'none',
+          WebkitUserSelect: 'none',
+          boxSizing: 'border-box'
+        }}
     >
-      <canvas 
-        ref={canvasRef} 
-        style={{ width: '100%', height: '100%' }}
-      />
-      
-      {/* Start Handle */}
-      <div 
-        className="trim-handle start-handle"
-        style={{ left: `${trimStart * 100}%` }}
-        onPointerDown={handlePointerDown('start')}
-      >
-        <div className="handle-line" />
-      </div>
+      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+          <canvas 
+            ref={canvasRef} 
+            style={{ width: '100%', height: '100%', touchAction: 'none', display: 'block' }}
+          />
+          
+          {/* Start Handle */}
+          <div 
+            className="trim-handle start-handle"
+            style={{ left: `${displayTrim.start * 100}%`, touchAction: 'none' }}
+            onPointerDown={handlePointerDown('start')}
+          >
+            <div className="handle-line" />
+          </div>
 
-      {/* End Handle */}
-      <div 
-        className="trim-handle end-handle"
-        style={{ left: `${trimEnd * 100}%` }}
-        onPointerDown={handlePointerDown('end')}
-      >
-        <div className="handle-line" />
+          {/* End Handle */}
+          <div 
+            className="trim-handle end-handle"
+            style={{ left: `${displayTrim.end * 100}%`, touchAction: 'none' }}
+            onPointerDown={handlePointerDown('end')}
+          >
+            <div className="handle-line" />
+          </div>
       </div>
     </div>
   );

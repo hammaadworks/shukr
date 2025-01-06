@@ -152,6 +152,13 @@
   width: 100%;
   max-width: clamp(160px, 30vh, 220px);
   margin: 0 auto;
+  transition: max-width 0.3s ease;
+}
+
+@media (min-height: 900px), (min-width: 540px) {
+  .word-card-wrap {
+    max-width: 320px;
+  }
 }
 
 .recorded-card {
@@ -269,6 +276,17 @@
   transform: translateX(-50%);
   cursor: ew-resize;
   z-index: 10;
+  touch-action: none; /* CRITICAL: Prevent scrolling while dragging */
+}
+
+/* Larger hit area for easier dragging on mobile */
+.trim-handle::after {
+  content: '';
+  position: absolute;
+  top: -15px;
+  bottom: -15px;
+  left: -20px;
+  right: -20px;
 }
 
 .start-handle {
