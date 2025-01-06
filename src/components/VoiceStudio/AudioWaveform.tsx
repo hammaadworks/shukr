@@ -25,14 +25,6 @@ export const AudioWaveform: React.FC<AudioWaveformProps> = ({
     if (!isRecording && !isReviewing) {
       if (animationRef.current !== null) cancelAnimationFrame(animationRef.current);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      // Draw a flat line
-      ctx.strokeStyle = '#e5e5ea';
-      ctx.lineWidth = 3;
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      ctx.moveTo(0, canvas.height / 2);
-      ctx.lineTo(canvas.width, canvas.height / 2);
-      ctx.stroke();
       return;
     }
 

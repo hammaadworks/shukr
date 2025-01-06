@@ -24,9 +24,11 @@ export const AudioTrimmer: React.FC<AudioTrimmerProps> = ({
   useEffect(() => {
     if (audioBuffer) {
       const data = getWaveformData(audioBuffer, 100);
-      setWaveData(data);
-      setTrimStart(0);
-      setTrimEnd(1);
+      setTimeout(() => {
+        setWaveData(data);
+        setTrimStart(0);
+        setTrimEnd(1);
+      }, 0);
     }
   }, [audioBuffer]);
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { 
-  X, Check, RotateCcw, Search, ChevronLeft, ChevronRight, Download, Plus, Trash2, Play, ChevronDown
+  Check, RotateCcw, Search, ChevronLeft, ChevronRight, Plus, Trash2, Play, ChevronDown
 } from 'lucide-react';
 import { useVoiceRecording } from '../../hooks/useVoiceRecording';
 import { audioStorage } from '../../lib/audioStorage';
@@ -20,13 +20,15 @@ interface VoiceStudioProps {
 
 type RecordingState = 'idle' | 'recording' | 'reviewing';
 
-export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig, onClose }) => {
+export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }) => {
   const { language } = useLanguage();
   const [activeProfile, setActiveProfile] = useState(config.activeVoiceProfile || 'default');
   const [recordedKeys, setRecordedKeys] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [recordingState, setRecordingState] = useState<RecordingState>('idle');
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasAutoNavigated, setHasAutoNavigated] = useState(false);
   
   // Modal States
   const [alertInfo, setAlertInfo] = useState<{title: string, desc: string} | null>(null);
@@ -52,15 +54,45 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig, 
 
   const { isRecording, startRecording, stopRecording, lastRecordedBlob, analyser, clearLastBlob } = useVoiceRecording();
 
+  const stopReviewAudio = useCallback(() => {
+    if (sourceNodeRef.current) {
+      try {
+        sourceNodeRef.current.stop();
+      } catch (e) {
+        // Ignore errors from stopping a source that hasn't started or already stopped
+      }
+      sourceNodeRef.current.disconnect();
+      sourceNodeRef.current = null;
+    }
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+      animationRef.current = null;
+    }
+    setIsPlaying(false);
+    setPlaybackProgress(0);
+  }, []);
+
+  const handleRedo = useCallback(() => {
+    stopReviewAudio();
+    clearLastBlob();
+    setAudioBuffer(null);
+    setRecordingState('idle');
+  }, [stopReviewAudio, clearLastBlob]);
+
   const refreshRecordedStatus = useCallback(async () => {
     const keys = await audioStorage.getAllKeys();
     setRecordedKeys(keys);
+    setIsLoaded(true);
   }, []);
 
   useEffect(() => { 
-    refreshRecordedStatus();
+    setTimeout(() => refreshRecordedStatus(), 0);
     return () => stopReviewAudio();
-  }, [refreshRecordedStatus, activeProfile]);
+  }, [refreshRecordedStatus, activeProfile, stopReviewAudio]);
+
+  useEffect(() => {
+    setTimeout(() => setHasAutoNavigated(false), 0);
+  }, [activeProfile]);
 
   const allWords = useMemo(() => {
     const categories = config.categories || [];
@@ -72,26 +104,27 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig, 
   const filteredWords = useFuzzySearch(allWords, searchQuery) as any[];
   const currentWord = filteredWords[currentIndex] || null;
 
+  useEffect(() => {
+    if (isLoaded && !hasAutoNavigated && filteredWords.length > 0) {
+      const firstUnrecorded = filteredWords.findIndex(w => !recordedKeys.some(k => k.startsWith(`${activeProfile}_`) && k.includes(w.id)));
+      if (firstUnrecorded !== -1) {
+        // Use timeout to avoid synchronous setState in effect warning
+        setTimeout(() => {
+            setCurrentIndex(firstUnrecorded);
+            setHasAutoNavigated(true);
+        }, 0);
+      } else {
+        setTimeout(() => setHasAutoNavigated(true), 0);
+      }
+    }
+  }, [isLoaded, hasAutoNavigated, filteredWords, recordedKeys, activeProfile]);
+
   const getAudioContext = () => {
     if (!audioCtxRef.current || audioCtxRef.current.state === 'closed') {
       audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
     }
     return audioCtxRef.current;
   };
-
-  const stopReviewAudio = useCallback(() => {
-    if (sourceNodeRef.current) {
-      try { sourceNodeRef.current.stop(); } catch(e) {}
-      sourceNodeRef.current.disconnect();
-      sourceNodeRef.current = null;
-    }
-    if (animationRef.current) {
-      cancelAnimationFrame(animationRef.current);
-      animationRef.current = null;
-    }
-    setIsPlaying(false);
-    setPlaybackProgress(0);
-  }, []);
 
   const playReviewAudio = useCallback(() => {
     if (!audioBuffer) return;
@@ -154,9 +187,9 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig, 
   // Auto-play when buffer is ready
   useEffect(() => {
     if (recordingState === 'reviewing' && audioBuffer && !isPlaying) {
-      playReviewAudio();
+      setTimeout(() => playReviewAudio(), 0);
     }
-  }, [recordingState, audioBuffer]);
+  }, [recordingState, audioBuffer, isPlaying, playReviewAudio]);
 
   const handleNext = useCallback(() => {
     stopReviewAudio();
@@ -181,13 +214,6 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig, 
     refreshRecordedStatus();
     handleNext();
   }, [currentWord, audioBuffer, trimStart, trimEnd, activeProfile, language, refreshRecordedStatus, handleNext]);
-
-  const handleRedo = useCallback(() => {
-    stopReviewAudio();
-    clearLastBlob();
-    setAudioBuffer(null);
-    setRecordingState('idle');
-  }, [stopReviewAudio, clearLastBlob]);
 
   const toggleRecording = useCallback(async () => {
     if (recordingState === 'idle') {
@@ -256,19 +282,6 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig, 
 
   return (
     <div className="voice-studio-fullscreen" dir="ltr">
-      <header className="studio-header-brand">
-        <button className="btn-icon large-icon" onClick={onClose} style={{ color: 'var(--color-primary)', background: 'transparent', border: 'none', cursor: 'pointer' }}>
-          <ChevronLeft size={36} strokeWidth={2.5} />
-        </button>
-        <div className="brand-progress-container">
-          <div className="progress-text-brand">{recordedCount} / {totalWords} ({progressPercent}%) COMPLETED</div>
-          <div className="progress-bar-bg-brand">
-            <div className="progress-bar-fill-brand" style={{ width: `${progressPercent}%` }}></div>
-          </div>
-        </div>
-        <div style={{ width: 36 }}></div>
-      </header>
-
       <main className="studio-main-brand">
         <div className="studio-profile-row">
             <button 
@@ -279,15 +292,22 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig, 
                 <span>{currentVoiceName}</span>
                 <ChevronDown size={20} color="var(--color-primary)" />
             </button>
-            <button className="btn-icon large-icon" style={{background: 'var(--color-primary)', color: 'white', width: 56, height: 56, borderRadius: 16}} onClick={handleAddProfile} title="New Profile"><Plus size={24}/></button>
+            <button className="btn-icon large-icon" style={{background: 'var(--color-primary)', color: 'white', width: 44, height: 44, borderRadius: 12}} onClick={handleAddProfile} title="New Profile"><Plus size={20}/></button>
             {activeProfile !== 'default' && (
-                <button className="btn-icon large-icon" style={{background: '#ffefee', color: 'var(--color-danger)', border: '1px solid rgba(220, 38, 38, 0.1)', width: 56, height: 56, borderRadius: 16}} onClick={handleDeleteProfile} title="Delete Profile"><Trash2 size={24}/></button>
+                <button className="btn-icon large-icon" style={{background: '#ffefee', color: 'var(--color-danger)', border: '1px solid rgba(220, 38, 38, 0.1)', width: 44, height: 44, borderRadius: 12}} onClick={handleDeleteProfile} title="Delete Profile"><Trash2 size={20}/></button>
             )}
+        </div>
+
+        <div className="brand-progress-container" style={{ width: '100%', maxWidth: '480px' }}>
+          <div className="progress-text-brand">{recordedCount} / {totalWords} ({progressPercent}%) COMPLETED</div>
+          <div className="progress-bar-bg-brand">
+            <div className="progress-bar-fill-brand" style={{ width: `${progressPercent}%` }}></div>
+          </div>
         </div>
 
         <div className="studio-search-row">
           <div className="studio-search-wrap-brand">
-            <Search size={22} color="var(--color-primary)" strokeWidth={2.5} />
+            <Search size={20} color="var(--color-primary)" strokeWidth={2.5} />
             <input 
                 type="text" 
                 placeholder="Find a word..." 
@@ -311,22 +331,24 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig, 
               </div>
               
               <div className="record-center-brand">
-                <div className="waveform-container-brand" style={{ padding: recordingState === 'reviewing' ? '0 24px' : '0 16px' }}>
-                  {recordingState === 'reviewing' ? (
-                     <AudioTrimmer 
-                        audioBuffer={audioBuffer}
-                        onTrimChange={(s, e) => { setTrimStart(s); setTrimEnd(e); }}
-                        color="var(--color-primary)"
-                        playbackProgress={playbackProgress}
-                     />
-                  ) : (
-                    <AudioWaveform 
-                        analyser={analyser} 
-                        isRecording={recordingState === 'recording'} 
-                        color={recordingState === 'recording' ? 'var(--color-danger)' : 'var(--color-primary)'} 
-                    />
-                  )}
-                </div>
+                {recordingState !== 'idle' && (
+                  <div className="waveform-container-brand" style={{ padding: recordingState === 'reviewing' ? '0 24px' : '0 16px' }}>
+                    {recordingState === 'reviewing' ? (
+                      <AudioTrimmer 
+                          audioBuffer={audioBuffer}
+                          onTrimChange={(s, e) => { setTrimStart(s); setTrimEnd(e); }}
+                          color="var(--color-primary)"
+                          playbackProgress={playbackProgress}
+                      />
+                    ) : (
+                      <AudioWaveform 
+                          analyser={analyser} 
+                          isRecording={recordingState === 'recording'} 
+                          color={recordingState === 'recording' ? 'var(--color-danger)' : 'var(--color-primary)'} 
+                      />
+                    )}
+                  </div>
+                )}
 
                 {recordingState === 'reviewing' ? (
                   <div className="review-actions-brand">
@@ -341,13 +363,36 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig, 
                     </button>
                   </div>
                 ) : (
-                  <button 
-                    className={`record-btn-brand ${recordingState === 'recording' ? 'recording' : ''} ${isCurrentRecorded ? 'recorded' : ''}`}
-                    onClick={toggleRecording}
-                  >
-                    <span className="mic-emoji">🎙️</span>
-                    <span className="record-label">{recordingState === 'recording' ? 'STOP' : 'RECORD'}</span>
-                  </button>
+                  <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+                    {isCurrentRecorded && recordingState === 'idle' && (
+                      <button 
+                        className="record-btn-brand"
+                        onClick={async () => {
+                          if (!currentWord) return;
+                          const storageKey = `${activeProfile}_${currentWord.id}_${language}`;
+                          const blob = await audioStorage.get(storageKey);
+                          if (blob) {
+                            const audioUrl = URL.createObjectURL(blob);
+                            const audio = new Audio(audioUrl);
+                            audio.play();
+                          }
+                        }}
+                        style={{ background: '#f2f2f7', color: 'var(--color-primary)', borderColor: '#f2f2f7', width: 'clamp(90px, 15vh, 120px)', height: 'clamp(90px, 15vh, 120px)' }}
+                        title="Play Current Recording"
+                      >
+                        <Play size={36} strokeWidth={2.5} fill="var(--color-primary)" />
+                        <span className="record-label" style={{ marginTop: 4 }}>PLAY</span>
+                      </button>
+                    )}
+                    <button 
+                      className={`record-btn-brand ${recordingState === 'recording' ? 'recording' : ''} ${isCurrentRecorded ? 'recorded' : ''}`}
+                      onClick={toggleRecording}
+                      style={isCurrentRecorded && recordingState === 'idle' ? { width: 'clamp(90px, 15vh, 120px)', height: 'clamp(90px, 15vh, 120px)' } : {}}
+                    >
+                      <span className="mic-emoji" style={isCurrentRecorded && recordingState === 'idle' ? { fontSize: 'clamp(1.5rem, 4vh, 2.2rem)' } : {}}>🎙️</span>
+                      <span className="record-label">{recordingState === 'recording' ? 'STOP' : (isCurrentRecorded ? 'RERECORD' : 'RECORD')}</span>
+                    </button>
+                  </div>
                 )}
               </div>
 
