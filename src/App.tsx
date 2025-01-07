@@ -333,7 +333,7 @@ const AppContent = () => {
       isPrompt: true,
       onClick: () => {
         setAddingWord({
-          id: `word_${Date.now()}`,
+          id: `word_${crypto.randomUUID()}`,
           en: '',
           ur: '',
           roman: '',
@@ -349,7 +349,7 @@ const AppContent = () => {
     const res = await translator.translate(searchQuery);
 
     setAddingWord({
-      id: `word_${Date.now()}`,
+      id: `word_${crypto.randomUUID()}`,
       en: res?.en || searchQuery,
       ur: res?.ur || '',
       roman: res?.roman || '',
