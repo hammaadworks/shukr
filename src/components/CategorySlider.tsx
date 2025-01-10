@@ -40,8 +40,8 @@ export const CategorySlider: React.FC<CategorySliderProps> = ({
               <Icon size={32} />
             </div>
             <div className="action-text-wrap">
-               <span className="action-ur">{cat.label_ur}</span>
-               <span className="action-en">{cat.label_en}</span>
+               <span className="action-ur">{cat.label_primary || cat.label_ur}</span>
+               <span className="action-en">{cat.label_secondary || cat.label_en}</span>
             </div>
           </button>
         );

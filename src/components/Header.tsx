@@ -1,9 +1,10 @@
 import React from 'react';
-import {Camera, Megaphone, ALargeSmall, Settings, X} from 'lucide-react';
+import {Camera, Megaphone, Settings, X} from 'lucide-react';
 import {ShukrButton} from './ShukrButton';
 import {useAudio} from '../hooks/useAudio';
 import {useLanguage} from '../hooks/useLanguage';
 import {GestureLegend} from './GestureLegend';
+import { type GestureDefinition } from '../recognition/gestures/types';
 
 interface HeaderProps {
     onOpenSettings: (tab?: string) => void;
@@ -17,10 +18,12 @@ interface HeaderProps {
     isSentenceBuilderActive: boolean;
     toggleSentenceBuilder: () => void;
     lastGesture: string;
-    isUrdu: boolean;
+    isPrimary: boolean;
     focusedIndex: number;
     showCloseDropzone?: boolean;
     cameraButtonRef?: React.RefObject<HTMLButtonElement | null>;
+    gestureMappings?: Record<string, GestureDefinition>;
+    onLongPressGesture?: (gesture: GestureDefinition) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -34,18 +37,21 @@ export const Header: React.FC<HeaderProps> = ({
                                                   isSentenceBuilderActive,
                                                   toggleSentenceBuilder,
                                                   lastGesture,
-                                                  isUrdu,
+                                                  isPrimary,
                                                   focusedIndex,
                                                   showCloseDropzone = false,
-                                                  cameraButtonRef
+                                                  cameraButtonRef,
+                                                  gestureMappings = {},
+                                                  onLongPressGesture = () => {}
                                               }) => {
     const {playClick} = useAudio();
-    const {setLanguage, language} = useLanguage();
+    const {language, setLanguage, primaryLanguage, secondaryLanguage} = useLanguage();
 
     const toggleLang = () => {
         playClick();
         if (navigator.vibrate) navigator.vibrate(30);
-        setLanguage(language === 'ur' ? 'en' : 'ur');
+        const nextLang = language === primaryLanguage ? secondaryLanguage : primaryLanguage;
+        setLanguage(nextLang);
     };
 
     return (<header className="apple-header consistent-header" dir="ltr">
@@ -109,8 +115,12 @@ export const Header: React.FC<HeaderProps> = ({
                         onClick={toggleLang}
                         aria-label="Switch Language"
                     >
-                        <div className={`lang-toggle-container ${isUrdu ? 'is-ur' : 'is-en'}`}>
-                            <ALargeSmall size={22} className="lang-icon-mini"/>
+                        <div className="lang-init-display" style={{ 
+                            fontSize: '0.9rem', 
+                            fontWeight: 800, 
+                            color: 'var(--color-primary)'
+                        }}>
+                            {language.toUpperCase()}
                         </div>
                     </button>
                 </div>
@@ -129,6 +139,6 @@ export const Header: React.FC<HeaderProps> = ({
                     </button>
                 </div>
             </div>
-            {isTrackingEnabled && (<GestureLegend lastGesture={lastGesture}/>)}
+            {isTrackingEnabled && (<GestureLegend lastGesture={lastGesture} mappings={gestureMappings} onLongPress={onLongPressGesture}/>)}
         </header>);
 };

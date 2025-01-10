@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { 
-  Check, RotateCcw, Search, ChevronLeft, ChevronRight, Plus, Trash2, Play, ChevronDown
+  Check, RotateCcw, Search, ChevronLeft, ChevronRight, Plus, Trash2, Play, ChevronDown, Edit2
 } from 'lucide-react';
 import { useVoiceRecording } from '../../hooks/useVoiceRecording';
 import { audioStorage } from '../../lib/audioStorage';
-import { useLanguage } from '../../hooks/useLanguage';
+import { useLanguage, SUPPORTED_LANGS } from '../../hooks/useLanguage';
 import { useFuzzySearch } from '../../hooks/useFuzzySearch';
 import { AudioWaveform } from './AudioWaveform';
 import { AudioTrimmer } from './AudioTrimmer';
@@ -21,7 +21,8 @@ interface VoiceStudioProps {
 type RecordingState = 'idle' | 'recording' | 'reviewing';
 
 export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }) => {
-  const { language } = useLanguage();
+  const { language: globalLanguage } = useLanguage();
+  const [recordingLanguage, setRecordingLanguage] = useState(globalLanguage);
   const [activeProfile, setActiveProfile] = useState(config.activeVoiceProfile || 'default');
   const [recordedKeys, setRecordedKeys] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -35,12 +36,15 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
   const [confirmInfo, setConfirmInfo] = useState<{title: string, desc: string, isDanger?: boolean, action: () => void} | null>(null);
   const [promptInfo, setPromptInfo] = useState<{title: string, placeholder?: string, defaultValue?: string, action: (val: string) => void} | null>(null);
   const [showVoiceSelect, setShowVoiceSelect] = useState(false);
+  const [showLanguageSelect, setShowLanguageSelect] = useState(false);
 
   const voiceOptions = [
     { value: 'default', label: 'System Default' },
     ...(config.voiceProfiles || []).map((p: any) => ({ value: p.id, label: p.name }))
   ];
   const currentVoiceName = voiceOptions.find(o => o.value === activeProfile)?.label || 'System Default';
+
+  const languageOptions = SUPPORTED_LANGS.map(l => ({ value: l.code, label: l.label }));
 
   const audioCtxRef = useRef<AudioContext | null>(null);
   const sourceNodeRef = useRef<AudioBufferSourceNode | null>(null);
@@ -88,11 +92,11 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
   useEffect(() => { 
     setTimeout(() => refreshRecordedStatus(), 0);
     return () => stopReviewAudio();
-  }, [refreshRecordedStatus, activeProfile, stopReviewAudio]);
+  }, [refreshRecordedStatus, activeProfile, recordingLanguage, stopReviewAudio]);
 
   useEffect(() => {
     setTimeout(() => setHasAutoNavigated(false), 0);
-  }, [activeProfile]);
+  }, [activeProfile, recordingLanguage]);
 
   const allWords = useMemo(() => {
     const categories = config.categories || [];
@@ -106,7 +110,7 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
 
   useEffect(() => {
     if (isLoaded && !hasAutoNavigated && filteredWords.length > 0) {
-      const firstUnrecorded = filteredWords.findIndex(w => !recordedKeys.some(k => k.startsWith(`${activeProfile}_`) && k.includes(w.id)));
+      const firstUnrecorded = filteredWords.findIndex(w => !recordedKeys.some(k => k === `${activeProfile}_${w.id}_${recordingLanguage}`));
       if (firstUnrecorded !== -1) {
         // Use timeout to avoid synchronous setState in effect warning
         setTimeout(() => {
@@ -117,7 +121,7 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
         setTimeout(() => setHasAutoNavigated(true), 0);
       }
     }
-  }, [isLoaded, hasAutoNavigated, filteredWords, recordedKeys, activeProfile]);
+  }, [isLoaded, hasAutoNavigated, filteredWords, recordedKeys, activeProfile, recordingLanguage]);
 
   const getAudioContext = () => {
     if (!audioCtxRef.current || audioCtxRef.current.state === 'closed') {
@@ -210,11 +214,11 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
     const trimmedBuffer = trimAudioBuffer(audioBuffer, ctx, trimStart * duration, trimEnd * duration);
     const finalBlob = audioBufferToWavBlob(trimmedBuffer);
 
-    const storageKey = `${activeProfile}_${currentWord.id}_${language}`;
+    const storageKey = `${activeProfile}_${currentWord.id}_${recordingLanguage}`;
     await audioStorage.set(storageKey, finalBlob);
     refreshRecordedStatus();
     handleNext();
-  }, [currentWord, audioBuffer, trimStart, trimEnd, activeProfile, language, refreshRecordedStatus, handleNext]);
+  }, [currentWord, audioBuffer, trimStart, trimEnd, activeProfile, recordingLanguage, refreshRecordedStatus, handleNext]);
 
   const toggleRecording = useCallback(async () => {
     if (recordingState === 'idle') {
@@ -242,6 +246,26 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
             updateConfig({ ...config, voiceProfiles: newProfiles, activeVoiceProfile: id });
             setActiveProfile(id);
         }
+    });
+  };
+
+  const handleRenameProfile = () => {
+    if (activeProfile === 'default') {
+      setAlertInfo({ title: "Cannot Rename", desc: "You cannot rename the system default profile." });
+      return;
+    }
+    const profile = (config.voiceProfiles || []).find((p: any) => p.id === activeProfile);
+    if (!profile) return;
+
+    setPromptInfo({
+      title: "Rename Profile",
+      placeholder: "e.g. New Name",
+      defaultValue: profile.name,
+      action: (newName) => {
+        if (!newName.trim()) return;
+        const newProfiles = config.voiceProfiles.map((p: any) => p.id === activeProfile ? { ...p, name: newName } : p);
+        updateConfig({ ...config, voiceProfiles: newProfiles });
+      }
     });
   };
 
@@ -279,7 +303,7 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
   const totalWords = allWords.length;
   const recordedCount = recordedKeys.filter(k => k.startsWith(`${activeProfile}_`)).length;
   const progressPercent = Math.round((recordedCount / totalWords) * 100) || 0;
-  const isCurrentRecorded = currentWord && recordedKeys.some(k => k.startsWith(`${activeProfile}_`) && k.includes(currentWord.id));
+  const isCurrentRecorded = currentWord && recordedKeys.some(k => k === `${activeProfile}_${currentWord.id}_${recordingLanguage}`);
 
   const handleTrimChange = useCallback((s: number, e: number) => {
     setTrimStart(s);
@@ -289,19 +313,109 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
   return (
     <div className="voice-studio-fullscreen" dir="ltr">
       <main className="studio-main-brand">
-        <div className="studio-profile-row">
+        <div className="studio-profile-row" style={{ 
+            display: 'grid', 
+            gridTemplateColumns: '5fr 2fr 1fr 1fr 1fr', 
+            gap: '8px', 
+            width: '100%', 
+            maxWidth: '520px',
+            height: 'clamp(54px, 7vh, 64px)',
+            marginBottom: 'clamp(8px, 2vh, 20px)'
+        }}>
             <button 
                 className="studio-profile-select"
-                style={{ textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+                style={{ textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', height: '100%', padding: '0 12px' }}
                 onClick={() => setShowVoiceSelect(true)}
             >
-                <span>{currentVoiceName}</span>
-                <ChevronDown size={20} color="var(--color-primary)" />
+                <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{currentVoiceName}</span>
+                <ChevronDown size={18} color="var(--color-primary)" />
             </button>
-            <button className="btn-icon large-icon" style={{background: 'var(--color-primary)', color: 'white', width: 44, height: 44, borderRadius: 12}} onClick={handleAddProfile} title="New Profile"><Plus size={20}/></button>
-            {activeProfile !== 'default' && (
-                <button className="btn-icon large-icon" style={{background: '#ffefee', color: 'var(--color-danger)', border: '1px solid rgba(220, 38, 38, 0.1)', width: 44, height: 44, borderRadius: 12}} onClick={handleDeleteProfile} title="Delete Profile"><Trash2 size={20}/></button>
-            )}
+
+            {/* Language Selection Button */}
+            <button 
+                className="studio-lang-select"
+                onClick={() => setShowLanguageSelect(true)}
+                style={{ 
+                    background: 'var(--color-primary)', 
+                    color: 'white', 
+                    borderRadius: 12, 
+                    fontSize: '0.9rem', 
+                    fontWeight: 800,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 6,
+                    border: 'none',
+                    cursor: 'pointer',
+                    height: '100%'
+                }}
+            >
+                {recordingLanguage.toUpperCase()}
+                <ChevronDown size={14} color="white" />
+            </button>
+
+            {/* Edit Profile Name */}
+            <button 
+                className="btn-icon" 
+                style={{
+                    background: '#f2f2f7', 
+                    color: activeProfile === 'default' ? '#ccc' : 'var(--color-primary)', 
+                    width: '100%', 
+                    height: '100%', 
+                    borderRadius: 12,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: 'none',
+                    cursor: activeProfile === 'default' ? 'not-allowed' : 'pointer'
+                }} 
+                onClick={handleRenameProfile} 
+                title="Rename Profile"
+                disabled={activeProfile === 'default'}
+            >
+                <Edit2 size={18}/>
+            </button>
+
+            <button 
+                className="btn-icon" 
+                style={{
+                    background: 'var(--color-primary)', 
+                    color: 'white', 
+                    width: '100%', 
+                    height: '100%', 
+                    borderRadius: 12,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: 'none',
+                    cursor: 'pointer'
+                }} 
+                onClick={handleAddProfile} 
+                title="New Profile"
+            >
+                <Plus size={20}/>
+            </button>
+            
+            <button 
+                className="btn-icon" 
+                style={{
+                    background: activeProfile === 'default' ? '#f2f2f7' : '#ffefee', 
+                    color: activeProfile === 'default' ? '#ccc' : 'var(--color-danger)', 
+                    border: activeProfile === 'default' ? 'none' : '1px solid rgba(220, 38, 38, 0.1)', 
+                    width: '100%', 
+                    height: '100%', 
+                    borderRadius: 12,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: activeProfile === 'default' ? 'not-allowed' : 'pointer'
+                }} 
+                onClick={handleDeleteProfile} 
+                title="Delete Profile"
+                disabled={activeProfile === 'default'}
+            >
+                <Trash2 size={18}/>
+            </button>
         </div>
 
         <div className="brand-progress-container" style={{ width: '100%', maxWidth: '480px' }}>
@@ -333,6 +447,7 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
                     onClick={() => {}} 
                     variant={1} 
                     className={isCurrentRecorded ? 'recorded-card' : ''}
+                    languageOverride={recordingLanguage}
                 />
               </div>
               
@@ -376,7 +491,7 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
                         className="record-btn-brand"
                         onClick={async () => {
                           if (!currentWord) return;
-                          const storageKey = `${activeProfile}_${currentWord.id}_${language}`;
+                          const storageKey = `${activeProfile}_${currentWord.id}_${recordingLanguage}`;
                           const blob = await audioStorage.get(storageKey);
                           if (blob) {
                             const audioUrl = URL.createObjectURL(blob);
@@ -460,6 +575,18 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
           onSelect={(val) => {
               setActiveProfile(val);
               updateConfig({ ...config, activeVoiceProfile: val });
+              handleRedo();
+          }}
+      />
+
+      <SelectDialog
+          isOpen={showLanguageSelect}
+          onClose={() => setShowLanguageSelect(false)}
+          title="Select Language"
+          options={languageOptions}
+          selectedValue={recordingLanguage}
+          onSelect={(val) => {
+              setRecordingLanguage(val);
               handleRedo();
           }}
       />
