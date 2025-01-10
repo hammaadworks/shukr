@@ -41,8 +41,9 @@ A canvas-based communication module.
 
 ### E. Data Portability & Storage
 *   **IndexedDB (Dexie):** Primary persistent storage for all user-generated content.
-*   **Universe Porter (`/src/lib/universePorter.ts`):** Handles exporting/importing the entire app state as a JSON bundle.
-*   **Boot Data (`src/boot_data.json`):** The default seed data used to initialize the application.
+*   **Universe Porter (`/src/lib/universePorter.ts`):** Handles exporting/importing the entire app state as a JSON bundle, including language pair preferences.
+*   **Federated Data Universe:** The app's "Universe" is split into `core` (structure) and `i18n` (language packs) inside `src/lib/data/`.
+*   **Data Assembler (`/src/lib/dataAssembler.ts`):** Dynamically stitches the core structure with selected Primary/Secondary language packs during boot.
 
 ---
 
@@ -50,14 +51,14 @@ A canvas-based communication module.
 
 ```text
 App.tsx (Global State & Gesture Engine)
-├── Header.tsx (Settings & Status)
+├── Header.tsx (Language Toggle & Settings)
 ├── SentenceBuilder.tsx (Current Message)
-├── PredictionScroller.tsx (The "Naani Bar")
+├── WordPredictions.tsx (The "Naani Bar")
 ├── Main Grid (Conditional Rendering)
 │   ├── WordGrid.tsx (Standard AAC)
 │   ├── CategorySlider.tsx (Navigation)
 │   └── DoodlePad.tsx (Sketch Mode)
-├── VoiceStudio.tsx (Recordings)
+├── VoiceStudio.tsx (Language-Aware Recordings)
 └── Footer.tsx (Quick Actions)
 ```
 

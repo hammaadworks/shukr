@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'icons.svg', 'boot_data.json'],
+      includeAssets: ['favicon.svg', 'icons.svg', 'src/lib/data/core/*.json', 'src/lib/data/i18n/*.json'],
       manifest: {
         name: 'Shukr - Adaptive AAC',
         short_name: 'Shukr',

@@ -78,9 +78,26 @@ The **Universe Porter** is Shukr's data portability system. It allows you to mov
 
 ---
 
-## 🎨 Styling & Themes
+## 🌍 Global Customization & Localization
 
-Shukr uses **CSS Modules** for styling. If you want to change the look and feel (colors, fonts, sizes):
-1.  Navigate to `src/styles/`.
-2.  **Tokens:** Use `tokens.css` to change global variables like primary colors, spacing, and border radiuses.
-3.  **Nastaliq:** If you want to use a different Urdu font, update the `@font-face` declaration in `base.css`.
+Shukr was born out of a desire to help those with speech challenges worldwide. While it defaults to Urdu and English, it is designed to be adapted for any language, script, or cultural context.
+
+### Supporting a New Language
+To add a third language (e.g., Arabic, Spanish, or Bengali), a few code adjustments are required:
+
+1.  **Define the Language:** In `src/hooks/useLanguage.tsx`, update the `Language` type:
+    ```typescript
+    type Language = 'ur' | 'en' | 'ar'; // Adding Arabic
+    ```
+2.  **Update Provider:** Add logic in `LanguageProvider` to handle the new language's direction (RTL/LTR).
+3.  **UI Toggle:** Update the `toggleLang` function in `src/components/Header.tsx` to cycle through the available languages instead of a binary switch.
+4.  **Data Schema:** Ensure your `boot_data.json` includes the new language keys (e.g., `label_ar`, `text_ar`).
+
+### Regional Content Adaptation
+AAC is most effective when it uses familiar symbols and phrases.
+*   **Categories:** Replace existing categories in `boot_data.json` with ones relevant to your region (e.g., local foods, family titles like 'Abuelo' or 'Dada').
+*   **Spiritual/Cultural Quotes:** Update the `quotes` array in `boot_data.json` with verses or sayings meaningful to the user's culture or faith.
+*   **Custom Icons:** Use the `icon` field in categories to select from the [Lucide Icon library](https://lucide.dev/icons) used by Shukr.
+
+### Open Source Contribution
+If you adapt Shukr for a new language or region, please consider contributing your configuration or code back to the community! This helps make communication accessible for everyone, everywhere.
