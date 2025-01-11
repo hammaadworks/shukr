@@ -4,12 +4,14 @@ import { LanguageProvider, useLanguage } from './hooks/useLanguage';
 import { useAudio } from './hooks/useAudio';
 import { ConfigProvider, useAppConfig } from './hooks/useAppConfig';
 import { useCameraGestures } from './hooks/useCameraGestures';
-import { type GestureAction } from './recognition/gestures/types';
+import { GestureEditModal } from './components/modals/GestureEditModal';
+import { type GestureDefinition, type GestureAction } from './recognition/gestures/types';
 import { useLogger } from './hooks/useLogger';
 import { useFuzzySearch } from './hooks/useFuzzySearch';
 import { wordNetwork } from './lib/wordNetwork';
 import { translator } from './lib/translator';
 import { universeDb } from './lib/universeDb';
+import { audioStorage } from './lib/audioStorage';
 
 // Extracted Components
 import { SplashScreen } from './components/SplashScreen';
@@ -25,19 +27,31 @@ import { DoodlePad } from './components/Doodle/DoodlePad';
 import { CameraPreview } from './components/CameraPreview';
 import { ScreenFlashes } from './components/ScreenFlashes';
 import { WordAddModal } from './components/WordAddModal';
+import { WordEditor } from './components/WordEditor';
+
+import { LandingPage } from './components/LandingPage';
 
 const AppContent = () => {
-  const { language, isUrdu, setLanguage } = useLanguage();
+  const { language, setLanguage, primaryLanguage, secondaryLanguage, isPrimary } = useLanguage();
   const { speak, speakSequence, playClick, currentlyPlayingId } = useAudio();
   const { logEvent } = useLogger();
   const { config, updateConfig, isLoading: isConfigLoading } = useAppConfig();
 
+  const [editingWord, setEditingWord] = useState<any | null>(null);
+
+  const isPWA = useMemo(() => {
+    return window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone === true;
+  }, []);
+
+  const [isAppStarted, setIsAppStarted] = useState(() => {
+    return localStorage.getItem('shukr_app_started') === 'true' || isPWA;
+  });
   const [currentCategory, setCurrentCategory] = useState<string | null>(null);
   const [sentence, setSentence] = useState<any[]>([]);
   const [lastGesture, setLastGesture] = useState<string>('');
   const [focusedIndex, setFocusedIndex] = useState<number>(-1);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [showSplash, setShowSplash] = useState(true);
+  const [showSplash, setShowSplash] = useState(isAppStarted); 
   const [addingWord, setAddingWord] = useState<any | null>(null);
   const [hasUnsyncedChanges, setHasUnsyncedChanges] = useState(false);
   const [route, setRoute] = useState(window.location.hash || '#');
@@ -53,8 +67,9 @@ const AppContent = () => {
   const [displayLimit, setDisplayLimit] = useState(24);
   const [randomQuote, setRandomQuote] = useState<any>(null);
   const [isDraggingPreview, setIsDraggingPreview] = useState(false);
+  const [editingGesture, setEditingGesture] = useState<GestureDefinition | null>(null);
 
-  const actionHandlerRef = useRef<(action: any) => void>(() => {});
+  const actionHandlerRef = useRef<(gestureKey: string) => void>(() => {});
   const builderScrollRef = useRef<HTMLDivElement>(null);
   const mainContentRef = useRef<HTMLDivElement>(null);
   const cameraButtonRef = useRef<HTMLButtonElement>(null);
@@ -63,136 +78,40 @@ const AppContent = () => {
     (window as any)._showSOS = () => setShowSOS(true);
   }, []);
 
-  const { isEnabled, effectiveEnabled, isRecognitionActive, toggleTracking, videoRef, isModelLoaded } =
+  const { isEnabled, effectiveEnabled, isRecognitionActive, setIsRecognitionActive, toggleTracking, videoRef, isModelLoaded } =
     useCameraGestures((action) => {
       actionHandlerRef.current(action);
     }, route === '#voices');
 
-  const handlePreviewDragMove = useCallback((_pos: { x: number; y: number }) => {
-    // We no longer kill on move, just keep the prop for potential future visual feedback
-  }, []);
+  const handlePreviewDragMove = useCallback((_pos: { x: number; y: number }) => {}, []);
 
   const handlePreviewDrop = useCallback((pos: { x: number; y: number }) => {
     if (!cameraButtonRef.current) return;
     const dropRect = cameraButtonRef.current.getBoundingClientRect();
-    
-    // Check if the drop point (finger/mouse position) is within the target
-    // OR if we want "any part of preview", we use the preview box at drop time.
-    // Given the previous feedback "if any part touches", I'll use overlap logic but only on DROP.
-    
-    const previewWidth = window.innerWidth >= 768 ? 130 : 100;
-    const previewHeight = window.innerWidth >= 768 ? 170 : 130;
-
-    // Use a smaller 4px buffer instead of 10px
     const targetLeft = dropRect.left - 4;
     const targetRight = dropRect.right + 4;
     const targetTop = dropRect.top - 4;
     const targetBottom = dropRect.bottom + 4;
 
-    // The 'pos' passed here is the top-left of the preview at the moment of drop
-    const overlap = !(
-      pos.x + previewWidth < targetLeft ||
-      pos.x > targetRight ||
-      pos.y + previewHeight < targetTop ||
-      pos.y > targetBottom
-    );
-
-    if (overlap && isEnabled) {
+    if (pos.x >= targetLeft && pos.x <= targetRight && pos.y >= targetTop && pos.y <= targetBottom) {
       toggleTracking();
-      playClick();
     }
-  }, [isEnabled, toggleTracking, playClick]);
-
-  const quotes = useMemo(() => config?.quotes || [], [config]);
+  }, [toggleTracking]);
 
   const refreshWords = useCallback(async () => {
-    try {
-      const words = await universeDb.words.toArray();
-      setDbWords(words);
-    } catch (err) {
-      console.error('Failed to fetch words from DB:', err);
-    }
+    const words = await universeDb.words.toArray();
+    setDbWords(words);
   }, []);
 
   useEffect(() => {
-    setTimeout(() => refreshWords(), 0);
-  }, [config, refreshWords]);
-
-  const triggerYesFlash = useCallback(() => {
-    setShowYesFlash(true);
-    setTimeout(() => setShowYesFlash(false), 800);
-  }, []);
-
-  const triggerNoFlash = useCallback(() => {
-    setShowNoFlash(true);
-    setTimeout(() => setShowNoFlash(false), 800);
-  }, []);
-
-  useEffect(() => {
-    if (config) {
-      const updates: any = {};
-      let needsUpdate = false;
-
-      if (!config.emergency_contacts || config.emergency_contacts.length < 3) {
-        updates.emergency_contacts = [
-          { name: 'مسعود (Masood)', phone: '9513631315' },
-          { name: 'حماد (Hammaad)', phone: '9663527755' },
-          { name: 'Emergency', phone: '112' },
-        ];
-        needsUpdate = true;
-      }
-
-      if (!config.favorites) {
-        updates.favorites = [];
-        needsUpdate = true;
-      }
-
-      if (needsUpdate) {
-        updateConfig({ ...config, ...updates });
-      }
-    }
-  }, [config, updateConfig]);
-
-  useEffect(() => {
-    const checkSyncStatus = () => {
-      const lastSnapshot = parseInt(localStorage.getItem('shukr_last_snapshot_ts') || '0');
-      const lastLocalMod = parseInt(localStorage.getItem('shukr_last_local_mod') || '0');
-
-      setHasUnsyncedChanges(lastLocalMod > lastSnapshot);
-    };
-
-    checkSyncStatus();
-    const interval = setInterval(checkSyncStatus, 30000);
-    return () => clearInterval(interval);
-  }, []);
+    refreshWords();
+  }, [refreshWords, config]);
 
   useEffect(() => {
     const handleHashChange = () => setRoute(window.location.hash || '#');
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (builderScrollRef.current) {
-        const threeLineHeightThreshold = 130;
-        setCanAddWords(builderScrollRef.current.offsetHeight <= threeLineHeightThreshold);
-      }
-    };
-
-    handleResize();
-
-    const resizeObserver = new ResizeObserver(handleResize);
-    if (builderScrollRef.current) {
-      resizeObserver.observe(builderScrollRef.current);
-    }
-
-    return () => {
-      if (builderScrollRef.current) {
-        resizeObserver.unobserve(builderScrollRef.current);
-      }
-    };
-  }, [sentence]);
 
   const navigate = useCallback((newRoute: string, tab?: string) => {
     if (tab) setInitialSettingsTab(tab);
@@ -205,535 +124,386 @@ const AppContent = () => {
   }, []);
 
   const handleNextQuote = useCallback(() => {
-    if (quotes.length === 0) return;
-
-    const currentIndex = quotes.findIndex((q: any) => q.en === randomQuote?.en);
+    if (!config?.quotes?.length) return;
+    const quotes = config.quotes;
+    const currentIndex = quotes.findIndex((q: any) => q.id === randomQuote?.id);
     const nextIndex = (currentIndex + 1) % quotes.length;
-
     setRandomQuote(quotes[nextIndex]);
-    logEvent('quote_action', { type: 'next_quote', index: nextIndex });
-  }, [quotes, randomQuote, logEvent]);
+  }, [config, randomQuote]);
 
   useEffect(() => {
-    if (quotes.length > 0 && !randomQuote) {
-      setTimeout(() => setRandomQuote(quotes[Math.floor(Math.random() * quotes.length)]), 0);
+    if (config?.quotes?.length > 0 && !randomQuote) {
+      setRandomQuote(config.quotes[Math.floor(Math.random() * config.quotes.length)]);
     }
-  }, [quotes, randomQuote]);
+  }, [config, randomQuote]);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowSplash(false), 3500);
-    return () => clearTimeout(timer);
-  }, []);
+    if (showSplash) {
+      const timer = setTimeout(() => setShowSplash(false), 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [showSplash]);
 
   const playSentence = useCallback(async () => {
     if (sentence.length === 0) return;
-
     await speakSequence(sentence);
-    logEvent('speech_action', { type: 'sentence_builder' });
-
     setSentence([]);
     setCurrentCategory(null);
     setSearchQuery('');
-  }, [sentence, speakSequence, logEvent]);
+  }, [sentence, speakSequence]);
 
   const allItems = useMemo(() => {
     if (!config?.categories) return [];
     return config.categories.flatMap((c: any) => c.items || []);
   }, [config]);
 
-  const handleAddCustomWord = async (item: any) => {
-    if (!config) return;
-
-    const newConfig: any = { ...config, categories: [...(config.categories || [])] };
-    const targetCatId = item.categoryId || 'cat_custom';
-
-    let targetCat = newConfig.categories.find((c: any) => c.id === targetCatId);
-
-    if (!targetCat) {
-      if (targetCatId === 'cat_custom') {
-        targetCat = {
-          id: 'cat_custom',
-          label_ur: 'میرے الفاظ',
-          label_en: 'My Words',
-          icon: 'star',
-          items: [],
-        };
-      } else if (targetCatId === 'khandan') {
-        targetCat = {
-          id: 'khandan',
-          label_ur: 'خاندان',
-          label_en: 'Family',
-          icon: 'users',
-          items: [],
-        };
-      }
-
-      if (targetCat) newConfig.categories.push(targetCat);
-    }
-
-    if (targetCat) {
-      targetCat.items = [...(targetCat.items || []), item];
-    }
-
-    updateConfig(newConfig);
-    setAddingWord(null);
-  };
-
   const toggleFavorite = useCallback(
     (itemId: string) => {
       if (!config) return;
-
-      const newConfig = { ...config, favorites: [...(config.favorites || [])] };
-      const idx = newConfig.favorites.indexOf(itemId);
-
-      if (idx > -1) {
-        newConfig.favorites.splice(idx, 1);
-      } else {
-        newConfig.favorites.push(itemId);
-      }
-
-      updateConfig(newConfig as any);
+      const favorites = [...(config.favorites || [])];
+      const idx = favorites.indexOf(itemId);
+      if (idx > -1) favorites.splice(idx, 1);
+      else favorites.push(itemId);
+      updateConfig({ ...config, favorites });
     },
     [config, updateConfig]
   );
 
+  const handleDeleteWord = useCallback(async (id: string) => {
+    if (!config) return;
+    const newConfig: any = {
+      ...config,
+      categories: (config.categories || []).map((cat: any) => ({
+        ...cat,
+        items: (cat.items || []).filter((i: any) => i.id !== id),
+      }))
+    };
+    if (newConfig.favorites) {
+      newConfig.favorites = newConfig.favorites.filter((fid: string) => fid !== id);
+    }
+    updateConfig(newConfig);
+    await universeDb.words.delete(id);
+    await universeDb.sketchTemplates.where('wordId').equals(id).delete();
+    refreshWords();
+    setEditingWord(null);
+  }, [config, updateConfig, refreshWords]);
+
+  const handleSaveEdit = useCallback(async (item: any, blob?: Blob | null) => {
+    if (!config) return;
+    const newConfig = { ...config };
+    
+    // Handle isFamily toggle during edit
+    const isActuallyInFamily = newConfig.categories.find((c: any) => c.id === 'khandan')?.items?.some((i: any) => i.id === item.id);
+    
+    if (item.isFamily && !isActuallyInFamily) {
+        // Add to family
+        newConfig.categories = newConfig.categories.map((cat: any) => {
+            if (cat.id === 'khandan') {
+                return { ...cat, items: [...(cat.items || []), item] };
+            }
+            return cat;
+        });
+    } else if (!item.isFamily && isActuallyInFamily) {
+        // Remove from family
+        newConfig.categories = newConfig.categories.map((cat: any) => {
+            if (cat.id === 'khandan') {
+                return { ...cat, items: (cat.items || []).filter((i: any) => i.id !== item.id) };
+            }
+            return cat;
+        });
+    }
+
+    // Update the item in its original categories
+    newConfig.categories = newConfig.categories.map((cat: any) => ({
+      ...cat,
+      items: (cat.items || []).map((i: any) => i.id === item.id ? item : i)
+    }));
+
+    updateConfig(newConfig);
+    await universeDb.words.put(item);
+    if (blob) {
+      const storageKey = `${config.activeVoiceProfile || 'default'}_${item.id}_${language}`;
+      await audioStorage.set(storageKey, blob);
+    }
+    refreshWords();
+    setEditingWord(null);
+  }, [config, updateConfig, language, refreshWords]);
+
   const displayCategories = useMemo(() => {
     if (!config?.categories) return [];
-
+    // Generic system categories
+    const favLabel = language === 'ur' ? 'پسندیدہ' : (language === 'es' ? 'Favoritos' : (language === 'ar' ? 'المفضلة' : 'Favorite'));
+    const khandanLabel = language === 'ur' ? 'خاندان' : (language === 'es' ? 'Familia' : (language === 'ar' ? 'عائلة' : 'Family'));
+    
     return [
-      { id: 'cat_fav', label_ur: 'پسندیدہ', label_en: 'Favorite', icon: 'heart' },
-      { id: 'khandan', label_ur: 'خاندان', label_en: 'Family', icon: 'users' },
+      { id: 'cat_fav', label_primary: favLabel, label_secondary: 'Favorite', icon: 'heart' },
+      { id: 'khandan', label_primary: khandanLabel, label_secondary: 'Family', icon: 'users' },
     ];
-  }, [config]);
+  }, [config, language]);
 
   const searchResults = useFuzzySearch(allItems, searchQuery);
 
   const handleScroll = useCallback(() => {
     if (!mainContentRef.current) return;
-
     const { scrollTop, scrollHeight, clientHeight } = mainContentRef.current;
-
     if (scrollHeight - scrollTop <= clientHeight + 100) {
       setDisplayLimit((prev) => prev + 24);
     }
   }, []);
 
-  const createPromptItem = useCallback(
-    (
-      id: string,
-      ur: string,
-      en: string,
-      icon: string,
-      payload: Record<string, any>
-    ) => ({
-      id,
-      ur,
-      en,
-      icon,
-      isPrompt: true,
-      onClick: () => {
-        setAddingWord({
-          id: `word_${crypto.randomUUID()}`,
-          en: '',
-          ur: '',
-          roman: '',
-          next: [],
-          ...payload,
-        });
-      },
-    }),
-    []
-  );
+  const handleAddCustomWord = async (item: any, blob?: Blob | null) => {
+    if (!config) return;
+    const newConfig: any = { ...config, categories: [...(config.categories || [])] };
+    
+    // If added from Favorites, actually add to Custom but mark as favorite
+    let targetCatId = item.categoryId || 'cat_custom';
+    if (targetCatId === 'cat_fav') {
+        targetCatId = 'cat_custom';
+        newConfig.favorites = [...(newConfig.favorites || []), item.id];
+    }
+
+    let targetCat = newConfig.categories.find((c: any) => c.id === targetCatId);
+    if (!targetCat) {
+      targetCat = { id: targetCatId, items: [], icon: 'star', label_primary: 'Custom', label_secondary: 'Custom' };
+      newConfig.categories.push(targetCat);
+    }
+    targetCat.items = [...(targetCat.items || []), item];
+
+    // Handle isFamily toggle
+    if (item.isFamily && targetCatId !== 'khandan') {
+        let khandanCat = newConfig.categories.find((c: any) => c.id === 'khandan');
+        if (!khandanCat) {
+            khandanCat = { id: 'khandan', items: [], icon: 'users', label_primary: 'Family', label_secondary: 'Family' };
+            newConfig.categories.push(khandanCat);
+        }
+        khandanCat.items = [...(khandanCat.items || []), item];
+    }
+
+    updateConfig(newConfig);
+    
+    await universeDb.words.put(item);
+    if (blob) {
+      const storageKey = `${config.activeVoiceProfile || 'default'}_${item.id}_${language}`;
+      await audioStorage.set(storageKey, blob);
+    }
+    refreshWords();
+    setAddingWord(null);
+  };
 
   const createSearchPrompt = useCallback(async () => {
     const res = await translator.translate(searchQuery);
-
     setAddingWord({
       id: `word_${crypto.randomUUID()}`,
+      text_primary: res?.ur || searchQuery,
+      text_secondary: res?.en || searchQuery,
       en: res?.en || searchQuery,
-      ur: res?.ur || '',
-      roman: res?.roman || '',
+      ur: res?.ur || searchQuery,
+      roman: res?.roman || searchQuery,
       icon: 'list-plus',
       next: [],
+      categoryId: 'cat_custom'
     });
   }, [searchQuery]);
 
   const getSearchItems = useCallback(() => {
     const results = [...searchResults];
-    const exactMatch = results.some(
-      (r: any) => r.en.toLowerCase() === searchQuery.toLowerCase() || r.ur === searchQuery
+    const exactMatch = results.some((r: any) => 
+      (r.text_primary || r.ur || '').toLowerCase() === searchQuery.toLowerCase() || 
+      (r.text_secondary || r.en || '').toLowerCase() === searchQuery.toLowerCase()
     );
-
     if (!exactMatch && searchQuery.length > 1) {
-      results.push({
-        id: 'add_new_prompt',
-        ur: 'نیا لفظ؟',
-        en: 'Add Word?',
-        icon: 'list-plus',
-        isPrompt: true,
-        onClick: createSearchPrompt,
-      });
+      const addLabel = language === 'ur' ? 'نیا لفظ؟' : 'Add Word?';
+      results.push({ id: 'add_new_prompt', ur: addLabel, en: 'Add Word?', icon: 'list-plus', isPrompt: true, onClick: createSearchPrompt });
     }
-
     return results;
-  }, [searchResults, searchQuery, createSearchPrompt]);
+  }, [searchResults, searchQuery, createSearchPrompt, language]);
 
   const getHomeItems = useCallback(() => {
-    return dbWords.length > 0
-      ? [...dbWords].sort((a, b) => (b.usageCount || 0) - (a.usageCount || 0))
-      : allItems;
+    return dbWords.length > 0 ? [...dbWords].sort((a, b) => (b.usageCount || 0) - (a.usageCount || 0)) : allItems;
   }, [dbWords, allItems]);
+
+  const handleOpenAddWord = useCallback((catId: string) => {
+    setAddingWord({
+      id: `word_${crypto.randomUUID()}`,
+      text_primary: '',
+      text_secondary: '',
+      ur: '',
+      en: '',
+      roman: '',
+      icon: 'list-plus',
+      next: [],
+      categoryId: catId
+    });
+  }, []);
 
   const getFavoriteItems = useCallback(() => {
     const favs = config?.favorites || [];
-    const favItems = (dbWords.length > 0 ? dbWords : allItems).filter((i: any) =>
-      favs.includes(i.id)
-    );
+    const items = (dbWords.length > 0 ? dbWords : allItems).filter((i: any) => favs.includes(i.id));
+    
+    // Add prompt as first button
+    const addLabel = language === 'ur' ? 'نیا لفظ؟' : 'Add Word?';
+    return [
+      { id: 'add_fav_prompt', ur: addLabel, en: 'Add Word?', icon: 'list-plus', isPrompt: true, onClick: () => handleOpenAddWord('cat_fav') },
+      ...items
+    ];
+  }, [dbWords, allItems, config, language, handleOpenAddWord]);
 
-    const addWordItem = createPromptItem(
-      'add_fav_prompt',
-      'نیا لفظ؟',
-      'Add Word?',
-      'list-plus',
-      {
-        icon: 'star',
-        categoryId: 'cat_custom',
-      }
-    );
-
-    return [addWordItem, ...favItems];
-  }, [config, dbWords, allItems, createPromptItem]);
-
-  const getCategoryTarget = useCallback(() => {
-    if (!currentCategory) return null;
-
-    return currentCategory === 'family'
-      ? 'khandan'
-      : currentCategory.startsWith('cat_')
-      ? currentCategory.substring(4)
-      : currentCategory;
-  }, [currentCategory]);
-
-  const getCategoryItems = useCallback(() => {
-    const targetId = getCategoryTarget();
-
-    const cat = config?.categories?.find(
-      (c: any) =>
-        c.id === currentCategory ||
-        c.id === targetId ||
-        (targetId === 'fam' && (c.id === 'khandan' || c.id === 'family')) ||
-        (targetId === 'khandan' && c.id === 'family')
-    );
-
-    const catIds = (cat?.items || []).map((i: any) => i.id);
-    return (dbWords.length > 0 ? dbWords : allItems).filter((i: any) => catIds.includes(i.id));
-  }, [config, currentCategory, getCategoryTarget, dbWords, allItems]);
-
-  const getFamilyItems = useCallback(() => {
-    const catItems = getCategoryItems();
-
-    const addMemberItem = createPromptItem(
-      'add_family_member',
-      'نیا ممبر؟',
-      'Add Member?',
-      'user-plus',
-      {
-        icon: 'user',
-        categoryId: 'khandan',
-      }
-    );
-
-    return [addMemberItem, ...catItems];
-  }, [getCategoryItems, createPromptItem]);
-
-  const getRegularCategoryItems = useCallback(() => {
-    const catItems = getCategoryItems();
-
-    const backItem = {
-      id: 'back',
-      ur: 'واپس',
-      en: 'Back',
-      icon: 'arrow-left',
-      isPrompt: true,
-      onClick: () => {
-        playClick();
-        setCurrentCategory(null);
-        setFocusedIndex(-1);
-      },
-    };
-
-    return [backItem, ...catItems];
-  }, [getCategoryItems, playClick]);
-
-  const resolveBaseGridItems = useCallback(() => {
+  const gridItems = useMemo(() => {
     if (searchQuery) return getSearchItems();
-    if (!currentCategory) return getHomeItems();
+    if (currentCategory === 'cat_fav') return getFavoriteItems();
+    if (currentCategory) {
+      const cat = config?.categories?.find((c: any) => c.id === currentCategory);
+      const items = cat?.items || [];
+      if (currentCategory === 'khandan' || currentCategory === 'cat_custom') {
+        const addLabel = language === 'ur' ? 'نیا لفظ؟' : 'Add Word?';
+        return [
+          { id: `add_${currentCategory}_prompt`, ur: addLabel, en: 'Add Word?', icon: 'list-plus', isPrompt: true, onClick: () => handleOpenAddWord(currentCategory) },
+          ...items
+        ];
+      }
+      return items;
+    }
+    return getHomeItems();
+  }, [searchQuery, currentCategory, getSearchItems, getFavoriteItems, getHomeItems, config, language, handleOpenAddWord]);
 
-    const isFavoritesCategory =
-      currentCategory === 'cat_fav' ||
-      currentCategory === 'fav' ||
-      currentCategory === 'favorites';
+  const [predictions, setPredictions] = useState<any[]>([]);
 
-    if (isFavoritesCategory) return getFavoriteItems();
+  useEffect(() => {
+    const updatePredictions = async () => {
+      if (allItems.length === 0) return;
+      const ranked = await wordNetwork.rankPredictions(allItems, sentence);
+      setPredictions(ranked.slice(0, 6));
+    };
+    updatePredictions();
+  }, [sentence, allItems]);
 
-    const targetId = getCategoryTarget();
-    const isFamilyCategory = targetId === 'khandan' || targetId === 'family';
-
-    return isFamilyCategory ? getFamilyItems() : getRegularCategoryItems();
-  }, [
-    searchQuery,
-    currentCategory,
-    getSearchItems,
-    getHomeItems,
-    getFavoriteItems,
-    getCategoryTarget,
-    getFamilyItems,
-    getRegularCategoryItems,
-  ]);
+  const sentenceRef = useRef<any[]>([]);
+  useEffect(() => {
+    sentenceRef.current = sentence;
+  }, [sentence]);
 
   const handleWordItemClick = useCallback(
     async (item: any) => {
-      const speakPromise = speak(isUrdu ? item.ur : item.en, item.id);
+      const text = isPrimary ? (item.text_primary || item.ur) : (item.text_secondary || item.en);
+      speak(text, item.id);
 
       if (isSentenceBuilderActive) {
-        if (canAddWords) {
-          setSentence((prev) => [...prev, item]);
+        if (sentence.length < 8) {
+          setSentence((prev) => {
+            const newSentence = [...prev, item];
+            if (prev.length > 0) {
+              wordNetwork.recordTransition(prev[prev.length - 1].id, item.id);
+            }
+            return newSentence;
+          });
         } else {
-          setSentence((prev) => [...prev.slice(0, -1), item]);
           setFlashSentenceBuilder(true);
           setTimeout(() => setFlashSentenceBuilder(false), 500);
         }
       }
-
-      await speakPromise;
-      await wordNetwork.recordUsage(item.id);
-      refreshWords();
-      setFocusedIndex(-1);
+      
+      wordNetwork.recordUsage(item.id);
     },
-    [speak, isUrdu, isSentenceBuilderActive, canAddWords, refreshWords]
+    [speak, isPrimary, isSentenceBuilderActive, sentence.length]
   );
-
-  const attachItemClickHandler = useCallback(
-    (item: any) => {
-      if (item.onClick) return item;
-      return { ...item, onClick: () => handleWordItemClick(item) };
-    },
-    [handleWordItemClick]
-  );
-
-  const gridItems = useMemo(() => {
-    return resolveBaseGridItems()
-      .map(attachItemClickHandler)
-      .slice(0, displayLimit);
-  }, [resolveBaseGridItems, attachItemClickHandler, displayLimit]);
-
-  const predictions = useMemo(() => {
-    const lastWord = sentence.length > 0 ? sentence[sentence.length - 1] : null;
-    const nextIds = lastWord?.next || [];
-
-    const results = allItems.filter((i: any) => nextIds.includes(i.id));
-
-    if (results.length < 5) {
-      const topWords = [...dbWords].sort((a, b) => (b.usageCount || 0) - (a.usageCount || 0));
-
-      for (const word of topWords) {
-        if (results.length >= 10) break;
-        if (!results.find((r) => r.id === word.id)) {
-          results.push(word);
-        }
-      }
-    }
-
-    return results.slice(0, 10).map((i: any) => ({
-      ...i,
-      onClick: async () => {
-        const speakPromise = speak(isUrdu ? i.ur : i.en, i.id);
-
-        if (isSentenceBuilderActive) {
-          if (canAddWords) {
-            setSentence((prev) => [...prev, i]);
-          } else {
-            setSentence((prev) => [...prev.slice(0, -1), i]);
-            setFlashSentenceBuilder(true);
-            setTimeout(() => setFlashSentenceBuilder(false), 500);
-          }
-        }
-
-        await speakPromise;
-        await wordNetwork.recordUsage(i.id);
-        refreshWords();
-        setFocusedIndex(-1);
-      },
-    }));
-  }, [sentence, allItems, isUrdu, speak, dbWords, refreshWords, canAddWords, isSentenceBuilderActive]);
 
   const navigableActions = useMemo(() => {
     const actions: (() => void)[] = [];
+    
+    // 1. Header (0-4)
+    actions.push(toggleTracking); // Camera
+    actions.push(toggleSentenceBuilder); // Builder
+    actions.push(() => { playClick(); navigate('#'); }); // Shukr/Home
+    actions.push(() => { playClick(); setLanguage(language === primaryLanguage ? secondaryLanguage : primaryLanguage); }); // Lang
+    actions.push(() => { playClick(); navigate('#settings'); }); // Settings
 
-    actions.push(toggleTracking);
-    actions.push(toggleSentenceBuilder);
-    actions.push(() => {
-      setSentence([]);
-      setCurrentCategory(null);
+    // 2. Categories
+    displayCategories.forEach(cat => actions.push(() => {
+      playClick();
+      setCurrentCategory(cat.id === currentCategory ? null : cat.id);
       setFocusedIndex(-1);
-      navigate('#');
-      playClick();
-    });
-    actions.push(() => {
-      setLanguage(language === 'ur' ? 'en' : 'ur');
-      playClick();
-    });
-    actions.push(() => {
-      navigate('#settings');
-      playClick();
-    });
+    }));
 
-    if (route === '#') {
-      predictions.forEach((p) => actions.push(p.onClick));
-      gridItems.forEach((g: any) => actions.push(g.onClick));
+    // 3. Predictions
+    predictions.forEach(item => actions.push(() => handleWordItemClick(item)));
 
-      if (isSentenceBuilderActive) {
-        actions.push(() => {
-          setSentence((prev) => prev.slice(0, -1));
-          playClick();
-        });
-        actions.push(() => {
-          setSentence([]);
-          playClick();
-        });
-        actions.push(() => {
-          playSentence();
-        });
-      }
+    // 4. Grid Items
+    gridItems.forEach(item => actions.push(() => handleWordItemClick(item)));
+
+    // 5. Sentence Builder (if active)
+    if (isSentenceBuilderActive) {
+      actions.push(() => { setSentence([]); playClick(); }); // Clear
+      actions.push(() => { setSentence(p => p.slice(0, -1)); playClick(); }); // Backspace
+      actions.push(playSentence); // Play
     }
 
-    actions.push(() => {
-      speak(isUrdu ? 'ہاں' : 'Yes', 'sys_yes');
+    // 6. Footer Actions (Yes, No, Doodle)
+    actions.push(() => { 
+      speak(isPrimary ? 'ہاں' : 'Yes', 'sys_yes'); 
+      setShowYesFlash(true);
+      setTimeout(() => setShowYesFlash(false), 1000);
     });
-    actions.push(() => {
-      speak(isUrdu ? 'نہیں' : 'No', 'sys_no');
+    actions.push(() => { 
+      speak(isPrimary ? 'نہیں' : 'No', 'sys_no'); 
+      setShowNoFlash(true);
+      setTimeout(() => setShowNoFlash(false), 1000);
     });
-    actions.push(() => {
-      playClick();
-      navigate('#doodle');
-    });
-
-    displayCategories.forEach((cat) => {
-      actions.push(() => {
-        playClick();
-        if (route !== '#') navigate('#');
-        setCurrentCategory(cat.id === currentCategory ? null : cat.id);
-        setFocusedIndex(-1);
-        setSearchQuery('');
-      });
-    });
-
-    if (route === '#') {
-      actions.push(handleNextQuote);
-    }
+    actions.push(() => { playClick(); navigate('#doodle'); });
 
     return actions;
-  }, [
-    route,
-    toggleTracking,
-    toggleSentenceBuilder,
-    setLanguage,
-    language,
-    navigate,
-    playClick,
-    playSentence,
-    predictions,
-    gridItems,
-    displayCategories,
-    currentCategory,
-    isUrdu,
-    handleNextQuote,
-    speak,
-    isSentenceBuilderActive,
-  ]);
+  }, [toggleTracking, toggleSentenceBuilder, playClick, navigate, setLanguage, language, primaryLanguage, secondaryLanguage, displayCategories, currentCategory, predictions, gridItems, isSentenceBuilderActive, playSentence, handleWordItemClick, isPrimary, speak]);
 
-  const handleGestureAction = useCallback(
-    (action: GestureAction) => {
-      setLastGesture(action);
+  const handleGestureAction = useCallback((gestureKey: string) => {
+    const mapping = config?.gesture_mappings?.[gestureKey];
+    if (!mapping) return;
+    setLastGesture(gestureKey);
+    setTimeout(() => setLastGesture(''), 2000);
 
-      setTimeout(() => {
-        setLastGesture('');
-      }, 2000);
-
-      switch (action) {
-        case 'SPEAK':
-          if (isSentenceBuilderActive) playSentence();
-          break;
-        case 'DOODLE':
-          navigate('#doodle');
-          playClick();
-          break;
-        case 'YES':
-          speak(isUrdu ? 'ہاں' : 'Yes', 'ji_haan');
-          break;
-        case 'SALAM':
-          speak(isUrdu ? 'السلام علیکم' : 'Assalamualikum', 'sys_salam');
-          break;
-        case 'CALL_CONTACT_1':
-          if (config?.emergency_contacts?.[0]?.phone) {
-            window.location.href = `tel:${config.emergency_contacts[0].phone}`;
-          }
-          break;
-        case 'HOME':
-        case 'CLEAR':
-          setSentence([]);
-          setCurrentCategory(null);
-          setFocusedIndex(-1);
-          playClick();
-          break;
-        case 'TOGGLE_RECOGNITION':
-          playClick();
-          break;
-        case 'NEXT':
-          setFocusedIndex((prev) => (prev + 1) % navigableActions.length);
-          playClick();
-          break;
-        case 'PREV':
-          setFocusedIndex((prev) => (prev <= 0 ? navigableActions.length - 1 : prev - 1));
-          playClick();
-          break;
-        case 'SELECT':
-          setFocusedIndex((prev) => {
-            if (prev >= 0 && prev < navigableActions.length) {
-              navigableActions[prev]();
-            }
-            return prev;
-          });
-          break;
-      }
-    },
-    [
-      playClick,
-      speak,
-      isUrdu,
-      playSentence,
-      config,
-      navigableActions,
-      isSentenceBuilderActive,
-      navigate,
-    ]
-  );
+    const action = mapping.value as GestureAction;
+    switch (action) {
+      case 'YES':
+        speak(isPrimary ? 'ہاں' : 'Yes', 'sys_yes');
+        setShowYesFlash(true);
+        setTimeout(() => setShowYesFlash(false), 1000);
+        break;
+      case 'SALAM':
+        speak(isPrimary ? 'السلام علیکم' : 'Assalamualikum', 'sys_salam');
+        break;
+      case 'HOME':
+      case 'CLEAR':
+        setSentence([]); setCurrentCategory(null); setFocusedIndex(-1); playClick();
+        break;
+      case 'SELECT':
+        if (focusedIndex >= 0 && focusedIndex < navigableActions.length) navigableActions[focusedIndex]();
+        break;
+      case 'NEXT':
+        setFocusedIndex(p => (p + 1) % navigableActions.length);
+        break;
+    }
+  }, [config, isPrimary, speak, focusedIndex, navigableActions, playClick]);
 
   useEffect(() => {
     actionHandlerRef.current = handleGestureAction;
   }, [handleGestureAction]);
 
+  const handleStartApp = useCallback(() => {
+    localStorage.setItem('shukr_app_started', 'true');
+    setIsAppStarted(true);
+    setShowSplash(true);
+    navigate('#');
+    playClick();
+  }, [playClick, navigate]);
+
   if (showSplash || isConfigLoading) {
-    return (
-      <SplashScreen
-        quote={randomQuote || { ur: 'شکراً', en: 'Shukr' }}
-        isLoading={isConfigLoading}
-      />
-    );
+    return <SplashScreen quote={randomQuote || { ur: 'شکراً', en: 'Shukr' }} isLoading={isConfigLoading} />;
+  }
+
+  if ((!isAppStarted || route === '#landing') && (route === '#' || route === '' || route === '#landing')) {
+    return <LandingPage onStart={handleStartApp} />;
   }
 
   return (
-    <div className="app-viewport" dir="rtl">
+    <div className="app-viewport" dir={document.documentElement.dir}>
       {isDraggingPreview && <div className="dragging-backdrop" />}
       <Header
         onOpenSettings={(tab) => navigate('#settings', tab)}
@@ -743,57 +513,37 @@ const AppContent = () => {
         hasUnsyncedChanges={hasUnsyncedChanges}
         isModelLoaded={isModelLoaded}
         onSOS={() => setShowSOS(true)}
-        onHome={() => {
-          setSentence([]);
-          setCurrentCategory(null);
-          navigate('#');
-        }}
+        onHome={() => { setSentence([]); setCurrentCategory(null); navigate('#'); }}
         isSentenceBuilderActive={isSentenceBuilderActive}
         toggleSentenceBuilder={toggleSentenceBuilder}
         lastGesture={lastGesture}
-        isUrdu={isUrdu}
+        isPrimary={isPrimary}
         focusedIndex={focusedIndex}
         showCloseDropzone={isDraggingPreview}
         cameraButtonRef={cameraButtonRef}
+        gestureMappings={config?.gesture_mappings}
+        onLongPressGesture={setEditingGesture}
       />
 
-      <div
-        className="main-content-wrapper"
-        style={{
-          flex: 1,
-          position: 'relative',
-          overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
+      <div className="main-content-wrapper" style={{ flex: 1, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         {route === '#voices' ? (
           <VoiceStudio config={config} updateConfig={updateConfig} onClose={() => navigate('#settings')} />
         ) : route === '#settings' ? (
           <SettingsPanel
-            config={config}
-            updateConfig={updateConfig}
-            initialTab={initialSettingsTab}
-            initialEditingItem={initialEditingItem}
+            config={config} updateConfig={updateConfig}
+            initialTab={initialSettingsTab} initialEditingItem={initialEditingItem}
             onOpenVoiceStudio={() => navigate('#voices')}
-            onClose={() => {
-              setInitialEditingItem(null);
-              setInitialSettingsTab(null);
-              navigate('#');
-            }}
+            onShowLanding={() => { setIsAppStarted(false); navigate('#'); }}
+            onClose={() => { setInitialEditingItem(null); setInitialSettingsTab(null); navigate('#'); }}
           />
         ) : route === '#doodle' ? (
           <>
             <CameraPreview isEnabled={effectiveEnabled} videoRef={videoRef} onDragChange={setIsDraggingPreview} onDragMove={handlePreviewDragMove} onDrop={handlePreviewDrop} />
             <DoodlePad
-              config={config}
-              focusedIndex={focusedIndex}
+              config={config} focusedIndex={focusedIndex}
               onRecognize={(item: any) => {
-                speak(isUrdu ? item.ur : item.en, item.id);
-                if (isSentenceBuilderActive) {
-                  setSentence((prev) => [...prev, item]);
-                  navigate('#');
-                }
+                speak(isPrimary ? (item.text_primary || item.ur) : (item.text_secondary || item.en), item.id);
+                if (isSentenceBuilderActive) setSentence(p => [...p, item]);
                 wordNetwork.recordUsage(item.id);
               }}
             />
@@ -801,12 +551,13 @@ const AppContent = () => {
         ) : (
           <>
             <CameraPreview isEnabled={effectiveEnabled} videoRef={videoRef} onDragChange={setIsDraggingPreview} onDragMove={handlePreviewDragMove} onDrop={handlePreviewDrop} />
-
+            
             <div className="top-system-area">
-              <WordPredictions
-                predictions={predictions}
-                focusedIndex={focusedIndex}
-                offset={5}
+              <WordPredictions 
+                predictions={predictions} 
+                focusedIndex={focusedIndex} 
+                offset={displayCategories.length} 
+                onSelect={handleWordItemClick}
               />
             </div>
 
@@ -814,68 +565,31 @@ const AppContent = () => {
               <WordGrid
                 gridItems={gridItems}
                 focusedIndex={focusedIndex}
-                offset={5 + predictions.length}
+                offset={5 + displayCategories.length + predictions.length}
                 randomQuote={randomQuote}
-                quotes={quotes}
+                quotes={config?.quotes || []}
                 onNextQuote={handleNextQuote}
                 updateConfig={updateConfig}
                 config={config}
                 currentlyPlayingId={currentlyPlayingId}
-                quoteFocused={
-                  focusedIndex ===
-                  5 +
-                    predictions.length +
-                    gridItems.length +
-                    (isSentenceBuilderActive ? 3 : 0) +
-                    displayCategories.length +
-                    3
-                }
+                quoteFocused={false}
                 onLongPressItem={(item) => toggleFavorite(item.id)}
-                onDeleteItem={async (id) => {
-                  if (!config) return;
-
-                  const newConfig: any = {
-                    ...config,
-                    categories: (config.categories || []).map((cat: any) => ({
-                      ...cat,
-                      items: (cat.items || []).filter((i: any) => i.id !== id),
-                    }))
-                  };
-
-                  // Clean up favorites if they exist
-                  if (newConfig.favorites) {
-                    newConfig.favorites = newConfig.favorites.filter((fid: string) => fid !== id);
-                  }
-
-                  updateConfig(newConfig);
-
-                  // Deep deletion from database
-                  await universeDb.words.delete(id);
-                  await universeDb.sketchTemplates.where('wordId').equals(id).delete();
-
-                  refreshWords();
-                }}
-                onEditItem={(item) => {
-                  setInitialEditingItem({ ...item, type: 'word' });
-                  navigate('#settings');
-                }}
+                onDeleteItem={handleDeleteWord}
+                onEditItem={(item) => setEditingWord(item)}
+                onSelect={handleWordItemClick}
                 favorites={config?.favorites || []}
               />
             </div>
-
             {isSentenceBuilderActive && (
               <div className="top-system-area" style={{ paddingTop: 0, paddingBottom: 8 }}>
                 <SentenceBuilder
-                  words={sentence}
-                  onClear={() => setSentence([])}
-                  onBackspace={() => setSentence((prev) => prev.slice(0, -1))}
-                  onPlay={playSentence}
-                  focusedIndex={focusedIndex}
-                  offset={5 + predictions.length + gridItems.length}
-                  searchQuery={searchQuery}
-                  setSearchQuery={setSearchQuery}
-                  canAddWords={canAddWords}
-                  builderScrollRef={builderScrollRef}
+                  words={sentence} onClear={() => setSentence([])}
+                  onBackspace={() => setSentence(p => p.slice(0, -1))}
+                  onPlay={playSentence} focusedIndex={focusedIndex} 
+                  offset={5 + displayCategories.length + predictions.length + gridItems.length}
+                  searchQuery={searchQuery} setSearchQuery={setSearchQuery}
+                  canAddWords={sentence.length < 8}
+                  builderScrollRef={builderScrollRef} 
                   flashBorder={flashSentenceBuilder}
                   currentlyPlayingId={currentlyPlayingId}
                 />
@@ -888,57 +602,40 @@ const AppContent = () => {
       <Footer
         currentCategory={currentCategory}
         onCategoryClick={(catId) => {
-          playClick();
-          if (route !== '#') navigate('#');
+          playClick(); if (route !== '#') navigate('#');
           setCurrentCategory(catId === currentCategory ? null : catId);
-          setFocusedIndex(-1);
-          setSearchQuery('');
+          setFocusedIndex(-1); setSearchQuery('');
         }}
         onDoodleClick={() => {
-          playClick();
-          if (currentCategory) {
-            setCurrentCategory(null);
-            setFocusedIndex(-1);
-            if (route !== '#') navigate('#');
-            return;
-          }
-          if (route === '#doodle') {
-            navigate('#');
-          } else {
-            navigate('#doodle');
-          }
+          playClick(); if (currentCategory) { setCurrentCategory(null); navigate('#'); return; }
+          route === '#doodle' ? navigate('#') : navigate('#doodle');
         }}
         onYesClick={() => {
-          speak(isUrdu ? 'ہاں' : 'Yes', 'sys_yes');
-          triggerYesFlash();
+          const yesText = language === 'ur' ? 'ہاں' : 'Yes';
+          speak(yesText, 'sys_yes');
+          setShowYesFlash(true);
+          setTimeout(() => setShowYesFlash(false), 1000);
           if (route === '#doodle') navigate('#');
         }}
         onNoClick={() => {
-          speak(isUrdu ? 'نہیں' : 'No', 'sys_no');
-          triggerNoFlash();
+          const noText = language === 'ur' ? 'نہیں' : 'No';
+          speak(noText, 'sys_no');
+          setShowNoFlash(true);
+          setTimeout(() => setShowNoFlash(false), 1000);
           if (route === '#doodle') navigate('#');
         }}
-        focusedIndex={focusedIndex}
-        offset={
-          route === '#'
-            ? 5 + predictions.length + gridItems.length + (isSentenceBuilderActive ? 3 : 0)
-            : 5
-        }
+        focusedIndex={focusedIndex} 
+        offset={5 + displayCategories.length + predictions.length + gridItems.length + (isSentenceBuilderActive ? 3 : 0)}
       />
 
       <ScreenFlashes showYes={showYesFlash} showNo={showNoFlash} />
-
-      {showSOS && (
-        <SOSModal
-          onClose={() => setShowSOS(false)}
-          emergencyContacts={config?.emergency_contacts || []}
-        />
-      )}
-
-      <WordAddModal
-        addingWord={addingWord}
-        setAddingWord={setAddingWord}
-        onSave={handleAddCustomWord}
+      {showSOS && <SOSModal onClose={() => setShowSOS(false)} emergencyContacts={config?.emergency_contacts || []} />}
+      <WordAddModal addingWord={addingWord} setAddingWord={setAddingWord} onSave={handleAddCustomWord} />
+      <WordEditor 
+        item={editingWord} 
+        onClose={() => setEditingWord(null)} 
+        onSave={handleSaveEdit} 
+        onDelete={handleDeleteWord} 
       />
     </div>
   );
@@ -946,10 +643,10 @@ const AppContent = () => {
 
 export default function App() {
   return (
-    <ConfigProvider>
-      <LanguageProvider>
+    <LanguageProvider>
+      <ConfigProvider>
         <AppContent />
-      </LanguageProvider>
-    </ConfigProvider>
+      </ConfigProvider>
+    </LanguageProvider>
   );
 }

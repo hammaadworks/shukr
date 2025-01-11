@@ -14,6 +14,7 @@ export interface UniverseSnapshot {
   emergency_contacts?: any[];
   activeVoiceProfile?: string;
   voiceProfiles?: any[];
+  langPair?: any;
 }
 
 /**
@@ -31,6 +32,9 @@ export const universePorter = {
     const quotes = await universeDb.quotes.toArray();
     const audio = await this.serializeAllAudio();
 
+    // Include the language pair from localStorage if it exists
+    const langPair = localStorage.getItem('shukr_lang_pair');
+
     return {
       version: currentConfig.version || 1,
       timestamp: Date.now(),
@@ -39,7 +43,9 @@ export const universePorter = {
       categories,
       sketches,
       quotes,
-      audio
+      audio,
+      // Metadata extension for global shukr
+      langPair: langPair ? JSON.parse(langPair) : undefined
     };
   },
 
@@ -47,7 +53,7 @@ export const universePorter = {
    * Hydrates the local IndexedDB with data from a snapshot.
    * If merge is false, it clears all existing data first.
    */
-  async import(snapshot: UniverseSnapshot, shouldMerge = true) {
+  async import(snapshot: any, shouldMerge = true) {
     if (!shouldMerge) {
       await this.clearAllLocalData();
     }
@@ -56,6 +62,11 @@ export const universePorter = {
     await this.restoreSketches(snapshot);
     await this.restoreQuotes(snapshot);
     await this.restoreAudio(snapshot);
+
+    // Restore language pair if provided
+    if (snapshot.langPair) {
+      localStorage.setItem('shukr_lang_pair', JSON.stringify(snapshot.langPair));
+    }
     
     console.log(`[Porter] Successfully imported universe snapshot from ${new Date(snapshot.timestamp).toLocaleString()}`);
   },

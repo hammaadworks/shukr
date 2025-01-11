@@ -11,12 +11,12 @@ export interface TranslationResult {
 }
 
 /**
- * A local-first translator that maps English words/phrases to Urdu script.
- * Uses a hybrid approach: AppConfig (Truth) + Offline Dictionary (Fallback) + Transliteration (Last resort)
+ * A local-first translator that maps between Primary and Secondary language pairs.
+ * Uses a hybrid approach: AppConfig (Truth) + Offline Dictionary (Fallback)
  */
 class Translator {
-  private enToUr: TranslationMap = {};
-  private urToEn: TranslationMap = {};
+  private primaryToSecondary: TranslationMap = {};
+  private secondaryToPrimary: TranslationMap = {};
   private idToRoman: TranslationMap = {};
 
   constructor() {
@@ -25,8 +25,8 @@ class Translator {
 
   private hydrateFromDictionary() {
     Object.entries(dictionary).forEach(([en, ur]) => {
-      this.enToUr[en.toLowerCase()] = ur;
-      this.urToEn[ur] = en;
+      this.primaryToSecondary[en.toLowerCase()] = ur;
+      this.secondaryToPrimary[ur] = en;
     });
   }
 
@@ -35,8 +35,8 @@ class Translator {
    */
   refresh(config: any) {
     // Reset to dictionary base
-    this.enToUr = {};
-    this.urToEn = {};
+    this.primaryToSecondary = {};
+    this.secondaryToPrimary = {};
     this.idToRoman = {};
     this.hydrateFromDictionary();
 
@@ -51,28 +51,28 @@ class Translator {
   }
 
   private processCategory(cat: any) {
-    const catEn = (cat.label_en || cat.en || '').toLowerCase().trim();
-    const catUr = (cat.label_ur || cat.ur || '').trim();
+    const catPrimary = (cat.label_primary || cat.label_ur || cat.en || '').toLowerCase().trim();
+    const catSecondary = (cat.label_secondary || cat.label_en || cat.ur || '').trim();
     
-    if (catEn && catUr) {
-      this.enToUr[catEn] = catUr;
-      this.urToEn[catUr] = catEn;
+    if (catPrimary && catSecondary) {
+      this.primaryToSecondary[catPrimary] = catSecondary;
+      this.secondaryToPrimary[catSecondary] = catPrimary;
     }
 
     if (cat.items) {
       cat.items.forEach((item: any) => {
-        const en = (item.en || '').toLowerCase().trim();
-        const ur = (item.ur || '').trim();
+        const primary = (item.text_primary || item.ur || '').toLowerCase().trim();
+        const secondary = (item.text_secondary || item.en || '').trim();
         const roman = (item.roman || item.id || '').toLowerCase().trim();
         
-        if (en && ur) {
-          this.enToUr[en] = ur;
-          this.urToEn[ur] = en;
+        if (primary && secondary) {
+          this.primaryToSecondary[primary] = secondary;
+          this.secondaryToPrimary[secondary] = primary;
         }
         
-        if (roman && ur) {
-          if (!this.enToUr[roman]) this.enToUr[roman] = ur;
-          if (!this.urToEn[ur]) this.urToEn[ur] = roman;
+        if (roman && primary) {
+          if (!this.primaryToSecondary[roman]) this.primaryToSecondary[roman] = primary;
+          if (!this.secondaryToPrimary[primary]) this.secondaryToPrimary[primary] = roman;
           this.idToRoman[item.id] = roman;
         }
       });
@@ -81,76 +81,100 @@ class Translator {
 
   private processQuickActions(actions: any[]) {
     actions.forEach((qa: any) => {
-      const en = (qa.en || '').toLowerCase().trim();
-      const ur = (qa.ur || '').trim();
-      if (en && ur) {
-        this.enToUr[en] = ur;
-        this.urToEn[ur] = en;
+      const primary = (qa.text_primary || qa.ur || '').toLowerCase().trim();
+      const secondary = (qa.text_secondary || qa.en || '').trim();
+      if (primary && secondary) {
+        this.primaryToSecondary[primary] = secondary;
+        this.secondaryToPrimary[secondary] = primary;
       }
     });
   }
 
   private processQuotes(quotes: any[]) {
     quotes.forEach((q: any) => {
-      const en = (q.en || '').toLowerCase().trim();
-      const ur = (q.ur || '').trim();
-      if (en && ur) {
-        this.enToUr[en] = ur;
-        this.urToEn[ur] = en;
+      const primary = (q.text_primary || q.ur || '').toLowerCase().trim();
+      const secondary = (q.text_secondary || q.en || '').trim();
+      if (primary && secondary) {
+        this.primaryToSecondary[primary] = secondary;
+        this.secondaryToPrimary[secondary] = primary;
       }
     });
   }
 
-  // Phonetic Transliteration Map (Roman Urdu to script)
-  private translitMap: [RegExp, string][] = [
-    [/sh/gi, 'ش'], [/kh/gi, 'خ'], [/gh/gi, 'غ'], [/ch/gi, 'چ'], [/th/gi, 'تھ'],
-    [/ph/gi, 'پھ'], [/bh/gi, 'بھ'], [/dh/gi, 'دھ'], [/jh/gi, 'جھ'], [/rh/gi, 'ڑھ'],
-    [/aa/gi, 'آ'], [/ee/gi, 'ی'], [/oo/gi, 'و'], [/ai/gi, 'ئے'], [/au/gi, 'و'],
-    [/a/gi, 'ا'], [/b/gi, 'ب'], [/p/gi, 'پ'], [/t/gi, 'ت'], [/j/gi, 'ج'],
-    [/d/gi, 'د'], [/r/gi, 'ر'], [/z/gi, 'ز'], [/s/gi, 'س'], [/f/gi, 'ف'],
-    [/k/gi, 'ک'], [/g/gi, 'گ'], [/l/gi, 'ل'], [/m/gi, 'م'], [/n/gi, 'ن'],
-    [/v/gi, 'و'], [/w/gi, 'و'], [/h/gi, 'ہ'], [/y/gi, 'ی'], [/q/gi, 'ق'],
-    [/x/gi, 'ژ'], [/c/gi, 'ک'], [/i/gi, 'ی'], [/u/gi, 'و'], [/e/gi, 'ے']
-  ];
-
-  transliterate(roman: string): string {
-    let result = roman;
-    this.translitMap.forEach(([regex, replacement]) => {
-      result = result.replace(regex, replacement);
-    });
-    return result;
-  }
-
+  /**
+   * Translates text by looking up in dictionaries or applying phonetics.
+   */
   async translate(text: string): Promise<TranslationResult | null> {
     const clean = text.toLowerCase().trim();
     if (!clean) return null;
 
-    const ur = this.enToUr[clean];
-    if (ur) {
-      return { en: text, ur, roman: this.urToEn[ur] || clean };
+    const secondary = this.primaryToSecondary[clean];
+    if (secondary) {
+      return { en: text, ur: secondary, roman: clean };
     }
 
-    const en = this.urToEn[text.trim()];
-    if (en) {
-      return { en: en.charAt(0).toUpperCase() + en.slice(1), ur: text.trim(), roman: clean };
+    const primary = this.secondaryToPrimary[text.trim()];
+    if (primary) {
+      return { en: primary.charAt(0).toUpperCase() + primary.slice(1), ur: text.trim(), roman: clean };
     }
 
+    // Language-aware transliteration
     const isUrduScript = /[\u0600-\u06FF]/.test(text);
+    const isLatinScript = /^[a-z0-9\s.,!?-]+$/i.test(text);
+
     if (isUrduScript) {
       return { en: text, ur: text, roman: '' };
+    } else if (isLatinScript) {
+      // Don't force Urdu transliteration on Latin scripts (Spanish, English)
+      return { 
+        en: text.charAt(0).toUpperCase() + text.slice(1), 
+        ur: text, 
+        roman: text 
+      };
     } else {
-      return { en: text.charAt(0).toUpperCase() + text.slice(1), ur: this.transliterate(clean), roman: clean };
+      // Fallback
+      return { 
+        en: text.charAt(0).toUpperCase() + text.slice(1), 
+        ur: this.transliterate(clean), 
+        roman: clean 
+      };
     }
   }
 
-  translateEnToUr(en: string): string | null {
-    return this.enToUr[en.toLowerCase().trim()] || null;
+  translatePrimaryToSecondary(primary: string): string | null {
+    return this.primaryToSecondary[primary.toLowerCase().trim()] || null;
   }
 
-  translateUrToEn(ur: string): string | null {
-    const en = this.urToEn[ur.trim()];
-    if (!en) return null;
-    return en.length > 2 ? en.charAt(0).toUpperCase() + en.slice(1) : en;
+  translateSecondaryToPrimary(secondary: string): string | null {
+    const primary = this.secondaryToPrimary[secondary.trim()];
+    if (!primary) return null;
+    return primary.length > 2 ? primary.charAt(0).toUpperCase() + primary.slice(1) : primary;
+  }
+
+  private transliterate(romanUrdu: string): string {
+    const map: Record<string, string> = {
+      'a': 'ا', 'aa': 'آ', 'b': 'ب', 'p': 'پ', 't': 'ت', 'tt': 'ٹ', 's': 'ث', 'j': 'ج', 'ch': 'چ', 'h': 'ح', 'kh': 'خ',
+      'd': 'د', 'dd': 'ڈ', 'z': 'ذ', 'r': 'ر', 'rr': 'ڑ', 'zz': 'ز', 'zh': 'ژ', 'sh': 'ش', 'ss': 'ص', 'dz': 'ض',
+      'zo': 'ظ', 'ain': 'ع', 'gh': 'غ', 'f': 'ف', 'q': 'ق', 'k': 'ک', 'g': 'گ', 'l': 'ل', 'm': 'م',
+
+      'n': 'ن', 'w': 'و', 'v': 'و', 'o': 'و', 'u': 'و', 'i': 'ی', 'e': 'ی', 'y': 'ی'
+    };
+    
+    let result = '';
+    let i = 0;
+    while (i < romanUrdu.length) {
+      if (i + 1 < romanUrdu.length && map[romanUrdu.substring(i, i + 2)]) {
+        result += map[romanUrdu.substring(i, i + 2)];
+        i += 2;
+      } else if (map[romanUrdu[i]]) {
+        result += map[romanUrdu[i]];
+        i++;
+      } else {
+        result += romanUrdu[i];
+        i++;
+      }
+    }
+    return result;
   }
 }
 

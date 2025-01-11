@@ -3,8 +3,10 @@ import type { SketchRecognitionMode, Stroke } from '../recognition/db';
 
 export interface WordUniverseItem {
   id: string;
-  en: string;
-  ur: string;
+  text_primary: string;
+  text_secondary: string;
+  en: string; // Legacy support
+  ur: string; // Legacy support
   roman?: string;
   category: string;
   icon: string;
@@ -18,8 +20,10 @@ export interface WordUniverseItem {
 
 export interface CategoryFolder {
   id: string;
-  label_en: string;
-  label_ur: string;
+  label_primary: string;
+  label_secondary: string;
+  label_en: string; // Legacy support
+  label_ur: string; // Legacy support
   icon: string;
   order: number;
   isSystem?: boolean;
@@ -27,8 +31,10 @@ export interface CategoryFolder {
 
 export interface QuoteItem {
   id: string;
-  ur: string;
-  en: string;
+  text_primary: string;
+  text_secondary: string;
+  ur: string; // Legacy support
+  en: string; // Legacy support
   source: string;
   createdAt: number;
 }

@@ -11,6 +11,21 @@ export const wordNetwork = {
     }
   },
 
+  async recordTransition(fromId: string, toId: string) {
+    const fromWord = await universeDb.words.get(fromId);
+    if (fromWord) {
+      const next = [...(fromWord.next || [])];
+      if (!next.includes(toId)) {
+        next.push(toId);
+        await universeDb.words.update(fromId, { next });
+      }
+    }
+  },
+
+  getPredictions(contextIds: string[], limit: number = 6): string[] {
+    return [];
+  },
+
   async rankPredictions(items: any[], currentSentence: any[] = []): Promise<any[]> {
     const now = Date.now();
     const hour = new Date().getHours();
@@ -28,17 +43,19 @@ export const wordNetwork = {
 
       if (stats) {
         // 1. Usage Count (30%)
-        score += Math.min(stats.usageCount * 0.05, 0.3);
+        score += Math.min((stats.usageCount || 0) * 0.05, 0.3);
 
         // 2. Recency Bonus (20%)
-        const hoursSinceLastUse = (now - stats.lastUsedAt) / (1000 * 60 * 60);
-        if (hoursSinceLastUse < 24) {
-          score += 0.2 * (1 - hoursSinceLastUse / 24);
+        if (stats.lastUsedAt) {
+          const hoursSinceLastUse = (now - stats.lastUsedAt) / (1000 * 60 * 60);
+          if (hoursSinceLastUse < 24) {
+            score += 0.2 * (1 - hoursSinceLastUse / 24);
+          }
         }
 
         // 3. Time of Day Bias (20%)
         if (stats.timeBias && stats.timeBias[hour]) {
-          score += stats.timeBias[hour] * 0.2;
+          score += (stats.timeBias[hour] || 0) * 0.2;
         }
 
         // 4. Predictive Flow (30%)
@@ -49,7 +66,6 @@ export const wordNetwork = {
 
       return { ...item, rankScore: score };
     })
-    .sort((a, b) => (b.rankScore || 0) - (a.rankScore || 0))
-    .slice(0, 12); // Return a healthy selection for the UI to pick from
+    .sort((a, b) => (b.rankScore || 0) - (a.rankScore || 0));
   }
 };

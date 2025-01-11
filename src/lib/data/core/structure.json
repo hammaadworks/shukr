@@ -1,0 +1,6577 @@
+{
+  "categories": [
+    {
+      "id": "cat_custom",
+      "icon": "star",
+      "order": 8,
+      "isSystem": false
+    },
+    {
+      "id": "core",
+      "icon": "user",
+      "order": 0,
+      "isSystem": true
+    },
+    {
+      "id": "jazbaat",
+      "icon": "smile",
+      "order": 7,
+      "isSystem": false
+    },
+    {
+      "id": "kaam",
+      "icon": "play",
+      "order": 6,
+      "isSystem": false
+    },
+    {
+      "id": "khana",
+      "icon": "utensils",
+      "order": 5,
+      "isSystem": false
+    },
+    {
+      "id": "khandan",
+      "icon": "users",
+      "order": 4,
+      "isSystem": false
+    },
+    {
+      "id": "ruhani",
+      "icon": "heart",
+      "order": 2,
+      "isSystem": false
+    },
+    {
+      "id": "sehat",
+      "icon": "activity",
+      "order": 1,
+      "isSystem": false
+    },
+    {
+      "id": "zaroorat",
+      "icon": "shopping-cart",
+      "order": 3,
+      "isSystem": false
+    }
+  ],
+  "quick_actions": [
+    {
+      "id": "ji_haan",
+      "type": "phrase",
+      "icon": "check-circle",
+      "status": "positive"
+    },
+    {
+      "id": "ji_nahi",
+      "type": "phrase",
+      "icon": "x-circle",
+      "status": "negative"
+    },
+    {
+      "id": "alhamdulillah_qa",
+      "type": "phrase",
+      "icon": "smile",
+      "status": "neutral"
+    },
+    {
+      "id": "madad_qa",
+      "type": "word",
+      "icon": "hand",
+      "status": "urgent",
+      "isWord": true
+    },
+    {
+      "id": "acha_qa",
+      "type": "phrase",
+      "icon": "smile",
+      "status": "positive"
+    }
+  ],
+  "quotes": [
+    {
+      "id": "quote_sys_0",
+      "source": "",
+      "createdAt": 1775928819845
+    },
+    {
+      "id": "quote_sys_1",
+      "source": "Quran 94:5",
+      "createdAt": 1775928819845
+    },
+    {
+      "id": "quote_sys_2",
+      "source": "Quran 2:286",
+      "createdAt": 1775928819845
+    },
+    {
+      "id": "quote_sys_3",
+      "source": "Quran 3:139",
+      "createdAt": 1775928819845
+    },
+    {
+      "id": "quote_sys_4",
+      "source": "Quran 70:5",
+      "createdAt": 1775928819845
+    },
+    {
+      "id": "quote_sys_5",
+      "source": "Quran 3:150",
+      "createdAt": 1775928819845
+    },
+    {
+      "id": "quote_sys_6",
+      "source": "Quran 20:25",
+      "createdAt": 1775928819845
+    },
+    {
+      "id": "quote_sys_7",
+      "source": "Quran 26:80",
+      "createdAt": 1775928819845
+    }
+  ],
+  "words": [
+    {
+      "id": "aaj",
+      "icon": "calendar",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "aaj",
+      "category": "core",
+      "type": "word",
+      "usageCount": 11,
+      "lastUsedAt": 1775825141835,
+      "timeBias": []
+    },
+    {
+      "id": "aam",
+      "icon": "star",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "aam",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "aap",
+      "icon": "users",
+      "next": [
+        "kaise",
+        "kab",
+        "kahan",
+        "dedo",
+        "lelo",
+        "baitho",
+        "utho",
+        "chalo",
+        "suno",
+        "bolo",
+        "khush",
+        "dua"
+      ],
+      "roman": "aap",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "abhi",
+      "icon": "zap",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "abhi",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "ac",
+      "icon": "snowflake",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "ac",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "acha",
+      "icon": "smile",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "acha",
+      "category": "core",
+      "type": "word",
+      "usageCount": 3,
+      "lastUsedAt": 1775817165925,
+      "timeBias": []
+    },
+    {
+      "id": "achaar",
+      "icon": "bowl",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "achaar",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 1,
+      "lastUsedAt": 1775648476766,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "afsos",
+      "icon": "frown",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "afsos",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "alhamdulillah",
+      "icon": "smile",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "subhanallah",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "alhamdulillah",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "allah",
+      "icon": "star",
+      "next": [
+        "shukr",
+        "dua",
+        "jannat",
+        "mashallah",
+        "subhanallah",
+        "inshallah",
+        "reham",
+        "madad_kaam",
+        "alhamdulillah",
+        "shukrguzar",
+        "sukun",
+        "itminan"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "allah",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "anda",
+      "icon": "utensils",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "anda",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "araam",
+      "icon": "bed",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "roman": "araam",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "asr",
+      "icon": "sun",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "asr",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "astagfirullah",
+      "icon": "refresh-cw",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "astagfirullah",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "aur",
+      "icon": "plus",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "roman": "aur",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "ayat",
+      "icon": "type",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "ayat",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "ayna",
+      "icon": "square",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "ayna",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "baad",
+      "icon": "clock",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "baad",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "baap",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "baap",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "bacche",
+      "icon": "users",
+      "next": [
+        "kahan",
+        "kaise",
+        "bolo",
+        "suno",
+        "pyaar",
+        "khush",
+        "dua",
+        "idhar",
+        "udhar",
+        "ab",
+        "aaj",
+        "kal"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "bacche",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "bahu",
+      "icon": "user",
+      "next": [
+        "kahan",
+        "kaise",
+        "bolo",
+        "suno",
+        "pyaar",
+        "khush",
+        "dua",
+        "idhar",
+        "udhar",
+        "ab",
+        "aaj",
+        "kal"
+      ],
+      "roman": "bahu",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "baitho",
+      "icon": "user",
+      "next": [
+        "dedo",
+        "lelo",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "baitho",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "band",
+      "icon": "x",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "band",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "batao",
+      "icon": "volume-2",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "batao",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "bathroom",
+      "icon": "bath",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "bathroom",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "batti",
+      "icon": "zap",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "batti",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "behen",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "behen",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "behtar",
+      "icon": "smile",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "behtar",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "beta",
+      "icon": "user",
+      "next": [
+        "kahan",
+        "kaise",
+        "bolo",
+        "suno",
+        "pyaar",
+        "khush",
+        "dua",
+        "idhar",
+        "udhar",
+        "ab",
+        "aaj",
+        "kal"
+      ],
+      "roman": "beta",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "betaserk",
+      "icon": "pill",
+      "next": [
+        "chakkar",
+        "theek",
+        "dawaii"
+      ],
+      "roman": "betaserk",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "beti",
+      "icon": "user",
+      "next": [
+        "kahan",
+        "kaise",
+        "bolo",
+        "suno",
+        "pyaar",
+        "khush",
+        "dua",
+        "idhar",
+        "udhar",
+        "ab",
+        "aaj",
+        "kal"
+      ],
+      "roman": "beti",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "bhai",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "bhai",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "bhuk",
+      "icon": "utensils",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "bhuk",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "biryani",
+      "icon": "utensils",
+      "next": [
+        "khana_core",
+        "khao",
+        "dedo",
+        "chahiye",
+        "lelo",
+        "acha",
+        "bura",
+        "shukriya",
+        "alhamdulillah",
+        "aur",
+        "mazedar",
+        "garm"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "biryani",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 1,
+      "lastUsedAt": 1775648603252,
+      "timeBias": []
+    },
+    {
+      "id": "biscuit",
+      "icon": "square",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "biscuit",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "bistar",
+      "icon": "bed",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "bistar",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "bolo",
+      "icon": "volume-2",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "bolo",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "bore",
+      "icon": "loader",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "bore",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "bp",
+      "icon": "activity",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "bp",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "bukhaar",
+      "icon": "thermometer",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "bukhaar",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "bura",
+      "icon": "frown",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "bura",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "cake",
+      "icon": "utensils",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "cake",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "chacha",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "chacha",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "chachi",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "chachi",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "chahiye",
+      "icon": "heart",
+      "next": [
+        "pani",
+        "khana_core",
+        "dawaii",
+        "araam",
+        "chai",
+        "dudh",
+        "takiya",
+        "kambal",
+        "bathroom",
+        "dua",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "chahiyay",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "chai",
+      "icon": "coffee",
+      "next": [
+        "dedo",
+        "piyo",
+        "chahiye",
+        "lelo",
+        "shukriya",
+        "alhamdulillah",
+        "aur",
+        "thanda",
+        "garam",
+        "acha",
+        "bura",
+        "mai"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "chai",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "chakkar",
+      "icon": "refresh-cw",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "chakkar",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "chalo",
+      "icon": "arrow-right",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "chalo",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "charger",
+      "icon": "battery",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "charger",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "chashma",
+      "icon": "eye",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "roman": "chashma",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "chawal",
+      "icon": "utensils",
+      "next": [
+        "khana_core",
+        "khao",
+        "dedo",
+        "chahiye",
+        "lelo",
+        "acha",
+        "bura",
+        "shukriya",
+        "alhamdulillah",
+        "aur",
+        "mazedar",
+        "garm"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "chawal",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "checkup",
+      "icon": "search",
+      "next": [
+        "doctor",
+        "nurse",
+        "hospital",
+        "theek",
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "shukriya"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "checkup",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "cheeni",
+      "icon": "utensils",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "cheeni",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "daane",
+      "icon": "droplet",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "daanay",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "dada",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "dada",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "dadi",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "dadi",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "dahi",
+      "icon": "bowl",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "dahi",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "dal",
+      "icon": "bowl",
+      "next": [
+        "khana_core",
+        "khao",
+        "dedo",
+        "chahiye",
+        "lelo",
+        "acha",
+        "bura",
+        "shukriya",
+        "alhamdulillah",
+        "aur",
+        "mazedar",
+        "garm"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "dal",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "damad",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "damad",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "dar",
+      "icon": "alert-triangle",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "dar",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "dard_ghutna",
+      "icon": "alert-circle",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "dard ghutna",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "dard_kan",
+      "icon": "alert-circle",
+      "next": [
+        "doctor",
+        "nurse",
+        "dawaii",
+        "theek",
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "shukriya"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "dard kan",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "dard_mein",
+      "icon": "alert-triangle",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "dard mein",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "dard_pait",
+      "icon": "alert-circle",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "dard pait",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "dard_pith",
+      "icon": "alert-circle",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "dard pith",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "dard_sar",
+      "icon": "alert-circle",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_pait",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "dard sar",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "dawaii",
+      "icon": "pill",
+      "next": [
+        "theek",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "dawaii",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "dedo",
+      "icon": "hand",
+      "next": [
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "dedo",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "dekho",
+      "icon": "eye",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "dekho",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "dheere",
+      "icon": "loader",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "khul",
+        "band",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "dheere",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "dho_lo",
+      "icon": "droplets",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "dho lo",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "dikhao",
+      "icon": "eye",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "dikhao",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "doctor_khandan",
+      "icon": "activity",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "doctor khandan",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "doctor_sehat",
+      "icon": "user",
+      "next": [
+        "checkup",
+        "dawaii",
+        "hospital",
+        "theek",
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "shukriya"
+      ],
+      "roman": "doctor",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "dua",
+      "icon": "hand",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "dua",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "dudh",
+      "icon": "milk",
+      "next": [
+        "dedo",
+        "piyo",
+        "chahiye",
+        "lelo",
+        "shukriya",
+        "alhamdulillah",
+        "aur",
+        "thanda",
+        "garam",
+        "acha",
+        "bura",
+        "mai"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "dudh",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 1,
+      "lastUsedAt": 1775648586828,
+      "timeBias": []
+    },
+    {
+      "id": "fajr",
+      "icon": "sun",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "fajr",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "fakhar",
+      "icon": "star",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "fakhar",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "farishta",
+      "icon": "star",
+      "next": [
+        "allah",
+        "dua",
+        "namaz",
+        "quran",
+        "rasool",
+        "theek",
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "farishta",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "garmi",
+      "icon": "sun",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "garmi",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "ghabrahat",
+      "icon": "refresh-cw",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "ghabrahat",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "ghari",
+      "icon": "clock",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "ghari",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "goli",
+      "icon": "pill",
+      "next": [
+        "theek",
+        "dawaii",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "goli",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "gosht",
+      "icon": "utensils",
+      "next": [
+        "khana_core",
+        "khao",
+        "dedo",
+        "chahiye",
+        "lelo",
+        "acha",
+        "bura",
+        "shukriya",
+        "alhamdulillah",
+        "aur",
+        "mazedar",
+        "garm"
+      ],
+      "roman": "gosht",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "gussa",
+      "icon": "alert-circle",
+      "next": [
+        "khush",
+        "udaas",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "gussa",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "haan",
+      "icon": "check",
+      "next": [
+        "shukriya",
+        "alhamdulillah",
+        "theek"
+      ],
+      "roman": "haan",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "hai",
+      "icon": "check-circle",
+      "next": [
+        "theek",
+        "acha",
+        "bura",
+        "kahan",
+        "kab",
+        "kyun",
+        "ab",
+        "baad",
+        "abhi",
+        "ya",
+        "aur",
+        "alhamdulillah"
+      ],
+      "roman": "hai",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "hairan",
+      "icon": "zap",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "hairan",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "hajj",
+      "icon": "home",
+      "next": [
+        "allah",
+        "makkah",
+        "madinah",
+        "dua",
+        "namaz",
+        "theek",
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "hajj",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "halwa",
+      "icon": "utensils",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "halwa",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "himmat_jazbaat",
+      "icon": "shield",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "himmat jazbaat",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "hospital",
+      "icon": "home",
+      "next": [
+        "doctor",
+        "nurse",
+        "checkup",
+        "theek",
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "shukriya"
+      ],
+      "roman": "hospital",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "hua",
+      "icon": "check-circle",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "roman": "hua",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "hun",
+      "icon": "check-circle",
+      "next": [
+        "theek",
+        "khush",
+        "udaas",
+        "thak",
+        "behtar",
+        "shukrguzar",
+        "alhamdulillah",
+        "shukr",
+        "itminan",
+        "sukun",
+        "acha",
+        "bura"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "hoon",
+      "category": "core",
+      "type": "word",
+      "usageCount": 11,
+      "lastUsedAt": 1775825143669,
+      "timeBias": []
+    },
+    {
+      "id": "idhar",
+      "icon": "arrow-left",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "idhar",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "injection",
+      "icon": "syringe",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "injection",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "inshallah",
+      "icon": "smile",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "inshallah",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "intezar",
+      "icon": "clock",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "intezar",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "isha",
+      "icon": "moon",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "isha",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "itminan",
+      "icon": "check-circle",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "behtar",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "itminan",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "jalan",
+      "icon": "zap",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "jalan",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "jaldi",
+      "icon": "zap",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "jaldi",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "janamaz",
+      "icon": "square",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "janamaz",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "jannat",
+      "icon": "star",
+      "next": [
+        "allah",
+        "dua",
+        "namaz",
+        "quran",
+        "rasool",
+        "theek",
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "jannat",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "jootay",
+      "icon": "footprints",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "jootay",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "juice",
+      "icon": "cup",
+      "next": [
+        "dedo",
+        "piyo",
+        "chahiye",
+        "lelo",
+        "shukriya",
+        "alhamdulillah",
+        "aur",
+        "thanda",
+        "garam",
+        "acha",
+        "bura",
+        "mai"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "juice",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "kab",
+      "icon": "clock",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "kab",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "kahan",
+      "icon": "search",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "kahan",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "kaise",
+      "icon": "help-circle",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "roman": "kaisay",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "kal",
+      "icon": "calendar",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "kal",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "kambal",
+      "icon": "square",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "kambal",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "kamzor_jazbaat",
+      "icon": "battery-low",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "kamzor jazbaat",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "kamzori",
+      "icon": "battery-low",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "kamzori",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "kangi",
+      "icon": "scissors",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "kangi",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "kapre",
+      "icon": "shirt",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "kapre",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "kela",
+      "icon": "banana",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "kela",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "khala",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "khala",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "khaloo",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "khaloo",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "khana_core",
+      "icon": "utensils",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "roman": "khana",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "khansi",
+      "icon": "wind",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "khansi",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "khao",
+      "icon": "utensils",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "khao",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "kharray",
+      "icon": "user",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "kharray",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "kheer",
+      "icon": "bowl",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "kheer",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "khichdi",
+      "icon": "bowl",
+      "next": [
+        "khana_core",
+        "khao",
+        "dedo",
+        "chahiye",
+        "lelo",
+        "acha",
+        "bura",
+        "shukriya",
+        "alhamdulillah",
+        "aur",
+        "mazedar",
+        "garm"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "khichdi",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "khujli",
+      "icon": "fingerprint",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "khujli",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "khul",
+      "icon": "plus",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "band",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "khul",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "khush",
+      "icon": "smile",
+      "next": [
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "khush",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "kursi",
+      "icon": "user",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "roman": "kursi",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "kya",
+      "icon": "help-circle",
+      "next": [
+        "hai",
+        "hua",
+        "waqt",
+        "kaise",
+        "kahan",
+        "kab",
+        "kyun",
+        "bolti",
+        "suno",
+        "dikhao",
+        "pucho",
+        "batao"
+      ],
+      "roman": "kya",
+      "category": "core",
+      "type": "word",
+      "usageCount": 1,
+      "lastUsedAt": 1775650755858,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "kyun",
+      "icon": "help-circle",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "roman": "kyoon",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "lassi",
+      "icon": "cup",
+      "next": [
+        "dedo",
+        "piyo",
+        "chahiye",
+        "lelo",
+        "shukriya",
+        "alhamdulillah",
+        "aur",
+        "thanda",
+        "garam",
+        "acha",
+        "bura",
+        "roti"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "lassi",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "lathi",
+      "icon": "zap",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "roman": "lathi",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "lekin",
+      "icon": "alert-triangle",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "roman": "lekin",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "leli",
+      "icon": "check-circle",
+      "next": [
+        "shukriya",
+        "alhamdulillah"
+      ],
+      "roman": "leli",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "lelo",
+      "icon": "hand",
+      "next": [
+        "dedo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "lelo",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "likho",
+      "icon": "type",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "likho",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "lotion",
+      "icon": "droplets",
+      "next": [
+        "lagao",
+        "chahiye",
+        "khujli"
+      ],
+      "roman": "lotion",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "maa",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "maa",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 1,
+      "lastUsedAt": 1775666416579,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "machli",
+      "icon": "utensils",
+      "next": [
+        "khana_core",
+        "khao",
+        "dedo",
+        "chahiye",
+        "lelo",
+        "acha",
+        "bura",
+        "shukriya",
+        "alhamdulillah",
+        "aur",
+        "mazedar",
+        "garm"
+      ],
+      "roman": "machli",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "madad_kaam",
+      "icon": "help-circle",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "madad kaam",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "madadgar",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "madadgar",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "madinah",
+      "icon": "home",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "madinah",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "maghrib",
+      "icon": "moon",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "maghrib",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "mai",
+      "icon": "user",
+      "next": [
+        "hun",
+        "theek",
+        "khush",
+        "udaas",
+        "thak",
+        "behtar",
+        "shukrguzar",
+        "alhamdulillah",
+        "shukr",
+        "acha",
+        "bura",
+        "tabiyat_kharab"
+      ],
+      "roman": "main",
+      "category": "core",
+      "type": "word",
+      "usageCount": 40,
+      "lastUsedAt": 1775927337913,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "makkah",
+      "icon": "home",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "makkah",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "malham",
+      "icon": "droplets",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "malham",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "malta",
+      "icon": "star",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "malta",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "mami",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "mami",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "mamoo",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "mamoo",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "masala",
+      "icon": "zap",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "masala",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "mashallah",
+      "icon": "smile",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "mashallah",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "masjid",
+      "icon": "home",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "masjid",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "masood",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "masood",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "matli",
+      "icon": "loader",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "matli",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "mayoos",
+      "icon": "frown",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "mayoos",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "mithai",
+      "icon": "utensils",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "mithai",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "moze",
+      "icon": "footprints",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "moze",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "mujhe",
+      "icon": "hand",
+      "next": [
+        "chahiye",
+        "pani",
+        "chai",
+        "dard_mein",
+        "bukhaar",
+        "neend",
+        "bhuk",
+        "pyas",
+        "alhamdulillah",
+        "shukr",
+        "dua",
+        "dawaii"
+      ],
+      "roman": "mujhay",
+      "category": "core",
+      "type": "word",
+      "usageCount": 15,
+      "lastUsedAt": 1775842788464,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "murghi",
+      "icon": "utensils",
+      "next": [
+        "khana_core",
+        "khao",
+        "dedo",
+        "chahiye",
+        "lelo",
+        "acha",
+        "bura",
+        "shukriya",
+        "alhamdulillah",
+        "aur",
+        "mazedar",
+        "garm"
+      ],
+      "roman": "murghi",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "nahi",
+      "icon": "x-circle",
+      "next": [
+        "chahiye",
+        "khao",
+        "piyo",
+        "baitho",
+        "chalo",
+        "theek",
+        "hua",
+        "hai",
+        "hun",
+        "shukriya",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "nahi",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "namak",
+      "icon": "utensils",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "namak",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "namaz",
+      "icon": "home",
+      "next": [
+        "allah",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "namaz",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "nana",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "nana",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "nani",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "nani",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "nawasa",
+      "icon": "user",
+      "next": [
+        "kahan",
+        "kaise",
+        "bolo",
+        "suno",
+        "pyaar",
+        "khush",
+        "dua",
+        "idhar",
+        "udhar",
+        "ab",
+        "aaj",
+        "kal"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "nawasa",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "nawasi",
+      "icon": "user",
+      "next": [
+        "kahan",
+        "kaise",
+        "bolo",
+        "suno",
+        "pyaar",
+        "khush",
+        "dua",
+        "idhar",
+        "udhar",
+        "ab",
+        "aaj",
+        "kal"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "nawasi",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "nazla",
+      "icon": "snowflake",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "nazla",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "neend",
+      "icon": "moon",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "neend",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "nurse_khandan",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "madadgar",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "nurse khandan",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "nurse_sehat",
+      "icon": "user",
+      "next": [
+        "madad",
+        "dawaii",
+        "injection",
+        "theek",
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "shukriya"
+      ],
+      "roman": "nurse",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "paise",
+      "icon": "wallet",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "paise",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "pakora",
+      "icon": "utensils",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "pakora",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "panadol",
+      "icon": "pill",
+      "next": [
+        "dedo",
+        "theek",
+        "dard_sar",
+        "bukhaar"
+      ],
+      "roman": "panadol",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "pani",
+      "icon": "droplet",
+      "next": [
+        "dedo",
+        "piyo",
+        "chahiye",
+        "lelo",
+        "shukriya",
+        "alhamdulillah",
+        "aur",
+        "thanda",
+        "garam",
+        "acha",
+        "bura",
+        "mai"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "pani",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "pani_core",
+      "icon": "droplet",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "roman": "pani",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "pankha",
+      "icon": "wind",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "pankha",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "pareshan",
+      "icon": "help-circle",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "pareshan",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "parho",
+      "icon": "book-open",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "parho",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "patti",
+      "icon": "shield",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "patti",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "phal",
+      "icon": "star",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "phal",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "phone_karo",
+      "icon": "phone",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "phone karo",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "phone_zaroorat",
+      "icon": "phone",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "roman": "phone zaroorat",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "phupha",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "phupha",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "phupho",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "phupho",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "piyo",
+      "icon": "cup",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "piyo",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "pota",
+      "icon": "user",
+      "next": [
+        "kahan",
+        "kaise",
+        "bolo",
+        "suno",
+        "pyaar",
+        "khush",
+        "dua",
+        "idhar",
+        "udhar",
+        "ab",
+        "aaj",
+        "kal"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "pota",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "poti",
+      "icon": "user",
+      "next": [
+        "kahan",
+        "kaise",
+        "bolo",
+        "suno",
+        "pyaar",
+        "khush",
+        "dua",
+        "idhar",
+        "udhar",
+        "ab",
+        "aaj",
+        "kal"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "poti",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "pucho",
+      "icon": "help-circle",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "pucho",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "pukao",
+      "icon": "utensils",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "pukao",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "pur_josh",
+      "icon": "zap",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "pur josh",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "pyaar",
+      "icon": "heart",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "pyaar",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "pyas",
+      "icon": "droplet",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "pyas",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "quran",
+      "icon": "book-open",
+      "next": [
+        "allah",
+        "namaz",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "quran",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "rakho",
+      "icon": "hand",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "rakho",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "rasool",
+      "icon": "user",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "rasool",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "remote",
+      "icon": "zap",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "remote",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "roti",
+      "icon": "utensils",
+      "next": [
+        "khana_core",
+        "khao",
+        "dedo",
+        "chahiye",
+        "lelo",
+        "acha",
+        "bura",
+        "shukriya",
+        "alhamdulillah",
+        "aur",
+        "mazedar",
+        "garm"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "roti",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "roza",
+      "icon": "sun",
+      "next": [
+        "allah",
+        "iftar",
+        "sehri",
+        "dua",
+        "namaz",
+        "theek",
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "roza",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "ruko",
+      "icon": "stop-circle",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "ruko",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "rus",
+      "icon": "square",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "rus",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "saaf_kaam",
+      "icon": "sparkles",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "saaf kaam",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "sabr",
+      "icon": "heart",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "sabr",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "sabun",
+      "icon": "droplets",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "sabun",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "sabzi",
+      "icon": "leaf",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "sabzi",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "salan",
+      "icon": "bowl",
+      "next": [
+        "khana_core",
+        "khao",
+        "dedo",
+        "chahiye",
+        "lelo",
+        "acha",
+        "bura",
+        "shukriya",
+        "alhamdulillah",
+        "aur",
+        "mazedar",
+        "garm"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "salan",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "samosa",
+      "icon": "utensils",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "seb",
+        "kela",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "samosa",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "sans",
+      "icon": "wind",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "sans",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "sath",
+      "icon": "users",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "roman": "saath",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "seb",
+      "icon": "apple",
+      "next": [
+        "roti",
+        "salan",
+        "dal",
+        "chawal",
+        "khichdi",
+        "biryani",
+        "gosht",
+        "phal",
+        "kela",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "seb",
+      "category": "khana",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "sharm",
+      "icon": "user",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "sharm",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "shingles",
+      "icon": "alert-circle",
+      "next": [
+        "dard_mein",
+        "khujli",
+        "jalan",
+        "daane",
+        "malham",
+        "dawaii"
+      ],
+      "roman": "shingles",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "shohar",
+      "icon": "user",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "pota",
+        "poti",
+        "masood",
+        "doctor",
+        "nurse",
+        "madadgar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "shohar",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "shukr",
+      "icon": "heart",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "shukr",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "shukrguzar",
+      "icon": "heart",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "shukrguzar",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "shukriya",
+      "icon": "smile",
+      "next": [
+        "beta",
+        "beti",
+        "bahu",
+        "bacche",
+        "aap",
+        "shukr",
+        "allah",
+        "khush",
+        "dua",
+        "alhamdulillah",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "shukriya",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "so_jao",
+      "icon": "moon",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "so jao",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "sojan",
+      "icon": "loader",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "sojan",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "sona_zaroorat",
+      "icon": "moon",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "roman": "sona zaroorat",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "subhanallah",
+      "icon": "star",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "subhanallah",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "sugar",
+      "icon": "activity",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "sugar",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "sukun",
+      "icon": "heart",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "sukun",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "suno",
+      "icon": "volume-2",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "suno",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "surah",
+      "icon": "book-open",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "surah",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "surkhi",
+      "icon": "eye",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "surkhi",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "tabiyat_kharab",
+      "icon": "frown",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "tabiyat kharab",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "takiya",
+      "icon": "bed",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "takiya",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "tanha",
+      "icon": "user",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "tanha",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "tasbeeh",
+      "icon": "refresh-cw",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "tasbeeh",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "tauliya",
+      "icon": "square",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "tauliya",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "tel",
+      "icon": "droplets",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "tel",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "tez_dard",
+      "icon": "alert-triangle",
+      "next": [
+        "theek",
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "tez dard",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "thak",
+      "icon": "battery-low",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "thak",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "thand",
+      "icon": "snowflake",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "thand",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "thandak",
+      "icon": "snowflake",
+      "next": [
+        "chahiye",
+        "malham",
+        "jalan"
+      ],
+      "roman": "thandak",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "theek",
+      "icon": "check-circle",
+      "next": [
+        "dawaii",
+        "goli",
+        "bp",
+        "sugar",
+        "bukhaar",
+        "khansi",
+        "nazla",
+        "dard_sar",
+        "dard_pait",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "theek",
+      "category": "sehat",
+      "type": "word",
+      "usageCount": 1,
+      "lastUsedAt": 1775648520206,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "udaas",
+      "icon": "frown",
+      "next": [
+        "khush",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "roman": "udaas",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "udhar",
+      "icon": "arrow-right",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "square"
+      ],
+      "roman": "udhar",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "umeed",
+      "icon": "star",
+      "next": [
+        "khush",
+        "udaas",
+        "gussa",
+        "thak",
+        "neend",
+        "bhuk",
+        "pyas",
+        "sukun",
+        "itminan",
+        "behtar",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "umeed",
+      "category": "jazbaat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "uthao",
+      "icon": "hand",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "roman": "uthao",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "utho",
+      "icon": "sun",
+      "next": [
+        "dedo",
+        "lelo",
+        "baitho",
+        "kharray",
+        "chalo",
+        "ruko",
+        "jaldi",
+        "dheere",
+        "khul",
+        "band",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "zigzag"
+      ],
+      "roman": "utho",
+      "category": "kaam",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "waqt",
+      "icon": "clock",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "tags": [
+        "circle"
+      ],
+      "roman": "waqt",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "wheelchair",
+      "icon": "user",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "roman": "wheelchair",
+      "category": "zaroorat",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "word_1775277152990",
+      "roman": "salam",
+      "icon": "volume",
+      "next": [],
+      "category": "cat_custom",
+      "type": "word",
+      "usageCount": 6,
+      "lastUsedAt": 1775817165172,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "word_1775652284561",
+      "roman": "gold",
+      "icon": "star",
+      "next": [],
+      "categoryId": "cat_custom",
+      "category": "cat_custom",
+      "type": "word",
+      "usageCount": 1,
+      "lastUsedAt": 1775652301378,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "word_1775666401083",
+      "roman": "maqsood",
+      "icon": "user",
+      "next": [],
+      "categoryId": "khandan",
+      "category": "khandan",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "word_1775666424293",
+      "roman": "jewellery",
+      "icon": "star",
+      "next": [],
+      "categoryId": "cat_custom",
+      "category": "cat_custom",
+      "type": "word",
+      "usageCount": 1,
+      "lastUsedAt": 1775666487113,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "wudu",
+      "icon": "droplets",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe",
+        "aap"
+      ],
+      "tags": [
+        "wave"
+      ],
+      "roman": "wuzu",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "ya",
+      "icon": "refresh-cw",
+      "next": [
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai",
+        "hun",
+        "nahi",
+        "chahiye",
+        "shukriya",
+        "theek",
+        "pani"
+      ],
+      "roman": "ya",
+      "category": "core",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "yeh",
+      "icon": "arrow-right",
+      "next": [
+        "kya",
+        "hai",
+        "theek",
+        "acha",
+        "bura",
+        "dedo",
+        "lelo",
+        "rakho",
+        "uthao",
+        "saaf_kaam",
+        "khul",
+        "band"
+      ],
+      "roman": "yeh",
+      "category": "core",
+      "type": "word",
+      "usageCount": 1,
+      "lastUsedAt": 1775650754507,
+      "timeBias": [],
+      "tags": []
+    },
+    {
+      "id": "zakat",
+      "icon": "heart",
+      "next": [
+        "allah",
+        "madad",
+        "dua",
+        "namaz",
+        "shukr",
+        "theek",
+        "mai",
+        "mujhe",
+        "aap",
+        "yeh",
+        "kya",
+        "hai"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "zakat",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "zuhr",
+      "icon": "sun",
+      "next": [
+        "allah",
+        "namaz",
+        "quran",
+        "dua",
+        "tasbeeh",
+        "wudu",
+        "sabr",
+        "shukr",
+        "alhamdulillah",
+        "subhanallah",
+        "mai",
+        "mujhe"
+      ],
+      "tags": [
+        "triangle"
+      ],
+      "roman": "zuhr",
+      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    }
+  ]
+}
