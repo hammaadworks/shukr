@@ -13,7 +13,7 @@ const setGlobalPlayingId = (id: string | null) => {
 };
 
 export const useAudio = () => {
-  const { language } = useLanguage();
+  const { language, primaryLanguage } = useLanguage();
   const { config } = useAppConfig();
   const [currentlyPlayingId, setCurrentlyPlayingId] = useState<string | null>(globalPlayingId);
 
@@ -145,8 +145,18 @@ export const useAudio = () => {
 
           audio.onerror = () => {
             if (objectUrl) URL.revokeObjectURL(objectUrl);
-            if (id && globalPlayingId === id) setGlobalPlayingId(null);
-            resolve();
+            // Fallback to Browser TTS
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = language === 'ur' ? 'ur-PK' : (language === 'es' ? 'es-ES' : (language === 'ar' ? 'ar-SA' : 'en-US'));
+            utterance.onend = () => {
+              if (id && globalPlayingId === id) setGlobalPlayingId(null);
+              resolve();
+            };
+            utterance.onerror = () => {
+              if (id && globalPlayingId === id) setGlobalPlayingId(null);
+              resolve();
+            };
+            window.speechSynthesis.speak(utterance);
           };
 
           await audio.play();
@@ -164,11 +174,12 @@ export const useAudio = () => {
 
   const speakSequence = useCallback(async (words: any[]) => {
     for (const word of words) {
-      const text = language === 'ur' ? word.ur : word.en;
+      const isPrimary = language === primaryLanguage;
+      const text = isPrimary ? (word.text_primary || word.ur) : (word.text_secondary || word.en);
       await speak(text, word.id);
       await new Promise(r => setTimeout(r, 150));
     }
-  }, [speak, language]);
+  }, [speak, language, primaryLanguage]);
 
   return { speak, speakSequence, playClick, toggleFlashlight, playSOS, stopSOS, currentlyPlayingId };
 };

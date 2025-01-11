@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { type GestureAction, FIXED_GESTURE_MAP } from '../recognition/gestures/types';
 import { GestureModelLoader } from '../recognition/gestures/modelLoader';
 import { HandGestureRecognizer } from '../recognition/gestures/HandGestureRecognizer';
 import { FaceGestureRecognizer } from '../recognition/gestures/FaceGestureRecognizer';
@@ -11,7 +10,7 @@ import { FaceGestureRecognizer } from '../recognition/gestures/FaceGestureRecogn
  * 2. CPU Throttling (20 FPS)
  * 3. WASM Memory Isolation
  */
-export const useCameraGestures = (onAction: (action: GestureAction) => void, forceDisabled: boolean = false) => {
+export const useCameraGestures = (onAction: (gestureKey: string) => void, forceDisabled: boolean = false) => {
   const [isEnabled, setIsEnabled] = useState(true);
   const [isRecognitionActive, setIsRecognitionActive] = useState(true);
   const [isModelLoaded, setIsModelLoaded] = useState(false);
@@ -32,7 +31,6 @@ export const useCameraGestures = (onAction: (action: GestureAction) => void, for
   // Configuration - Targeted for mobile performance
   const FRAME_THROTTLE = 1000 / 20; // 20 FPS is the "sweet spot"
   const ACTION_COOLDOWN = 1200; 
-  const TOGGLE_COOLDOWN = 2000;
 
   // Stable reference for the prediction function
   const predictRef = useRef<() => void>(() => {});
@@ -68,26 +66,14 @@ export const useCameraGestures = (onAction: (action: GestureAction) => void, for
     
     if (!stableGesture || stableGesture === 'none') return;
 
-    const action = FIXED_GESTURE_MAP[stableGesture];
-    if (!action) return;
-
     const now = Date.now();
-    if (action === 'TOGGLE_RECOGNITION') {
-      if (now - (lastActionTimeRef.current[action] || 0) > TOGGLE_COOLDOWN) {
-        lastActionTimeRef.current[action] = now;
-        setIsRecognitionActive(prev => !prev);
-        onAction(action);
-      }
-      return;
+    
+    // Check cooldowns based on physical gesture ID
+    if (now - (lastActionTimeRef.current[stableGesture] || 0) > ACTION_COOLDOWN) {
+      lastActionTimeRef.current[stableGesture] = now;
+      onAction(stableGesture);
     }
-
-    if (!isRecognitionActive) return;
-
-    if (now - (lastActionTimeRef.current[action] || 0) > ACTION_COOLDOWN) {
-      lastActionTimeRef.current[action] = now;
-      onAction(action);
-    }
-  }, [isRecognitionActive, onAction]);
+  }, [onAction]);
 
   // 3. Optimized Prediction Loop - Stable loop assignment
   useEffect(() => {
@@ -123,18 +109,19 @@ export const useCameraGestures = (onAction: (action: GestureAction) => void, for
 
         const timestamp = performance.now();
 
-        // Detection
-        const handResults = hand.detectForVideo(videoRef.current, timestamp);
-        const handGestureKey = HandGestureRecognizer.detectGesture(handResults);
-        
-        // Pass to stabilization handler (even if null to clear buffer)
-        handleDetectedGesture(handGestureKey);
-
-        // Only run face detection if recognition is active (Saves CPU)
+        // Only run detection if recognition is active (Saves CPU)
         if (isRecognitionActive) {
-          const faceResults = face.detectForVideo(videoRef.current, timestamp);
-          const faceGestureKey = FaceGestureRecognizer.detectGesture(faceResults);
-          if (faceGestureKey) handleDetectedGesture(faceGestureKey);
+            // Hand Detection
+            const handResults = hand.detectForVideo(videoRef.current, timestamp);
+            const handGestureKey = HandGestureRecognizer.detectGesture(handResults);
+            if (handGestureKey) {
+                handleDetectedGesture(handGestureKey);
+            } else {
+                // Face Detection
+                const faceResults = face.detectForVideo(videoRef.current, timestamp);
+                const faceGestureKey = FaceGestureRecognizer.detectGesture(faceResults);
+                if (faceGestureKey) handleDetectedGesture(faceGestureKey);
+            }
         }
       } catch (error) {
         // Catch transient MediaPipe errors without breaking the entire loop
@@ -208,13 +195,14 @@ export const useCameraGestures = (onAction: (action: GestureAction) => void, for
         requestRef.current = 0;
       }
     };
-  }, [effectiveEnabled, isModelLoaded, handleDetectedGesture]);
+  }, [effectiveEnabled, isModelLoaded]);
 
   return { 
     isEnabled, 
     effectiveEnabled,
     isRecognitionActive,
-    toggleTracking: () => setIsEnabled(!isEnabled), 
+    toggleTracking: () => setIsEnabled(!isEnabled),
+    setIsRecognitionActive,
     videoRef, 
     isModelLoaded 
   };

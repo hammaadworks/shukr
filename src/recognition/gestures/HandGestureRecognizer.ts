@@ -18,29 +18,14 @@ export class HandGestureRecognizer {
     
     const upCount = [isIndexUp, isMiddleUp, isRingUp, isPinkyUp].filter(Boolean).length;
 
-    // 1. Palm (Clear/Home) - All 5 fingers MUST be up clearly
-    if (upCount === 4 && isThumbUp) return 'palm';
+    // 1. Palm (Clear/Home) - All 4 main fingers up + thumb
+    if (upCount >= 3 && isThumbUp) return 'palm';
 
-    // 2. Peace Sign (Salam) - Exactly Index & Middle up, others down
-    if (upCount === 2 && isIndexUp && isMiddleUp && !isRingUp && !isPinkyUp) return 'peace_sign';
-
-    // 3. Thumb Up (Yes/Select fallback) - Only thumb up
-    if (isThumbUp && upCount === 0) return 'thumb_up';
-
-    // 4. Three Fingers (Doodle) - Index, Middle, Ring up
-    if (upCount === 3 && isIndexUp && isMiddleUp && isRingUp && !isPinkyUp) return 'three_fingers';
-
-    // 5. Two Fingers (Prev) - Index and Middle (already handled by peace_sign, but as fallback)
-    if (upCount === 2 && isIndexUp && isMiddleUp) return 'two_fingers';
-
-    // 6. One Finger (Next) - ONLY Index up
+    // 2. One Finger (Next) - ONLY Index up
     if (upCount === 1 && isIndexUp && !isMiddleUp && !isRingUp && !isPinkyUp) return 'one_finger';
 
-    // 7. Fist (Select) - All fingers down, including thumb
-    if (upCount === 0 && !isThumbUp) {
-      // Ensure it's actually a hand by checking landmarks distance or just rely on MP
-      return 'fist';
-    }
+    // 3. Fist (Yes) - All fingers down, including thumb
+    if (upCount === 0 && !isThumbUp) return 'fist';
 
     return null;
   }
