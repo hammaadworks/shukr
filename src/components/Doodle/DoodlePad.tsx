@@ -16,7 +16,7 @@ interface DoodlePadProps {
 }
 
 export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focusedIndex }) => {
-  const { isUrdu } = useLanguage();
+  const { isPrimary } = useLanguage();
   const { playClick, speak } = useAudio();
   
   const [currentStrokes, setCurrentStrokes] = useState<Stroke[]>([]);
@@ -131,13 +131,13 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focus
           onClear={clearCanvas} 
           onTrain={() => {
             if (currentStrokes.length === 0) {
-              speak(isUrdu ? "پہلے کچھ ڈرا کریں!" : "Draw something first!");
+              speak(isPrimary ? "پہلے کچھ ڈرا کریں!" : "Draw something first!");
               return;
             }
             setShowTrainModal(true);
             playClick();
           }} 
-          isUrdu={isUrdu} 
+          isPrimary={isPrimary} 
         />
       </div>
 

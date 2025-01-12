@@ -6,10 +6,13 @@ import {universeDb} from '../lib/universeDb';
 import {WordEditor} from './WordEditor';
 import {AlertDialog, ConfirmDialog, PromptDialog, SelectDialog} from './modals/Dialogs';
 
+import { useLanguage, SUPPORTED_LANGS } from '../hooks/useLanguage';
+
 interface SettingsPanelProps {
     config: any;
     updateConfig: (newConfig: any) => void;
     onOpenVoiceStudio: () => void;
+    onShowLanding?: () => void;
     onClose: () => void;
     initialTab?: TabType;
     initialEditingItem?: any;
@@ -17,16 +20,18 @@ interface SettingsPanelProps {
 
 type EditingType = 'word' | 'category' | 'quote';
 
-type TabType = 'contact' | 'voice' | 'data';
+type TabType = 'contact' | 'voice' | 'data' | 'language';
 
 export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                                                 config,
                                                                 updateConfig,
                                                                 onOpenVoiceStudio,
+                                                                onShowLanding,
                                                                 onClose,
                                                                 initialTab,
                                                                 initialEditingItem
                                                             }) => {
+    const { primaryLanguage, secondaryLanguage, setLanguagePair, language } = useLanguage();
     const [activeTab, setActiveTab] = useState<TabType>(initialTab || 'contact');
     const [editingItem, setEditingItem] = useState<any | null>(initialEditingItem || null);
     const [editingType] = useState<EditingType>(initialEditingItem ? (initialEditingItem.type || 'word') : 'word');
@@ -48,6 +53,8 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
         action: (val: string) => void
     } | null>(null);
     const [showVoiceSelect, setShowVoiceSelect] = useState(false);
+    const [showPrimarySelect, setShowPrimarySelect] = useState(false);
+    const [showSecondarySelect, setShowSecondarySelect] = useState(false);
 
     const voiceOptions = [{
         value: 'default',
@@ -249,14 +256,17 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
 
         {/* Tabs */}
         {!editingItem && (<div className="settings-tabs">
-            {[{id: 'contact', label: 'Call', urdu: 'کال کریں', icon: Settings}, {
-                id: 'voice', label: 'Voice', urdu: 'آواز', icon: Mic
-            }, {id: 'data', label: 'Data', urdu: 'ڈیٹا', icon: RefreshCw},].map(tab => (<button
+            {[
+                {id: 'contact', label: 'Call', urdu: 'کال کریں', icon: Settings}, 
+                {id: 'voice', label: 'Voice', urdu: 'آواز', icon: Mic}, 
+                {id: 'data', label: 'Data', urdu: 'ڈیٹا', icon: RefreshCw},
+                {id: 'language', label: 'Lang', urdu: 'زبان', icon: Settings},
+            ].map(tab => (<button
                 key={tab.id}
                 className={`tab-btn ${activeTab === tab.id ? 'active' : ''}`}
                 onClick={() => setActiveTab(tab.id as TabType)}
             >
-                {document.documentElement.lang === 'ur' ? (<span className="urdu-tab">{tab.urdu}</span>) : (tab.label)}
+                {language === 'ur' ? (<span className="urdu-tab">{tab.urdu}</span>) : (tab.label)}
             </button>))}
         </div>)}
 
@@ -401,6 +411,25 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                         <div className="list-item massive-item"
                              style={{flexDirection: 'column', alignItems: 'flex-start', gap: 16}}>
                             <div style={{width: '100%'}}>
+                                <h3 style={{margin: 0, color: 'var(--color-primary)'}}>App Introduction (تعارف)</h3>
+                                <p style={{fontSize: '0.9rem', color: '#8e8e93', marginTop: 4}}>
+                                    View the app's features and overview on the landing page.
+                                </p>
+                            </div>
+                            <button className="btn-save w-full" style={{
+                                background: 'white',
+                                color: 'var(--color-primary)',
+                                border: '1px solid var(--color-primary)',
+                                boxShadow: 'none'
+                            }} onClick={onShowLanding}>
+                                View Landing Page
+                            </button>
+                        </div>
+                        {/* ... rest of data items ... */}
+
+                        <div className="list-item massive-item"
+                             style={{flexDirection: 'column', alignItems: 'flex-start', gap: 16}}>
+                            <div style={{width: '100%'}}>
                                 <h3 style={{margin: 0, color: 'var(--color-primary)'}}>Cloud Backup (بیک
                                     اپ)</h3>
                                 <p dir="ltr" style={{
@@ -476,6 +505,46 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                         </div>
                     </div>
                 </div>)}
+
+                {/* Language Settings */}
+                {activeTab === 'language' && (<div className="gestures-settings-container">
+                    <div className="list-group">
+                        <div className="list-item massive-item"
+                             style={{flexDirection: 'column', alignItems: 'flex-start', gap: 16}}>
+                            <div style={{width: '100%'}}>
+                                <h3 style={{margin: 0, color: 'var(--color-primary)'}}>Language Pair (زبان کا انتخاب)</h3>
+                                <p style={{fontSize: '0.9rem', color: '#8e8e93', marginTop: 4}}>
+                                    Select the language pair for the User and Caregiver.
+                                </p>
+                            </div>
+                            
+                            <div style={{ display: 'flex', width: '100%', gap: 12 }}>
+                                <div style={{ flex: 1 }}>
+                                    <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-primary)', display: 'block', marginBottom: 4 }}>Primary (User)</label>
+                                    <button 
+                                        className="massive-input" 
+                                        style={{ width: '100%', height: 60, fontSize: '1rem', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+                                        onClick={() => setShowPrimarySelect(true)}
+                                    >
+                                        <span>{SUPPORTED_LANGS.find(l => l.code === primaryLanguage)?.label}</span>
+                                        <ChevronDown size={20} />
+                                    </button>
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                    <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-primary)', display: 'block', marginBottom: 4 }}>Secondary (Helper)</label>
+                                    <button 
+                                        className="massive-input" 
+                                        style={{ width: '100%', height: 60, fontSize: '1rem', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+                                        onClick={() => setShowSecondarySelect(true)}
+                                    >
+                                        <span>{SUPPORTED_LANGS.find(l => l.code === secondaryLanguage)?.label}</span>
+                                        <ChevronDown size={20} />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>)}
             </>)}
 
             {/* Edit Form */}
@@ -485,6 +554,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 onChange={(newItem) => setEditingItem({...editingItem, ...newItem})}
                 onSave={handleSave}
                 onDelete={handleDelete}
+                existingWords={(config?.categories || []).flatMap((c: any) => c.items || [])}
             />)}
         </div>
 
@@ -524,6 +594,24 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 const newConfig = {...config, activeVoiceProfile: val};
                 updateConfig(newConfig);
             }}
+        />
+
+        <SelectDialog
+            isOpen={showPrimarySelect}
+            onClose={() => setShowPrimarySelect(false)}
+            title="Primary Language (User)"
+            options={SUPPORTED_LANGS.map(l => ({ value: l.code, label: l.label }))}
+            selectedValue={primaryLanguage}
+            onSelect={(val) => setLanguagePair(val, secondaryLanguage)}
+        />
+
+        <SelectDialog
+            isOpen={showSecondarySelect}
+            onClose={() => setShowSecondarySelect(false)}
+            title="Secondary Language (Helper)"
+            options={SUPPORTED_LANGS.map(l => ({ value: l.code, label: l.label }))}
+            selectedValue={secondaryLanguage}
+            onSelect={(val) => setLanguagePair(primaryLanguage, val)}
         />
     </div>);
 };
