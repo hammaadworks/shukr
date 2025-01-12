@@ -16,16 +16,16 @@
 }
 
 .progress-text-brand {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--color-primary);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .progress-bar-bg-brand {
-  height: 4px;
+  height: 8px;
   background: rgba(45, 90, 39, 0.05);
   border-radius: 100px;
   overflow: hidden;

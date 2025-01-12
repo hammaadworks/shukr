@@ -26,18 +26,22 @@
 }
 
 .settings-tabs {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   background: white;
   padding: 10px 16px;
   gap: 10px;
-  overflow-x: auto;
-  scrollbar-width: none;
   border-bottom: 1px solid rgba(45, 90, 39, 0.05);
 }
 
+@media (min-width: 600px) {
+  .settings-tabs {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 .tab-btn {
-  flex: 0 0 auto;
-  min-width: 100px; 
+  width: 100%;
   padding: 12px 16px;
   border-radius: 16px;
   border: 1.5px solid rgba(45, 90, 39, 0.1);
@@ -45,6 +49,10 @@
   color: var(--color-primary);
   font-weight: 800;
   font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .urdu-tab {
@@ -144,4 +152,225 @@
   justify-content: center;
   gap: 12px;
   border: none;
+}
+
+/* --- Gesture Edit Modal --- */
+.gesture-edit-overlay {
+  background: rgba(45, 90, 39, 0.6);
+}
+
+.gesture-edit-content {
+  max-width: 500px;
+  padding: 32px 20px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.gesture-edit-header {
+  margin-bottom: 20px;
+}
+
+.gesture-id-badge {
+  display: inline-block;
+  background: #f2f2f7;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #8e8e93;
+  margin-top: 8px;
+}
+
+.gesture-edit-tabs {
+  display: flex;
+  background: #f2f2f7;
+  padding: 4px;
+  border-radius: 14px;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.gesture-edit-tabs button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  color: #8e8e93;
+}
+
+.gesture-edit-tabs button.active {
+  background: white;
+  color: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.gesture-edit-labels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.label-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.label-input-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #8e8e93;
+  text-transform: uppercase;
+}
+
+.label-input-group input {
+  background: #f2f2f7;
+  border: 1.5px solid transparent;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  width: 100%;
+}
+
+.label-input-group input:focus {
+  border-color: var(--color-primary);
+  background: white;
+  outline: none;
+}
+
+.gesture-edit-tab-content {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 24px;
+  min-height: 200px;
+}
+
+.gesture-edit-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.gesture-action-option {
+  padding: 16px;
+  border: 2px solid #f2f2f7;
+  background: white;
+  border-radius: 16px;
+  font-weight: 800;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.gesture-action-option.active {
+  border-color: var(--color-primary);
+  background: rgba(45, 90, 39, 0.05);
+  color: var(--color-primary);
+}
+
+.gesture-edit-words-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.selected-words-sequence {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  background: #f2f2f7;
+  border-radius: 14px;
+  min-height: 50px;
+}
+
+.sequence-item {
+  background: var(--color-primary);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.sequence-item button {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  border-radius: 4px;
+  display: flex;
+  padding: 2px;
+}
+
+.word-picker-search input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1.5px solid #f2f2f7;
+  background: #f2f2f7;
+  font-weight: 700;
+}
+
+.word-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.word-picker-grid .picked {
+  border: 2px solid var(--color-primary);
+  background: rgba(45, 90, 39, 0.05);
+}
+
+.gesture-edit-audio-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}
+
+.audio-placeholder-card {
+  text-align: center;
+  color: #8e8e93;
+}
+
+.audio-placeholder-card p {
+  font-weight: 800;
+  margin-top: 12px;
+  color: var(--color-text);
+}
+
+.audio-placeholder-card .hint-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 4px;
+  color: #8e8e93;
+}
+
+.btn-save-gesture {
+  width: 100%;
+  height: 60px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 18px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: 0 10px 25px rgba(45, 90, 39, 0.2);
 }

@@ -113,33 +113,33 @@
 .word-card-root.variant-1 .card-translation, .word-card-root.variant-1 .card-transliteration { font-size: 0.7rem; font-weight: 700; color: #4B5563; }
 .word-card-root.variant-1 .card-divider { color: var(--color-accent); opacity: 0.5; font-size: 0.7rem; }
 
-/* --- Variant 2: Compact Card (Made Bigger) --- */
+/* --- Variant 2: Compact Card (Small & Clean) --- */
 .word-card-root.variant-2 {
-  min-width: 90px;
+  min-width: 80px;
   padding: 0;
-  border-radius: 16px;
+  border-radius: 12px;
   background: white;
-  border: 1.5px solid rgba(45, 90, 39, 0.12);
-  box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+  border: 1.5px solid rgba(45, 90, 39, 0.08);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
 }
-.word-card-root.variant-2 .card-word-display { padding: 6px 12px; min-height: 46px; }
+.word-card-root.variant-2 .card-word-display { padding: 4px 8px; min-height: 38px; }
 .word-card-root.variant-2 .card-bottom-meta { 
-  height: 30px; 
-  padding: 0 10px;
-  gap: 8px;
-  background: rgba(45, 90, 39, 0.04);
-  border-top: 1px solid rgba(45, 90, 39, 0.08);
+  height: 24px; 
+  padding: 0 8px;
+  gap: 6px;
+  background: rgba(45, 90, 39, 0.02);
+  border-top: 1px solid rgba(45, 90, 39, 0.06);
 }
 .word-card-root.variant-2 .card-transliteration, 
 .word-card-root.variant-2 .card-translation { 
-  font-size: 0.8rem; 
+  font-size: 0.7rem; 
   font-weight: 700; 
-  color: #4B5563; 
+  color: #6B7280; 
 }
 .word-card-root.variant-2 .card-divider { 
   color: var(--color-accent); 
-  opacity: 0.5; 
-  font-size: 0.8rem;
+  opacity: 0.4; 
+  font-size: 0.7rem;
 }
 /* --- Variant 3: Minimal Card --- */
 .word-card-root.variant-3 { flex-direction: row; height: 48px; padding: 0 12px; border-radius: 100px; align-items: center; justify-content: center; background: white; border: 1px solid rgba(45, 90, 39, 0.08); }

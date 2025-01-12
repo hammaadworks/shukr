@@ -225,10 +225,27 @@
 .gesture-mini-card {
   flex: 1;
   min-width: 0 !important;
-  height: 68px !important; 
+  height: 68px !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .gesture-mini-card.focused-item {
-  transform: scale(1.05) !important;
+  background: rgba(255, 235, 59, 0.3) !important; /* Yellow Tint */
+  border-color: #FBC02D !important;
+  transform: scale(1.08) !important;
+  box-shadow: 0 4px 15px rgba(251, 192, 45, 0.2) !important;
+  z-index: 10;
 }
+
+.gesture-mini-card .card-word-display span {
+  font-size: 1.6rem !important;
+}
+
+.gesture-mini-card .card-bottom-meta .card-translation {
+  font-size: 0.65rem !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+}
+
+
 
