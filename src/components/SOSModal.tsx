@@ -9,7 +9,7 @@ interface SOSModalProps {
 }
 
 export const SOSModal: React.FC<SOSModalProps> = ({ onClose, emergencyContacts }) => {
-  const { isUrdu } = useLanguage();
+  const { isPrimary } = useLanguage();
   const { playSOS, stopSOS, playClick } = useAudio();
   const [countdown, setCountdown] = useState(5);
   const [isSOSActive, setIsSOSActive] = useState(false);
@@ -51,10 +51,10 @@ export const SOSModal: React.FC<SOSModalProps> = ({ onClose, emergencyContacts }
 
         <div className="sos-header">
           <AlertTriangle size={64} color="var(--color-danger)" style={{ marginBottom: 16 }} />
-          <h2>{isUrdu ? 'ہنگامی مدد' : 'Emergency Help'}</h2>
+          <h2>{isPrimary ? 'ہنگامی مدد' : 'Emergency Help'}</h2>
           <div className="sos-status-badge">
             <div className="pulse-dot" />
-            <span>{isSOSActive ? (isUrdu ? 'مدد طلب کی جا رہی ہے' : 'SOS ACTIVE') : (isUrdu ? 'الرٹ بھیجا جا رہا ہے' : 'ALERT SENDING')}</span>
+            <span>{isSOSActive ? (isPrimary ? 'مدد طلب کی جا رہی ہے' : 'SOS ACTIVE') : (isPrimary ? 'الرٹ بھیجا جا رہا ہے' : 'ALERT SENDING')}</span>
           </div>
         </div>
 
@@ -64,13 +64,13 @@ export const SOSModal: React.FC<SOSModalProps> = ({ onClose, emergencyContacts }
               <span className="sos-countdown-number">{countdown}</span>
             </div>
             <p className="sos-hint">
-              {isUrdu ? 'روکنے کے لیے بٹن دبائیں' : 'Press STOP to cancel'}
+              {isPrimary ? 'روکنے کے لیے بٹن دبائیں' : 'Press STOP to cancel'}
             </p>
           </div>
         ) : (
           <div className="sos-active-status">
             <p className="sos-active-msg">
-              {isUrdu ? 'گھر والوں کو الرٹ بھیج دیا گیا ہے۔' : 'Family has been alerted.'}
+              {isPrimary ? 'گھر والوں کو الرٹ بھیج دیا گیا ہے۔' : 'Family has been alerted.'}
             </p>
           </div>
         )}
@@ -84,7 +84,7 @@ export const SOSModal: React.FC<SOSModalProps> = ({ onClose, emergencyContacts }
             >
               <Phone size={24} />
               <div className="call-text">
-                <span className="call-label">{isUrdu ? 'فوری کال' : 'Quick Call'}</span>
+                <span className="call-label">{isPrimary ? 'فوری کال' : 'Quick Call'}</span>
                 <span className="call-name">{contact.name}</span>
               </div>
             </button>
@@ -92,13 +92,13 @@ export const SOSModal: React.FC<SOSModalProps> = ({ onClose, emergencyContacts }
 
           <button className="btn-sos-stop brand-secondary-btn" onClick={handleStop}>
             <VolumeX size={24} />
-            <span>{isUrdu ? 'الرٹ ختم کریں' : 'Stop Alert'}</span>
+            <span>{isPrimary ? 'الرٹ ختم کریں' : 'Stop Alert'}</span>
           </button>
 
           {isSOSActive && (
             <button className="btn-sos-restart-simple" onClick={handleRestart}>
               <RotateCcw size={20} />
-              <span>{isUrdu ? 'دوبارہ شروع' : 'Restart'}</span>
+              <span>{isPrimary ? 'دوبارہ شروع' : 'Restart'}</span>
             </button>
           )}
         </div>

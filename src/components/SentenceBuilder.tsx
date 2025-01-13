@@ -32,7 +32,7 @@ export const SentenceBuilder: React.FC<SentenceBuilderProps> = ({
   flashBorder,
   currentlyPlayingId,
 }) => {
-  const { isUrdu } = useLanguage();
+  const { isPrimary } = useLanguage();
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
@@ -40,13 +40,13 @@ export const SentenceBuilder: React.FC<SentenceBuilderProps> = ({
       <div className="smart-input-area">
         <div className="builder-scroll" ref={builderScrollRef}>
           {words.map((w: any, i: number) => (
-            <WordCard 
-              key={`${w.id}-${i}`} 
-              item={w} 
-              variant={3} 
-              isFocused={false} 
-              isPlaying={currentlyPlayingId === w.id && i === words.length - 1}
-              onClick={() => {}} 
+            <WordCard
+              key={`${w.id}-${i}`}
+              item={w}
+              variant={3}
+              isFocused={false}
+              isPlaying={currentlyPlayingId === w.id}
+              onClick={() => {}}
             />
           ))}
           <input
@@ -54,7 +54,7 @@ export const SentenceBuilder: React.FC<SentenceBuilderProps> = ({
             type="text"
             className="search-input-dock"
             placeholder={
-              words.length === 0 ? (isUrdu ? 'تلاش یا جملہ...' : 'Search or build...') : ''
+              words.length === 0 ? (isPrimary ? 'تلاش یا جملہ...' : 'Search or build...') : ''
             }
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -91,7 +91,7 @@ export const SentenceBuilder: React.FC<SentenceBuilderProps> = ({
           }}
           disabled={!canAddWords}
         >
-          <span>{isUrdu ? 'بولیں' : 'SPEAK'}</span>
+          <span>{isPrimary ? 'بولیں' : 'SPEAK'}</span>
         </button>
         <button
           className={`btn-dock-ios clear-btn ${focusedIndex === offset + 1 ? 'focused-item' : ''}`}

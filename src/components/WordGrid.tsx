@@ -16,10 +16,12 @@ interface WordGridProps {
   onLongPressItem?: (item: any) => void;
   onEditItem?: (item: any) => void;
   onDeleteItem?: (id: string) => void;
+  onSelect?: (item: any) => void;
   favorites?: string[];
   currentlyPlayingId?: string | null;
 }
-export const WordGrid: React.FC<WordGridProps> = ({
+
+export const WordGrid: React.FC<WordGridProps> = React.memo(({
   gridItems,
   focusedIndex,
   offset,
@@ -32,11 +34,12 @@ export const WordGrid: React.FC<WordGridProps> = ({
   onLongPressItem,
   onEditItem,
   onDeleteItem,
+  onSelect,
   favorites = [],
   currentlyPlayingId,
 }) => {
-  const { isUrdu } = useLanguage();
-  const [deleteId, setDeleteId] = React.useState<string | null>(null);
+
+  const { isPrimary } = useLanguage();
 
   return (
     <div className="smart-grid-apple">
@@ -46,45 +49,22 @@ export const WordGrid: React.FC<WordGridProps> = ({
           item={item}
           isFocused={focusedIndex === offset + idx}
           isPlaying={currentlyPlayingId === item.id}
-          onClick={item.onClick}
-          onLongPress={() => {
+          onClick={() => {
+            if (item.onClick) item.onClick();
+            else onSelect?.(item);
+          }}
+          onEdit={() => {
              if (item.isPrompt) return;
              onEditItem?.(item);
           }}
           onToggleFavorite={() => onLongPressItem?.(item)}
-          onDelete={() => setDeleteId(item.id)}
+          onDelete={() => {
+             if (item.isPrompt) return;
+             onEditItem?.(item);
+          }}
           isFavorite={favorites.includes(item.id)}
         />
       ))}
-
-      {deleteId && (() => {
-        const item = gridItems.find(i => i.id === deleteId);
-        const label = isUrdu ? item?.ur : item?.en;
-        return (
-          <div className="delete-modal-overlay" onClick={() => setDeleteId(null)}>
-            <div className="delete-modal" onClick={e => e.stopPropagation()}>
-              <h3 style={{ marginBottom: '16px', fontSize: '1.2rem', textAlign: isUrdu ? 'right' : 'left' }}>
-                  {isUrdu ? `حذف کریں "${label}"؟` : `Delete "${label}"?`}
-              </h3>
-              <div className="modal-actions" style={{ flexDirection: 'row-reverse', gap: '8px' }}>
-                <button 
-                  className="btn-danger" 
-                  onClick={() => { onDeleteItem?.(deleteId); setDeleteId(null); }}
-                  style={{ borderRadius: '12px', padding: '10px 20px', backgroundColor: 'var(--color-danger)', color: 'white', border: 'none' }}
-                >
-                  {isUrdu ? 'حذف کریں' : 'Delete'}
-                </button>
-                <button 
-                  onClick={() => setDeleteId(null)} 
-                  style={{ background: '#f0f0f0', borderRadius: '12px', padding: '10px 20px', border: 'none' }}
-                >
-                  {isUrdu ? 'منسوخ' : 'Cancel'}
-                </button>
-              </div>
-            </div>
-          </div>
-        );
-      })()}
 
       {randomQuote && onNextQuote && updateConfig && config && (
         <MotivateCard 
@@ -98,4 +78,4 @@ export const WordGrid: React.FC<WordGridProps> = ({
       )}
     </div>
   );
-};
+});
