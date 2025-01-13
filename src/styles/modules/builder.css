@@ -37,19 +37,19 @@
   justify-content: flex-start;
   padding: 12px;
   border-radius: 24px !important;
-  max-height: 100px; /* Default: 1 row */
+  max-height: 110px; /* Increased to avoid clipping */
   box-sizing: border-box;
 }
 
 @media (min-height: 600px) {
   .prediction-scroller, .doodle-predictions-bar, .word-predictions-container {
-    max-height: 186px; /* 2 rows */
+    max-height: 200px; /* 2 rows */
   }
 }
 
 @media (min-height: 1000px) {
   .prediction-scroller, .doodle-predictions-bar, .word-predictions-container {
-    max-height: 277px; /* 3 rows */
+    max-height: 300px; /* 3 rows */
   }
 }
 

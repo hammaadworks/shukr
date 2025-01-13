@@ -630,12 +630,18 @@ const AppContent = () => {
 
       <ScreenFlashes showYes={showYesFlash} showNo={showNoFlash} />
       {showSOS && <SOSModal onClose={() => setShowSOS(false)} emergencyContacts={config?.emergency_contacts || []} />}
-      <WordAddModal addingWord={addingWord} setAddingWord={setAddingWord} onSave={handleAddCustomWord} />
+      <WordAddModal 
+        addingWord={addingWord} 
+        setAddingWord={setAddingWord} 
+        onSave={handleAddCustomWord} 
+        existingWords={(config?.categories || []).flatMap((c: any) => c.items || [])} 
+      />
       <WordEditor 
         item={editingWord} 
         onClose={() => setEditingWord(null)} 
         onSave={handleSaveEdit} 
         onDelete={handleDeleteWord} 
+        existingWords={(config?.categories || []).flatMap((c: any) => c.items || [])}
       />
     </div>
   );
