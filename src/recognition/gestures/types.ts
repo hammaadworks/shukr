@@ -1,16 +1,8 @@
 export type GestureAction = 
   | 'NEXT' 
-  | 'PREV' 
   | 'SELECT' 
   | 'CLEAR' 
-  | 'ATTENTION' 
-  | 'DOODLE' 
-  | 'SPEAK' 
-  | 'HOME' 
-  | 'YES' 
-  | 'SALAM' 
-  | 'CALL_CONTACT_1' 
-  | 'TOGGLE_RECOGNITION';
+  | 'YES';
 
 export type GestureMappingType = 'action' | 'words' | 'audio';
 
