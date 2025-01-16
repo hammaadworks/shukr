@@ -37,19 +37,19 @@
   justify-content: flex-start;
   padding: 12px;
   border-radius: 24px !important;
-  max-height: 110px; /* Increased to avoid clipping */
+  max-height: 156px; /* STRICTLY 2 rows max of variant-2 cards (clips just before row 3 starts) */
   box-sizing: border-box;
 }
 
 @media (min-height: 600px) {
   .prediction-scroller, .doodle-predictions-bar, .word-predictions-container {
-    max-height: 200px; /* 2 rows */
+    max-height: 156px; /* Keep at 2 rows for consistency */
   }
 }
 
 @media (min-height: 1000px) {
   .prediction-scroller, .doodle-predictions-bar, .word-predictions-container {
-    max-height: 300px; /* 3 rows */
+    max-height: 156px; /* Still 2 rows as per user requirement */
   }
 }
 
@@ -88,6 +88,15 @@
   flex: 0 0 auto;
   width: auto !important;
   min-width: 80px;
+}
+
+.builder-placeholder {
+  color: #8e8e93;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding-left: 4px;
+  pointer-events: none;
+  user-select: none;
 }
 
 .search-input-dock {

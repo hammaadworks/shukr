@@ -106,9 +106,81 @@
   opacity: 0.8;
 }
 
-.gesture-chip-action.urdu-text-spaced {
-  font-family: var(--font-ur);
-  font-size: 0.9rem;
-  text-transform: none;
-  opacity: 1;
+/* --- Gesture Legend Card (Apple Serif Style like good.png) --- */
+#gesture-legend-root.gesture-legend-container {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 10px !important;
+  width: 100% !important;
+  max-width: 540px !important;
+  margin: 6px auto 0 !important;
+  padding: 0 12px !important;
+  direction: ltr !important;
 }
+
+#gesture-legend-root .gesture-legend-card {
+  background: #FFF9E1 !important; /* Precise creamy yellow */
+  border: 1.5px solid #FBC02D !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03) !important;
+  cursor: pointer !important;
+  min-height: 90px !important;
+  text-align: center !important;
+}
+
+#gesture-legend-root .gesture-legend-card.active {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(251, 192, 45, 0.2) !important;
+  border-width: 2.5px !important;
+  background: #FFFDE7 !important;
+}
+
+#gesture-legend-root .gesture-top-area {
+  flex: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 8px 4px !important;
+}
+
+#gesture-legend-root .gesture-emoji-large {
+  font-size: 2.2rem !important;
+}
+
+#gesture-legend-root .gesture-bottom-bar {
+  background: white !important;
+  border-top: 1.5px solid #FBC02D !important;
+  padding: 6px 2px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#gesture-legend-root .gesture-label-text {
+  font-size: 0.95rem !important;
+  font-weight: 800 !important;
+  color: #2D5A27 !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+#gesture-legend-root .gesture-label-text.is-urdu {
+  font-family: var(--font-ur) !important;
+  font-size: 1.15rem !important;
+  line-height: 1 !important;
+}
+
+@media (max-width: 480px) {
+  #gesture-legend-root.gesture-legend-container { gap: 6px !important; padding: 0 8px !important; }
+  #gesture-legend-root .gesture-emoji-large { font-size: 1.8rem !important; }
+  #gesture-legend-root .gesture-label-text { font-size: 0.85rem !important; }
+  #gesture-legend-root .gesture-label-text.is-urdu { font-size: 1.0rem !important; }
+  #gesture-legend-root .gesture-legend-card { min-height: 80px !important; }
+}
+
+
+
+
