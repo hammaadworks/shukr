@@ -34,7 +34,25 @@ async function run() {
     const settings = {
       version: snapshot.version || 1,
       timestamp: Date.now(),
+      user_nickname: snapshot.user_nickname || "Bade Ammi",
       emergency_contacts: snapshot.emergency_contacts || [],
+      sos_settings: snapshot.sos_settings || {
+        message_template: "I need help immediately!",
+        countdown_seconds: 5,
+        play_alarm_sound: true
+      },
+      preferences: snapshot.preferences || {
+        theme: "light",
+        font_size: "large",
+        speech_rate: 0.9,
+        enable_vibration: true,
+        enable_click_sound: true,
+        auto_clear_minutes: 5
+      },
+      language_pair: snapshot.language_pair || {
+        primary: "ur",
+        secondary: "en"
+      },
       favorites: snapshot.favorites || [],
       voiceProfiles: snapshot.voiceProfiles || [],
       activeVoiceProfile: snapshot.activeVoiceProfile || ""
@@ -42,57 +60,46 @@ async function run() {
     fs.writeFileSync(path.join(DATA_DIR, 'core/settings.json'), JSON.stringify(settings, null, 2));
     console.log('✓ Updated core/settings.json');
 
-    // 2. Handle Audio Recordings (must be done before structure to update paths)
-    const audioMapping = {}; // localId -> publicPath
-    if (snapshot.audio) {
-      ensureDir(PUBLIC_AUDIO_DIR);
-      const audioKeys = Object.keys(snapshot.audio);
-      console.log(`Processing ${audioKeys.length} audio recordings...`);
+    // 2. Audio Ingestion logic
+    ensureDir(PUBLIC_AUDIO_DIR);
+    const audioKeys = Object.keys(snapshot.audio || {});
+    console.log(`Ingesting ${audioKeys.length} audio clips...`);
 
-      for (const key of audioKeys) {
-        const dataUrl = snapshot.audio[key];
-        const matches = dataUrl.match(/^data:(audio\/\w+);base64,(.+)$/);
-        
-        if (matches) {
-          const contentType = matches[1];
-          const base64Data = matches[2];
-          const extension = contentType.split('/')[1] === 'webm' ? 'webm' : 'wav';
-          const fileName = `${key}.${extension}`;
-          const filePath = path.join(PUBLIC_AUDIO_DIR, fileName);
-
-          fs.writeFileSync(filePath, Buffer.from(base64Data, 'base64'));
-          audioMapping[key] = `/audio/recordings/${fileName}`;
-        }
+    // Prune existing files not in the snapshot
+    const existingFiles = fs.readdirSync(PUBLIC_AUDIO_DIR);
+    existingFiles.forEach(file => {
+      const id = path.basename(file, path.extname(file));
+      if (!snapshot.audio[id]) {
+        fs.unlinkSync(path.join(PUBLIC_AUDIO_DIR, file));
+        console.log(`  - Deleted orphaned audio: ${file}`);
       }
-      console.log(`✓ Saved audio recordings to ${PUBLIC_AUDIO_DIR}`);
-    }
-
-    // 3. Update core/structure.json (categories, words, quotes)
-    // We need to merge audio paths into the words
-    const updatedWords = (snapshot.words || []).map(word => {
-      // If there's a recording for this word in any language/profile, 
-      // we might want to default the 'audio' property to it if it's currently empty
-      // However, the standard structure usually uses 'audio' for the base file.
-      // We'll keep the word structure as is, but ensuring we don't lose custom fields.
-      return {
-        ...word,
-        // Optional: If you want to bake the custom recording AS the vanilla audio:
-        // audio: audioMapping[someKey] || word.audio
-      };
     });
 
-    const structure = {
-      categories: snapshot.categories || [],
-      words: updatedWords,
+    // Save/Update files from snapshot
+    for (const [id, dataUrl] of Object.entries(snapshot.audio || {})) {
+      const base64Data = dataUrl.split(',')[1];
+      if (!base64Data) continue;
+      
+      const buffer = Buffer.from(base64Data, 'base64');
+      // All audio files are stored as .webm by default
+      const fileName = `${id}.webm`;
+      fs.writeFileSync(path.join(PUBLIC_AUDIO_DIR, fileName), buffer);
+    }
+    console.log('✓ Updated public/audio/recordings/');
+
+    // 3. Update core/vocabulary.json (words, quotes) - NO CATEGORIES
+    const vocabulary = {
+      quick_actions: snapshot.quick_actions || [],
+      words: snapshot.words || [],
       quotes: snapshot.quotes || []
     };
-    fs.writeFileSync(path.join(DATA_DIR, 'core/structure.json'), JSON.stringify(structure, null, 2));
-    console.log('✓ Updated core/structure.json');
+    fs.writeFileSync(path.join(DATA_DIR, 'core/vocabulary.json'), JSON.stringify(vocabulary, null, 2));
+    console.log('✓ Updated core/vocabulary.json');
 
-    // 4. Update core/sketches.json (Doodles)
-    const sketches = snapshot.sketches || [];
-    fs.writeFileSync(path.join(DATA_DIR, 'core/sketches.json'), JSON.stringify(sketches, null, 2));
-    console.log('✓ Updated core/sketches.json');
+    // 4. Update core/doodle.json (Doodles)
+    const doodles = snapshot.doodles || snapshot.sketches || [];
+    fs.writeFileSync(path.join(DATA_DIR, 'core/doodle.json'), JSON.stringify(doodles, null, 2));
+    console.log('✓ Updated core/doodle.json');
 
     // 5. Update dictionary.json (English -> Urdu lookup)
     const dictionary = {};
@@ -109,21 +116,25 @@ async function run() {
       if (fs.existsSync(i18nPath)) {
         const i18n = JSON.parse(fs.readFileSync(i18nPath, 'utf8'));
         
-        // Update words and categories
-        if (!i18n.words) i18n.words = {};
+        // Reset words and quotes from snapshot (Absolute Source of Truth)
+        i18n.words = {};
         (snapshot.words || []).forEach(word => {
-          i18n.words[word.id] = word[lang] || word.id;
+          i18n.words[word.id] = word[lang] || word.text_primary || word.id;
         });
 
-        if (!i18n.categories) i18n.categories = {};
-        (snapshot.categories || []).forEach(cat => {
-          i18n.categories[cat.id] = cat[`label_${lang}`] || cat.id;
-        });
-
-        if (!i18n.quotes) i18n.quotes = {};
+        i18n.quotes = {};
         (snapshot.quotes || []).forEach(quote => {
           i18n.quotes[quote.id] = quote[lang] || quote.text_primary || quote.id;
         });
+
+        // Categories are fixed now
+        if (!i18n.categories) {
+           i18n.categories = {
+             favorite: lang === 'ur' ? 'پسندیدہ' : (lang === 'ar' ? 'المفضلة' : (lang === 'es' ? 'Favoritos' : 'Favorite')),
+             family: lang === 'ur' ? 'خاندان' : (lang === 'ar' ? 'عائلة' : (lang === 'es' ? 'Familia' : 'Family')),
+             general: lang === 'ur' ? 'عام' : (lang === 'ar' ? 'عام' : (lang === 'es' ? 'General' : 'General'))
+           };
+        }
 
         fs.writeFileSync(i18nPath, JSON.stringify(i18n, null, 2));
         console.log(`✓ Updated i18n/${lang}.json`);

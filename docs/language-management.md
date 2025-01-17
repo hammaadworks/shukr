@@ -10,7 +10,7 @@ Shukr is built to be a global platform. This guide explains how to add a new lan
 **Location:** `src/lib/data/i18n/`
 Create a new file named `[lang_code].json` (e.g., `bn.json` for Bengali).
 *   **Action:** Copy the contents of `src/lib/data/i18n/en.json` into your new file.
-*   **Action:** Translate the values for `categories`, `words`, `quick_actions`, and `quotes`. Keep the keys (IDs) exactly the same as they are in `en.json`.
+*   **Action:** Translate the values for `categories`, `words`, and `quotes`. Keep the keys (IDs) exactly the same as they are in `en.json`.
 
 ### 2. Register the Language in UI
 **Location:** `src/components/SettingsPanel.tsx`
@@ -46,7 +46,7 @@ If you are using an AI agent to perform these changes, use the prompt below. It 
 > 2. Modify `src/hooks/useLanguage.tsx`: Update the `getDirection` function to include the new language code if it is RTL.
 >
 > **Step 4: Validation**
-> Review all modified files. Ensure that the IDs in the new i18n file match `src/lib/data/core/structure.json` exactly. Ensure no type errors are introduced.
+> Review all modified files. Ensure that the IDs in the new i18n file match `src/lib/data/core/vocabulary.json` exactly. Ensure no type errors are introduced.
 >
 > **Step 5: Execution**
 > Do not apply changes until you have confirmed the language and direction with me. Once confirmed, proceed with the implementation autonomously.

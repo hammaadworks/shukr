@@ -26,7 +26,7 @@ This is the primary relational store for the app's vocabulary, UI structure, and
 **Table: `words`**
 *Role:* Stores every piece of communicable vocabulary in the app (words, phrases, alphabets, etc.).
 *Schema:*
-- `id` (String, Primary Key): Unique identifier (e.g., `word_12345`).
+- `id` (String, Primary Key): Unique identifier (e.g., `gold`, `sukun`). Derived from English or Roman text.
 - `en` (String, Indexed): The English display text and search key.
 - `ur` (String): The Urdu translation.
 - `roman` (String, Optional): Roman Urdu transliteration for easier reading by non-native speakers.
