@@ -78,22 +78,57 @@ const AppContent = () => {
     (window as any)._showSOS = () => setShowSOS(true);
   }, []);
 
-  const { isEnabled, effectiveEnabled, isRecognitionActive, setIsRecognitionActive, toggleTracking, videoRef, isModelLoaded } =
+  const { isEnabled, effectiveEnabled, isRecognitionActive, setIsRecognitionActive, toggleTracking, videoRef, isModelLoaded, gestureHits } =
     useCameraGestures((action) => {
       actionHandlerRef.current(action);
     }, route === '#voices');
 
+  const handleSaveGesture = useCallback(async (updated: GestureDefinition, blob?: Blob | null) => {
+    if (!config) return;
+    const newConfig = { 
+      ...config,
+      gesture_mappings: {
+        ...(config.gesture_mappings || {}),
+        [updated.id]: updated
+      }
+    };
+    updateConfig(newConfig);
+    if (blob) {
+      await audioStorage.set(`gesture_${updated.id}`, blob);
+    }
+    setEditingGesture(null);
+  }, [config, updateConfig]);
+
   const handlePreviewDragMove = useCallback((_pos: { x: number; y: number }) => {}, []);
 
-  const handlePreviewDrop = useCallback((pos: { x: number; y: number }) => {
+  const handlePreviewDrop = useCallback((rect: DOMRect) => {
     if (!cameraButtonRef.current) return;
     const dropRect = cameraButtonRef.current.getBoundingClientRect();
-    const targetLeft = dropRect.left - 4;
-    const targetRight = dropRect.right + 4;
-    const targetTop = dropRect.top - 4;
-    const targetBottom = dropRect.bottom + 4;
+    
+    // Increased detection area (Magnetism)
+    const padding = 25; 
+    const target = {
+      left: dropRect.left - padding,
+      right: dropRect.right + padding,
+      top: dropRect.top - padding,
+      bottom: dropRect.bottom + padding
+    };
 
-    if (pos.x >= targetLeft && pos.x <= targetRight && pos.y >= targetTop && pos.y <= targetBottom) {
+    // Calculate center of the dropped preview
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    // Detection logic: Is the center of the preview inside the expanded target area?
+    // OR: Is there a substantial overlap? 
+    const isOverlapping = (
+      centerX >= target.left && 
+      centerX <= target.right && 
+      centerY >= target.top && 
+      centerY <= target.bottom
+    );
+
+    if (isOverlapping) {
+      if (navigator.vibrate) navigator.vibrate([40, 30]); // Haptic feedback
       toggleTracking();
     }
   }, [toggleTracking]);
@@ -233,11 +268,13 @@ const AppContent = () => {
     if (!config?.categories) return [];
     // Generic system categories
     const favLabel = language === 'ur' ? 'پسندیدہ' : (language === 'es' ? 'Favoritos' : (language === 'ar' ? 'المفضلة' : 'Favorite'));
-    const khandanLabel = language === 'ur' ? 'خاندان' : (language === 'es' ? 'Familia' : (language === 'ar' ? 'عائلة' : 'Family'));
+    const familyLabel = language === 'ur' ? 'خاندان' : (language === 'es' ? 'Familia' : (language === 'ar' ? 'عائلة' : 'Family'));
+    const generalLabel = language === 'ur' ? 'عام' : (language === 'es' ? 'General' : (language === 'ar' ? 'عام' : 'General'));
     
     return [
-      { id: 'cat_fav', label_primary: favLabel, label_secondary: 'Favorite', icon: 'heart' },
-      { id: 'khandan', label_primary: khandanLabel, label_secondary: 'Family', icon: 'users' },
+      { id: 'favorite', label_primary: favLabel, label_secondary: 'Favorite', icon: 'heart' },
+      { id: 'family', label_primary: familyLabel, label_secondary: 'Family', icon: 'users' },
+      { id: 'general', label_primary: generalLabel, label_secondary: 'General', icon: 'grid' },
     ];
   }, [config, language]);
 
@@ -255,28 +292,10 @@ const AppContent = () => {
     if (!config) return;
     const newConfig: any = { ...config, categories: [...(config.categories || [])] };
     
-    // If added from Favorites, actually add to Custom but mark as favorite
-    let targetCatId = item.categoryId || 'cat_custom';
-    if (targetCatId === 'cat_fav') {
-        targetCatId = 'cat_custom';
+    // Default to general if not specified
+    let targetCatId = item.categoryId || 'general';
+    if (targetCatId === 'favorite') {
         newConfig.favorites = [...(newConfig.favorites || []), item.id];
-    }
-
-    let targetCat = newConfig.categories.find((c: any) => c.id === targetCatId);
-    if (!targetCat) {
-      targetCat = { id: targetCatId, items: [], icon: 'star', label_primary: 'Custom', label_secondary: 'Custom' };
-      newConfig.categories.push(targetCat);
-    }
-    targetCat.items = [...(targetCat.items || []), item];
-
-    // Handle isFamily toggle
-    if (item.isFamily && targetCatId !== 'khandan') {
-        let khandanCat = newConfig.categories.find((c: any) => c.id === 'khandan');
-        if (!khandanCat) {
-            khandanCat = { id: 'khandan', items: [], icon: 'users', label_primary: 'Family', label_secondary: 'Family' };
-            newConfig.categories.push(khandanCat);
-        }
-        khandanCat.items = [...(khandanCat.items || []), item];
     }
 
     updateConfig(newConfig);
@@ -293,7 +312,7 @@ const AppContent = () => {
   const createSearchPrompt = useCallback(async () => {
     const res = await translator.translate(searchQuery);
     setAddingWord({
-      id: `word_${crypto.randomUUID()}`,
+      id: 'pending_id',
       text_primary: res?.ur || searchQuery,
       text_secondary: res?.en || searchQuery,
       en: res?.en || searchQuery,
@@ -301,7 +320,7 @@ const AppContent = () => {
       roman: res?.roman || searchQuery,
       icon: 'list-plus',
       next: [],
-      categoryId: 'cat_custom'
+      categoryId: 'general'
     });
   }, [searchQuery]);
 
@@ -322,13 +341,13 @@ const AppContent = () => {
     return dbWords.length > 0 ? [...dbWords].sort((a, b) => (b.usageCount || 0) - (a.usageCount || 0)) : allItems;
   }, [dbWords, allItems]);
 
-  const handleOpenAddWord = useCallback((catId: string) => {
+  const handleOpenAddWord = useCallback((catId: string, initialValue?: string) => {
     setAddingWord({
-      id: `word_${crypto.randomUUID()}`,
-      text_primary: '',
-      text_secondary: '',
-      ur: '',
-      en: '',
+      id: 'pending_id',
+      text_primary: initialValue || '',
+      text_secondary: initialValue || '',
+      ur: initialValue || '',
+      en: initialValue || '',
       roman: '',
       icon: 'list-plus',
       next: [],
@@ -343,28 +362,36 @@ const AppContent = () => {
     // Add prompt as first button
     const addLabel = language === 'ur' ? 'نیا لفظ؟' : 'Add Word?';
     return [
-      { id: 'add_fav_prompt', ur: addLabel, en: 'Add Word?', icon: 'list-plus', isPrompt: true, onClick: () => handleOpenAddWord('cat_fav') },
+      { id: 'add_fav_prompt', ur: addLabel, en: 'Add Word?', icon: 'list-plus', isPrompt: true, onClick: () => handleOpenAddWord('favorite') },
       ...items
     ];
   }, [dbWords, allItems, config, language, handleOpenAddWord]);
 
+  const getFamilyItems = useCallback(() => {
+    const items = (dbWords.length > 0 ? dbWords : allItems).filter((i: any) => i.category === 'family' || i.category === 'khandan');
+    const addLabel = language === 'ur' ? 'نیا لفظ؟' : 'Add Word?';
+    return [
+      { id: 'add_family_prompt', ur: addLabel, en: 'Add Word?', icon: 'list-plus', isPrompt: true, onClick: () => handleOpenAddWord('family') },
+      ...items
+    ];
+  }, [dbWords, allItems, language, handleOpenAddWord]);
+
   const gridItems = useMemo(() => {
     if (searchQuery) return getSearchItems();
-    if (currentCategory === 'cat_fav') return getFavoriteItems();
-    if (currentCategory) {
-      const cat = config?.categories?.find((c: any) => c.id === currentCategory);
-      const items = cat?.items || [];
-      if (currentCategory === 'khandan' || currentCategory === 'cat_custom') {
+    if (currentCategory === 'favorite') return getFavoriteItems();
+    if (currentCategory === 'family') return getFamilyItems();
+    
+    // Default or General
+    const items = getHomeItems();
+    if (currentCategory === 'general') {
         const addLabel = language === 'ur' ? 'نیا لفظ؟' : 'Add Word?';
         return [
-          { id: `add_${currentCategory}_prompt`, ur: addLabel, en: 'Add Word?', icon: 'list-plus', isPrompt: true, onClick: () => handleOpenAddWord(currentCategory) },
+          { id: 'add_general_prompt', ur: addLabel, en: 'Add Word?', icon: 'list-plus', isPrompt: true, onClick: () => handleOpenAddWord('general') },
           ...items
         ];
-      }
-      return items;
     }
-    return getHomeItems();
-  }, [searchQuery, currentCategory, getSearchItems, getFavoriteItems, getHomeItems, config, language, handleOpenAddWord]);
+    return items;
+  }, [searchQuery, currentCategory, getSearchItems, getFavoriteItems, getFamilyItems, getHomeItems, language, handleOpenAddWord]);
 
   const [predictions, setPredictions] = useState<any[]>([]);
 
@@ -387,18 +414,21 @@ const AppContent = () => {
       const text = isPrimary ? (item.text_primary || item.ur) : (item.text_secondary || item.en);
       speak(text, item.id);
 
-      if (isSentenceBuilderActive) {
-        if (sentence.length < 8) {
-          setSentence((prev) => {
-            const newSentence = [...prev, item];
-            if (prev.length > 0) {
-              wordNetwork.recordTransition(prev[prev.length - 1].id, item.id);
-            }
-            return newSentence;
-          });
-        } else {
+      if (sentence.length < 8) {
+        setSentence((prev) => {
+          const newSentence = [...prev, item];
+          if (prev.length > 0) {
+            wordNetwork.recordTransition(prev[prev.length - 1].id, item.id);
+          }
+          return newSentence;
+        });
+      } else {
+        if (isSentenceBuilderActive) {
           setFlashSentenceBuilder(true);
           setTimeout(() => setFlashSentenceBuilder(false), 500);
+        } else {
+          // If builder is off, keep updating context by shifting
+          setSentence((prev) => [...prev.slice(1), item]);
         }
       }
       
@@ -453,34 +483,67 @@ const AppContent = () => {
     return actions;
   }, [toggleTracking, toggleSentenceBuilder, playClick, navigate, setLanguage, language, primaryLanguage, secondaryLanguage, displayCategories, currentCategory, predictions, gridItems, isSentenceBuilderActive, playSentence, handleWordItemClick, isPrimary, speak]);
 
-  const handleGestureAction = useCallback((gestureKey: string) => {
+  const handleGestureAction = useCallback(async (gestureKey: string) => {
     const mapping = config?.gesture_mappings?.[gestureKey];
     if (!mapping) return;
+    
     setLastGesture(gestureKey);
     setTimeout(() => setLastGesture(''), 2000);
 
-    const action = mapping.value as GestureAction;
-    switch (action) {
-      case 'YES':
-        speak(isPrimary ? 'ہاں' : 'Yes', 'sys_yes');
-        setShowYesFlash(true);
-        setTimeout(() => setShowYesFlash(false), 1000);
-        break;
-      case 'SALAM':
-        speak(isPrimary ? 'السلام علیکم' : 'Assalamualikum', 'sys_salam');
-        break;
-      case 'HOME':
-      case 'CLEAR':
-        setSentence([]); setCurrentCategory(null); setFocusedIndex(-1); playClick();
-        break;
-      case 'SELECT':
-        if (focusedIndex >= 0 && focusedIndex < navigableActions.length) navigableActions[focusedIndex]();
-        break;
-      case 'NEXT':
-        setFocusedIndex(p => (p + 1) % navigableActions.length);
-        break;
+    // 1. Handle Audio Mapping
+    if (mapping.type === 'audio') {
+      const audioId = `gesture_${gestureKey}`;
+      const blob = await audioStorage.get(audioId);
+      if (blob) {
+        const url = URL.createObjectURL(blob);
+        const audio = new Audio(url);
+        audio.play();
+        return;
+      }
     }
-  }, [config, isPrimary, speak, focusedIndex, navigableActions, playClick]);
+
+    // 2. Handle Words Sequence
+    if (mapping.type === 'words' && Array.isArray(mapping.value)) {
+      const wordsToSpeak = allItems.filter((i: any) => (mapping.value as string[]).includes(i.id));
+      if (wordsToSpeak.length > 0) {
+        speakSequence(wordsToSpeak);
+        return;
+      }
+    }
+
+    // 3. Handle Actions
+    if (mapping.type === 'action') {
+      const action = mapping.value as string;
+      switch (action) {
+        case 'YES':
+          speak(isPrimary ? 'ہاں' : 'Yes', 'sys_yes');
+          setShowYesFlash(true);
+          setTimeout(() => setShowYesFlash(false), 1000);
+          break;
+        case 'CLEAR':
+          setSentence([]); setCurrentCategory(null); setFocusedIndex(-1); playClick();
+          break;
+        case 'SELECT':
+          if (focusedIndex >= 0 && focusedIndex < navigableActions.length) navigableActions[focusedIndex]();
+          break;
+        case 'NEXT':
+          setFocusedIndex(p => (p + 1) % navigableActions.length);
+          break;
+        case 'NAV_DOODLE':
+          playClick(); navigate('#doodle');
+          break;
+        case 'NAV_SETTINGS':
+          playClick(); navigate('#settings');
+          break;
+        case 'TOGGLE_LANG':
+          playClick(); setLanguage(language === primaryLanguage ? secondaryLanguage : primaryLanguage);
+          break;
+        case 'TOGGLE_BUILDER':
+          playClick(); toggleSentenceBuilder();
+          break;
+      }
+    }
+  }, [config, isPrimary, speak, speakSequence, allItems, focusedIndex, navigableActions, playClick, navigate, setLanguage, language, primaryLanguage, secondaryLanguage, toggleSentenceBuilder]);
 
   useEffect(() => {
     actionHandlerRef.current = handleGestureAction;
@@ -523,6 +586,7 @@ const AppContent = () => {
         cameraButtonRef={cameraButtonRef}
         gestureMappings={config?.gesture_mappings}
         onLongPressGesture={setEditingGesture}
+        gestureHits={gestureHits}
       />
 
       <div className="main-content-wrapper" style={{ flex: 1, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
@@ -541,9 +605,20 @@ const AppContent = () => {
             <CameraPreview isEnabled={effectiveEnabled} videoRef={videoRef} onDragChange={setIsDraggingPreview} onDragMove={handlePreviewDragMove} onDrop={handlePreviewDrop} />
             <DoodlePad
               config={config} focusedIndex={focusedIndex}
+              onOpenAddWord={(initial) => handleOpenAddWord('cat_custom', initial)}
+              sentence={sentence}
               onRecognize={(item: any) => {
                 speak(isPrimary ? (item.text_primary || item.ur) : (item.text_secondary || item.en), item.id);
-                if (isSentenceBuilderActive) setSentence(p => [...p, item]);
+                if (sentence.length < 8) {
+                  setSentence(p => [...p, item]);
+                } else {
+                  if (isSentenceBuilderActive) {
+                    setFlashSentenceBuilder(true);
+                    setTimeout(() => setFlashSentenceBuilder(false), 500);
+                  } else {
+                    setSentence(p => [...p.slice(1), item]);
+                  }
+                }
                 wordNetwork.recordUsage(item.id);
               }}
             />
@@ -587,7 +662,6 @@ const AppContent = () => {
                   onBackspace={() => setSentence(p => p.slice(0, -1))}
                   onPlay={playSentence} focusedIndex={focusedIndex} 
                   offset={5 + displayCategories.length + predictions.length + gridItems.length}
-                  searchQuery={searchQuery} setSearchQuery={setSearchQuery}
                   canAddWords={sentence.length < 8}
                   builderScrollRef={builderScrollRef} 
                   flashBorder={flashSentenceBuilder}
@@ -607,8 +681,17 @@ const AppContent = () => {
           setFocusedIndex(-1); setSearchQuery('');
         }}
         onDoodleClick={() => {
-          playClick(); if (currentCategory) { setCurrentCategory(null); navigate('#'); return; }
-          route === '#doodle' ? navigate('#') : navigate('#doodle');
+          playClick(); 
+          if (currentCategory) { 
+            setCurrentCategory(null); 
+            navigate('#'); 
+            return; 
+          }
+          if (route === '#doodle') {
+            navigate('#');
+          } else {
+            navigate('#doodle');
+          }
         }}
         onYesClick={() => {
           const yesText = language === 'ur' ? 'ہاں' : 'Yes';
@@ -643,6 +726,14 @@ const AppContent = () => {
         onDelete={handleDeleteWord} 
         existingWords={(config?.categories || []).flatMap((c: any) => c.items || [])}
       />
+      {editingGesture && (
+        <GestureEditModal
+          gesture={editingGesture}
+          config={config}
+          onClose={() => setEditingGesture(null)}
+          onSave={handleSaveGesture}
+        />
+      )}
     </div>
   );
 };

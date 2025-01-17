@@ -207,8 +207,15 @@ export const recognitionEngine = {
   async train(label: string, en: string, ur: string, strokes: Stroke[], _mode: SketchRecognitionMode) {
     const normalized = normalizeStrokes(strokes);
     const id = `tpl_${crypto.randomUUID()}`;
+    // The "en" here is effectively our language-agnostic semantic wordId
+    const wordId = en.toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '_')
+      .trim();
+
     await db.templates.add({
       id,
+      wordId,
       label,
       en,
       ur,

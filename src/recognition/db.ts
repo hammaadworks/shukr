@@ -19,9 +19,10 @@ export type Stroke = StrokePoint[];
 
 export type UserSketchTemplate = {
   id: string;
-  label: string;
-  en: string;
-  ur: string;
+  wordId: string;
+  label?: string;
+  en?: string;
+  ur?: string;
   category: SketchRecognitionMode;
   strokes: Stroke[];
   createdAt: number;
@@ -32,8 +33,8 @@ export class RecognitionDatabase extends Dexie {
 
   constructor() {
     super('shukr_recognition_db');
-    this.version(1).stores({
-      templates: '++id, label, en, category, createdAt'
+    this.version(2).stores({
+      templates: '++id, wordId, category, createdAt'
     });
   }
 }
