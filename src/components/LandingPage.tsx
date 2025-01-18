@@ -427,18 +427,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
             </div>
             <div className="slide-visual-side">
                <div className="floating-mockup" style={{ width: '100%', maxWidth: '480px' }}>
-                  <SentenceBuilder 
-                    words={[{ id: 'intro_1', ur: 'السلام علیکم', en: 'Salam', icon: 'volume2' }]} 
-                    onClear={() => {}} 
-                    onBackspace={() => {}} 
-                    onPlay={() => {}} 
-                    focusedIndex={-1} 
-                    offset={0} 
-                    searchQuery="" 
-                    setSearchQuery={() => {}} 
-                    canAddWords={true} 
-                    builderScrollRef={builderScrollRef} 
-                    flashBorder={false} 
+                  <SentenceBuilder
+                     words={[{ id: 'intro_1', ur: 'السلام علیکم', en: 'Salam', icon: 'volume2' }]}
+                     onClear={() => {}}
+                     onBackspace={() => {}}
+                     onPlay={() => {}}
+                     focusedIndex={-1}
+                     offset={0}
+                     canAddWords={true}
+                     builderScrollRef={builderScrollRef}
+                     flashBorder={false}
+                     currentlyPlayingId={null}
                   />
                </div>
             </div>

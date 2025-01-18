@@ -24,6 +24,7 @@ interface HeaderProps {
     cameraButtonRef?: React.RefObject<HTMLButtonElement | null>;
     gestureMappings?: Record<string, GestureDefinition>;
     onLongPressGesture?: (gesture: GestureDefinition) => void;
+    gestureHits?: Record<string, number>;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -42,7 +43,8 @@ export const Header: React.FC<HeaderProps> = ({
                                                   showCloseDropzone = false,
                                                   cameraButtonRef,
                                                   gestureMappings = {},
-                                                  onLongPressGesture = () => {}
+                                                  onLongPressGesture = () => {},
+                                                  gestureHits = {}
                                               }) => {
     const {playClick} = useAudio();
     const {language, setLanguage, primaryLanguage, secondaryLanguage} = useLanguage();
@@ -139,6 +141,13 @@ export const Header: React.FC<HeaderProps> = ({
                     </button>
                 </div>
             </div>
-            {isTrackingEnabled && (<GestureLegend lastGesture={lastGesture} mappings={gestureMappings} onLongPress={onLongPressGesture}/>)}
+            {isTrackingEnabled && (
+                <GestureLegend 
+                    lastGesture={lastGesture} 
+                    mappings={gestureMappings} 
+                    onLongPress={onLongPressGesture}
+                    gestureHits={gestureHits}
+                />
+            )}
         </header>);
 };

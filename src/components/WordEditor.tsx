@@ -63,6 +63,8 @@ export const WordEditor: React.FC<WordEditorProps> = ({ item: initialItem, onClo
   const handleFieldChange = async (field: 'primary' | 'secondary' | 'roman', val: string) => {
     setError(null);
     const updated = { ...item };
+    
+    // Update the field being typed in immediately
     if (field === 'primary') {
         updated.text_primary = val;
         updated.ur = val;
@@ -76,21 +78,30 @@ export const WordEditor: React.FC<WordEditorProps> = ({ item: initialItem, onClo
     setItem(updated);
     if (onChange) onChange(updated);
 
-    if (val.length > 2) {
+    // Trigger bidirectional sync/translation
+    if (val.length > 0) {
       setIsTranslating(true);
       try {
-        const res = await translator.translate(val);
+        const res = await translator.translate(val, field);
         if (res) {
           const finalItem = { ...updated };
+          
+          // Apply results to the OTHER fields
           if (field === 'primary') {
             finalItem.text_secondary = res.en;
             finalItem.en = res.en;
-            if (!finalItem.roman) finalItem.roman = res.roman;
+            finalItem.roman = res.roman;
           } else if (field === 'secondary') {
             finalItem.text_primary = res.ur;
             finalItem.ur = res.ur;
-            if (!finalItem.roman) finalItem.roman = res.roman;
+            finalItem.roman = res.roman;
+          } else if (field === 'roman') {
+            finalItem.text_primary = res.ur;
+            finalItem.ur = res.ur;
+            finalItem.text_secondary = res.en;
+            finalItem.en = res.en;
           }
+          
           setItem(finalItem);
           if (onChange) onChange(finalItem);
         }
@@ -103,20 +114,40 @@ export const WordEditor: React.FC<WordEditorProps> = ({ item: initialItem, onClo
   };
 
   const handleSaveClick = () => {
-    const pText = item.text_primary || item.ur || '';
-    const sText = item.text_secondary || item.en || '';
+    const pText = (item.text_primary || item.ur || '').trim();
+    const sText = (item.text_secondary || item.en || '').trim();
 
-    if (!pText.trim() && !sText.trim()) {
+    if (!pText && !sText) {
         setError("Please enter a word.");
         return;
     }
 
+    // 1. Generate a semantic ID from the English or Roman text (slugify)
+    // We prioritize English (secondary if ur is primary) or Roman text for the ID
+    const baseForId = (sText || item.roman || pText || '').trim();
+    let finalId = item.id;
+
+    if (isNew || item.id.startsWith('word_')) {
+      finalId = baseForId.toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '') // remove special chars
+        .replace(/\s+/g, '_'); // replace spaces with underscores
+    }
+
+    if (!finalId) {
+       setError("Could not generate a valid ID. Please provide English or Roman text.");
+       return;
+    }
+
+    // 2. Strict Duplicate Check
     if (existingWords) {
         const isDuplicate = existingWords.some(w => {
             if (w.id === item.id) return false; 
-            const matchP = pText.trim() && (w.ur === pText.trim() || w.text_primary === pText.trim());
-            const matchS = sText.trim() && (w.en?.toLowerCase() === sText.trim().toLowerCase() || w.text_secondary?.toLowerCase() === sText.trim().toLowerCase());
-            return matchP || matchS;
+            
+            const matchP = pText && (w.ur === pText || w.text_primary === pText);
+            const matchS = sText && (w.en?.toLowerCase() === sText.toLowerCase() || w.text_secondary?.toLowerCase() === sText.toLowerCase());
+            const matchId = w.id === finalId;
+
+            return matchP || matchS || matchId;
         });
 
         if (isDuplicate) {
@@ -125,7 +156,12 @@ export const WordEditor: React.FC<WordEditorProps> = ({ item: initialItem, onClo
         }
     }
 
-    onSave({ ...item, categoryId: isFamily ? 'khandan' : (item.categoryId || 'common') }, null);
+    onSave({ 
+      ...item, 
+      id: finalId, 
+      categoryId: isFamily ? 'khandan' : (item.categoryId === 'khandan' ? 'common' : (item.categoryId || 'common')),
+      isFamily: isFamily 
+    }, null);
   };
 
   if (showDeleteConfirm) {
@@ -338,54 +374,57 @@ export const WordEditor: React.FC<WordEditorProps> = ({ item: initialItem, onClo
   );
 
   return (
-    <div className="sos-modal-overlay" onClick={onClose} style={{ zIndex: 3000, position: 'fixed', inset: 0, background: 'rgba(253, 251, 247, 0.95)', backdropFilter: 'blur(20px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div className="sos-modal-overlay" onClick={onClose} style={{ zIndex: 3000, position: 'fixed', inset: 0, background: 'rgba(253, 251, 247, 0.95)', backdropFilter: 'blur(20px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem' }}>
       <div 
         className="sos-modal-content naani-friendly" 
         onClick={e => e.stopPropagation()}
         style={{ 
-          height: '100dvh',
-          width: '100vw',
-          maxHeight: '100dvh',
+          height: 'auto',
+          maxHeight: '90dvh',
+          width: '100%',
+          maxWidth: '500px',
           display: 'flex',
           flexDirection: 'column',
           background: 'var(--color-surface)',
-          boxShadow: '0 0 100px rgba(0,0,0,0.1)',
-          overflowY: 'auto',
-          position: 'relative'
+          boxShadow: 'var(--shadow-soft)',
+          borderRadius: 'var(--radius-empathy)',
+          overflow: 'hidden',
+          position: 'relative',
+          border: '1px solid rgba(45, 90, 39, 0.05)'
         }}
       >
         {/* Header */}
         <div style={{ 
           display: 'flex', justifyContent: 'space-between', alignItems: 'center', 
-          padding: '1.5rem 1.5rem 1rem', position: 'sticky', top: 0, 
+          padding: '1.25rem 1.5rem', position: 'sticky', top: 0, 
           background: 'var(--color-surface)', zIndex: 10, borderBottom: '1px solid rgba(0,0,0,0.05)' 
         }}>
           <button 
             className="btn-icon" 
             onClick={onClose}
             style={{ 
-              background: 'rgba(0,0,0,0.05)', border: 'none', width: 44, height: 44, 
+              background: 'rgba(0,0,0,0.05)', border: 'none', width: 40, height: 40, 
               borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', 
               color: 'var(--color-text)', cursor: 'pointer' 
             }}
           >
-            <X size={24} />
+            <X size={20} />
           </button>
           
           <div style={{ textAlign: 'center' }}>
-            <h2 style={{ margin: 0, fontSize: '2rem', color: 'var(--color-primary)', fontFamily: 'var(--font-ur)', lineHeight: 1.1 }}>
+            <h2 style={{ margin: 0, fontSize: '1.8rem', color: 'var(--color-primary)', fontFamily: 'var(--font-ur)', lineHeight: 1 }}>
               {isNew ? 'نیا لفظ' : 'ترمیم کریں'}
             </h2>
-            <div style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+            <div style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>
               {isNew ? 'Add Word' : 'Edit Word'}
             </div>
           </div>
           
-          <div style={{ width: 44 }} />
+          <div style={{ width: 40 }} />
         </div>
 
         {/* Form Body */}
-        <div style={{ padding: '1.5rem', flex: 1 }}>
+        <div style={{ padding: '1.5rem', flex: 1, overflowY: 'auto' }}>
           {content}
         </div>
       </div>

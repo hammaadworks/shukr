@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { Delete, RotateCcw, XCircle } from 'lucide-react';
+import React from 'react';
+import { Delete, RotateCcw } from 'lucide-react';
 import { useLanguage } from '../hooks/useLanguage';
 import { WordCard } from './WordCard';
 
@@ -10,8 +10,6 @@ interface SentenceBuilderProps {
   onPlay: () => void;
   focusedIndex: number;
   offset: number;
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
   canAddWords: boolean;
   builderScrollRef: React.RefObject<HTMLDivElement | null>;
   flashBorder: boolean;
@@ -25,20 +23,22 @@ export const SentenceBuilder: React.FC<SentenceBuilderProps> = ({
   onPlay,
   focusedIndex,
   offset,
-  searchQuery,
-  setSearchQuery,
   canAddWords,
   builderScrollRef,
   flashBorder,
   currentlyPlayingId,
 }) => {
   const { isPrimary } = useLanguage();
-  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className={`sentence-dock-glass glass-container ${flashBorder ? 'flash-red-border' : ''}`} onClick={() => inputRef.current?.focus()}>
+    <div className={`sentence-dock-glass glass-container ${flashBorder ? 'flash-red-border' : ''}`}>
       <div className="smart-input-area">
         <div className="builder-scroll" ref={builderScrollRef}>
+          {words.length === 0 && (
+             <span className="builder-placeholder">
+               {isPrimary ? 'جملہ بنائیں...' : 'Build a sentence...'}
+             </span>
+          )}
           {words.map((w: any, i: number) => (
             <WordCard
               key={`${w.id}-${i}`}
@@ -49,36 +49,7 @@ export const SentenceBuilder: React.FC<SentenceBuilderProps> = ({
               onClick={() => {}}
             />
           ))}
-          <input
-            ref={inputRef}
-            type="text"
-            className="search-input-dock"
-            placeholder={
-              words.length === 0 ? (isPrimary ? 'تلاش یا جملہ...' : 'Search or build...') : ''
-            }
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Backspace' && searchQuery === '') {
-                e.preventDefault();
-                onBackspace();
-              }
-            }}
-            disabled={!canAddWords}
-          />
         </div>
-        {searchQuery && (
-          <button
-            className="btn-icon-ios"
-            style={{ padding: 4 }}
-            onClick={(e) => {
-              e.stopPropagation();
-              setSearchQuery('');
-            }}
-          >
-            <XCircle size={18} color="#8e8e8e" />
-          </button>
-        )}
       </div>
       <div className="dock-actions">
         <button

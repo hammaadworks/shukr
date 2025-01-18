@@ -20,7 +20,7 @@ interface SettingsPanelProps {
 
 type EditingType = 'word' | 'category' | 'quote';
 
-type TabType = 'contact' | 'voice' | 'data' | 'language';
+type TabType = 'contact' | 'voice' | 'data' | 'general';
 
 export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                                                 config,
@@ -260,7 +260,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 {id: 'contact', label: 'Call', urdu: 'کال کریں', icon: Settings}, 
                 {id: 'voice', label: 'Voice', urdu: 'آواز', icon: Mic}, 
                 {id: 'data', label: 'Data', urdu: 'ڈیٹا', icon: RefreshCw},
-                {id: 'language', label: 'Lang', urdu: 'زبان', icon: Settings},
+                {id: 'general', label: 'General', urdu: 'عام', icon: Settings},
             ].map(tab => (<button
                 key={tab.id}
                 className={`tab-btn ${activeTab === tab.id ? 'active' : ''}`}
@@ -275,9 +275,55 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 {/* Contact Settings */}
                 {activeTab === 'contact' && (<div className="gestures-settings-container">
                     <div className="list-group">
+                        <div style={{ marginBottom: 24 }}>
+                            <h3 style={{ margin: '0 0 12px 0', color: 'var(--color-primary)', fontSize: '1.2rem' }}>SOS Template (پیغام)</h3>
+                            <textarea 
+                                className="massive-input"
+                                style={{ width: '100%', height: 100, padding: 16, fontSize: '1.1rem', borderRadius: 24 }}
+                                placeholder="I need help!"
+                                value={config.sos_settings?.message_template || ''}
+                                onChange={(e) => {
+                                    const newConfig = { ...config };
+                                    if (!newConfig.sos_settings) newConfig.sos_settings = {};
+                                    newConfig.sos_settings.message_template = e.target.value;
+                                    updateConfig(newConfig);
+                                }}
+                            />
+                        </div>
+
+                        <div className="massive-item" style={{ height: 100, marginBottom: 24 }}>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <span style={{ fontSize: '1.2rem', fontWeight: 800 }}>Countdown</span>
+                                <span className="urdu-tab" style={{ fontSize: '1.4rem', color: 'var(--color-primary)' }}>الٹی گنتی (سیکنڈ)</span>
+                            </div>
+                            <div style={{ display: 'flex', gap: 8 }}>
+                                {[3, 5, 10].map(sec => (
+                                    <button
+                                        key={sec}
+                                        className={`btn-icon ${config.sos_settings?.countdown_seconds === sec ? 'active' : ''}`}
+                                        style={{ 
+                                            width: 60, height: 60, borderRadius: 18, fontSize: '1.2rem', fontWeight: 900,
+                                            background: config.sos_settings?.countdown_seconds === sec ? 'var(--color-primary)' : 'white',
+                                            color: config.sos_settings?.countdown_seconds === sec ? 'white' : 'var(--color-primary)',
+                                            border: '1px solid var(--color-primary)'
+                                        }}
+                                        onClick={() => {
+                                            const newConfig = { ...config };
+                                            if (!newConfig.sos_settings) newConfig.sos_settings = {};
+                                            newConfig.sos_settings.countdown_seconds = sec;
+                                            updateConfig(newConfig);
+                                        }}
+                                    >
+                                        {sec}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <h3 style={{ margin: '0 0 12px 0', color: 'var(--color-primary)', fontSize: '1.2rem' }}>Emergency Contacts (ایمرجنسی نمبر)</h3>
                         {(config.emergency_contacts || []).map((contact: any, idx: number) => (
                             <div key={idx} className="massive-item"
-                                 style={{flexDirection: 'column', gap: 12}}>
+                                 style={{flexDirection: 'column', gap: 12, marginBottom: 12}}>
                                 <div style={{display: 'flex', width: '100%', gap: 12}}>
                                     <input
                                         className="massive-input"
@@ -364,45 +410,6 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                         <Mic size={56}/>
                         <span style={{fontSize: '1.6rem', fontWeight: 900}}>ریکارڈنگ ہوم (Open Voice Studio)</span>
                     </button>
-
-                    <div className="massive-item" style={{ height: 100 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                            <div style={{ 
-                                background: config?.enableClickSound !== false ? 'rgba(45,90,39,0.1)' : '#f2f2f7',
-                                padding: 16,
-                                borderRadius: 18,
-                                color: config?.enableClickSound !== false ? 'var(--color-primary)' : '#8e8e93'
-                            }}>
-                                {config?.enableClickSound !== false ? <Volume2 size={32}/> : <VolumeX size={32}/>}
-                            </div>
-                            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                <span style={{ fontSize: '1.2rem', fontWeight: 800 }}>Button Sound</span>
-                                <span className="urdu-tab" style={{ fontSize: '1.4rem', color: 'var(--color-primary)', lineHeight: 1 }}>بٹن کی آواز</span>
-                            </div>
-                        </div>
-                        <button 
-                            className={`huge-btn ${config?.enableClickSound !== false ? 'active' : ''}`}
-                            style={{ 
-                                width: 120, 
-                                height: 64, 
-                                borderRadius: 32,
-                                background: config?.enableClickSound !== false ? 'var(--color-primary)' : '#e5e5ea',
-                                color: config?.enableClickSound !== false ? 'white' : '#8e8e93',
-                                transition: 'all 0.3s ease',
-                                fontSize: '1.2rem',
-                                fontWeight: 900
-                            }}
-                            onClick={() => {
-                                const newState = config?.enableClickSound !== false ? false : true;
-                                updateConfig({
-                                    ...config,
-                                    enableClickSound: newState
-                                });
-                            }}
-                        >
-                            {config?.enableClickSound !== false ? 'ON' : 'OFF'}
-                        </button>
-                    </div>
                 </div>)}
 
                 {/* Data Settings (System) */}
@@ -425,7 +432,6 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                 View Landing Page
                             </button>
                         </div>
-                        {/* ... rest of data items ... */}
 
                         <div className="list-item massive-item"
                              style={{flexDirection: 'column', alignItems: 'flex-start', gap: 16}}>
@@ -506,11 +512,24 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     </div>
                 </div>)}
 
-                {/* Language Settings */}
-                {activeTab === 'language' && (<div className="gestures-settings-container">
+                {/* General Settings */}
+                {activeTab === 'general' && (<div className="gestures-settings-container">
                     <div className="list-group">
+                        <div style={{ marginBottom: 24 }}>
+                            <h3 style={{ margin: '0 0 12px 0', color: 'var(--color-primary)', fontSize: '1.2rem' }}>User Nickname (نام)</h3>
+                            <input 
+                                className="massive-input"
+                                style={{ width: '100%', height: 70, padding: 16, fontSize: '1.2rem', borderRadius: 24 }}
+                                placeholder="e.g. Bade Ammi"
+                                value={config.user_nickname || ''}
+                                onChange={(e) => {
+                                    updateConfig({ ...config, user_nickname: e.target.value });
+                                }}
+                            />
+                        </div>
+
                         <div className="list-item massive-item"
-                             style={{flexDirection: 'column', alignItems: 'flex-start', gap: 16}}>
+                             style={{flexDirection: 'column', alignItems: 'flex-start', gap: 16, marginBottom: 24}}>
                             <div style={{width: '100%'}}>
                                 <h3 style={{margin: 0, color: 'var(--color-primary)'}}>Language Pair (زبان کا انتخاب)</h3>
                                 <p style={{fontSize: '0.9rem', color: '#8e8e93', marginTop: 4}}>
@@ -542,6 +561,65 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                     </button>
                                 </div>
                             </div>
+                        </div>
+
+                        <div style={{ marginBottom: 24 }}>
+                            <h3 style={{ margin: '0 0 12px 0', color: 'var(--color-primary)', fontSize: '1.2rem' }}>Speech Rate (رفتار)</h3>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                                <input 
+                                    type="range"
+                                    min="0.5"
+                                    max="1.5"
+                                    step="0.1"
+                                    style={{ flex: 1, height: 12, accentColor: 'var(--color-primary)' }}
+                                    value={config.preferences?.speech_rate || 0.9}
+                                    onChange={(e) => {
+                                        const newConfig = { ...config };
+                                        if (!newConfig.preferences) newConfig.preferences = {};
+                                        newConfig.preferences.speech_rate = parseFloat(e.target.value);
+                                        updateConfig(newConfig);
+                                    }}
+                                />
+                                <span style={{ fontSize: '1.2rem', fontWeight: 900, width: 40 }}>{config.preferences?.speech_rate || 0.9}</span>
+                            </div>
+                        </div>
+
+                        <div className="massive-item" style={{ height: 100 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                                <div style={{ 
+                                    background: config.preferences?.enable_click_sound !== false ? 'rgba(45,90,39,0.1)' : '#f2f2f7',
+                                    padding: 16,
+                                    borderRadius: 18,
+                                    color: config.preferences?.enable_click_sound !== false ? 'var(--color-primary)' : '#8e8e93'
+                                }}>
+                                    {config.preferences?.enable_click_sound !== false ? <Volume2 size={32}/> : <VolumeX size={32}/>}
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                    <span style={{ fontSize: '1.2rem', fontWeight: 800 }}>Button Sound</span>
+                                    <span className="urdu-tab" style={{ fontSize: '1.4rem', color: 'var(--color-primary)', lineHeight: 1 }}>بٹن کی آواز</span>
+                                </div>
+                            </div>
+                            <button 
+                                className={`huge-btn ${config.preferences?.enable_click_sound !== false ? 'active' : ''}`}
+                                style={{ 
+                                    width: 120, 
+                                    height: 64, 
+                                    borderRadius: 32,
+                                    background: config.preferences?.enable_click_sound !== false ? 'var(--color-primary)' : '#e5e5ea',
+                                    color: config.preferences?.enable_click_sound !== false ? 'white' : '#8e8e93',
+                                    transition: 'all 0.3s ease',
+                                    fontSize: '1.2rem',
+                                    fontWeight: 900
+                                }}
+                                onClick={() => {
+                                    const newConfig = { ...config };
+                                    if (!newConfig.preferences) newConfig.preferences = {};
+                                    newConfig.preferences.enable_click_sound = config.preferences?.enable_click_sound !== false ? false : true;
+                                    updateConfig(newConfig);
+                                }}
+                            >
+                                {config.preferences?.enable_click_sound !== false ? 'ON' : 'OFF'}
+                            </button>
                         </div>
                     </div>
                 </div>)}
