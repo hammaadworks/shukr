@@ -5,7 +5,7 @@ interface CameraPreviewProps {
   videoRef: React.RefObject<HTMLVideoElement | null>;
   onDragChange?: (isDragging: boolean) => void;
   onDragMove?: (position: { x: number; y: number }) => void;
-  onDrop?: (position: { x: number; y: number }) => void;
+  onDrop?: (rect: DOMRect) => void;
 }
 
 export const CameraPreview: React.FC<CameraPreviewProps> = ({ 
@@ -33,12 +33,12 @@ export const CameraPreview: React.FC<CameraPreviewProps> = ({
   };
 
   const handleMove = useCallback((clientX: number, clientY: number) => {
-    if (isDragging) {
+    if (isDragging && previewRef.current) {
       const newX = clientX - offsetRef.current.x;
       const newY = clientY - offsetRef.current.y;
       
-      const maxX = window.innerWidth - (previewRef.current?.offsetWidth || 0);
-      const maxY = window.innerHeight - (previewRef.current?.offsetHeight || 0);
+      const maxX = window.innerWidth - previewRef.current.offsetWidth;
+      const maxY = window.innerHeight - previewRef.current.offsetHeight;
       
       const nextPos = {
         x: Math.max(0, Math.min(newX, maxX)),
@@ -50,12 +50,12 @@ export const CameraPreview: React.FC<CameraPreviewProps> = ({
   }, [isDragging, onDragMove]);
 
   const handleEnd = useCallback(() => {
-    if (isDragging) {
+    if (isDragging && previewRef.current) {
       setIsDragging(false);
       onDragChange?.(false);
-      onDrop?.(position);
+      onDrop?.(previewRef.current.getBoundingClientRect());
     }
-  }, [isDragging, onDragChange, onDrop, position]);
+  }, [isDragging, onDragChange, onDrop]);
 
   useEffect(() => {
     const onMouseMove = (e: MouseEvent) => handleMove(e.clientX, e.clientY);
