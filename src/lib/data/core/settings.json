@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "timestamp": 1712451857000,
+  "user_nickname": "Bade Ammi",
+  "emergency_contacts": [
+    {
+      "name": "Masood",
+      "phone": "9513631315"
+    },
+    {
+      "name": "Hammaad",
+      "phone": "9663527755"
+    },
+    {
+      "name": "Emergency",
+      "phone": "112"
+    }
+  ],
+  "sos_settings": {
+    "message_template": "I need help immediately!",
+    "countdown_seconds": 5,
+    "play_alarm_sound": true
+  },
+  "preferences": {
+    "theme": "light",
+    "font_size": "large",
+    "speech_rate": 0.9,
+    "enable_vibration": true,
+    "enable_click_sound": true,
+    "auto_clear_minutes": 5
+  },
+  "language_pair": {
+    "primary": "ur",
+    "secondary": "en"
+  },
+  "favorites": [],
+  "voiceProfiles": [
+    {
+      "id": "voice_1775802743199",
+      "name": "Hammaad new"
+    }
+  ],
+  "activeVoiceProfile": ""
+}

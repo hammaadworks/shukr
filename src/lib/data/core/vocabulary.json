@@ -1,93 +1,4 @@
 {
-  "categories": [
-    {
-      "id": "cat_custom",
-      "icon": "star",
-      "order": 8,
-      "isSystem": false
-    },
-    {
-      "id": "core",
-      "icon": "user",
-      "order": 0,
-      "isSystem": true
-    },
-    {
-      "id": "jazbaat",
-      "icon": "smile",
-      "order": 7,
-      "isSystem": false
-    },
-    {
-      "id": "kaam",
-      "icon": "play",
-      "order": 6,
-      "isSystem": false
-    },
-    {
-      "id": "khana",
-      "icon": "utensils",
-      "order": 5,
-      "isSystem": false
-    },
-    {
-      "id": "khandan",
-      "icon": "users",
-      "order": 4,
-      "isSystem": false
-    },
-    {
-      "id": "ruhani",
-      "icon": "heart",
-      "order": 2,
-      "isSystem": false
-    },
-    {
-      "id": "sehat",
-      "icon": "activity",
-      "order": 1,
-      "isSystem": false
-    },
-    {
-      "id": "zaroorat",
-      "icon": "shopping-cart",
-      "order": 3,
-      "isSystem": false
-    }
-  ],
-  "quick_actions": [
-    {
-      "id": "ji_haan",
-      "type": "phrase",
-      "icon": "check-circle",
-      "status": "positive"
-    },
-    {
-      "id": "ji_nahi",
-      "type": "phrase",
-      "icon": "x-circle",
-      "status": "negative"
-    },
-    {
-      "id": "alhamdulillah_qa",
-      "type": "phrase",
-      "icon": "smile",
-      "status": "neutral"
-    },
-    {
-      "id": "madad_qa",
-      "type": "word",
-      "icon": "hand",
-      "status": "urgent",
-      "isWord": true
-    },
-    {
-      "id": "acha_qa",
-      "type": "phrase",
-      "icon": "smile",
-      "status": "positive"
-    }
-  ],
   "quotes": [
     {
       "id": "quote_sys_0",
@@ -132,21 +43,21 @@
   ],
   "words": [
     {
-      "id": "aaj",
+      "id": "today",
       "icon": "calendar",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -159,21 +70,21 @@
       "timeBias": []
     },
     {
-      "id": "aam",
+      "id": "mango",
       "icon": "star",
       "next": [
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe"
+        "meat",
+        "fruit",
+        "apple",
+        "banana",
+        "i",
+        "to_me"
       ],
       "tags": [
         "circle"
@@ -186,20 +97,20 @@
       "timeBias": []
     },
     {
-      "id": "aap",
+      "id": "you",
       "icon": "users",
       "next": [
-        "kaise",
-        "kab",
-        "kahan",
-        "dedo",
-        "lelo",
-        "baitho",
-        "utho",
-        "chalo",
-        "suno",
-        "bolo",
-        "khush",
+        "how",
+        "when",
+        "where",
+        "give",
+        "take",
+        "sit",
+        "wake_up",
+        "go",
+        "listen",
+        "speak",
+        "happy",
         "dua"
       ],
       "roman": "aap",
@@ -211,21 +122,21 @@
       "tags": []
     },
     {
-      "id": "abhi",
+      "id": "now",
       "icon": "zap",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -241,18 +152,18 @@
       "id": "ac",
       "icon": "snowflake",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -265,21 +176,21 @@
       "timeBias": []
     },
     {
-      "id": "acha",
+      "id": "good",
       "icon": "smile",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "circle"
@@ -292,21 +203,21 @@
       "timeBias": []
     },
     {
-      "id": "achaar",
+      "id": "pickle",
       "icon": "bowl",
       "next": [
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe"
+        "meat",
+        "fruit",
+        "apple",
+        "banana",
+        "i",
+        "to_me"
       ],
       "roman": "achaar",
       "category": "khana",
@@ -317,21 +228,21 @@
       "tags": []
     },
     {
-      "id": "afsos",
+      "id": "regret",
       "icon": "frown",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -353,12 +264,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "subhanallah",
-        "mai",
-        "mujhe",
-        "aap"
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "triangle"
@@ -374,18 +285,18 @@
       "id": "allah",
       "icon": "star",
       "next": [
-        "shukr",
+        "gratitude",
         "dua",
-        "jannat",
+        "paradise",
         "mashallah",
         "subhanallah",
         "inshallah",
         "reham",
-        "madad_kaam",
+        "help",
         "alhamdulillah",
-        "shukrguzar",
-        "sukun",
-        "itminan"
+        "thankful",
+        "peaceful",
+        "content"
       ],
       "tags": [
         "triangle"
@@ -398,21 +309,21 @@
       "timeBias": []
     },
     {
-      "id": "anda",
+      "id": "egg",
       "icon": "utensils",
       "next": [
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe"
+        "meat",
+        "fruit",
+        "apple",
+        "banana",
+        "i",
+        "to_me"
       ],
       "tags": [
         "circle"
@@ -425,21 +336,21 @@
       "timeBias": []
     },
     {
-      "id": "araam",
+      "id": "rest",
       "icon": "bed",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "roman": "araam",
       "category": "zaroorat",
@@ -459,12 +370,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe"
+        "i",
+        "to_me"
       ],
       "tags": [
         "triangle"
@@ -486,12 +397,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe"
+        "i",
+        "to_me"
       ],
       "roman": "astagfirullah",
       "category": "ruhani",
@@ -502,21 +413,21 @@
       "tags": []
     },
     {
-      "id": "aur",
+      "id": "and",
       "icon": "plus",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "roman": "aur",
       "category": "core",
@@ -536,12 +447,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe"
+        "i",
+        "to_me"
       ],
       "tags": [
         "triangle"
@@ -554,21 +465,21 @@
       "timeBias": []
     },
     {
-      "id": "ayna",
+      "id": "mirror",
       "icon": "square",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -581,21 +492,21 @@
       "timeBias": []
     },
     {
-      "id": "baad",
+      "id": "later",
       "icon": "clock",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -608,21 +519,21 @@
       "timeBias": []
     },
     {
-      "id": "baap",
+      "id": "father",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "baap",
       "category": "khandan",
@@ -633,21 +544,21 @@
       "tags": []
     },
     {
-      "id": "bacche",
+      "id": "kids",
       "icon": "users",
       "next": [
-        "kahan",
-        "kaise",
-        "bolo",
-        "suno",
-        "pyaar",
-        "khush",
+        "where",
+        "how",
+        "speak",
+        "listen",
+        "loved",
+        "happy",
         "dua",
-        "idhar",
-        "udhar",
+        "here",
+        "there",
         "ab",
-        "aaj",
-        "kal"
+        "today",
+        "tomorrow"
       ],
       "tags": [
         "circle"
@@ -660,21 +571,21 @@
       "timeBias": []
     },
     {
-      "id": "bahu",
+      "id": "daughter-in-law",
       "icon": "user",
       "next": [
-        "kahan",
-        "kaise",
-        "bolo",
-        "suno",
-        "pyaar",
-        "khush",
+        "where",
+        "how",
+        "speak",
+        "listen",
+        "loved",
+        "happy",
         "dua",
-        "idhar",
-        "udhar",
+        "here",
+        "there",
         "ab",
-        "aaj",
-        "kal"
+        "today",
+        "tomorrow"
       ],
       "roman": "bahu",
       "category": "khandan",
@@ -685,21 +596,21 @@
       "tags": []
     },
     {
-      "id": "baitho",
+      "id": "sit",
       "icon": "user",
       "next": [
-        "dedo",
-        "lelo",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe",
-        "aap"
+        "give",
+        "take",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "zigzag"
@@ -712,21 +623,21 @@
       "timeBias": []
     },
     {
-      "id": "band",
+      "id": "close",
       "icon": "x",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "mai",
-        "mujhe",
-        "aap"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "band",
       "category": "kaam",
@@ -737,21 +648,21 @@
       "tags": []
     },
     {
-      "id": "batao",
+      "id": "tell",
       "icon": "volume-2",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "roman": "batao",
       "category": "kaam",
@@ -765,18 +676,18 @@
       "id": "bathroom",
       "icon": "bath",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -789,21 +700,21 @@
       "timeBias": []
     },
     {
-      "id": "batti",
+      "id": "light",
       "icon": "zap",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -816,21 +727,21 @@
       "timeBias": []
     },
     {
-      "id": "behen",
+      "id": "sister",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "behen",
       "category": "khandan",
@@ -841,21 +752,21 @@
       "tags": []
     },
     {
-      "id": "behtar",
+      "id": "better",
       "icon": "smile",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "mai",
-        "mujhe",
-        "aap"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "behtar",
       "category": "jazbaat",
@@ -866,21 +777,21 @@
       "tags": []
     },
     {
-      "id": "beta",
+      "id": "son",
       "icon": "user",
       "next": [
-        "kahan",
-        "kaise",
-        "bolo",
-        "suno",
-        "pyaar",
-        "khush",
+        "where",
+        "how",
+        "speak",
+        "listen",
+        "loved",
+        "happy",
         "dua",
-        "idhar",
-        "udhar",
+        "here",
+        "there",
         "ab",
-        "aaj",
-        "kal"
+        "today",
+        "tomorrow"
       ],
       "roman": "beta",
       "category": "khandan",
@@ -894,9 +805,9 @@
       "id": "betaserk",
       "icon": "pill",
       "next": [
-        "chakkar",
-        "theek",
-        "dawaii"
+        "dizzy",
+        "better",
+        "medicine"
       ],
       "roman": "betaserk",
       "category": "sehat",
@@ -907,21 +818,21 @@
       "tags": []
     },
     {
-      "id": "beti",
+      "id": "daughter",
       "icon": "user",
       "next": [
-        "kahan",
-        "kaise",
-        "bolo",
-        "suno",
-        "pyaar",
-        "khush",
+        "where",
+        "how",
+        "speak",
+        "listen",
+        "loved",
+        "happy",
         "dua",
-        "idhar",
-        "udhar",
+        "here",
+        "there",
         "ab",
-        "aaj",
-        "kal"
+        "today",
+        "tomorrow"
       ],
       "roman": "beti",
       "category": "khandan",
@@ -932,21 +843,21 @@
       "tags": []
     },
     {
-      "id": "bhai",
+      "id": "brother",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "bhai",
       "category": "khandan",
@@ -957,21 +868,21 @@
       "tags": []
     },
     {
-      "id": "bhuk",
+      "id": "hungry",
       "icon": "utensils",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe",
-        "aap"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "zigzag"
@@ -987,16 +898,16 @@
       "id": "biryani",
       "icon": "utensils",
       "next": [
-        "khana_core",
-        "khao",
-        "dedo",
-        "chahiye",
-        "lelo",
-        "acha",
-        "bura",
-        "shukriya",
+        "food",
+        "eat",
+        "give",
+        "want",
+        "take",
+        "good",
+        "bad",
+        "thank_you",
         "alhamdulillah",
-        "aur",
+        "and",
         "mazedar",
         "garm"
       ],
@@ -1017,15 +928,15 @@
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe"
+        "meat",
+        "fruit",
+        "apple",
+        "banana",
+        "i",
+        "to_me"
       ],
       "tags": [
         "square"
@@ -1038,21 +949,21 @@
       "timeBias": []
     },
     {
-      "id": "bistar",
+      "id": "bed",
       "icon": "bed",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -1065,21 +976,21 @@
       "timeBias": []
     },
     {
-      "id": "bolo",
+      "id": "speak",
       "icon": "volume-2",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "tags": [
         "wave"
@@ -1092,21 +1003,21 @@
       "timeBias": []
     },
     {
-      "id": "bore",
+      "id": "bored",
       "icon": "loader",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -1119,21 +1030,21 @@
       "timeBias": []
     },
     {
-      "id": "bp",
+      "id": "blood_pressure",
       "icon": "activity",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
+        "better",
+        "medicine",
+        "tablet",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe",
-        "aap"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "circle"
@@ -1146,21 +1057,21 @@
       "timeBias": []
     },
     {
-      "id": "bukhaar",
+      "id": "fever",
       "icon": "thermometer",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe",
-        "aap"
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "zigzag"
@@ -1173,21 +1084,21 @@
       "timeBias": []
     },
     {
-      "id": "bura",
+      "id": "bad",
       "icon": "frown",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "circle"
@@ -1206,15 +1117,15 @@
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe"
+        "meat",
+        "fruit",
+        "apple",
+        "banana",
+        "i",
+        "to_me"
       ],
       "tags": [
         "square"
@@ -1227,21 +1138,21 @@
       "timeBias": []
     },
     {
-      "id": "chacha",
+      "id": "uncle",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "chacha",
       "category": "khandan",
@@ -1252,21 +1163,21 @@
       "tags": []
     },
     {
-      "id": "chachi",
+      "id": "aunt",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "chachi",
       "category": "khandan",
@@ -1277,21 +1188,21 @@
       "tags": []
     },
     {
-      "id": "chahiye",
+      "id": "want",
       "icon": "heart",
       "next": [
-        "pani",
-        "khana_core",
-        "dawaii",
-        "araam",
-        "chai",
-        "dudh",
-        "takiya",
-        "kambal",
+        "water",
+        "food",
+        "medicine",
+        "rest",
+        "tea",
+        "milk",
+        "pillow",
+        "blanket",
         "bathroom",
         "dua",
-        "mai",
-        "mujhe"
+        "i",
+        "to_me"
       ],
       "roman": "chahiyay",
       "category": "core",
@@ -1302,21 +1213,21 @@
       "tags": []
     },
     {
-      "id": "chai",
+      "id": "tea",
       "icon": "coffee",
       "next": [
-        "dedo",
-        "piyo",
-        "chahiye",
-        "lelo",
-        "shukriya",
+        "give",
+        "drink",
+        "want",
+        "take",
+        "thank_you",
         "alhamdulillah",
-        "aur",
+        "and",
         "thanda",
         "garam",
-        "acha",
-        "bura",
-        "mai"
+        "good",
+        "bad",
+        "i"
       ],
       "tags": [
         "wave"
@@ -1329,21 +1240,21 @@
       "timeBias": []
     },
     {
-      "id": "chakkar",
+      "id": "dizzy",
       "icon": "refresh-cw",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me"
       ],
       "tags": [
         "circle"
@@ -1356,21 +1267,21 @@
       "timeBias": []
     },
     {
-      "id": "chalo",
+      "id": "go",
       "icon": "arrow-right",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe",
-        "aap"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "zigzag"
@@ -1386,18 +1297,18 @@
       "id": "charger",
       "icon": "battery",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -1410,21 +1321,21 @@
       "timeBias": []
     },
     {
-      "id": "chashma",
+      "id": "glasses",
       "icon": "eye",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "roman": "chashma",
       "category": "zaroorat",
@@ -1435,19 +1346,19 @@
       "tags": []
     },
     {
-      "id": "chawal",
+      "id": "rice",
       "icon": "utensils",
       "next": [
-        "khana_core",
-        "khao",
-        "dedo",
-        "chahiye",
-        "lelo",
-        "acha",
-        "bura",
-        "shukriya",
+        "food",
+        "eat",
+        "give",
+        "want",
+        "take",
+        "good",
+        "bad",
+        "thank_you",
         "alhamdulillah",
-        "aur",
+        "and",
         "mazedar",
         "garm"
       ],
@@ -1468,15 +1379,15 @@
         "doctor",
         "nurse",
         "hospital",
-        "theek",
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "shukriya"
+        "better",
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "thank_you"
       ],
       "tags": [
         "circle"
@@ -1489,21 +1400,21 @@
       "timeBias": []
     },
     {
-      "id": "cheeni",
+      "id": "sugar",
       "icon": "utensils",
       "next": [
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe"
+        "meat",
+        "fruit",
+        "apple",
+        "banana",
+        "i",
+        "to_me"
       ],
       "tags": [
         "circle"
@@ -1516,21 +1427,21 @@
       "timeBias": []
     },
     {
-      "id": "daane",
+      "id": "blisters",
       "icon": "droplet",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -1543,21 +1454,21 @@
       "timeBias": []
     },
     {
-      "id": "dada",
+      "id": "grandfather",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "dada",
       "category": "khandan",
@@ -1568,21 +1479,21 @@
       "tags": []
     },
     {
-      "id": "dadi",
+      "id": "grandmother",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "dadi",
       "category": "khandan",
@@ -1593,21 +1504,21 @@
       "tags": []
     },
     {
-      "id": "dahi",
+      "id": "yogurt",
       "icon": "bowl",
       "next": [
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe"
+        "meat",
+        "fruit",
+        "apple",
+        "banana",
+        "i",
+        "to_me"
       ],
       "tags": [
         "circle"
@@ -1623,16 +1534,16 @@
       "id": "dal",
       "icon": "bowl",
       "next": [
-        "khana_core",
-        "khao",
-        "dedo",
-        "chahiye",
-        "lelo",
-        "acha",
-        "bura",
-        "shukriya",
+        "food",
+        "eat",
+        "give",
+        "want",
+        "take",
+        "good",
+        "bad",
+        "thank_you",
         "alhamdulillah",
-        "aur",
+        "and",
         "mazedar",
         "garm"
       ],
@@ -1647,21 +1558,21 @@
       "timeBias": []
     },
     {
-      "id": "damad",
+      "id": "son-in-law",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "damad",
       "category": "khandan",
@@ -1672,21 +1583,21 @@
       "tags": []
     },
     {
-      "id": "dar",
+      "id": "scared",
       "icon": "alert-triangle",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "roman": "dar",
       "category": "jazbaat",
@@ -1697,21 +1608,21 @@
       "tags": []
     },
     {
-      "id": "dard_ghutna",
+      "id": "knee_pain",
       "icon": "alert-circle",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -1724,21 +1635,21 @@
       "timeBias": []
     },
     {
-      "id": "dard_kan",
+      "id": "ear_pain",
       "icon": "alert-circle",
       "next": [
         "doctor",
         "nurse",
-        "dawaii",
-        "theek",
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "shukriya"
+        "medicine",
+        "better",
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "thank_you"
       ],
       "tags": [
         "zigzag"
@@ -1751,21 +1662,21 @@
       "timeBias": []
     },
     {
-      "id": "dard_mein",
+      "id": "painful",
       "icon": "alert-triangle",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -1778,21 +1689,21 @@
       "timeBias": []
     },
     {
-      "id": "dard_pait",
+      "id": "stomach_ache",
       "icon": "alert-circle",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "mai",
-        "mujhe",
-        "aap"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "zigzag"
@@ -1805,21 +1716,21 @@
       "timeBias": []
     },
     {
-      "id": "dard_pith",
+      "id": "back_pain",
       "icon": "alert-circle",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -1832,21 +1743,21 @@
       "timeBias": []
     },
     {
-      "id": "dard_sar",
+      "id": "headache",
       "icon": "alert-circle",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_pait",
-        "mai",
-        "mujhe",
-        "aap"
+        "fever",
+        "cough",
+        "cold",
+        "stomach_ache",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "circle"
@@ -1859,21 +1770,21 @@
       "timeBias": []
     },
     {
-      "id": "dawaii",
+      "id": "medicine",
       "icon": "pill",
       "next": [
-        "theek",
-        "goli",
-        "bp",
+        "better",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe",
-        "aap"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "dawaii",
       "category": "sehat",
@@ -1884,21 +1795,21 @@
       "tags": []
     },
     {
-      "id": "dedo",
+      "id": "give",
       "icon": "hand",
       "next": [
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe",
-        "aap"
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "dedo",
       "category": "kaam",
@@ -1909,21 +1820,21 @@
       "tags": []
     },
     {
-      "id": "dekho",
+      "id": "watch",
       "icon": "eye",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "roman": "dekho",
       "category": "kaam",
@@ -1934,21 +1845,21 @@
       "tags": []
     },
     {
-      "id": "dheere",
+      "id": "slowly",
       "icon": "loader",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "khul",
-        "band",
-        "mai",
-        "mujhe",
-        "aap"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "open",
+        "close",
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "dheere",
       "category": "kaam",
@@ -1959,21 +1870,21 @@
       "tags": []
     },
     {
-      "id": "dho_lo",
+      "id": "wash",
       "icon": "droplets",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "tags": [
         "wave"
@@ -1986,21 +1897,21 @@
       "timeBias": []
     },
     {
-      "id": "dikhao",
+      "id": "show",
       "icon": "eye",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "roman": "dikhao",
       "category": "kaam",
@@ -2011,21 +1922,21 @@
       "tags": []
     },
     {
-      "id": "doctor_khandan",
+      "id": "doctor",
       "icon": "activity",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe",
-        "aap"
+        "helper",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "circle"
@@ -2038,21 +1949,21 @@
       "timeBias": []
     },
     {
-      "id": "doctor_sehat",
+      "id": "doctor",
       "icon": "user",
       "next": [
         "checkup",
-        "dawaii",
+        "medicine",
         "hospital",
-        "theek",
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "shukriya"
+        "better",
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "thank_you"
       ],
       "roman": "doctor",
       "category": "sehat",
@@ -2071,13 +1982,13 @@
         "quran",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe",
-        "aap"
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "wave"
@@ -2090,21 +2001,21 @@
       "timeBias": []
     },
     {
-      "id": "dudh",
+      "id": "milk",
       "icon": "milk",
       "next": [
-        "dedo",
-        "piyo",
-        "chahiye",
-        "lelo",
-        "shukriya",
+        "give",
+        "drink",
+        "want",
+        "take",
+        "thank_you",
         "alhamdulillah",
-        "aur",
+        "and",
         "thanda",
         "garam",
-        "acha",
-        "bura",
-        "mai"
+        "good",
+        "bad",
+        "i"
       ],
       "tags": [
         "wave"
@@ -2126,12 +2037,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe"
+        "i",
+        "to_me"
       ],
       "tags": [
         "triangle"
@@ -2144,21 +2055,21 @@
       "timeBias": []
     },
     {
-      "id": "fakhar",
+      "id": "proud",
       "icon": "star",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "roman": "fakhar",
       "category": "jazbaat",
@@ -2169,21 +2080,21 @@
       "tags": []
     },
     {
-      "id": "farishta",
+      "id": "angel",
       "icon": "star",
       "next": [
         "allah",
         "dua",
         "namaz",
         "quran",
-        "rasool",
-        "theek",
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai"
+        "prophet",
+        "better",
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is"
       ],
       "tags": [
         "triangle"
@@ -2196,21 +2107,21 @@
       "timeBias": []
     },
     {
-      "id": "garmi",
+      "id": "hot",
       "icon": "sun",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -2223,21 +2134,21 @@
       "timeBias": []
     },
     {
-      "id": "ghabrahat",
+      "id": "nervous",
       "icon": "refresh-cw",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -2250,21 +2161,21 @@
       "timeBias": []
     },
     {
-      "id": "ghari",
+      "id": "watch",
       "icon": "clock",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "circle"
@@ -2277,21 +2188,21 @@
       "timeBias": []
     },
     {
-      "id": "goli",
+      "id": "tablet",
       "icon": "pill",
       "next": [
-        "theek",
-        "dawaii",
-        "bp",
+        "better",
+        "medicine",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe",
-        "aap"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "goli",
       "category": "sehat",
@@ -2302,19 +2213,19 @@
       "tags": []
     },
     {
-      "id": "gosht",
+      "id": "meat",
       "icon": "utensils",
       "next": [
-        "khana_core",
-        "khao",
-        "dedo",
-        "chahiye",
-        "lelo",
-        "acha",
-        "bura",
-        "shukriya",
+        "food",
+        "eat",
+        "give",
+        "want",
+        "take",
+        "good",
+        "bad",
+        "thank_you",
         "alhamdulillah",
-        "aur",
+        "and",
         "mazedar",
         "garm"
       ],
@@ -2327,21 +2238,21 @@
       "tags": []
     },
     {
-      "id": "gussa",
+      "id": "angry",
       "icon": "alert-circle",
       "next": [
-        "khush",
-        "udaas",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe",
-        "aap"
+        "happy",
+        "sad",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "zigzag"
@@ -2354,12 +2265,12 @@
       "timeBias": []
     },
     {
-      "id": "haan",
+      "id": "yes",
       "icon": "check",
       "next": [
-        "shukriya",
+        "thank_you",
         "alhamdulillah",
-        "theek"
+        "better"
       ],
       "roman": "haan",
       "category": "core",
@@ -2370,20 +2281,20 @@
       "tags": []
     },
     {
-      "id": "hai",
+      "id": "is",
       "icon": "check-circle",
       "next": [
-        "theek",
-        "acha",
-        "bura",
-        "kahan",
-        "kab",
-        "kyun",
+        "better",
+        "good",
+        "bad",
+        "where",
+        "when",
+        "why",
         "ab",
-        "baad",
-        "abhi",
-        "ya",
-        "aur",
+        "later",
+        "now",
+        "or",
+        "and",
         "alhamdulillah"
       ],
       "roman": "hai",
@@ -2395,21 +2306,21 @@
       "tags": []
     },
     {
-      "id": "hairan",
+      "id": "surprised",
       "icon": "zap",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -2430,13 +2341,13 @@
         "madinah",
         "dua",
         "namaz",
-        "theek",
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai"
+        "better",
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is"
       ],
       "tags": [
         "triangle"
@@ -2455,15 +2366,15 @@
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe"
+        "meat",
+        "fruit",
+        "apple",
+        "banana",
+        "i",
+        "to_me"
       ],
       "tags": [
         "circle"
@@ -2476,21 +2387,21 @@
       "timeBias": []
     },
     {
-      "id": "himmat_jazbaat",
+      "id": "brave",
       "icon": "shield",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "tags": [
         "triangle"
@@ -2509,15 +2420,15 @@
         "doctor",
         "nurse",
         "checkup",
-        "theek",
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "shukriya"
+        "better",
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "thank_you"
       ],
       "roman": "hospital",
       "category": "sehat",
@@ -2528,21 +2439,21 @@
       "tags": []
     },
     {
-      "id": "hua",
+      "id": "happened",
       "icon": "check-circle",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "roman": "hua",
       "category": "core",
@@ -2553,21 +2464,21 @@
       "tags": []
     },
     {
-      "id": "hun",
+      "id": "am",
       "icon": "check-circle",
       "next": [
-        "theek",
-        "khush",
-        "udaas",
-        "thak",
-        "behtar",
-        "shukrguzar",
+        "better",
+        "happy",
+        "sad",
+        "tired",
+        "better",
+        "thankful",
         "alhamdulillah",
-        "shukr",
-        "itminan",
-        "sukun",
-        "acha",
-        "bura"
+        "gratitude",
+        "content",
+        "peaceful",
+        "good",
+        "bad"
       ],
       "tags": [
         "circle"
@@ -2580,21 +2491,21 @@
       "timeBias": []
     },
     {
-      "id": "idhar",
+      "id": "here",
       "icon": "arrow-left",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -2610,18 +2521,18 @@
       "id": "injection",
       "icon": "syringe",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me"
       ],
       "roman": "injection",
       "category": "sehat",
@@ -2641,12 +2552,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe"
+        "i",
+        "to_me"
       ],
       "roman": "inshallah",
       "category": "ruhani",
@@ -2657,21 +2568,21 @@
       "tags": []
     },
     {
-      "id": "intezar",
+      "id": "wait",
       "icon": "clock",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "roman": "intezar",
       "category": "kaam",
@@ -2691,12 +2602,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe"
+        "i",
+        "to_me"
       ],
       "tags": [
         "triangle"
@@ -2709,21 +2620,21 @@
       "timeBias": []
     },
     {
-      "id": "itminan",
+      "id": "content",
       "icon": "check-circle",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "behtar",
-        "mai",
-        "mujhe",
-        "aap"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "better",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "wave"
@@ -2736,21 +2647,21 @@
       "timeBias": []
     },
     {
-      "id": "jalan",
+      "id": "burning",
       "icon": "zap",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -2763,21 +2674,21 @@
       "timeBias": []
     },
     {
-      "id": "jaldi",
+      "id": "quickly",
       "icon": "zap",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe",
-        "aap"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "jaldi",
       "category": "kaam",
@@ -2788,7 +2699,7 @@
       "tags": []
     },
     {
-      "id": "janamaz",
+      "id": "prayer_mat",
       "icon": "square",
       "next": [
         "allah",
@@ -2797,12 +2708,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe"
+        "i",
+        "to_me"
       ],
       "tags": [
         "square"
@@ -2815,21 +2726,21 @@
       "timeBias": []
     },
     {
-      "id": "jannat",
+      "id": "paradise",
       "icon": "star",
       "next": [
         "allah",
         "dua",
         "namaz",
         "quran",
-        "rasool",
-        "theek",
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai"
+        "prophet",
+        "better",
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is"
       ],
       "tags": [
         "triangle"
@@ -2842,21 +2753,21 @@
       "timeBias": []
     },
     {
-      "id": "jootay",
+      "id": "shoes",
       "icon": "footprints",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -2872,18 +2783,18 @@
       "id": "juice",
       "icon": "cup",
       "next": [
-        "dedo",
-        "piyo",
-        "chahiye",
-        "lelo",
-        "shukriya",
+        "give",
+        "drink",
+        "want",
+        "take",
+        "thank_you",
         "alhamdulillah",
-        "aur",
+        "and",
         "thanda",
         "garam",
-        "acha",
-        "bura",
-        "mai"
+        "good",
+        "bad",
+        "i"
       ],
       "tags": [
         "wave"
@@ -2896,21 +2807,21 @@
       "timeBias": []
     },
     {
-      "id": "kab",
+      "id": "when",
       "icon": "clock",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -2923,21 +2834,21 @@
       "timeBias": []
     },
     {
-      "id": "kahan",
+      "id": "where",
       "icon": "search",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -2950,21 +2861,21 @@
       "timeBias": []
     },
     {
-      "id": "kaise",
+      "id": "how",
       "icon": "help-circle",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "roman": "kaisay",
       "category": "core",
@@ -2975,21 +2886,21 @@
       "tags": []
     },
     {
-      "id": "kal",
+      "id": "tomorrow",
       "icon": "calendar",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -3002,21 +2913,21 @@
       "timeBias": []
     },
     {
-      "id": "kambal",
+      "id": "blanket",
       "icon": "square",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -3029,21 +2940,21 @@
       "timeBias": []
     },
     {
-      "id": "kamzor_jazbaat",
+      "id": "weak",
       "icon": "battery-low",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "roman": "kamzor jazbaat",
       "category": "jazbaat",
@@ -3054,21 +2965,21 @@
       "tags": []
     },
     {
-      "id": "kamzori",
+      "id": "weakness",
       "icon": "battery-low",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me"
       ],
       "roman": "kamzori",
       "category": "sehat",
@@ -3079,21 +2990,21 @@
       "tags": []
     },
     {
-      "id": "kangi",
+      "id": "comb",
       "icon": "scissors",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -3106,21 +3017,21 @@
       "timeBias": []
     },
     {
-      "id": "kapre",
+      "id": "clothes",
       "icon": "shirt",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -3133,21 +3044,21 @@
       "timeBias": []
     },
     {
-      "id": "kela",
+      "id": "banana",
       "icon": "banana",
       "next": [
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "mai",
-        "mujhe",
-        "aap"
+        "meat",
+        "fruit",
+        "apple",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "circle"
@@ -3160,21 +3071,21 @@
       "timeBias": []
     },
     {
-      "id": "khala",
+      "id": "aunt",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "khala",
       "category": "khandan",
@@ -3185,21 +3096,21 @@
       "tags": []
     },
     {
-      "id": "khaloo",
+      "id": "uncle",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "khaloo",
       "category": "khandan",
@@ -3210,21 +3121,21 @@
       "tags": []
     },
     {
-      "id": "khana_core",
+      "id": "food",
       "icon": "utensils",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "roman": "khana",
       "category": "core",
@@ -3235,21 +3146,21 @@
       "tags": []
     },
     {
-      "id": "khansi",
+      "id": "cough",
       "icon": "wind",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe",
-        "aap"
+        "fever",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "zigzag"
@@ -3262,21 +3173,21 @@
       "timeBias": []
     },
     {
-      "id": "khao",
+      "id": "eat",
       "icon": "utensils",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "roman": "khao",
       "category": "kaam",
@@ -3287,21 +3198,21 @@
       "tags": []
     },
     {
-      "id": "kharray",
+      "id": "stand",
       "icon": "user",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe",
-        "aap"
+        "give",
+        "take",
+        "sit",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "kharray",
       "category": "kaam",
@@ -3318,15 +3229,15 @@
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe"
+        "meat",
+        "fruit",
+        "apple",
+        "banana",
+        "i",
+        "to_me"
       ],
       "tags": [
         "circle"
@@ -3342,16 +3253,16 @@
       "id": "khichdi",
       "icon": "bowl",
       "next": [
-        "khana_core",
-        "khao",
-        "dedo",
-        "chahiye",
-        "lelo",
-        "acha",
-        "bura",
-        "shukriya",
+        "food",
+        "eat",
+        "give",
+        "want",
+        "take",
+        "good",
+        "bad",
+        "thank_you",
         "alhamdulillah",
-        "aur",
+        "and",
         "mazedar",
         "garm"
       ],
@@ -3366,21 +3277,21 @@
       "timeBias": []
     },
     {
-      "id": "khujli",
+      "id": "itching",
       "icon": "fingerprint",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -3393,21 +3304,21 @@
       "timeBias": []
     },
     {
-      "id": "khul",
+      "id": "open",
       "icon": "plus",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "band",
-        "mai",
-        "mujhe",
-        "aap"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "close",
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "khul",
       "category": "kaam",
@@ -3418,21 +3329,21 @@
       "tags": []
     },
     {
-      "id": "khush",
+      "id": "happy",
       "icon": "smile",
       "next": [
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe",
-        "aap"
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "khush",
       "category": "jazbaat",
@@ -3443,21 +3354,21 @@
       "tags": []
     },
     {
-      "id": "kursi",
+      "id": "chair",
       "icon": "user",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "roman": "kursi",
       "category": "zaroorat",
@@ -3468,21 +3379,21 @@
       "tags": []
     },
     {
-      "id": "kya",
+      "id": "what",
       "icon": "help-circle",
       "next": [
-        "hai",
-        "hua",
-        "waqt",
-        "kaise",
-        "kahan",
-        "kab",
-        "kyun",
+        "is",
+        "happened",
+        "time",
+        "how",
+        "where",
+        "when",
+        "why",
         "bolti",
-        "suno",
-        "dikhao",
-        "pucho",
-        "batao"
+        "listen",
+        "show",
+        "ask",
+        "tell"
       ],
       "roman": "kya",
       "category": "core",
@@ -3493,21 +3404,21 @@
       "tags": []
     },
     {
-      "id": "kyun",
+      "id": "why",
       "icon": "help-circle",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "roman": "kyoon",
       "category": "core",
@@ -3521,17 +3432,17 @@
       "id": "lassi",
       "icon": "cup",
       "next": [
-        "dedo",
-        "piyo",
-        "chahiye",
-        "lelo",
-        "shukriya",
+        "give",
+        "drink",
+        "want",
+        "take",
+        "thank_you",
         "alhamdulillah",
-        "aur",
+        "and",
         "thanda",
         "garam",
-        "acha",
-        "bura",
+        "good",
+        "bad",
         "roti"
       ],
       "tags": [
@@ -3545,21 +3456,21 @@
       "timeBias": []
     },
     {
-      "id": "lathi",
+      "id": "cane",
       "icon": "zap",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "roman": "lathi",
       "category": "zaroorat",
@@ -3570,21 +3481,21 @@
       "tags": []
     },
     {
-      "id": "lekin",
+      "id": "but",
       "icon": "alert-triangle",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "roman": "lekin",
       "category": "core",
@@ -3595,10 +3506,10 @@
       "tags": []
     },
     {
-      "id": "leli",
+      "id": "took_it",
       "icon": "check-circle",
       "next": [
-        "shukriya",
+        "thank_you",
         "alhamdulillah"
       ],
       "roman": "leli",
@@ -3610,21 +3521,21 @@
       "tags": []
     },
     {
-      "id": "lelo",
+      "id": "take",
       "icon": "hand",
       "next": [
-        "dedo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe",
-        "aap"
+        "give",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "lelo",
       "category": "kaam",
@@ -3635,21 +3546,21 @@
       "tags": []
     },
     {
-      "id": "likho",
+      "id": "write",
       "icon": "type",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "roman": "likho",
       "category": "kaam",
@@ -3664,8 +3575,8 @@
       "icon": "droplets",
       "next": [
         "lagao",
-        "chahiye",
-        "khujli"
+        "want",
+        "itching"
       ],
       "roman": "lotion",
       "category": "sehat",
@@ -3676,21 +3587,21 @@
       "tags": []
     },
     {
-      "id": "maa",
+      "id": "mother",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "maa",
       "category": "khandan",
@@ -3701,19 +3612,19 @@
       "tags": []
     },
     {
-      "id": "machli",
+      "id": "fish",
       "icon": "utensils",
       "next": [
-        "khana_core",
-        "khao",
-        "dedo",
-        "chahiye",
-        "lelo",
-        "acha",
-        "bura",
-        "shukriya",
+        "food",
+        "eat",
+        "give",
+        "want",
+        "take",
+        "good",
+        "bad",
+        "thank_you",
         "alhamdulillah",
-        "aur",
+        "and",
         "mazedar",
         "garm"
       ],
@@ -3726,21 +3637,21 @@
       "tags": []
     },
     {
-      "id": "madad_kaam",
+      "id": "help",
       "icon": "help-circle",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "roman": "madad kaam",
       "category": "kaam",
@@ -3751,21 +3662,21 @@
       "tags": []
     },
     {
-      "id": "madadgar",
+      "id": "helper",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "mai",
-        "mujhe",
-        "aap"
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "madadgar",
       "category": "khandan",
@@ -3785,12 +3696,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe"
+        "i",
+        "to_me"
       ],
       "tags": [
         "triangle"
@@ -3812,12 +3723,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe"
+        "i",
+        "to_me"
       ],
       "tags": [
         "triangle"
@@ -3830,21 +3741,21 @@
       "timeBias": []
     },
     {
-      "id": "mai",
+      "id": "i",
       "icon": "user",
       "next": [
-        "hun",
-        "theek",
-        "khush",
-        "udaas",
-        "thak",
-        "behtar",
-        "shukrguzar",
+        "am",
+        "better",
+        "happy",
+        "sad",
+        "tired",
+        "better",
+        "thankful",
         "alhamdulillah",
-        "shukr",
-        "acha",
-        "bura",
-        "tabiyat_kharab"
+        "gratitude",
+        "good",
+        "bad",
+        "worse"
       ],
       "roman": "main",
       "category": "core",
@@ -3864,12 +3775,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe"
+        "i",
+        "to_me"
       ],
       "tags": [
         "triangle"
@@ -3882,21 +3793,21 @@
       "timeBias": []
     },
     {
-      "id": "malham",
+      "id": "ointment",
       "icon": "droplets",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me"
       ],
       "tags": [
         "wave"
@@ -3909,21 +3820,21 @@
       "timeBias": []
     },
     {
-      "id": "malta",
+      "id": "orange",
       "icon": "star",
       "next": [
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe"
+        "meat",
+        "fruit",
+        "apple",
+        "banana",
+        "i",
+        "to_me"
       ],
       "tags": [
         "circle"
@@ -3936,21 +3847,21 @@
       "timeBias": []
     },
     {
-      "id": "mami",
+      "id": "aunt",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "mami",
       "category": "khandan",
@@ -3961,21 +3872,21 @@
       "tags": []
     },
     {
-      "id": "mamoo",
+      "id": "uncle",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "mamoo",
       "category": "khandan",
@@ -3986,21 +3897,21 @@
       "tags": []
     },
     {
-      "id": "masala",
+      "id": "spice",
       "icon": "zap",
       "next": [
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe"
+        "meat",
+        "fruit",
+        "apple",
+        "banana",
+        "i",
+        "to_me"
       ],
       "roman": "masala",
       "category": "khana",
@@ -4020,12 +3931,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe"
+        "i",
+        "to_me"
       ],
       "roman": "mashallah",
       "category": "ruhani",
@@ -4045,12 +3956,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe"
+        "i",
+        "to_me"
       ],
       "roman": "masjid",
       "category": "ruhani",
@@ -4064,18 +3975,18 @@
       "id": "masood",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe",
-        "aap"
+        "helper",
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "masood",
       "category": "khandan",
@@ -4086,21 +3997,21 @@
       "tags": []
     },
     {
-      "id": "matli",
+      "id": "nausea",
       "icon": "loader",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -4113,21 +4024,21 @@
       "timeBias": []
     },
     {
-      "id": "mayoos",
+      "id": "hopeless",
       "icon": "frown",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "roman": "mayoos",
       "category": "jazbaat",
@@ -4138,21 +4049,21 @@
       "tags": []
     },
     {
-      "id": "mithai",
+      "id": "sweets",
       "icon": "utensils",
       "next": [
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe"
+        "meat",
+        "fruit",
+        "apple",
+        "banana",
+        "i",
+        "to_me"
       ],
       "tags": [
         "circle"
@@ -4165,21 +4076,21 @@
       "timeBias": []
     },
     {
-      "id": "moze",
+      "id": "socks",
       "icon": "footprints",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -4192,21 +4103,21 @@
       "timeBias": []
     },
     {
-      "id": "mujhe",
+      "id": "to_me",
       "icon": "hand",
       "next": [
-        "chahiye",
-        "pani",
-        "chai",
-        "dard_mein",
-        "bukhaar",
-        "neend",
-        "bhuk",
-        "pyas",
+        "want",
+        "water",
+        "tea",
+        "painful",
+        "fever",
+        "sleepy",
+        "hungry",
+        "thirsty",
         "alhamdulillah",
-        "shukr",
+        "gratitude",
         "dua",
-        "dawaii"
+        "medicine"
       ],
       "roman": "mujhay",
       "category": "core",
@@ -4217,19 +4128,19 @@
       "tags": []
     },
     {
-      "id": "murghi",
+      "id": "chicken",
       "icon": "utensils",
       "next": [
-        "khana_core",
-        "khao",
-        "dedo",
-        "chahiye",
-        "lelo",
-        "acha",
-        "bura",
-        "shukriya",
+        "food",
+        "eat",
+        "give",
+        "want",
+        "take",
+        "good",
+        "bad",
+        "thank_you",
         "alhamdulillah",
-        "aur",
+        "and",
         "mazedar",
         "garm"
       ],
@@ -4242,21 +4153,21 @@
       "tags": []
     },
     {
-      "id": "nahi",
+      "id": "no",
       "icon": "x-circle",
       "next": [
-        "chahiye",
-        "khao",
-        "piyo",
-        "baitho",
-        "chalo",
-        "theek",
-        "hua",
-        "hai",
-        "hun",
-        "shukriya",
-        "mai",
-        "mujhe"
+        "want",
+        "eat",
+        "drink",
+        "sit",
+        "go",
+        "better",
+        "happened",
+        "is",
+        "am",
+        "thank_you",
+        "i",
+        "to_me"
       ],
       "roman": "nahi",
       "category": "core",
@@ -4267,21 +4178,21 @@
       "tags": []
     },
     {
-      "id": "namak",
+      "id": "salt",
       "icon": "utensils",
       "next": [
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe"
+        "meat",
+        "fruit",
+        "apple",
+        "banana",
+        "i",
+        "to_me"
       ],
       "tags": [
         "circle"
@@ -4302,13 +4213,13 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe",
-        "aap"
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "triangle"
@@ -4321,21 +4232,21 @@
       "timeBias": []
     },
     {
-      "id": "nana",
+      "id": "grandfather",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "nana",
       "category": "khandan",
@@ -4346,21 +4257,21 @@
       "tags": []
     },
     {
-      "id": "nani",
+      "id": "grandmother",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "nani",
       "category": "khandan",
@@ -4371,21 +4282,21 @@
       "tags": []
     },
     {
-      "id": "nawasa",
+      "id": "grandson",
       "icon": "user",
       "next": [
-        "kahan",
-        "kaise",
-        "bolo",
-        "suno",
-        "pyaar",
-        "khush",
+        "where",
+        "how",
+        "speak",
+        "listen",
+        "loved",
+        "happy",
         "dua",
-        "idhar",
-        "udhar",
+        "here",
+        "there",
         "ab",
-        "aaj",
-        "kal"
+        "today",
+        "tomorrow"
       ],
       "tags": [
         "circle"
@@ -4398,21 +4309,21 @@
       "timeBias": []
     },
     {
-      "id": "nawasi",
+      "id": "granddaughter",
       "icon": "user",
       "next": [
-        "kahan",
-        "kaise",
-        "bolo",
-        "suno",
-        "pyaar",
-        "khush",
+        "where",
+        "how",
+        "speak",
+        "listen",
+        "loved",
+        "happy",
         "dua",
-        "idhar",
-        "udhar",
+        "here",
+        "there",
         "ab",
-        "aaj",
-        "kal"
+        "today",
+        "tomorrow"
       ],
       "tags": [
         "circle"
@@ -4425,21 +4336,21 @@
       "timeBias": []
     },
     {
-      "id": "nazla",
+      "id": "cold",
       "icon": "snowflake",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe",
-        "aap"
+        "fever",
+        "cough",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "zigzag"
@@ -4452,21 +4363,21 @@
       "timeBias": []
     },
     {
-      "id": "neend",
+      "id": "sleepy",
       "icon": "moon",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe",
-        "aap"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "wave"
@@ -4479,21 +4390,21 @@
       "timeBias": []
     },
     {
-      "id": "nurse_khandan",
+      "id": "nurse",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
-        "madadgar",
-        "mai",
-        "mujhe",
-        "aap"
+        "helper",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "circle"
@@ -4506,21 +4417,21 @@
       "timeBias": []
     },
     {
-      "id": "nurse_sehat",
+      "id": "nurse",
       "icon": "user",
       "next": [
         "madad",
-        "dawaii",
+        "medicine",
         "injection",
-        "theek",
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "shukriya"
+        "better",
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "thank_you"
       ],
       "roman": "nurse",
       "category": "sehat",
@@ -4531,21 +4442,21 @@
       "tags": []
     },
     {
-      "id": "paise",
+      "id": "money",
       "icon": "wallet",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -4564,15 +4475,15 @@
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe"
+        "meat",
+        "fruit",
+        "apple",
+        "banana",
+        "i",
+        "to_me"
       ],
       "tags": [
         "circle"
@@ -4588,10 +4499,10 @@
       "id": "panadol",
       "icon": "pill",
       "next": [
-        "dedo",
-        "theek",
-        "dard_sar",
-        "bukhaar"
+        "give",
+        "better",
+        "headache",
+        "fever"
       ],
       "roman": "panadol",
       "category": "sehat",
@@ -4602,21 +4513,21 @@
       "tags": []
     },
     {
-      "id": "pani",
+      "id": "water",
       "icon": "droplet",
       "next": [
-        "dedo",
-        "piyo",
-        "chahiye",
-        "lelo",
-        "shukriya",
+        "give",
+        "drink",
+        "want",
+        "take",
+        "thank_you",
         "alhamdulillah",
-        "aur",
+        "and",
         "thanda",
         "garam",
-        "acha",
-        "bura",
-        "mai"
+        "good",
+        "bad",
+        "i"
       ],
       "tags": [
         "wave"
@@ -4629,21 +4540,21 @@
       "timeBias": []
     },
     {
-      "id": "pani_core",
+      "id": "water",
       "icon": "droplet",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "roman": "pani",
       "category": "core",
@@ -4654,21 +4565,21 @@
       "tags": []
     },
     {
-      "id": "pankha",
+      "id": "fan",
       "icon": "wind",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -4681,21 +4592,21 @@
       "timeBias": []
     },
     {
-      "id": "pareshan",
+      "id": "worried",
       "icon": "help-circle",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -4708,21 +4619,21 @@
       "timeBias": []
     },
     {
-      "id": "parho",
+      "id": "read",
       "icon": "book-open",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "roman": "parho",
       "category": "kaam",
@@ -4733,21 +4644,21 @@
       "tags": []
     },
     {
-      "id": "patti",
+      "id": "bandage",
       "icon": "shield",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me"
       ],
       "roman": "patti",
       "category": "sehat",
@@ -4758,21 +4669,21 @@
       "tags": []
     },
     {
-      "id": "phal",
+      "id": "fruit",
       "icon": "star",
       "next": [
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe",
-        "aap"
+        "meat",
+        "apple",
+        "banana",
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "phal",
       "category": "khana",
@@ -4783,21 +4694,21 @@
       "tags": []
     },
     {
-      "id": "phone_karo",
+      "id": "call",
       "icon": "phone",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "roman": "phone karo",
       "category": "kaam",
@@ -4808,21 +4719,21 @@
       "tags": []
     },
     {
-      "id": "phone_zaroorat",
+      "id": "phone",
       "icon": "phone",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "roman": "phone zaroorat",
       "category": "zaroorat",
@@ -4833,21 +4744,21 @@
       "tags": []
     },
     {
-      "id": "phupha",
+      "id": "uncle",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "phupha",
       "category": "khandan",
@@ -4858,21 +4769,21 @@
       "tags": []
     },
     {
-      "id": "phupho",
+      "id": "aunt",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "phupho",
       "category": "khandan",
@@ -4883,21 +4794,21 @@
       "tags": []
     },
     {
-      "id": "piyo",
+      "id": "drink",
       "icon": "cup",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "tags": [
         "wave"
@@ -4910,21 +4821,21 @@
       "timeBias": []
     },
     {
-      "id": "pota",
+      "id": "grandson",
       "icon": "user",
       "next": [
-        "kahan",
-        "kaise",
-        "bolo",
-        "suno",
-        "pyaar",
-        "khush",
+        "where",
+        "how",
+        "speak",
+        "listen",
+        "loved",
+        "happy",
         "dua",
-        "idhar",
-        "udhar",
+        "here",
+        "there",
         "ab",
-        "aaj",
-        "kal"
+        "today",
+        "tomorrow"
       ],
       "tags": [
         "circle"
@@ -4937,21 +4848,21 @@
       "timeBias": []
     },
     {
-      "id": "poti",
+      "id": "granddaughter",
       "icon": "user",
       "next": [
-        "kahan",
-        "kaise",
-        "bolo",
-        "suno",
-        "pyaar",
-        "khush",
+        "where",
+        "how",
+        "speak",
+        "listen",
+        "loved",
+        "happy",
         "dua",
-        "idhar",
-        "udhar",
+        "here",
+        "there",
         "ab",
-        "aaj",
-        "kal"
+        "today",
+        "tomorrow"
       ],
       "tags": [
         "circle"
@@ -4964,21 +4875,21 @@
       "timeBias": []
     },
     {
-      "id": "pucho",
+      "id": "ask",
       "icon": "help-circle",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "roman": "pucho",
       "category": "kaam",
@@ -4989,21 +4900,21 @@
       "tags": []
     },
     {
-      "id": "pukao",
+      "id": "cook",
       "icon": "utensils",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "roman": "pukao",
       "category": "kaam",
@@ -5014,21 +4925,21 @@
       "tags": []
     },
     {
-      "id": "pur_josh",
+      "id": "excited",
       "icon": "zap",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "roman": "pur josh",
       "category": "jazbaat",
@@ -5039,21 +4950,21 @@
       "tags": []
     },
     {
-      "id": "pyaar",
+      "id": "loved",
       "icon": "heart",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "tags": [
         "wave"
@@ -5066,21 +4977,21 @@
       "timeBias": []
     },
     {
-      "id": "pyas",
+      "id": "thirsty",
       "icon": "droplet",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe",
-        "aap"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "zigzag"
@@ -5101,13 +5012,13 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe",
-        "aap"
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "square"
@@ -5120,21 +5031,21 @@
       "timeBias": []
     },
     {
-      "id": "rakho",
+      "id": "put",
       "icon": "hand",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "roman": "rakho",
       "category": "kaam",
@@ -5145,7 +5056,7 @@
       "tags": []
     },
     {
-      "id": "rasool",
+      "id": "prophet",
       "icon": "user",
       "next": [
         "allah",
@@ -5154,12 +5065,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe"
+        "i",
+        "to_me"
       ],
       "tags": [
         "triangle"
@@ -5175,18 +5086,18 @@
       "id": "remote",
       "icon": "zap",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -5202,16 +5113,16 @@
       "id": "roti",
       "icon": "utensils",
       "next": [
-        "khana_core",
-        "khao",
-        "dedo",
-        "chahiye",
-        "lelo",
-        "acha",
-        "bura",
-        "shukriya",
+        "food",
+        "eat",
+        "give",
+        "want",
+        "take",
+        "good",
+        "bad",
+        "thank_you",
         "alhamdulillah",
-        "aur",
+        "and",
         "mazedar",
         "garm"
       ],
@@ -5226,7 +5137,7 @@
       "timeBias": []
     },
     {
-      "id": "roza",
+      "id": "fast",
       "icon": "sun",
       "next": [
         "allah",
@@ -5234,13 +5145,13 @@
         "sehri",
         "dua",
         "namaz",
-        "theek",
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai"
+        "better",
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is"
       ],
       "tags": [
         "triangle"
@@ -5253,21 +5164,21 @@
       "timeBias": []
     },
     {
-      "id": "ruko",
+      "id": "stop",
       "icon": "stop-circle",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe",
-        "aap"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "ruko",
       "category": "kaam",
@@ -5278,21 +5189,21 @@
       "tags": []
     },
     {
-      "id": "rus",
+      "id": "toast",
       "icon": "square",
       "next": [
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe"
+        "meat",
+        "fruit",
+        "apple",
+        "banana",
+        "i",
+        "to_me"
       ],
       "tags": [
         "square"
@@ -5305,21 +5216,21 @@
       "timeBias": []
     },
     {
-      "id": "saaf_kaam",
+      "id": "clean",
       "icon": "sparkles",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "tags": [
         "wave"
@@ -5332,7 +5243,7 @@
       "timeBias": []
     },
     {
-      "id": "sabr",
+      "id": "patience",
       "icon": "heart",
       "next": [
         "allah",
@@ -5341,12 +5252,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "shukr",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe",
-        "aap"
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "triangle"
@@ -5359,21 +5270,21 @@
       "timeBias": []
     },
     {
-      "id": "sabun",
+      "id": "soap",
       "icon": "droplets",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -5386,21 +5297,21 @@
       "timeBias": []
     },
     {
-      "id": "sabzi",
+      "id": "vegetable",
       "icon": "leaf",
       "next": [
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe"
+        "meat",
+        "fruit",
+        "apple",
+        "banana",
+        "i",
+        "to_me"
       ],
       "roman": "sabzi",
       "category": "khana",
@@ -5414,16 +5325,16 @@
       "id": "salan",
       "icon": "bowl",
       "next": [
-        "khana_core",
-        "khao",
-        "dedo",
-        "chahiye",
-        "lelo",
-        "acha",
-        "bura",
-        "shukriya",
+        "food",
+        "eat",
+        "give",
+        "want",
+        "take",
+        "good",
+        "bad",
+        "thank_you",
         "alhamdulillah",
-        "aur",
+        "and",
         "mazedar",
         "garm"
       ],
@@ -5444,15 +5355,15 @@
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "seb",
-        "kela",
-        "mai",
-        "mujhe"
+        "meat",
+        "fruit",
+        "apple",
+        "banana",
+        "i",
+        "to_me"
       ],
       "tags": [
         "circle"
@@ -5465,21 +5376,21 @@
       "timeBias": []
     },
     {
-      "id": "sans",
+      "id": "breathing",
       "icon": "wind",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -5492,21 +5403,21 @@
       "timeBias": []
     },
     {
-      "id": "sath",
+      "id": "with",
       "icon": "users",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "roman": "saath",
       "category": "core",
@@ -5517,21 +5428,21 @@
       "tags": []
     },
     {
-      "id": "seb",
+      "id": "apple",
       "icon": "apple",
       "next": [
         "roti",
         "salan",
         "dal",
-        "chawal",
+        "rice",
         "khichdi",
         "biryani",
-        "gosht",
-        "phal",
-        "kela",
-        "mai",
-        "mujhe",
-        "aap"
+        "meat",
+        "fruit",
+        "banana",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "circle"
@@ -5544,21 +5455,21 @@
       "timeBias": []
     },
     {
-      "id": "sharm",
+      "id": "shy",
       "icon": "user",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "roman": "sharm",
       "category": "jazbaat",
@@ -5572,12 +5483,12 @@
       "id": "shingles",
       "icon": "alert-circle",
       "next": [
-        "dard_mein",
-        "khujli",
-        "jalan",
-        "daane",
-        "malham",
-        "dawaii"
+        "painful",
+        "itching",
+        "burning",
+        "blisters",
+        "ointment",
+        "medicine"
       ],
       "roman": "shingles",
       "category": "sehat",
@@ -5588,21 +5499,21 @@
       "tags": []
     },
     {
-      "id": "shohar",
+      "id": "husband",
       "icon": "user",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "pota",
-        "poti",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "grandson",
+        "granddaughter",
         "masood",
         "doctor",
         "nurse",
-        "madadgar",
-        "mai",
-        "mujhe"
+        "helper",
+        "i",
+        "to_me"
       ],
       "roman": "shohar",
       "category": "khandan",
@@ -5613,7 +5524,7 @@
       "tags": []
     },
     {
-      "id": "shukr",
+      "id": "gratitude",
       "icon": "heart",
       "next": [
         "allah",
@@ -5622,12 +5533,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
+        "patience",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe",
-        "aap"
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "triangle"
@@ -5640,21 +5551,21 @@
       "timeBias": []
     },
     {
-      "id": "shukrguzar",
+      "id": "thankful",
       "icon": "heart",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "tags": [
         "wave"
@@ -5667,21 +5578,21 @@
       "timeBias": []
     },
     {
-      "id": "shukriya",
+      "id": "thank_you",
       "icon": "smile",
       "next": [
-        "beta",
-        "beti",
-        "bahu",
-        "bacche",
-        "aap",
-        "shukr",
+        "son",
+        "daughter",
+        "daughter-in-law",
+        "kids",
+        "you",
+        "gratitude",
         "allah",
-        "khush",
+        "happy",
         "dua",
         "alhamdulillah",
-        "mai",
-        "mujhe"
+        "i",
+        "to_me"
       ],
       "roman": "shukriya",
       "category": "core",
@@ -5692,21 +5603,21 @@
       "tags": []
     },
     {
-      "id": "so_jao",
+      "id": "sleep",
       "icon": "moon",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "roman": "so jao",
       "category": "kaam",
@@ -5717,21 +5628,21 @@
       "tags": []
     },
     {
-      "id": "sojan",
+      "id": "swelling",
       "icon": "loader",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -5744,21 +5655,21 @@
       "timeBias": []
     },
     {
-      "id": "sona_zaroorat",
+      "id": "sleep",
       "icon": "moon",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "roman": "sona zaroorat",
       "category": "zaroorat",
@@ -5778,12 +5689,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
-        "mai",
-        "mujhe",
-        "aap"
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "subhanallah",
       "category": "ruhani",
@@ -5797,18 +5708,18 @@
       "id": "sugar",
       "icon": "activity",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe",
-        "aap"
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "circle"
@@ -5821,21 +5732,21 @@
       "timeBias": []
     },
     {
-      "id": "sukun",
+      "id": "peaceful",
       "icon": "heart",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe",
-        "aap"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "content",
+        "better",
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "wave"
@@ -5848,21 +5759,21 @@
       "timeBias": []
     },
     {
-      "id": "suno",
+      "id": "listen",
       "icon": "volume-2",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "tags": [
         "wave"
@@ -5884,12 +5795,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe"
+        "i",
+        "to_me"
       ],
       "tags": [
         "triangle"
@@ -5902,21 +5813,21 @@
       "timeBias": []
     },
     {
-      "id": "surkhi",
+      "id": "redness",
       "icon": "eye",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -5929,21 +5840,21 @@
       "timeBias": []
     },
     {
-      "id": "tabiyat_kharab",
+      "id": "worse",
       "icon": "frown",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "roman": "tabiyat kharab",
       "category": "jazbaat",
@@ -5954,21 +5865,21 @@
       "tags": []
     },
     {
-      "id": "takiya",
+      "id": "pillow",
       "icon": "bed",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -5981,21 +5892,21 @@
       "timeBias": []
     },
     {
-      "id": "tanha",
+      "id": "lonely",
       "icon": "user",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -6016,13 +5927,13 @@
         "quran",
         "dua",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe",
-        "aap"
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "triangle"
@@ -6035,21 +5946,21 @@
       "timeBias": []
     },
     {
-      "id": "tauliya",
+      "id": "towel",
       "icon": "square",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "wave"
@@ -6062,21 +5973,21 @@
       "timeBias": []
     },
     {
-      "id": "tel",
+      "id": "oil",
       "icon": "droplets",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -6089,21 +6000,21 @@
       "timeBias": []
     },
     {
-      "id": "tez_dard",
+      "id": "sharp_pain",
       "icon": "alert-triangle",
       "next": [
-        "theek",
-        "dawaii",
-        "goli",
-        "bp",
+        "better",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -6116,21 +6027,21 @@
       "timeBias": []
     },
     {
-      "id": "thak",
+      "id": "tired",
       "icon": "battery-low",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe",
-        "aap"
+        "happy",
+        "sad",
+        "angry",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "thak",
       "category": "jazbaat",
@@ -6141,21 +6052,21 @@
       "tags": []
     },
     {
-      "id": "thand",
+      "id": "cold",
       "icon": "snowflake",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -6168,12 +6079,12 @@
       "timeBias": []
     },
     {
-      "id": "thandak",
+      "id": "cooling",
       "icon": "snowflake",
       "next": [
-        "chahiye",
-        "malham",
-        "jalan"
+        "want",
+        "ointment",
+        "burning"
       ],
       "roman": "thandak",
       "category": "sehat",
@@ -6184,21 +6095,21 @@
       "tags": []
     },
     {
-      "id": "theek",
+      "id": "better",
       "icon": "check-circle",
       "next": [
-        "dawaii",
-        "goli",
-        "bp",
+        "medicine",
+        "tablet",
+        "blood_pressure",
         "sugar",
-        "bukhaar",
-        "khansi",
-        "nazla",
-        "dard_sar",
-        "dard_pait",
-        "mai",
-        "mujhe",
-        "aap"
+        "fever",
+        "cough",
+        "cold",
+        "headache",
+        "stomach_ache",
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "theek",
       "category": "sehat",
@@ -6209,21 +6120,21 @@
       "tags": []
     },
     {
-      "id": "udaas",
+      "id": "sad",
       "icon": "frown",
       "next": [
-        "khush",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe",
-        "aap"
+        "happy",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me",
+        "you"
       ],
       "roman": "udaas",
       "category": "jazbaat",
@@ -6234,21 +6145,21 @@
       "tags": []
     },
     {
-      "id": "udhar",
+      "id": "there",
       "icon": "arrow-right",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "square"
@@ -6261,21 +6172,21 @@
       "timeBias": []
     },
     {
-      "id": "umeed",
+      "id": "hope",
       "icon": "star",
       "next": [
-        "khush",
-        "udaas",
-        "gussa",
-        "thak",
-        "neend",
-        "bhuk",
-        "pyas",
-        "sukun",
-        "itminan",
-        "behtar",
-        "mai",
-        "mujhe"
+        "happy",
+        "sad",
+        "angry",
+        "tired",
+        "sleepy",
+        "hungry",
+        "thirsty",
+        "peaceful",
+        "content",
+        "better",
+        "i",
+        "to_me"
       ],
       "tags": [
         "wave"
@@ -6288,21 +6199,21 @@
       "timeBias": []
     },
     {
-      "id": "uthao",
+      "id": "pick_up",
       "icon": "hand",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "roman": "uthao",
       "category": "kaam",
@@ -6313,21 +6224,21 @@
       "tags": []
     },
     {
-      "id": "utho",
+      "id": "wake_up",
       "icon": "sun",
       "next": [
-        "dedo",
-        "lelo",
-        "baitho",
-        "kharray",
-        "chalo",
-        "ruko",
-        "jaldi",
-        "dheere",
-        "khul",
-        "band",
-        "mai",
-        "mujhe"
+        "give",
+        "take",
+        "sit",
+        "stand",
+        "go",
+        "stop",
+        "quickly",
+        "slowly",
+        "open",
+        "close",
+        "i",
+        "to_me"
       ],
       "tags": [
         "zigzag"
@@ -6340,21 +6251,21 @@
       "timeBias": []
     },
     {
-      "id": "waqt",
+      "id": "time",
       "icon": "clock",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "tags": [
         "circle"
@@ -6370,75 +6281,24 @@
       "id": "wheelchair",
       "icon": "user",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "roman": "wheelchair",
       "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
-      "timeBias": [],
-      "tags": []
-    },
-    {
-      "id": "word_1775277152990",
-      "roman": "salam",
-      "icon": "volume",
-      "next": [],
-      "category": "cat_custom",
-      "type": "word",
-      "usageCount": 6,
-      "lastUsedAt": 1775817165172,
-      "timeBias": [],
-      "tags": []
-    },
-    {
-      "id": "word_1775652284561",
-      "roman": "gold",
-      "icon": "star",
-      "next": [],
-      "categoryId": "cat_custom",
-      "category": "cat_custom",
-      "type": "word",
-      "usageCount": 1,
-      "lastUsedAt": 1775652301378,
-      "timeBias": [],
-      "tags": []
-    },
-    {
-      "id": "word_1775666401083",
-      "roman": "maqsood",
-      "icon": "user",
-      "next": [],
-      "categoryId": "khandan",
-      "category": "khandan",
-      "type": "word",
-      "usageCount": 0,
-      "lastUsedAt": 0,
-      "timeBias": [],
-      "tags": []
-    },
-    {
-      "id": "word_1775666424293",
-      "roman": "jewellery",
-      "icon": "star",
-      "next": [],
-      "categoryId": "cat_custom",
-      "category": "cat_custom",
-      "type": "word",
-      "usageCount": 1,
-      "lastUsedAt": 1775666487113,
       "timeBias": [],
       "tags": []
     },
@@ -6451,13 +6311,13 @@
         "quran",
         "dua",
         "tasbeeh",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe",
-        "aap"
+        "i",
+        "to_me",
+        "you"
       ],
       "tags": [
         "wave"
@@ -6470,21 +6330,21 @@
       "timeBias": []
     },
     {
-      "id": "ya",
+      "id": "or",
       "icon": "refresh-cw",
       "next": [
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai",
-        "hun",
-        "nahi",
-        "chahiye",
-        "shukriya",
-        "theek",
-        "pani"
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is",
+        "am",
+        "no",
+        "want",
+        "thank_you",
+        "better",
+        "water"
       ],
       "roman": "ya",
       "category": "core",
@@ -6495,21 +6355,21 @@
       "tags": []
     },
     {
-      "id": "yeh",
+      "id": "this",
       "icon": "arrow-right",
       "next": [
-        "kya",
-        "hai",
-        "theek",
-        "acha",
-        "bura",
-        "dedo",
-        "lelo",
-        "rakho",
-        "uthao",
-        "saaf_kaam",
-        "khul",
-        "band"
+        "what",
+        "is",
+        "better",
+        "good",
+        "bad",
+        "give",
+        "take",
+        "put",
+        "pick_up",
+        "clean",
+        "open",
+        "close"
       ],
       "roman": "yeh",
       "category": "core",
@@ -6520,21 +6380,21 @@
       "tags": []
     },
     {
-      "id": "zakat",
+      "id": "charity",
       "icon": "heart",
       "next": [
         "allah",
         "madad",
         "dua",
         "namaz",
-        "shukr",
-        "theek",
-        "mai",
-        "mujhe",
-        "aap",
-        "yeh",
-        "kya",
-        "hai"
+        "gratitude",
+        "better",
+        "i",
+        "to_me",
+        "you",
+        "this",
+        "what",
+        "is"
       ],
       "tags": [
         "triangle"
@@ -6556,12 +6416,12 @@
         "dua",
         "tasbeeh",
         "wudu",
-        "sabr",
-        "shukr",
+        "patience",
+        "gratitude",
         "alhamdulillah",
         "subhanallah",
-        "mai",
-        "mujhe"
+        "i",
+        "to_me"
       ],
       "tags": [
         "triangle"

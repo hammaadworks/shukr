@@ -89,7 +89,6 @@ async function run() {
 
     // 3. Update core/vocabulary.json (words, quotes) - NO CATEGORIES
     const vocabulary = {
-      quick_actions: snapshot.quick_actions || [],
       words: snapshot.words || [],
       quotes: snapshot.quotes || []
     };

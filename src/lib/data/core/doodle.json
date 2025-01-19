@@ -1,9 +1,6 @@
 [
   {
     "id": "tpl_1775324747930",
-    "label": "specs",
-    "en": "specs",
-    "ur": "specs",
     "category": "auto",
     "strokes": [
       [
@@ -719,13 +716,11 @@
         }
       ]
     ],
-    "createdAt": 1775324747930
+    "createdAt": 1775324747930,
+    "wordId": "glasses"
   },
   {
     "id": "tpl_1775733874766",
-    "label": "Food",
-    "en": "Food",
-    "ur": "کھانا",
     "category": "auto",
     "strokes": [
       [
@@ -2669,6 +2664,7 @@
         }
       ]
     ],
-    "createdAt": 1775733874766
+    "createdAt": 1775733874766,
+    "wordId": "food"
   }
 ]
