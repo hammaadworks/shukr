@@ -24,7 +24,7 @@ export const TrainDoodleModal: React.FC<TrainDoodleModalProps> = ({ onSave, onCa
 
   const handleStartNew = () => {
     setEditingItem({
-      id: `word_${crypto.randomUUID()}`,
+      id: 'pending_id',
       en: searchQuery,
       ur: '',
       roman: '',

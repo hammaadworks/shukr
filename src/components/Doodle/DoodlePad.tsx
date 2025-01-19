@@ -4,7 +4,7 @@ import { useLanguage } from '../../hooks/useLanguage';
 import { useAudio } from '../../hooks/useAudio';
 import { useFuzzySearch } from '../../hooks/useFuzzySearch';
 import { recognitionEngine } from '../../recognition/engine';
-import { wordNetwork } from '../../lib/wordNetwork';
+import { predictionsEngine } from '../../lib/predictionsEngine';
 import type { Stroke, StrokePoint } from '../../recognition/db';
 
 import { DoodleCanvas } from './DoodleCanvas';
@@ -36,13 +36,14 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focus
 
   const allWords = useMemo(() => {
     if (!config?.categories) return [];
+    // Flatten all items from all categories
     return config.categories.flatMap((c: any) => c.items || []);
   }, [config]);
 
   useEffect(() => {
     const updateContextPredictions = async () => {
       if (allWords.length === 0) return;
-      const ranked = await wordNetwork.rankPredictions(allWords, sentence);
+      const ranked = await predictionsEngine.rankPredictions(allWords, sentence);
       setContextPredictions(ranked.slice(0, 10));
     };
     updateContextPredictions();
@@ -50,7 +51,7 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focus
 
   const searchResults = useFuzzySearch(allWords, searchQuery);
 
-  // Ensure minimum 5 predictions by falling back to top words
+  // Ensure predictions are always populated
   const displayedPredictions = useMemo(() => {
     if (searchQuery.trim().length > 0) {
       if (searchResults.length === 0) {
@@ -59,7 +60,7 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focus
           id: 'doodle_add_prompt', 
           ur: addLabel, 
           en: 'Add Word?', 
-          icon: 'list-plus', 
+          icon: 'plus', 
           isPrompt: true, 
           onClick: () => onOpenAddWord?.(searchQuery)
         }];
@@ -77,17 +78,14 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focus
       }
     }
 
-    // Basic unique words fallback if still < 10
-    if (results.length < 10 && config?.categories) {
-      for (const word of allWords) {
-        if (results.length >= 10) break;
-        if (!results.find(r => r.id === word.id)) {
-          results.push(word);
-        }
-      }
+    // fallback to all words if still empty
+    if (results.length < 5) {
+        const remaining = allWords.filter(w => !results.find(r => r.id === w.id));
+        results.push(...remaining.slice(0, 10 - results.length));
     }
+
     return results.slice(0, 10);
-  }, [predictions, config, searchQuery, searchResults, allWords, language, onOpenAddWord, contextPredictions]);
+  }, [predictions, searchQuery, searchResults, allWords, language, onOpenAddWord, contextPredictions]);
 
   useEffect(() => {
     recognitionEngine.init(config);
@@ -125,7 +123,6 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focus
       setCurrentStrokes(prevStrokes => {
         const newStrokes = [...prevStrokes, prevPoints];
         
-        // Use a separate async block to handle recognition to not block state updates
         (async () => {
           const results = await recognitionEngine.recognize(newStrokes, 'auto', config);
           setPredictions(results);
@@ -157,32 +154,39 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focus
     <div className="doodle-page-container">
       <div className="mobile-drawing-container">
         {/* Predictions Area */}
-        <WordPredictions 
-          predictions={displayedPredictions} 
-          onSelect={(item) => {
-            if (item.isPrompt && item.onClick) {
-              item.onClick();
-              return;
-            }
-            onRecognize(item);
-            if (searchQuery) setSearchQuery('');
-            clearCanvas();
-          }} 
-          focusedIndex={focusedIndex}
-          offset={0}
-          className="doodle-predictions-bar"
-        />
+        <div className="doodle-predictions-container">
+          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 8px 4px', fontSize: '0.7rem', fontWeight: 800, color: 'var(--color-primary)', textTransform: 'uppercase', opacity: 0.6 }}>
+             <span>{isPrimary ? 'تجاویز' : 'Suggestions'}</span>
+             <span>{searchQuery ? (isPrimary ? 'تلاش' : 'Searching') : (predictions.length > 0 ? (isPrimary ? 'ڈرائنگ' : 'Drawing') : (isPrimary ? 'مشہور' : 'Popular'))}</span>
+          </div>
+          <WordPredictions 
+            predictions={displayedPredictions} 
+            onSelect={(item) => {
+              if (item.isPrompt && item.onClick) {
+                item.onClick();
+                return;
+              }
+              onRecognize(item);
+              if (searchQuery) setSearchQuery('');
+              clearCanvas();
+            }} 
+            focusedIndex={focusedIndex}
+            offset={0}
+            className="doodle-predictions-bar"
+          />
+        </div>
 
         {/* Search Bar */}
         <div className="doodle-search-wrap">
-          <div className="doodle-search-inner">
-            <Search size={18} className="doodle-search-icon" />
+          <div className="doodle-search-inner" onClick={() => setIsKeyboardVisible(true)}>
+            <button className="doodle-search-icon-btn" onClick={(e) => { e.stopPropagation(); setIsKeyboardVisible(!isKeyboardVisible); }} title="Search">
+              <Search size={18} />
+            </button>
             <input 
               type="text" 
               placeholder={isPrimary ? "لفظ تلاش کریں..." : "Search for a word..."}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              onClick={() => setIsKeyboardVisible(true)}
               onFocus={(e) => { e.target.blur(); setIsKeyboardVisible(true); }}
               inputMode="none"
               readOnly
@@ -190,13 +194,13 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focus
             />
             <div className="doodle-search-actions">
               {searchQuery && (
-                <button className="doodle-search-clear" onClick={() => { setSearchQuery(''); setIsKeyboardVisible(false); }}>
+                <button className="doodle-search-clear" onClick={(e) => { e.stopPropagation(); setSearchQuery(''); }}>
                   <X size={16} />
                 </button>
               )}
               <button 
                 className="doodle-search-add" 
-                onClick={() => onOpenAddWord?.(searchQuery)}
+                onClick={(e) => { e.stopPropagation(); onOpenAddWord?.(searchQuery); }}
                 title={isPrimary ? "نیا لفظ شامل کریں" : "Add New Word"}
               >
                 <Plus size={18} />

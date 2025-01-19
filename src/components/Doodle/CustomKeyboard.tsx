@@ -44,25 +44,25 @@ export const CustomKeyboard: React.FC<CustomKeyboardProps> = ({ onKeyPress, onBa
     return layouts[language] || layouts['en'];
   }, [language]);
 
-  const handleKeyClick = (e: React.MouseEvent | React.TouchEvent, key: string) => {
-    e.preventDefault();
+  const handleKeyClick = (key: string) => {
+    if (navigator.vibrate) navigator.vibrate(30);
     onKeyPress(key);
   };
 
-  const handleBackspace = (e: React.MouseEvent | React.TouchEvent) => {
-    e.preventDefault();
+  const handleBackspace = () => {
+    if (navigator.vibrate) navigator.vibrate(30);
     onBackspace();
   };
 
-  const handleClose = (e: React.MouseEvent | React.TouchEvent) => {
-    e.preventDefault();
+  const handleClose = () => {
+    if (navigator.vibrate) navigator.vibrate(20);
     onClose();
   };
 
   return (
     <div className="custom-keyboard-container">
       <div className="keyboard-header">
-        <button className="keyboard-close-btn" onClick={handleClose} onTouchEnd={handleClose}>
+        <button className="keyboard-close-btn" onClick={handleClose}>
           <ChevronDown size={24} />
         </button>
       </div>
@@ -73,8 +73,7 @@ export const CustomKeyboard: React.FC<CustomKeyboardProps> = ({ onKeyPress, onBa
               <button
                 key={key}
                 className="keyboard-key"
-                onClick={(e) => handleKeyClick(e, key)}
-                onTouchEnd={(e) => handleKeyClick(e, key)}
+                onClick={() => handleKeyClick(key)}
               >
                 {key}
               </button>
@@ -84,7 +83,6 @@ export const CustomKeyboard: React.FC<CustomKeyboardProps> = ({ onKeyPress, onBa
               <button
                 className="keyboard-key backspace-key"
                 onClick={handleBackspace}
-                onTouchEnd={handleBackspace}
               >
                 <Delete size={20} />
               </button>
