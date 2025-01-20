@@ -21,8 +21,9 @@ interface VoiceStudioProps {
 type RecordingState = 'idle' | 'recording' | 'reviewing';
 
 export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }) => {
-  const { language: globalLanguage } = useLanguage();
+  const { language: globalLanguage, secondaryLanguage } = useLanguage();
   const [recordingLanguage, setRecordingLanguage] = useState(globalLanguage);
+  const [helperLanguage, setHelperLanguage] = useState(secondaryLanguage || 'en');
   const [activeProfile, setActiveProfile] = useState(config.activeVoiceProfile || 'default');
   const [recordedKeys, setRecordedKeys] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -37,6 +38,7 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
   const [promptInfo, setPromptInfo] = useState<{title: string, placeholder?: string, defaultValue?: string, action: (val: string) => void} | null>(null);
   const [showVoiceSelect, setShowVoiceSelect] = useState(false);
   const [showLanguageSelect, setShowLanguageSelect] = useState(false);
+  const [showHelperSelect, setShowHelperSelect] = useState(false);
 
   const voiceOptions = [
     { value: 'default', label: 'System Default' },
@@ -315,7 +317,7 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
       <main className="studio-main-brand">
         <div className="studio-profile-row" style={{ 
             display: 'grid', 
-            gridTemplateColumns: '5fr 2fr 1fr 1fr 1fr', 
+            gridTemplateColumns: '5fr 2fr 2fr 1fr 1fr', 
             gap: '8px', 
             width: '100%', 
             maxWidth: '520px',
@@ -352,6 +354,30 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
             >
                 {recordingLanguage.toUpperCase()}
                 <ChevronDown size={14} color="white" />
+            </button>
+
+            {/* Helper Language Selection Button */}
+            <button 
+                className="studio-lang-select"
+                onClick={() => setShowHelperSelect(true)}
+                style={{ 
+                    background: '#f2f2f7', 
+                    color: 'var(--color-primary)', 
+                    borderRadius: 12, 
+                    fontSize: '0.8rem', 
+                    fontWeight: 800,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 4,
+                    border: 'none',
+                    cursor: 'pointer',
+                    height: '100%'
+                }}
+                title="My Language (Translation)"
+            >
+                {helperLanguage.toUpperCase()}
+                <ChevronDown size={14} color="var(--color-primary)" />
             </button>
 
             {/* Edit Profile Name */}
@@ -448,6 +474,8 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
                     variant={1} 
                     className={isCurrentRecorded ? 'recorded-card' : ''}
                     languageOverride={recordingLanguage}
+                    helperLanguageOverride={helperLanguage}
+                    forceDualMode={helperLanguage !== recordingLanguage}
                 />
               </div>
               
@@ -582,12 +610,23 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig }
       <SelectDialog
           isOpen={showLanguageSelect}
           onClose={() => setShowLanguageSelect(false)}
-          title="Select Language"
+          title="Target Language (Record)"
           options={languageOptions}
           selectedValue={recordingLanguage}
           onSelect={(val) => {
               setRecordingLanguage(val);
               handleRedo();
+          }}
+      />
+
+      <SelectDialog
+          isOpen={showHelperSelect}
+          onClose={() => setShowHelperSelect(false)}
+          title="Helper Language (Read)"
+          options={languageOptions}
+          selectedValue={helperLanguage}
+          onSelect={(val) => {
+              setHelperLanguage(val);
           }}
       />
     </div>
