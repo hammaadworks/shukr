@@ -1,15 +1,14 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
-import { X, Save, Mic, List, Activity, Play, Square, Scissors, RotateCcw } from 'lucide-react';
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import { X, Save, Mic, List, Activity, Play, Square, Scissors, RotateCcw, Check, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLanguage } from '../../hooks/useLanguage';
-import { type GestureDefinition, type GestureAction, type GestureMappingType } from '../../recognition/gestures/types';
-import { WordCard } from '../WordCard';
-import type { WordCardItem } from '../WordCard';
+import { type GestureDefinition, type GestureMappingType } from '../../recognition/gestures/types';
 import { useFuzzySearch } from '../../hooks/useFuzzySearch';
 import { useVoiceRecording } from '../../hooks/useVoiceRecording';
 import { AudioTrimmer } from '../VoiceStudio/AudioTrimmer';
 import { AudioWaveform } from '../VoiceStudio/AudioWaveform';
 import { decodeAudioData, trimAudioBuffer, audioBufferToWavBlob } from '../../lib/audioUtils';
 import { audioStorage } from '../../lib/audioStorage';
+import { PermissionDialog } from './Dialogs';
 
 interface GestureEditModalProps {
   gesture: GestureDefinition;
@@ -17,6 +16,8 @@ interface GestureEditModalProps {
   onClose: () => void;
   onSave: (updated: GestureDefinition, audioBlob?: Blob | null) => void;
 }
+
+type RecordingState = 'idle' | 'recording' | 'reviewing';
 
 const SYSTEM_ACTIONS: { value: string; label_en: string; label_ur: string; icon?: string }[] = [
   { value: 'SELECT', label_en: 'Select / Speak', label_ur: 'منتخب / بولیں' },
@@ -30,27 +31,119 @@ const SYSTEM_ACTIONS: { value: string; label_en: string; label_ur: string; icon?
 ];
 
 export const GestureEditModal: React.FC<GestureEditModalProps> = ({ gesture, config, onClose, onSave }) => {
-  const { isPrimary, language } = useLanguage();
+  const { isPrimary, language, primaryLanguage, secondaryLanguage } = useLanguage();
   const [activeTab, setActiveTab] = useState<GestureMappingType>(gesture.type);
-  const [labelEn, setLabelEn] = useState(gesture.label_en);
-  const [labelUr, setLabelUr] = useState(gesture.label_ur);
+  const [labelEn, setLabelEn] = useState(gesture.label_en || '');
+  const [labelUr, setLabelUr] = useState(gesture.label_ur || '');
   const [selectedValue, setSelectedValue] = useState<string | string[]>(gesture.value);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Audio State
-  const { isRecording, startRecording, stopRecording, lastRecordedBlob, analyser, clearLastBlob } = useVoiceRecording();
+  const isDualLang = primaryLanguage !== secondaryLanguage;
+
+  // Audio State & Logic (VoiceStudio Style)
+  const [recordingState, setRecordingState] = useState<RecordingState>('idle');
+  const { 
+    isRecording, startRecording, stopRecording, lastRecordedBlob, analyser, clearLastBlob,
+    permissionStatus, requestPermission, showPermissionExplanation, setShowPermissionExplanation 
+  } = useVoiceRecording();
   const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
+
+  const handleStartMic = async () => {
+    if (permissionStatus !== 'granted') {
+      setShowPermissionExplanation(true);
+    } else {
+      setRecordingState('recording');
+      await startRecording();
+    }
+  };
+
+  const handleConfirmMicPermission = async () => {
+    const success = await requestPermission();
+    if (success) {
+      setShowPermissionExplanation(false);
+      setRecordingState('recording');
+      await startRecording();
+    }
+  };
   const [trimRange, setTrimRange] = useState({ start: 0, end: 1 });
   const [isProcessingAudio, setIsProcessingAudio] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const playbackRef = useRef<AudioBufferSourceNode | null>(null);
+  const [playbackProgress, setPlaybackProgress] = useState(0);
+  
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const sourceNodeRef = useRef<AudioBufferSourceNode | null>(null);
+  const animationRef = useRef<number | null>(null);
   const [hasExistingAudio, setHasExistingAudio] = useState(false);
 
-  const allWords = useMemo(() => {
-    return (config.categories || []).flatMap((c: any) => c.items || []);
-  }, [config]);
+  const getAudioContext = () => {
+    if (!audioCtxRef.current || audioCtxRef.current.state === 'closed') {
+      const AudioContextClass = (window.AudioContext || (window as any).webkitAudioContext);
+      audioCtxRef.current = new AudioContextClass();
+    }
+    return audioCtxRef.current;
+  };
 
-  const searchResults = useFuzzySearch(allWords, searchQuery);
+  const stopAudio = useCallback(() => {
+    if (sourceNodeRef.current) {
+      try { sourceNodeRef.current.stop(); } catch (e) {}
+      sourceNodeRef.current.disconnect();
+      sourceNodeRef.current = null;
+    }
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+      animationRef.current = null;
+    }
+    setIsPlaying(false);
+    setPlaybackProgress(trimRange.start);
+  }, [trimRange.start]);
+
+  const playAudio = useCallback(() => {
+    if (!audioBuffer) return;
+    stopAudio();
+
+    const ctx = getAudioContext();
+    const source = ctx.createBufferSource();
+    source.buffer = audioBuffer;
+    source.connect(ctx.destination);
+
+    const duration = audioBuffer.duration;
+    const startTime = trimRange.start * duration;
+    const playDuration = (trimRange.end - trimRange.start) * duration;
+
+    source.start(0, startTime, playDuration);
+    sourceNodeRef.current = source;
+    setIsPlaying(true);
+
+    const startSysTime = ctx.currentTime;
+    
+    const updateProgress = () => {
+      const elapsed = ctx.currentTime - startSysTime;
+      if (elapsed >= playDuration) {
+        setIsPlaying(false);
+        setPlaybackProgress(trimRange.start);
+        return;
+      }
+      const currentPos = startTime + elapsed;
+      setPlaybackProgress(currentPos / duration);
+      animationRef.current = requestAnimationFrame(updateProgress);
+    };
+    
+    updateProgress();
+
+    source.onended = () => {
+      if (sourceNodeRef.current === source) {
+        setIsPlaying(false);
+        setPlaybackProgress(trimRange.start);
+      }
+    };
+  }, [audioBuffer, trimRange, stopAudio]);
+
+  const handleRedo = useCallback(() => {
+    stopAudio();
+    clearLastBlob();
+    setAudioBuffer(null);
+    setRecordingState('idle');
+  }, [stopAudio, clearLastBlob]);
 
   useEffect(() => {
     const checkAudio = async () => {
@@ -61,57 +154,45 @@ export const GestureEditModal: React.FC<GestureEditModalProps> = ({ gesture, con
   }, [gesture.id, activeTab]);
 
   useEffect(() => {
-    if (lastRecordedBlob) {
+    if (lastRecordedBlob && !isRecording && recordingState === 'recording') {
       const loadAudio = async () => {
         setIsProcessingAudio(true);
         try {
-          const AudioContextClass = (window.AudioContext || (window as any).webkitAudioContext);
-          const ctx = new AudioContextClass();
+          const ctx = getAudioContext();
           const buffer = await decodeAudioData(lastRecordedBlob, ctx);
           setAudioBuffer(buffer);
           setTrimRange({ start: 0, end: 1 });
+          setRecordingState('reviewing');
         } catch (e) {
           console.error("Audio processing failed", e);
+          handleRedo();
         } finally {
           setIsProcessingAudio(false);
         }
       };
       loadAudio();
     }
-  }, [lastRecordedBlob]);
+  }, [lastRecordedBlob, isRecording, recordingState, handleRedo]);
 
-  const handlePreviewPlay = () => {
-    if (!audioBuffer || isPlaying) return;
-    const AudioContextClass = (window.AudioContext || (window as any).webkitAudioContext);
-    const ctx = new AudioContextClass();
-    const source = ctx.createBufferSource();
-    
-    const duration = audioBuffer.duration;
-    const start = trimRange.start * duration;
-    const end = trimRange.end * duration;
-    
-    source.buffer = audioBuffer;
-    source.connect(ctx.destination);
-    source.start(0, start, end - start);
-    
-    playbackRef.current = source;
-    setIsPlaying(true);
-    source.onended = () => setIsPlaying(false);
-  };
-
-  const stopPreview = () => {
-    if (playbackRef.current) {
-      playbackRef.current.stop();
-      setIsPlaying(false);
+  // Auto-play on review
+  useEffect(() => {
+    if (recordingState === 'reviewing' && audioBuffer && !isPlaying) {
+      const timer = setTimeout(() => playAudio(), 800);
+      return () => clearTimeout(timer);
     }
-  };
+  }, [recordingState, audioBuffer, isPlaying, playAudio]);
+
+  const allWords = useMemo(() => {
+    return (config.categories || []).flatMap((c: any) => c.items || []);
+  }, [config]);
+
+  const searchResults = useFuzzySearch(allWords, searchQuery);
 
   const handleSave = async () => {
     let finalBlob: Blob | null = null;
     
     if (activeTab === 'audio' && audioBuffer) {
-      const AudioContextClass = (window.AudioContext || (window as any).webkitAudioContext);
-      const ctx = new AudioContextClass();
+      const ctx = getAudioContext();
       const trimmed = trimAudioBuffer(audioBuffer, ctx, trimRange.start * audioBuffer.duration, trimRange.end * audioBuffer.duration);
       finalBlob = audioBufferToWavBlob(trimmed);
     }
@@ -177,13 +258,14 @@ export const GestureEditModal: React.FC<GestureEditModalProps> = ({ gesture, con
             </div>
           ) : (
             <div className="empty-sequence-hint">
-               <List size={32} opacity={0.3} />
+               <List size={28} opacity={0.3} />
                <p>{isPrimary ? 'الفاظ منتخب کریں' : 'Select words to speak'}</p>
             </div>
           )}
         </div>
 
-        <div className="word-picker-search">
+        <div className="word-picker-search-compact">
+          <Search size={18} />
           <input 
             type="text" 
             placeholder={isPrimary ? "لفظ تلاش کریں..." : "Search words..."}
@@ -213,54 +295,63 @@ export const GestureEditModal: React.FC<GestureEditModalProps> = ({ gesture, con
 
   const renderAudioTab = () => (
     <div className="gesture-edit-audio-container naani-friendly">
-       {!audioBuffer ? (
-         <div className="audio-recording-zone">
-            <div className={`record-button-large ${isRecording ? 'recording' : ''}`} 
-                 onClick={isRecording ? stopRecording : startRecording}>
-               {isRecording ? <Square size={48} fill="white" /> : <Mic size={48} />}
-               <div className="record-ring" />
+       {recordingState !== 'reviewing' ? (
+         <div className="audio-recording-zone-compact">
+            <div className="waveform-box">
+               <AudioWaveform 
+                 analyser={analyser} 
+                 isRecording={recordingState === 'recording'} 
+                 color={recordingState === 'recording' ? 'var(--color-danger)' : 'var(--color-primary)'} 
+               />
             </div>
             
-            <div className="recording-status">
-               <h3>{isRecording ? (isPrimary ? 'ریکارڈنگ ہو رہی ہے...' : 'Recording...') : (isPrimary ? 'آڈیو ریکارڈ کریں' : 'Record Audio')}</h3>
-               <p>{isRecording ? (isPrimary ? 'بولنا جاری رکھیں' : 'Keep speaking') : (isPrimary ? 'بٹن دبا کر ریکارڈ کریں' : 'Tap to start recording')}</p>
+            <div className="recording-status-compact">
+               <h3>{recordingState === 'recording' ? (isPrimary ? 'ریکارڈنگ ہو رہی ہے...' : 'Recording...') : (isPrimary ? 'آڈیو ریکارڈ کریں' : 'Record Audio')}</h3>
             </div>
 
-            {isRecording && analyser && (
-              <div className="live-viz-container">
-                <AudioWaveform analyser={analyser} isRecording={true} color="var(--color-primary)" />
-              </div>
-            )}
+            <div className="record-center-compact">
+               <button 
+                 className={`record-btn-brand ${recordingState === 'recording' ? 'recording' : ''}`}
+                 onClick={async () => {
+                   if (recordingState === 'idle') {
+                     await handleStartMic();
+                   } else {
+                     stopRecording();
+                   }
+                 }}
+               >
+                 <span className="mic-emoji">🎙️</span>
+                 <span className="record-label">{recordingState === 'recording' ? 'STOP' : 'RECORD'}</span>
+               </button>
+            </div>
 
-            {hasExistingAudio && !isRecording && (
+            {hasExistingAudio && recordingState === 'idle' && (
               <div className="existing-audio-badge">
-                <Play size={14} /> {isPrimary ? 'پرانی ریکارڈنگ موجود ہے' : 'Existing recording found'}
+                <Play size={14} fill="currentColor" /> {isPrimary ? 'پرانی ریکارڈنگ موجود ہے' : 'Existing recording found'}
               </div>
             )}
          </div>
        ) : (
-         <div className="audio-trim-zone">
-            <div className="trimmer-header">
-               <button className="btn-secondary" onClick={() => { setAudioBuffer(null); clearLastBlob(); }}>
-                  <RotateCcw size={18} /> {isPrimary ? 'دوبارہ ریکارڈ کریں' : 'Re-record'}
-               </button>
-               <div className="trim-label">
-                  <Scissors size={18} /> {isPrimary ? 'آڈیو تراشیں' : 'Trim Audio'}
-               </div>
-            </div>
-
-            <div className="trimmer-viewport">
+         <div className="audio-review-zone-compact">
+            <div className="trimmer-viewport-compact">
                <AudioTrimmer 
                  audioBuffer={audioBuffer} 
                  onTrimChange={(s, e) => setTrimRange({ start: s, end: e })} 
+                 onDragStart={stopAudio}
                  color="var(--color-primary)"
+                 playbackProgress={playbackProgress}
                />
             </div>
 
-            <div className="trimmer-actions">
-               <button className={`btn-preview ${isPlaying ? 'playing' : ''}`} onClick={isPlaying ? stopPreview : handlePreviewPlay}>
-                  {isPlaying ? <Square size={24} fill="white" /> : <Play size={24} fill="white" />}
-                  <span>{isPlaying ? (isPrimary ? 'روکیں' : 'Stop') : (isPrimary ? 'سنیں' : 'Preview')}</span>
+            <div className="review-actions-brand compact">
+               <button className="review-btn btn-redo" onClick={handleRedo} title="Redo Recording">
+                  <RotateCcw size={28} strokeWidth={2.5} />
+               </button>
+               <button className="review-btn btn-play" onClick={isPlaying ? stopAudio : playAudio} title={isPlaying ? "Stop" : "Play"}>
+                  {isPlaying ? <Square size={28} fill="var(--color-primary)" /> : <Play size={28} strokeWidth={2.5} fill="var(--color-primary)" />}
+               </button>
+               <button className="review-btn btn-tick" onClick={handleSave} title="Save">
+                  <Check size={36} strokeWidth={3} />
                </button>
             </div>
          </div>
@@ -271,19 +362,19 @@ export const GestureEditModal: React.FC<GestureEditModalProps> = ({ gesture, con
   return (
     <div className="sos-modal-overlay gesture-edit-overlay">
       <div className="sos-modal-content gesture-edit-content">
-        <button className="sos-close-btn" onClick={onClose}><X size={24} /></button>
+        <button className="sos-close-btn-compact" onClick={onClose}><X size={20} /></button>
         
-        <div className="gesture-edit-header">
-          <div className="gesture-badge">
-             <span className="gesture-emoji-mini">{gesture.id === 'fist' ? '✊' : gesture.id === 'mouth_open' ? '😮' : gesture.id === 'one_finger' ? '☝️' : '🖐️'}</span>
+        <div className="gesture-edit-header-compact">
+          <div className="gesture-badge-compact">
+             <span className="gesture-emoji-tiny">{gesture.id === 'fist' ? '✊' : gesture.id === 'mouth_open' ? '😮' : gesture.id === 'one_finger' ? '☝️' : '🖐️'}</span>
              <h2>{isPrimary ? 'اشارہ تبدیل کریں' : 'Edit Gesture'}</h2>
           </div>
-          <p className="gesture-id-text">{gesture.id.replace('_', ' ').toUpperCase()}</p>
+          <p className="gesture-id-text-compact">{gesture.id.replace('_', ' ')}</p>
         </div>
 
-        <div className="gesture-edit-tabs">
+        <div className="gesture-edit-tabs-compact">
           <button className={activeTab === 'action' ? 'active' : ''} onClick={() => setActiveTab('action')}>
-            <Activity size={20} />
+            <Activity size={18} />
             <div className="tab-labels">
                <span className="tab-ur">ایکشن</span>
                <span className="tab-en">Action</span>
@@ -293,14 +384,14 @@ export const GestureEditModal: React.FC<GestureEditModalProps> = ({ gesture, con
             setActiveTab('words');
             if (!Array.isArray(selectedValue)) setSelectedValue([]);
           }}>
-            <List size={20} />
+            <List size={18} />
             <div className="tab-labels">
                <span className="tab-ur">الفاظ</span>
                <span className="tab-en">Words</span>
             </div>
           </button>
           <button className={activeTab === 'audio' ? 'active' : ''} onClick={() => setActiveTab('audio')}>
-            <Mic size={20} />
+            <Mic size={18} />
             <div className="tab-labels">
                <span className="tab-ur">آڈیو</span>
                <span className="tab-en">Audio</span>
@@ -308,26 +399,30 @@ export const GestureEditModal: React.FC<GestureEditModalProps> = ({ gesture, con
           </button>
         </div>
 
-        <div className="gesture-edit-tab-content">
+        <div className="gesture-edit-tab-content-compact">
           {activeTab === 'action' && renderActionTab()}
           {activeTab === 'words' && renderWordsTab()}
           {activeTab === 'audio' && renderAudioTab()}
         </div>
 
-        <div className="gesture-edit-labels-grid">
-           <div className="label-input-wrapper" dir="rtl">
-              <label>اردو نام</label>
-              <input value={labelUr} onChange={e => setLabelUr(e.target.value)} placeholder="مثلاً اگلا" />
-           </div>
-           <div className="label-input-wrapper">
-              <label>English Label</label>
-              <input value={labelEn} onChange={e => setLabelEn(e.target.value)} placeholder="e.g. Next" />
-           </div>
-        </div>
+        <div className="gesture-edit-footer-compact">
+          <div className="gesture-edit-labels-row">
+            {(isDualLang || language === 'ur') && (
+              <div className="label-input-wrapper-compact" dir="rtl">
+                <label>اردو نام</label>
+                <input value={labelUr} onChange={e => setLabelUr(e.target.value)} placeholder="مثلاً اگلا" />
+              </div>
+            )}
+            {(isDualLang || language === 'en') && (
+              <div className="label-input-wrapper-compact">
+                <label>English Label</label>
+                <input value={labelEn} onChange={e => setLabelEn(e.target.value)} placeholder="e.g. Next" />
+              </div>
+            )}
+          </div>
 
-        <div className="gesture-edit-footer">
-          <button className="btn-save-gesture" onClick={handleSave} disabled={isProcessingAudio}>
-            <Save size={22} />
+          <button className="btn-save-gesture-compact" onClick={handleSave} disabled={isProcessingAudio}>
+            <Save size={20} />
             <div className="btn-text-stack">
                <span className="ur">محفوظ کریں</span>
                <span className="en">Save Mapping</span>
@@ -335,6 +430,14 @@ export const GestureEditModal: React.FC<GestureEditModalProps> = ({ gesture, con
           </button>
         </div>
       </div>
+      {showPermissionExplanation && (
+        <PermissionDialog 
+          type="microphone"
+          status={permissionStatus === 'granted' ? 'prompt' : (permissionStatus as any)} 
+          onConfirm={handleConfirmMicPermission} 
+          onCancel={() => setShowPermissionExplanation(false)} 
+        />
+      )}
     </div>
   );
 };
