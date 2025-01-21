@@ -31,7 +31,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                                                 initialTab,
                                                                 initialEditingItem
                                                             }) => {
-    const { primaryLanguage, secondaryLanguage, setLanguagePair, language } = useLanguage();
+    const { primaryLanguage, secondaryLanguage, setLanguagePair, language, isDualMode, setDualMode } = useLanguage();
     const [activeTab, setActiveTab] = useState<TabType>(initialTab || 'contact');
     const [editingItem, setEditingItem] = useState<any | null>(initialEditingItem || null);
     const [editingType] = useState<EditingType>(initialEditingItem ? (initialEditingItem.type || 'word') : 'word');
@@ -549,18 +549,55 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                         <ChevronDown size={20} />
                                     </button>
                                 </div>
-                                <div style={{ flex: 1 }}>
-                                    <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-primary)', display: 'block', marginBottom: 4 }}>Secondary (Helper)</label>
-                                    <button 
-                                        className="massive-input" 
-                                        style={{ width: '100%', height: 60, fontSize: '1rem', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
-                                        onClick={() => setShowSecondarySelect(true)}
-                                    >
-                                        <span>{SUPPORTED_LANGS.find(l => l.code === secondaryLanguage)?.label}</span>
-                                        <ChevronDown size={20} />
-                                    </button>
+                                {isDualMode && (
+                                    <div style={{ flex: 1 }}>
+                                        <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-primary)', display: 'block', marginBottom: 4 }}>Secondary (Helper)</label>
+                                        <button 
+                                            className="massive-input" 
+                                            style={{ width: '100%', height: 60, fontSize: '1rem', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+                                            onClick={() => setShowSecondarySelect(true)}
+                                        >
+                                            <span>{SUPPORTED_LANGS.find(l => l.code === secondaryLanguage)?.label}</span>
+                                            <ChevronDown size={20} />
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="massive-item" style={{ height: 100, marginBottom: 24 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                                <div style={{ 
+                                    background: isDualMode ? 'rgba(45,90,39,0.1)' : '#f2f2f7',
+                                    padding: 16,
+                                    borderRadius: 18,
+                                    color: isDualMode ? 'var(--color-primary)' : '#8e8e93'
+                                }}>
+                                    <RefreshCw size={32}/>
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                    <span style={{ fontSize: '1.2rem', fontWeight: 800 }}>Dual Language</span>
+                                    <span className="urdu-tab" style={{ fontSize: '1.4rem', color: 'var(--color-primary)', lineHeight: 1 }}>دوہری زبان</span>
                                 </div>
                             </div>
+                            <button 
+                                className={`huge-btn ${isDualMode ? 'active' : ''}`}
+                                style={{ 
+                                    width: 120, 
+                                    height: 64, 
+                                    borderRadius: 32,
+                                    background: isDualMode ? 'var(--color-primary)' : '#e5e5ea',
+                                    color: isDualMode ? 'white' : '#8e8e93',
+                                    transition: 'all 0.3s ease',
+                                    fontSize: '1.2rem',
+                                    fontWeight: 900
+                                }}
+                                onClick={() => {
+                                    setDualMode(!isDualMode);
+                                }}
+                            >
+                                {isDualMode ? 'ON' : 'OFF'}
+                            </button>
                         </div>
 
                         <div style={{ marginBottom: 24 }}>
@@ -678,7 +715,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
             isOpen={showPrimarySelect}
             onClose={() => setShowPrimarySelect(false)}
             title="Primary Language (User)"
-            options={SUPPORTED_LANGS.map(l => ({ value: l.code, label: l.label }))}
+            options={SUPPORTED_LANGS.filter(l => l.code !== secondaryLanguage).map(l => ({ value: l.code, label: l.label }))}
             selectedValue={primaryLanguage}
             onSelect={(val) => setLanguagePair(val, secondaryLanguage)}
         />
@@ -687,7 +724,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
             isOpen={showSecondarySelect}
             onClose={() => setShowSecondarySelect(false)}
             title="Secondary Language (Helper)"
-            options={SUPPORTED_LANGS.map(l => ({ value: l.code, label: l.label }))}
+            options={SUPPORTED_LANGS.filter(l => l.code !== primaryLanguage).map(l => ({ value: l.code, label: l.label }))}
             selectedValue={secondaryLanguage}
             onSelect={(val) => setLanguagePair(primaryLanguage, val)}
         />

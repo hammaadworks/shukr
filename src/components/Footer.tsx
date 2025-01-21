@@ -60,8 +60,8 @@ export const Footer: React.FC<FooterProps> = React.memo(({
 
                 {/* 4: Favorite */}
                 <button
-                    className={`bar-category-btn favorite-btn ${focusedIndex === offset + 3 ? 'focused-item' : ''} ${currentCategory === 'cat_fav' || currentCategory === 'favorites' ? 'active-category' : ''}`}
-                    onClick={() => onCategoryClick('cat_fav')}
+                    className={`bar-category-btn favorite-btn ${focusedIndex === offset + 3 ? 'focused-item' : ''} ${currentCategory === 'favorite' ? 'active-category' : ''}`}
+                    onClick={() => onCategoryClick('favorite')}
                 >
                     <Heart size={24} fill="var(--color-danger)"/>
                     <span className="dock-label">پسندیدہ</span>
@@ -69,8 +69,8 @@ export const Footer: React.FC<FooterProps> = React.memo(({
 
                 {/* 5: Family */}
                 <button
-                    className={`bar-category-btn family-btn ${focusedIndex === offset + 4 ? 'focused-item' : ''} ${currentCategory === 'khandan' || currentCategory === 'family' ? 'active-category' : ''}`}
-                    onClick={() => onCategoryClick('khandan')}
+                    className={`bar-category-btn family-btn ${focusedIndex === offset + 4 ? 'focused-item' : ''} ${currentCategory === 'family' ? 'active-category' : ''}`}
+                    onClick={() => onCategoryClick('family')}
                 >
                     <Users size={24} fill="var(--color-primary)"/>
                     <span className="dock-label">خاندان</span>

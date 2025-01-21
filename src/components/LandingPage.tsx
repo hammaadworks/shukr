@@ -377,7 +377,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
         options={SUPPORTED_LANGS.map(l => ({ value: l.code, label: l.label }))}
         selectedValue={primaryLanguage}
         onSelect={(val) => {
-          setLanguagePair(val, secondaryLanguage);
+          const newSec = val === secondaryLanguage ? (val === 'en' ? 'ur' : 'en') : secondaryLanguage;
+          setLanguagePair(val, newSec);
           setShowLangSelect(false);
         }}
       />
