@@ -8,12 +8,12 @@
       "phone": "9513631315"
     },
     {
-      "name": "Hammaad",
-      "phone": "9663527755"
+      "name": "Maqsood",
+      "phone": "9916245456"
     },
     {
-      "name": "Emergency",
-      "phone": "112"
+      "name": "Hammaad",
+      "phone": "9663527755"
     }
   ],
   "sos_settings": {
@@ -37,8 +37,30 @@
   "voiceProfiles": [
     {
       "id": "voice_1775802743199",
-      "name": "Hammaad new"
+      "name": "Hammaad"
     }
   ],
-  "activeVoiceProfile": ""
+  "activeVoiceProfile": "",
+  "family": [
+    "father",
+    "kids",
+    "daughter-in-law",
+    "sister",
+    "son",
+    "daughter",
+    "brother",
+    "uncle",
+    "aunt",
+    "grandfather",
+    "grandmother",
+    "son-in-law",
+    "doctor",
+    "mother",
+    "helper",
+    "masood",
+    "grandson",
+    "granddaughter",
+    "nurse",
+    "husband"
+  ]
 }

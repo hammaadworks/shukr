@@ -1,274 +1,240 @@
 {
   "categories": {
-    "cat_custom": "میرے الفاظ",
-    "core": "عام الفاظ",
-    "jazbaat": "جذبات",
-    "kaam": "کام",
-    "khana": "کھانا پینا",
-    "khandan": "خاندان",
-    "ruhani": "روحانی سکون",
-    "sehat": "صحت و آرام",
-    "zaroorat": "ضروریات"
+    "favorite": "پسندیدہ",
+    "family": "خاندان",
+    "general": "عام"
   },
   "words": {
-    "aaj": "آج",
-    "aam": "آم",
-    "aap": "آپ",
-    "abhi": "ابھی",
+    "today": "آج",
+    "mango": "آم",
+    "you": "آپ",
+    "now": "ابھی",
     "ac": "اے سی",
-    "acha": "اچھا",
-    "achaar": "اچار",
-    "afsos": "افسوس",
+    "good": "اچھا",
+    "pickle": "اچار",
+    "regret": "افسوس",
     "alhamdulillah": "الحمدللہ",
     "allah": "اللہ",
-    "anda": "انڈا",
-    "araam": "آرام",
+    "egg": "انڈا",
+    "rest": "آرام",
     "asr": "عصر",
     "astagfirullah": "استغفر اللہ",
-    "aur": "اور",
+    "and": "اور",
     "ayat": "آیت",
-    "ayna": "آئینہ",
-    "baad": "بعد",
-    "baap": "باپ",
-    "bacche": "بچے",
-    "bahu": "بہو",
-    "baitho": "بیٹھو",
-    "band": "بند کرو",
-    "batao": "بتاؤ",
+    "mirror": "آئینہ",
+    "later": "بعد",
+    "father": "باپ",
+    "kids": "بچے",
+    "daughter-in-law": "بہو",
+    "sit": "بیٹھو",
+    "close": "بند کرو",
+    "tell": "بتاؤ",
     "bathroom": "باتھ روم",
-    "batti": "بتی",
-    "behen": "بہن",
-    "behtar": "بہتر",
-    "beta": "بیٹا",
+    "light": "بتی",
+    "sister": "بہن",
+    "better": "ٹھیک",
+    "son": "بیٹا",
     "betaserk": "بیٹاسرک",
-    "beti": "بیٹی",
-    "bhai": "بھائی",
-    "bhuk": "بھوک",
+    "daughter": "بیٹی",
+    "brother": "بھائی",
+    "hungry": "بھوک",
     "biryani": "بریانی",
     "biscuit": "بسکٹ",
-    "bistar": "بستر",
-    "bolo": "بولو",
-    "bore": "بور",
-    "bp": "بی پی",
-    "bukhaar": "بخار",
-    "bura": "برا",
+    "bed": "بستر",
+    "speak": "بولو",
+    "bored": "بور",
+    "blood_pressure": "بی پی",
+    "fever": "بخار",
+    "bad": "برا",
     "cake": "کیک",
-    "chacha": "چاچا",
-    "chachi": "چاچی",
-    "chahiye": "چاہیے",
-    "chai": "چائے",
-    "chakkar": "چکر",
-    "chalo": "چلو",
+    "uncle": "پھوپھا",
+    "aunt": "پھوپھو",
+    "want": "چاہیے",
+    "tea": "چائے",
+    "dizzy": "چکر",
+    "go": "چلو",
     "charger": "چارجر",
-    "chashma": "چشمہ",
-    "chawal": "چاول",
+    "glasses": "چشمہ",
+    "rice": "چاول",
     "checkup": "چیک اپ",
-    "cheeni": "چینی",
-    "daane": "دانے",
-    "dada": "دادا",
-    "dadi": "دادی",
-    "dahi": "دہی",
+    "sugar": "شوگر",
+    "blisters": "دانے",
+    "grandfather": "نانا",
+    "grandmother": "نانی",
+    "yogurt": "دہی",
     "dal": "دال",
-    "damad": "داماد",
-    "dar": "ڈر",
-    "dard_ghutna": "گھٹنا درد",
-    "dard_kan": "کان درد",
-    "dard_mein": "درد میں",
-    "dard_pait": "پیٹ درد",
-    "dard_pith": "پیٹھ درد",
-    "dard_sar": "سر درد",
-    "dawaii": "دوائی",
-    "dedo": "دے دو",
-    "dekho": "دیکھو",
-    "dheere": "دھیرے",
-    "dho_lo": "دھو لو",
-    "dikhao": "دکھاؤ",
-    "doctor_khandan": "ڈاکٹر",
-    "doctor_sehat": "ڈاکٹر",
+    "son-in-law": "داماد",
+    "scared": "ڈر",
+    "knee_pain": "گھٹنا درد",
+    "ear_pain": "کان درد",
+    "painful": "درد میں",
+    "stomach_ache": "پیٹ درد",
+    "back_pain": "پیٹھ درد",
+    "headache": "سر درد",
+    "medicine": "دوائی",
+    "give": "دے دو",
+    "watch": "گھڑی",
+    "slowly": "دھیرے",
+    "wash": "دھو لو",
+    "show": "دکھاؤ",
+    "doctor": "ڈاکٹر",
     "dua": "دعا",
-    "dudh": "دودھ",
+    "milk": "دودھ",
     "fajr": "فجر",
-    "fakhar": "فخر",
-    "farishta": "فرشتہ",
-    "garmi": "گرمی",
-    "ghabrahat": "گھبراہٹ",
-    "ghari": "گھڑی",
-    "goli": "گولی",
-    "gosht": "گوشت",
-    "gussa": "غصہ",
-    "haan": "ہاں",
-    "hai": "ہے",
-    "hairan": "حیران",
+    "proud": "فخر",
+    "angel": "فرشتہ",
+    "hot": "گرمی",
+    "nervous": "گھبراہٹ",
+    "tablet": "گولی",
+    "meat": "گوشت",
+    "angry": "غصہ",
+    "yes": "ہاں",
+    "is": "ہے",
+    "surprised": "حیران",
     "hajj": "حج",
     "halwa": "حلوا",
-    "himmat_jazbaat": "ہمت",
+    "brave": "ہمت",
     "hospital": "ہسپتال",
-    "hua": "ہوا",
-    "hun": "ہوں",
-    "idhar": "ادھر",
+    "happened": "ہوا",
+    "am": "ہوں",
+    "here": "ادھر",
     "injection": "انجکشن",
     "inshallah": "انشاء اللہ",
-    "intezar": "انتظار",
+    "wait": "انتظار",
     "isha": "عشاء",
-    "itminan": "اطمینان",
-    "jalan": "جلن",
-    "jaldi": "جلدی",
-    "janamaz": "جائے نماز",
-    "jannat": "جنت",
-    "jootay": "جوتے",
+    "content": "اطمینان",
+    "burning": "جلن",
+    "quickly": "جلدی",
+    "prayer_mat": "جائے نماز",
+    "paradise": "جنت",
+    "shoes": "جوتے",
     "juice": "جوس",
-    "kab": "کب",
-    "kahan": "کہاں",
-    "kaise": "کیسے",
-    "kal": "کل",
-    "kambal": "کمبل",
-    "kamzor_jazbaat": "کمزور",
-    "kamzori": "کمزوری",
-    "kangi": "کنگھی",
-    "kapre": "کپڑے",
-    "kela": "کیلا",
-    "khala": "خالہ",
-    "khaloo": "خالو",
-    "khana_core": "کھانا",
-    "khansi": "کھانسی",
-    "khao": "کھاؤ",
-    "kharray": "کھڑے ہو",
+    "when": "کب",
+    "where": "کہاں",
+    "how": "کیسے",
+    "tomorrow": "کل",
+    "blanket": "کمبل",
+    "weak": "کمزور",
+    "weakness": "کمزوری",
+    "comb": "کنگھی",
+    "clothes": "کپڑے",
+    "banana": "کیلا",
+    "food": "کھانا",
+    "cough": "کھانسی",
+    "eat": "کھاؤ",
+    "stand": "کھڑے ہو",
     "kheer": "کھیر",
     "khichdi": "کھچڑی",
-    "khujli": "خارش",
-    "khul": "کھولو",
-    "khush": "خوش",
-    "kursi": "کرسی",
-    "kya": "کیا",
-    "kyun": "کیوں",
+    "itching": "خارش",
+    "open": "کھولو",
+    "happy": "خوش",
+    "chair": "کرسی",
+    "what": "کیا",
+    "why": "کیوں",
     "lassi": "لسی",
-    "lathi": "لاٹھی",
-    "lekin": "لیکن",
-    "leli": "لے لی",
-    "lelo": "لے لو",
-    "likho": "لکھو",
+    "cane": "لاٹھی",
+    "but": "لیکن",
+    "took_it": "لے لی",
+    "take": "لے لو",
+    "write": "لکھو",
     "lotion": "لوشن",
-    "maa": "ماں",
-    "machli": "مچھلی",
-    "madad_kaam": "مدد",
-    "madadgar": "مددگار",
+    "mother": "ماں",
+    "fish": "مچھلی",
+    "help": "مدد",
+    "helper": "مددگار",
     "madinah": "مدینہ",
     "maghrib": "مغرب",
-    "mai": "میں",
+    "i": "میں",
     "makkah": "مکہ",
-    "malham": "ملہم",
-    "malta": "مالٹا",
-    "mami": "مامی",
-    "mamoo": "ماموں",
-    "masala": "مصالحہ",
+    "ointment": "ملہم",
+    "orange": "مالٹا",
+    "spice": "مصالحہ",
     "mashallah": "ماشاء اللہ",
     "masjid": "مسجد",
     "masood": "مسعود",
-    "matli": "متلی",
-    "mayoos": "مایوس",
-    "mithai": "مٹھائی",
-    "moze": "موزے",
-    "mujhe": "مجھے",
-    "murghi": "مرغی",
-    "nahi": "نہیں",
-    "namak": "نمک",
+    "nausea": "متلی",
+    "hopeless": "مایوس",
+    "sweets": "مٹھائی",
+    "socks": "موزے",
+    "to_me": "مجھے",
+    "chicken": "مرغی",
+    "no": "نہیں",
+    "salt": "نمک",
     "namaz": "نماز",
-    "nana": "نانا",
-    "nani": "نانی",
-    "nawasa": "نواسہ",
-    "nawasi": "نواسی",
-    "nazla": "نزلہ",
-    "neend": "نیند",
-    "nurse_khandan": "نرس",
-    "nurse_sehat": "نرس",
-    "paise": "پیسے",
+    "grandson": "پوتا",
+    "granddaughter": "پوتی",
+    "cold": "ٹھنڈ",
+    "sleepy": "نیند",
+    "nurse": "نرس",
+    "money": "پیسے",
     "pakora": "پکوڑا",
     "panadol": "پیناڈول",
-    "pani": "پانی",
-    "pani_core": "پانی",
-    "pankha": "پنکھا",
-    "pareshan": "پریشان",
-    "parho": "پڑھو",
-    "patti": "پٹی",
-    "phal": "پھل",
-    "phone_karo": "فون کرو",
-    "phone_zaroorat": "فون",
-    "phupha": "پھوپھا",
-    "phupho": "پھوپھو",
-    "piyo": "پیو",
-    "pota": "پوتا",
-    "poti": "پوتی",
-    "pucho": "پوچھو",
-    "pukao": "پکاؤ",
-    "pur_josh": "پرجوش",
-    "pyaar": "پیار",
-    "pyas": "پیاس",
+    "water": "پانی",
+    "fan": "پنکھا",
+    "worried": "پریشان",
+    "read": "پڑھو",
+    "bandage": "پٹی",
+    "fruit": "پھل",
+    "call": "فون کرو",
+    "phone": "فون",
+    "drink": "پیو",
+    "ask": "پوچھو",
+    "cook": "پکاؤ",
+    "excited": "پرجوش",
+    "loved": "پیار",
+    "thirsty": "پیاس",
     "quran": "قرآن",
-    "rakho": "رکھو",
-    "rasool": "رسول",
+    "put": "رکھو",
+    "prophet": "رسول",
     "remote": "ریموٹ",
     "roti": "روٹی",
-    "roza": "روزہ",
-    "ruko": "رکو",
-    "rus": "رس",
-    "saaf_kaam": "صاف",
-    "sabr": "صبر",
-    "sabun": "صابن",
-    "sabzi": "سبزی",
+    "fast": "روزہ",
+    "stop": "رکو",
+    "toast": "رس",
+    "clean": "صاف",
+    "patience": "صبر",
+    "soap": "صابن",
+    "vegetable": "سبزی",
     "salan": "سالن",
     "samosa": "سموسہ",
-    "sans": "سانس",
-    "sath": "ساتھ",
-    "seb": "سیب",
-    "sharm": "شرم",
+    "breathing": "سانس",
+    "with": "ساتھ",
+    "apple": "سیب",
+    "shy": "شرم",
     "shingles": "شنگلز",
-    "shohar": "شوہر",
-    "shukr": "شکر",
-    "shukrguzar": "شکر گزار",
-    "shukriya": "شکریہ",
-    "so_jao": "سو جاؤ",
-    "sojan": "سوجن",
-    "sona_zaroorat": "سونا",
+    "husband": "شوہر",
+    "gratitude": "شکر",
+    "thankful": "شکر گزار",
+    "thank_you": "شکریہ",
+    "sleep": "سونا",
+    "swelling": "سوجن",
     "subhanallah": "سبحان اللہ",
-    "sugar": "شوگر",
-    "sukun": "سکون",
-    "suno": "سنو",
+    "peaceful": "سکون",
+    "listen": "سنو",
     "surah": "سورہ",
-    "surkhi": "سرخی",
-    "tabiyat_kharab": "طبیعت خراب",
-    "takiya": "تکیہ",
-    "tanha": "تنھا",
+    "redness": "سرخی",
+    "worse": "طبیعت خراب",
+    "pillow": "تکیہ",
+    "lonely": "تنھا",
     "tasbeeh": "تسبیح",
-    "tauliya": "تولیا",
-    "tel": "تیل",
-    "tez_dard": "تیز درد",
-    "thak": "تھک",
-    "thand": "ٹھنڈ",
-    "thandak": "ٹھنڈک",
-    "theek": "ٹھیک",
-    "udaas": "اداس",
-    "udhar": "ادھر",
-    "umeed": "امید",
-    "uthao": "اٹھاؤ",
-    "utho": "اٹھو",
-    "waqt": "وقت",
+    "towel": "تولیا",
+    "oil": "تیل",
+    "sharp_pain": "تیز درد",
+    "tired": "تھک",
+    "cooling": "ٹھنڈک",
+    "sad": "اداس",
+    "there": "ادھر",
+    "hope": "امید",
+    "pick_up": "اٹھاؤ",
+    "wake_up": "اٹھو",
+    "time": "وقت",
     "wheelchair": "وھیل چیئر",
-    "word_1775277152990": "سالام",
-    "word_1775652284561": "گoلد",
-    "word_1775666401083": "ماقسود",
-    "word_1775666424293": "جےوےللےری",
     "wudu": "وضو",
-    "ya": "یا",
-    "yeh": "یہ",
-    "zakat": "زکوۃ",
-    "zuhr": "ظہر"
-  },
-  "quick_actions": {
-    "ji_haan": "ہاں",
-    "ji_nahi": "نہیں",
-    "alhamdulillah_qa": "الحمدللہ",
-    "madad_qa": "مدد",
-    "acha_qa": "اچھا"
+    "or": "یا",
+    "this": "یہ",
+    "charity": "زکوۃ",
+    "zuhr": "ظہر",
+    "cat": "بلی"
   },
   "quotes": {
     "quote_sys_0": "شکریہ، الحمدللہ آپ بہت اچھے ہیں۔",
@@ -279,5 +245,923 @@
     "quote_sys_5": "اللہ ہی بہترین مددگار ہے اور وہ سب سے بڑھ کر رحم کرنے والا ہے۔",
     "quote_sys_6": "میرے رب! میرے لیے میرا سینہ کھول دے۔",
     "quote_sys_7": "اور جب میں بیمار ہوتا ہوں تو وہی مجھے شفا دیتا ہے۔"
+  },
+  "transliterations": {
+    "today": {
+      "en": "aaj",
+      "es": "aaj"
+    },
+    "mango": {
+      "en": "aam",
+      "es": "aam"
+    },
+    "you": {
+      "en": "aap",
+      "es": "aap"
+    },
+    "now": {
+      "en": "abhi",
+      "es": "abhi"
+    },
+    "ac": {
+      "en": "ac",
+      "es": "ac"
+    },
+    "good": {
+      "en": "acha",
+      "es": "acha"
+    },
+    "pickle": {
+      "en": "achaar",
+      "es": "achaar"
+    },
+    "regret": {
+      "en": "afsos",
+      "es": "afsos"
+    },
+    "alhamdulillah": {
+      "en": "alhamdulillah",
+      "es": "alhamdulillah"
+    },
+    "allah": {
+      "en": "allah",
+      "es": "allah"
+    },
+    "egg": {
+      "en": "anda",
+      "es": "anda"
+    },
+    "rest": {
+      "en": "araam",
+      "es": "araam"
+    },
+    "asr": {
+      "en": "asr",
+      "es": "asr"
+    },
+    "astagfirullah": {
+      "en": "astagfirullah",
+      "es": "astagfirullah"
+    },
+    "and": {
+      "en": "aur",
+      "es": "aur"
+    },
+    "ayat": {
+      "en": "ayat",
+      "es": "ayat"
+    },
+    "mirror": {
+      "en": "ayna",
+      "es": "ayna"
+    },
+    "later": {
+      "en": "baad",
+      "es": "baad"
+    },
+    "father": {
+      "en": "baap",
+      "es": "baap"
+    },
+    "kids": {
+      "en": "bacche",
+      "es": "bacche"
+    },
+    "daughter-in-law": {
+      "en": "bahu",
+      "es": "bahu"
+    },
+    "sit": {
+      "en": "baitho",
+      "es": "baitho"
+    },
+    "close": {
+      "en": "band",
+      "es": "band"
+    },
+    "tell": {
+      "en": "batao",
+      "es": "batao"
+    },
+    "bathroom": {
+      "en": "bathroom",
+      "es": "bathroom"
+    },
+    "light": {
+      "en": "batti",
+      "es": "batti"
+    },
+    "sister": {
+      "en": "behen",
+      "es": "behen"
+    },
+    "better": {
+      "en": "theek",
+      "es": "theek"
+    },
+    "son": {
+      "en": "beta",
+      "es": "beta"
+    },
+    "betaserk": {
+      "en": "betaserk",
+      "es": "betaserk"
+    },
+    "daughter": {
+      "en": "beti",
+      "es": "beti"
+    },
+    "brother": {
+      "en": "bhai",
+      "es": "bhai"
+    },
+    "hungry": {
+      "en": "bhuk",
+      "es": "bhuk"
+    },
+    "biryani": {
+      "en": "biryani",
+      "es": "biryani"
+    },
+    "biscuit": {
+      "en": "biscuit",
+      "es": "biscuit"
+    },
+    "bed": {
+      "en": "bistar",
+      "es": "bistar"
+    },
+    "speak": {
+      "en": "bolo",
+      "es": "bolo"
+    },
+    "bored": {
+      "en": "bore",
+      "es": "bore"
+    },
+    "blood_pressure": {
+      "en": "bp",
+      "es": "bp"
+    },
+    "fever": {
+      "en": "bukhaar",
+      "es": "bukhaar"
+    },
+    "bad": {
+      "en": "bura",
+      "es": "bura"
+    },
+    "cake": {
+      "en": "cake",
+      "es": "cake"
+    },
+    "uncle": {
+      "en": "phupha",
+      "es": "phupha"
+    },
+    "aunt": {
+      "en": "phupho",
+      "es": "phupho"
+    },
+    "want": {
+      "en": "chahiyay",
+      "es": "chahiyay"
+    },
+    "tea": {
+      "en": "chai",
+      "es": "chai"
+    },
+    "dizzy": {
+      "en": "chakkar",
+      "es": "chakkar"
+    },
+    "go": {
+      "en": "chalo",
+      "es": "chalo"
+    },
+    "charger": {
+      "en": "charger",
+      "es": "charger"
+    },
+    "glasses": {
+      "en": "chashma",
+      "es": "chashma"
+    },
+    "rice": {
+      "en": "chawal",
+      "es": "chawal"
+    },
+    "checkup": {
+      "en": "checkup",
+      "es": "checkup"
+    },
+    "sugar": {
+      "en": "sugar",
+      "es": "sugar"
+    },
+    "blisters": {
+      "en": "daanay",
+      "es": "daanay"
+    },
+    "grandfather": {
+      "en": "nana",
+      "es": "nana"
+    },
+    "grandmother": {
+      "en": "nani",
+      "es": "nani"
+    },
+    "yogurt": {
+      "en": "dahi",
+      "es": "dahi"
+    },
+    "dal": {
+      "en": "dal",
+      "es": "dal"
+    },
+    "son-in-law": {
+      "en": "damad",
+      "es": "damad"
+    },
+    "scared": {
+      "en": "dar",
+      "es": "dar"
+    },
+    "knee_pain": {
+      "en": "dard ghutna",
+      "es": "dard ghutna"
+    },
+    "ear_pain": {
+      "en": "dard kan",
+      "es": "dard kan"
+    },
+    "painful": {
+      "en": "dard mein",
+      "es": "dard mein"
+    },
+    "stomach_ache": {
+      "en": "dard pait",
+      "es": "dard pait"
+    },
+    "back_pain": {
+      "en": "dard pith",
+      "es": "dard pith"
+    },
+    "headache": {
+      "en": "dard sar",
+      "es": "dard sar"
+    },
+    "medicine": {
+      "en": "dawaii",
+      "es": "dawaii"
+    },
+    "give": {
+      "en": "dedo",
+      "es": "dedo"
+    },
+    "watch": {
+      "en": "ghari",
+      "es": "ghari"
+    },
+    "slowly": {
+      "en": "dheere",
+      "es": "dheere"
+    },
+    "wash": {
+      "en": "dho lo",
+      "es": "dho lo"
+    },
+    "show": {
+      "en": "dikhao",
+      "es": "dikhao"
+    },
+    "doctor": {
+      "en": "doctor",
+      "es": "doctor"
+    },
+    "dua": {
+      "en": "dua",
+      "es": "dua"
+    },
+    "milk": {
+      "en": "dudh",
+      "es": "dudh"
+    },
+    "fajr": {
+      "en": "fajr",
+      "es": "fajr"
+    },
+    "proud": {
+      "en": "fakhar",
+      "es": "fakhar"
+    },
+    "angel": {
+      "en": "farishta",
+      "es": "farishta"
+    },
+    "hot": {
+      "en": "garmi",
+      "es": "garmi"
+    },
+    "nervous": {
+      "en": "ghabrahat",
+      "es": "ghabrahat"
+    },
+    "tablet": {
+      "en": "goli",
+      "es": "goli"
+    },
+    "meat": {
+      "en": "gosht",
+      "es": "gosht"
+    },
+    "angry": {
+      "en": "gussa",
+      "es": "gussa"
+    },
+    "yes": {
+      "en": "haan",
+      "es": "haan"
+    },
+    "is": {
+      "en": "hai",
+      "es": "hai"
+    },
+    "surprised": {
+      "en": "hairan",
+      "es": "hairan"
+    },
+    "hajj": {
+      "en": "hajj",
+      "es": "hajj"
+    },
+    "halwa": {
+      "en": "halwa",
+      "es": "halwa"
+    },
+    "brave": {
+      "en": "himmat jazbaat",
+      "es": "himmat jazbaat"
+    },
+    "hospital": {
+      "en": "hospital",
+      "es": "hospital"
+    },
+    "happened": {
+      "en": "hua",
+      "es": "hua"
+    },
+    "am": {
+      "en": "hoon",
+      "es": "hoon"
+    },
+    "here": {
+      "en": "idhar",
+      "es": "idhar"
+    },
+    "injection": {
+      "en": "injection",
+      "es": "injection"
+    },
+    "inshallah": {
+      "en": "inshallah",
+      "es": "inshallah"
+    },
+    "wait": {
+      "en": "intezar",
+      "es": "intezar"
+    },
+    "isha": {
+      "en": "isha",
+      "es": "isha"
+    },
+    "content": {
+      "en": "itminan",
+      "es": "itminan"
+    },
+    "burning": {
+      "en": "jalan",
+      "es": "jalan"
+    },
+    "quickly": {
+      "en": "jaldi",
+      "es": "jaldi"
+    },
+    "prayer_mat": {
+      "en": "janamaz",
+      "es": "janamaz"
+    },
+    "paradise": {
+      "en": "jannat",
+      "es": "jannat"
+    },
+    "shoes": {
+      "en": "jootay",
+      "es": "jootay"
+    },
+    "juice": {
+      "en": "juice",
+      "es": "juice"
+    },
+    "when": {
+      "en": "kab",
+      "es": "kab"
+    },
+    "where": {
+      "en": "kahan",
+      "es": "kahan"
+    },
+    "how": {
+      "en": "kaisay",
+      "es": "kaisay"
+    },
+    "tomorrow": {
+      "en": "kal",
+      "es": "kal"
+    },
+    "blanket": {
+      "en": "kambal",
+      "es": "kambal"
+    },
+    "weak": {
+      "en": "kamzor jazbaat",
+      "es": "kamzor jazbaat"
+    },
+    "weakness": {
+      "en": "kamzori",
+      "es": "kamzori"
+    },
+    "comb": {
+      "en": "kangi",
+      "es": "kangi"
+    },
+    "clothes": {
+      "en": "kapre",
+      "es": "kapre"
+    },
+    "banana": {
+      "en": "kela",
+      "es": "kela"
+    },
+    "food": {
+      "en": "khana",
+      "es": "khana"
+    },
+    "cough": {
+      "en": "khansi",
+      "es": "khansi"
+    },
+    "eat": {
+      "en": "khao",
+      "es": "khao"
+    },
+    "stand": {
+      "en": "kharray",
+      "es": "kharray"
+    },
+    "kheer": {
+      "en": "kheer",
+      "es": "kheer"
+    },
+    "khichdi": {
+      "en": "khichdi",
+      "es": "khichdi"
+    },
+    "itching": {
+      "en": "khujli",
+      "es": "khujli"
+    },
+    "open": {
+      "en": "khul",
+      "es": "khul"
+    },
+    "happy": {
+      "en": "khush",
+      "es": "khush"
+    },
+    "chair": {
+      "en": "kursi",
+      "es": "kursi"
+    },
+    "what": {
+      "en": "kya",
+      "es": "kya"
+    },
+    "why": {
+      "en": "kyoon",
+      "es": "kyoon"
+    },
+    "lassi": {
+      "en": "lassi",
+      "es": "lassi"
+    },
+    "cane": {
+      "en": "lathi",
+      "es": "lathi"
+    },
+    "but": {
+      "en": "lekin",
+      "es": "lekin"
+    },
+    "took_it": {
+      "en": "leli",
+      "es": "leli"
+    },
+    "take": {
+      "en": "lelo",
+      "es": "lelo"
+    },
+    "write": {
+      "en": "likho",
+      "es": "likho"
+    },
+    "lotion": {
+      "en": "lotion",
+      "es": "lotion"
+    },
+    "mother": {
+      "en": "maa",
+      "es": "maa"
+    },
+    "fish": {
+      "en": "machli",
+      "es": "machli"
+    },
+    "help": {
+      "en": "madad kaam",
+      "es": "madad kaam"
+    },
+    "helper": {
+      "en": "madadgar",
+      "es": "madadgar"
+    },
+    "madinah": {
+      "en": "madinah",
+      "es": "madinah"
+    },
+    "maghrib": {
+      "en": "maghrib",
+      "es": "maghrib"
+    },
+    "i": {
+      "en": "main",
+      "es": "main"
+    },
+    "makkah": {
+      "en": "makkah",
+      "es": "makkah"
+    },
+    "ointment": {
+      "en": "malham",
+      "es": "malham"
+    },
+    "orange": {
+      "en": "malta",
+      "es": "malta"
+    },
+    "spice": {
+      "en": "masala",
+      "es": "masala"
+    },
+    "mashallah": {
+      "en": "mashallah",
+      "es": "mashallah"
+    },
+    "masjid": {
+      "en": "masjid",
+      "es": "masjid"
+    },
+    "masood": {
+      "en": "masood",
+      "es": "masood"
+    },
+    "nausea": {
+      "en": "matli",
+      "es": "matli"
+    },
+    "hopeless": {
+      "en": "mayoos",
+      "es": "mayoos"
+    },
+    "sweets": {
+      "en": "mithai",
+      "es": "mithai"
+    },
+    "socks": {
+      "en": "moze",
+      "es": "moze"
+    },
+    "to_me": {
+      "en": "mujhay",
+      "es": "mujhay"
+    },
+    "chicken": {
+      "en": "murghi",
+      "es": "murghi"
+    },
+    "no": {
+      "en": "nahi",
+      "es": "nahi"
+    },
+    "salt": {
+      "en": "namak",
+      "es": "namak"
+    },
+    "namaz": {
+      "en": "namaz",
+      "es": "namaz"
+    },
+    "grandson": {
+      "en": "pota",
+      "es": "pota"
+    },
+    "granddaughter": {
+      "en": "poti",
+      "es": "poti"
+    },
+    "cold": {
+      "en": "thand",
+      "es": "thand"
+    },
+    "sleepy": {
+      "en": "neend",
+      "es": "neend"
+    },
+    "nurse": {
+      "en": "nurse",
+      "es": "nurse"
+    },
+    "money": {
+      "en": "paise",
+      "es": "paise"
+    },
+    "pakora": {
+      "en": "pakora",
+      "es": "pakora"
+    },
+    "panadol": {
+      "en": "panadol",
+      "es": "panadol"
+    },
+    "water": {
+      "en": "pani",
+      "es": "pani"
+    },
+    "fan": {
+      "en": "pankha",
+      "es": "pankha"
+    },
+    "worried": {
+      "en": "pareshan",
+      "es": "pareshan"
+    },
+    "read": {
+      "en": "parho",
+      "es": "parho"
+    },
+    "bandage": {
+      "en": "patti",
+      "es": "patti"
+    },
+    "fruit": {
+      "en": "phal",
+      "es": "phal"
+    },
+    "call": {
+      "en": "phone karo",
+      "es": "phone karo"
+    },
+    "phone": {
+      "en": "phone zaroorat",
+      "es": "phone zaroorat"
+    },
+    "drink": {
+      "en": "piyo",
+      "es": "piyo"
+    },
+    "ask": {
+      "en": "pucho",
+      "es": "pucho"
+    },
+    "cook": {
+      "en": "pukao",
+      "es": "pukao"
+    },
+    "excited": {
+      "en": "pur josh",
+      "es": "pur josh"
+    },
+    "loved": {
+      "en": "pyaar",
+      "es": "pyaar"
+    },
+    "thirsty": {
+      "en": "pyas",
+      "es": "pyas"
+    },
+    "quran": {
+      "en": "quran",
+      "es": "quran"
+    },
+    "put": {
+      "en": "rakho",
+      "es": "rakho"
+    },
+    "prophet": {
+      "en": "rasool",
+      "es": "rasool"
+    },
+    "remote": {
+      "en": "remote",
+      "es": "remote"
+    },
+    "roti": {
+      "en": "roti",
+      "es": "roti"
+    },
+    "fast": {
+      "en": "roza",
+      "es": "roza"
+    },
+    "stop": {
+      "en": "ruko",
+      "es": "ruko"
+    },
+    "toast": {
+      "en": "rus",
+      "es": "rus"
+    },
+    "clean": {
+      "en": "saaf kaam",
+      "es": "saaf kaam"
+    },
+    "patience": {
+      "en": "sabr",
+      "es": "sabr"
+    },
+    "soap": {
+      "en": "sabun",
+      "es": "sabun"
+    },
+    "vegetable": {
+      "en": "sabzi",
+      "es": "sabzi"
+    },
+    "salan": {
+      "en": "salan",
+      "es": "salan"
+    },
+    "samosa": {
+      "en": "samosa",
+      "es": "samosa"
+    },
+    "breathing": {
+      "en": "sans",
+      "es": "sans"
+    },
+    "with": {
+      "en": "saath",
+      "es": "saath"
+    },
+    "apple": {
+      "en": "seb",
+      "es": "seb"
+    },
+    "shy": {
+      "en": "sharm",
+      "es": "sharm"
+    },
+    "shingles": {
+      "en": "shingles",
+      "es": "shingles"
+    },
+    "husband": {
+      "en": "shohar",
+      "es": "shohar"
+    },
+    "gratitude": {
+      "en": "shukr",
+      "es": "shukr"
+    },
+    "thankful": {
+      "en": "shukrguzar",
+      "es": "shukrguzar"
+    },
+    "thank_you": {
+      "en": "shukriya",
+      "es": "shukriya"
+    },
+    "sleep": {
+      "en": "sona zaroorat",
+      "es": "sona zaroorat"
+    },
+    "swelling": {
+      "en": "sojan",
+      "es": "sojan"
+    },
+    "subhanallah": {
+      "en": "subhanallah",
+      "es": "subhanallah"
+    },
+    "peaceful": {
+      "en": "sukun",
+      "es": "sukun"
+    },
+    "listen": {
+      "en": "suno",
+      "es": "suno"
+    },
+    "surah": {
+      "en": "surah",
+      "es": "surah"
+    },
+    "redness": {
+      "en": "surkhi",
+      "es": "surkhi"
+    },
+    "worse": {
+      "en": "tabiyat kharab",
+      "es": "tabiyat kharab"
+    },
+    "pillow": {
+      "en": "takiya",
+      "es": "takiya"
+    },
+    "lonely": {
+      "en": "tanha",
+      "es": "tanha"
+    },
+    "tasbeeh": {
+      "en": "tasbeeh",
+      "es": "tasbeeh"
+    },
+    "towel": {
+      "en": "tauliya",
+      "es": "tauliya"
+    },
+    "oil": {
+      "en": "tel",
+      "es": "tel"
+    },
+    "sharp_pain": {
+      "en": "tez dard",
+      "es": "tez dard"
+    },
+    "tired": {
+      "en": "thak",
+      "es": "thak"
+    },
+    "cooling": {
+      "en": "thandak",
+      "es": "thandak"
+    },
+    "sad": {
+      "en": "udaas",
+      "es": "udaas"
+    },
+    "there": {
+      "en": "udhar",
+      "es": "udhar"
+    },
+    "hope": {
+      "en": "umeed",
+      "es": "umeed"
+    },
+    "pick_up": {
+      "en": "uthao",
+      "es": "uthao"
+    },
+    "wake_up": {
+      "en": "utho",
+      "es": "utho"
+    },
+    "time": {
+      "en": "waqt",
+      "es": "waqt"
+    },
+    "wheelchair": {
+      "en": "wheelchair",
+      "es": "wheelchair"
+    },
+    "wudu": {
+      "en": "wuzu",
+      "es": "wuzu"
+    },
+    "or": {
+      "en": "ya",
+      "es": "ya"
+    },
+    "this": {
+      "en": "yeh",
+      "es": "yeh"
+    },
+    "charity": {
+      "en": "zakat",
+      "es": "zakat"
+    },
+    "zuhr": {
+      "en": "zuhr",
+      "es": "zuhr"
+    }
   }
 }

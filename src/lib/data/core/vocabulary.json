@@ -62,8 +62,6 @@
       "tags": [
         "square"
       ],
-      "roman": "aaj",
-      "category": "core",
       "type": "word",
       "usageCount": 11,
       "lastUsedAt": 1775825141835,
@@ -89,8 +87,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "aam",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -113,8 +109,6 @@
         "happy",
         "dua"
       ],
-      "roman": "aap",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -141,8 +135,6 @@
       "tags": [
         "square"
       ],
-      "roman": "abhi",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -168,8 +160,6 @@
       "tags": [
         "square"
       ],
-      "roman": "ac",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -195,8 +185,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "acha",
-      "category": "core",
       "type": "word",
       "usageCount": 3,
       "lastUsedAt": 1775817165925,
@@ -219,8 +207,6 @@
         "i",
         "to_me"
       ],
-      "roman": "achaar",
-      "category": "khana",
       "type": "word",
       "usageCount": 1,
       "lastUsedAt": 1775648476766,
@@ -247,8 +233,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "afsos",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -274,8 +258,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "alhamdulillah",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -301,8 +283,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "allah",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -328,8 +308,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "anda",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -352,8 +330,6 @@
         "better",
         "water"
       ],
-      "roman": "araam",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -380,8 +356,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "asr",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -404,8 +378,6 @@
         "i",
         "to_me"
       ],
-      "roman": "astagfirullah",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -429,8 +401,6 @@
         "better",
         "water"
       ],
-      "roman": "aur",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -457,8 +427,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "ayat",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -484,8 +452,6 @@
       "tags": [
         "square"
       ],
-      "roman": "ayna",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -511,8 +477,6 @@
       "tags": [
         "square"
       ],
-      "roman": "baad",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -535,8 +499,6 @@
         "i",
         "to_me"
       ],
-      "roman": "baap",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -563,8 +525,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "bacche",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -587,8 +547,6 @@
         "today",
         "tomorrow"
       ],
-      "roman": "bahu",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -615,8 +573,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "baitho",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -639,8 +595,6 @@
         "to_me",
         "you"
       ],
-      "roman": "band",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -664,8 +618,6 @@
         "i",
         "to_me"
       ],
-      "roman": "batao",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -692,8 +644,6 @@
       "tags": [
         "square"
       ],
-      "roman": "bathroom",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -719,8 +669,6 @@
       "tags": [
         "square"
       ],
-      "roman": "batti",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -743,8 +691,6 @@
         "i",
         "to_me"
       ],
-      "roman": "behen",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -768,8 +714,6 @@
         "to_me",
         "you"
       ],
-      "roman": "behtar",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -793,8 +737,6 @@
         "today",
         "tomorrow"
       ],
-      "roman": "beta",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -809,8 +751,6 @@
         "better",
         "medicine"
       ],
-      "roman": "betaserk",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -834,8 +774,6 @@
         "today",
         "tomorrow"
       ],
-      "roman": "beti",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -859,8 +797,6 @@
         "i",
         "to_me"
       ],
-      "roman": "bhai",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -887,8 +823,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "bhuk",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -914,8 +848,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "biryani",
-      "category": "khana",
       "type": "word",
       "usageCount": 1,
       "lastUsedAt": 1775648603252,
@@ -941,8 +873,6 @@
       "tags": [
         "square"
       ],
-      "roman": "biscuit",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -968,8 +898,6 @@
       "tags": [
         "square"
       ],
-      "roman": "bistar",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -995,8 +923,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "bolo",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1022,8 +948,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "bore",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1049,8 +973,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "bp",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1076,8 +998,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "bukhaar",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1103,8 +1023,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "bura",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1130,8 +1048,6 @@
       "tags": [
         "square"
       ],
-      "roman": "cake",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1154,8 +1070,6 @@
         "i",
         "to_me"
       ],
-      "roman": "chacha",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1179,8 +1093,6 @@
         "i",
         "to_me"
       ],
-      "roman": "chachi",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1204,8 +1116,6 @@
         "i",
         "to_me"
       ],
-      "roman": "chahiyay",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1232,8 +1142,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "chai",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1259,8 +1167,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "chakkar",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1286,8 +1192,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "chalo",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1313,8 +1217,6 @@
       "tags": [
         "square"
       ],
-      "roman": "charger",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1337,8 +1239,6 @@
         "better",
         "water"
       ],
-      "roman": "chashma",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1365,8 +1265,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "chawal",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1392,8 +1290,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "checkup",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1419,8 +1315,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "cheeni",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1446,8 +1340,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "daanay",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1470,8 +1362,6 @@
         "i",
         "to_me"
       ],
-      "roman": "dada",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1495,8 +1385,6 @@
         "i",
         "to_me"
       ],
-      "roman": "dadi",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1523,8 +1411,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "dahi",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1550,8 +1436,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "dal",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1574,8 +1458,6 @@
         "i",
         "to_me"
       ],
-      "roman": "damad",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1599,8 +1481,6 @@
         "i",
         "to_me"
       ],
-      "roman": "dar",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1627,8 +1507,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "dard ghutna",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1654,8 +1532,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "dard kan",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1681,8 +1557,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "dard mein",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1708,8 +1582,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "dard pait",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1735,8 +1607,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "dard pith",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1762,8 +1632,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "dard sar",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1786,8 +1654,6 @@
         "to_me",
         "you"
       ],
-      "roman": "dawaii",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1811,8 +1677,6 @@
         "to_me",
         "you"
       ],
-      "roman": "dedo",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1836,8 +1700,6 @@
         "i",
         "to_me"
       ],
-      "roman": "dekho",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1861,8 +1723,6 @@
         "to_me",
         "you"
       ],
-      "roman": "dheere",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1889,8 +1749,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "dho lo",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1913,8 +1771,6 @@
         "i",
         "to_me"
       ],
-      "roman": "dikhao",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1941,8 +1797,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "doctor khandan",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1965,8 +1819,6 @@
         "am",
         "thank_you"
       ],
-      "roman": "doctor",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -1993,8 +1845,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "dua",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2020,8 +1870,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "dudh",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 1,
       "lastUsedAt": 1775648586828,
@@ -2047,8 +1895,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "fajr",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2071,8 +1917,6 @@
         "i",
         "to_me"
       ],
-      "roman": "fakhar",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2099,8 +1943,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "farishta",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2126,8 +1968,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "garmi",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2153,8 +1993,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "ghabrahat",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2180,8 +2018,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "ghari",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2204,8 +2040,6 @@
         "to_me",
         "you"
       ],
-      "roman": "goli",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2229,8 +2063,6 @@
         "mazedar",
         "garm"
       ],
-      "roman": "gosht",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2257,8 +2089,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "gussa",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2272,8 +2102,6 @@
         "alhamdulillah",
         "better"
       ],
-      "roman": "haan",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2297,8 +2125,6 @@
         "and",
         "alhamdulillah"
       ],
-      "roman": "hai",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2325,8 +2151,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "hairan",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2352,8 +2176,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "hajj",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2379,8 +2201,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "halwa",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2406,8 +2226,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "himmat jazbaat",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2430,8 +2248,6 @@
         "am",
         "thank_you"
       ],
-      "roman": "hospital",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2455,8 +2271,6 @@
         "better",
         "water"
       ],
-      "roman": "hua",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2483,8 +2297,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "hoon",
-      "category": "core",
       "type": "word",
       "usageCount": 11,
       "lastUsedAt": 1775825143669,
@@ -2510,8 +2322,6 @@
       "tags": [
         "square"
       ],
-      "roman": "idhar",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2534,8 +2344,6 @@
         "i",
         "to_me"
       ],
-      "roman": "injection",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2559,8 +2367,6 @@
         "i",
         "to_me"
       ],
-      "roman": "inshallah",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2584,8 +2390,6 @@
         "i",
         "to_me"
       ],
-      "roman": "intezar",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2612,8 +2416,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "isha",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2639,8 +2441,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "itminan",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2666,8 +2466,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "jalan",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2690,8 +2488,6 @@
         "to_me",
         "you"
       ],
-      "roman": "jaldi",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2718,8 +2514,6 @@
       "tags": [
         "square"
       ],
-      "roman": "janamaz",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2745,8 +2539,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "jannat",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2772,8 +2564,6 @@
       "tags": [
         "square"
       ],
-      "roman": "jootay",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2799,8 +2589,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "juice",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2826,8 +2614,6 @@
       "tags": [
         "square"
       ],
-      "roman": "kab",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2853,8 +2639,6 @@
       "tags": [
         "square"
       ],
-      "roman": "kahan",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2877,8 +2661,6 @@
         "better",
         "water"
       ],
-      "roman": "kaisay",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2905,8 +2687,6 @@
       "tags": [
         "square"
       ],
-      "roman": "kal",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2932,8 +2712,6 @@
       "tags": [
         "square"
       ],
-      "roman": "kambal",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2956,8 +2734,6 @@
         "i",
         "to_me"
       ],
-      "roman": "kamzor jazbaat",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -2981,8 +2757,6 @@
         "i",
         "to_me"
       ],
-      "roman": "kamzori",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3009,8 +2783,6 @@
       "tags": [
         "square"
       ],
-      "roman": "kangi",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3036,8 +2808,6 @@
       "tags": [
         "square"
       ],
-      "roman": "kapre",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3063,8 +2833,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "kela",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3087,8 +2855,6 @@
         "i",
         "to_me"
       ],
-      "roman": "khala",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3112,8 +2878,6 @@
         "i",
         "to_me"
       ],
-      "roman": "khaloo",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3137,8 +2901,6 @@
         "better",
         "water"
       ],
-      "roman": "khana",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3165,8 +2927,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "khansi",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3189,8 +2949,6 @@
         "i",
         "to_me"
       ],
-      "roman": "khao",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3214,8 +2972,6 @@
         "to_me",
         "you"
       ],
-      "roman": "kharray",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3242,8 +2998,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "kheer",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3269,8 +3023,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "khichdi",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3296,8 +3048,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "khujli",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3320,8 +3070,6 @@
         "to_me",
         "you"
       ],
-      "roman": "khul",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3345,8 +3093,6 @@
         "to_me",
         "you"
       ],
-      "roman": "khush",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3370,8 +3116,6 @@
         "better",
         "water"
       ],
-      "roman": "kursi",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3395,8 +3139,6 @@
         "ask",
         "tell"
       ],
-      "roman": "kya",
-      "category": "core",
       "type": "word",
       "usageCount": 1,
       "lastUsedAt": 1775650755858,
@@ -3420,8 +3162,6 @@
         "better",
         "water"
       ],
-      "roman": "kyoon",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3448,8 +3188,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "lassi",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3472,8 +3210,6 @@
         "better",
         "water"
       ],
-      "roman": "lathi",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3497,8 +3233,6 @@
         "better",
         "water"
       ],
-      "roman": "lekin",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3512,8 +3246,6 @@
         "thank_you",
         "alhamdulillah"
       ],
-      "roman": "leli",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3537,8 +3269,6 @@
         "to_me",
         "you"
       ],
-      "roman": "lelo",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3562,8 +3292,6 @@
         "i",
         "to_me"
       ],
-      "roman": "likho",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3578,8 +3306,6 @@
         "want",
         "itching"
       ],
-      "roman": "lotion",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3603,8 +3329,6 @@
         "i",
         "to_me"
       ],
-      "roman": "maa",
-      "category": "khandan",
       "type": "word",
       "usageCount": 1,
       "lastUsedAt": 1775666416579,
@@ -3628,8 +3352,6 @@
         "mazedar",
         "garm"
       ],
-      "roman": "machli",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3653,8 +3375,6 @@
         "i",
         "to_me"
       ],
-      "roman": "madad kaam",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3678,8 +3398,6 @@
         "to_me",
         "you"
       ],
-      "roman": "madadgar",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3706,8 +3424,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "madinah",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3733,8 +3449,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "maghrib",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3757,8 +3471,6 @@
         "bad",
         "worse"
       ],
-      "roman": "main",
-      "category": "core",
       "type": "word",
       "usageCount": 40,
       "lastUsedAt": 1775927337913,
@@ -3785,8 +3497,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "makkah",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3812,8 +3522,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "malham",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3839,8 +3547,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "malta",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3863,8 +3569,6 @@
         "i",
         "to_me"
       ],
-      "roman": "mami",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3888,8 +3592,6 @@
         "i",
         "to_me"
       ],
-      "roman": "mamoo",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3913,8 +3615,6 @@
         "i",
         "to_me"
       ],
-      "roman": "masala",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3938,8 +3638,6 @@
         "i",
         "to_me"
       ],
-      "roman": "mashallah",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3963,8 +3661,6 @@
         "i",
         "to_me"
       ],
-      "roman": "masjid",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -3988,8 +3684,6 @@
         "to_me",
         "you"
       ],
-      "roman": "masood",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4016,8 +3710,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "matli",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4040,8 +3732,6 @@
         "i",
         "to_me"
       ],
-      "roman": "mayoos",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4068,8 +3758,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "mithai",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4095,8 +3783,6 @@
       "tags": [
         "square"
       ],
-      "roman": "moze",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4119,8 +3805,6 @@
         "dua",
         "medicine"
       ],
-      "roman": "mujhay",
-      "category": "core",
       "type": "word",
       "usageCount": 15,
       "lastUsedAt": 1775842788464,
@@ -4144,8 +3828,6 @@
         "mazedar",
         "garm"
       ],
-      "roman": "murghi",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4169,8 +3851,6 @@
         "i",
         "to_me"
       ],
-      "roman": "nahi",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4197,8 +3877,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "namak",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4224,8 +3902,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "namaz",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4248,8 +3924,6 @@
         "i",
         "to_me"
       ],
-      "roman": "nana",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4273,8 +3947,6 @@
         "i",
         "to_me"
       ],
-      "roman": "nani",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4301,8 +3973,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "nawasa",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4328,8 +3998,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "nawasi",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4355,8 +4023,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "nazla",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4382,8 +4048,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "neend",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4409,8 +4073,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "nurse khandan",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4433,8 +4095,6 @@
         "am",
         "thank_you"
       ],
-      "roman": "nurse",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4461,8 +4121,6 @@
       "tags": [
         "square"
       ],
-      "roman": "paise",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4488,8 +4146,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "pakora",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4504,8 +4160,6 @@
         "headache",
         "fever"
       ],
-      "roman": "panadol",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4532,8 +4186,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "pani",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4556,8 +4208,6 @@
         "better",
         "water"
       ],
-      "roman": "pani",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4584,8 +4234,6 @@
       "tags": [
         "square"
       ],
-      "roman": "pankha",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4611,8 +4259,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "pareshan",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4635,8 +4281,6 @@
         "i",
         "to_me"
       ],
-      "roman": "parho",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4660,8 +4304,6 @@
         "i",
         "to_me"
       ],
-      "roman": "patti",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4685,8 +4327,6 @@
         "to_me",
         "you"
       ],
-      "roman": "phal",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4710,8 +4350,6 @@
         "i",
         "to_me"
       ],
-      "roman": "phone karo",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4735,8 +4373,6 @@
         "better",
         "water"
       ],
-      "roman": "phone zaroorat",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4760,8 +4396,6 @@
         "i",
         "to_me"
       ],
-      "roman": "phupha",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4785,8 +4419,6 @@
         "i",
         "to_me"
       ],
-      "roman": "phupho",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4813,8 +4445,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "piyo",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4840,8 +4470,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "pota",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4867,8 +4495,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "poti",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4891,8 +4517,6 @@
         "i",
         "to_me"
       ],
-      "roman": "pucho",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4916,8 +4540,6 @@
         "i",
         "to_me"
       ],
-      "roman": "pukao",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4941,8 +4563,6 @@
         "i",
         "to_me"
       ],
-      "roman": "pur josh",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4969,8 +4589,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "pyaar",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -4996,8 +4614,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "pyas",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5023,8 +4639,6 @@
       "tags": [
         "square"
       ],
-      "roman": "quran",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5047,8 +4661,6 @@
         "i",
         "to_me"
       ],
-      "roman": "rakho",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5075,8 +4687,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "rasool",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5102,8 +4712,6 @@
       "tags": [
         "square"
       ],
-      "roman": "remote",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5129,8 +4737,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "roti",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5156,8 +4762,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "roza",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5180,8 +4784,6 @@
         "to_me",
         "you"
       ],
-      "roman": "ruko",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5208,8 +4810,6 @@
       "tags": [
         "square"
       ],
-      "roman": "rus",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5235,8 +4835,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "saaf kaam",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5262,8 +4860,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "sabr",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5289,8 +4885,6 @@
       "tags": [
         "square"
       ],
-      "roman": "sabun",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5313,8 +4907,6 @@
         "i",
         "to_me"
       ],
-      "roman": "sabzi",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5341,8 +4933,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "salan",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5368,8 +4958,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "samosa",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5395,8 +4983,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "sans",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5419,8 +5005,6 @@
         "better",
         "water"
       ],
-      "roman": "saath",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5447,8 +5031,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "seb",
-      "category": "khana",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5471,8 +5053,6 @@
         "i",
         "to_me"
       ],
-      "roman": "sharm",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5490,8 +5070,6 @@
         "ointment",
         "medicine"
       ],
-      "roman": "shingles",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5515,8 +5093,6 @@
         "i",
         "to_me"
       ],
-      "roman": "shohar",
-      "category": "khandan",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5543,8 +5119,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "shukr",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5570,8 +5144,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "shukrguzar",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5594,8 +5166,6 @@
         "i",
         "to_me"
       ],
-      "roman": "shukriya",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5619,8 +5189,6 @@
         "i",
         "to_me"
       ],
-      "roman": "so jao",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5647,8 +5215,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "sojan",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5671,8 +5237,6 @@
         "better",
         "water"
       ],
-      "roman": "sona zaroorat",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5696,8 +5260,6 @@
         "to_me",
         "you"
       ],
-      "roman": "subhanallah",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5724,8 +5286,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "sugar",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5751,8 +5311,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "sukun",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5778,8 +5336,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "suno",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5805,8 +5361,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "surah",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5832,8 +5386,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "surkhi",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5856,8 +5408,6 @@
         "i",
         "to_me"
       ],
-      "roman": "tabiyat kharab",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5884,8 +5434,6 @@
       "tags": [
         "square"
       ],
-      "roman": "takiya",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5911,8 +5459,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "tanha",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5938,8 +5484,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "tasbeeh",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5965,8 +5509,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "tauliya",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -5992,8 +5534,6 @@
       "tags": [
         "square"
       ],
-      "roman": "tel",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -6019,8 +5559,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "tez dard",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -6043,8 +5581,6 @@
         "to_me",
         "you"
       ],
-      "roman": "thak",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -6071,8 +5607,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "thand",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -6086,8 +5620,6 @@
         "ointment",
         "burning"
       ],
-      "roman": "thandak",
-      "category": "sehat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -6111,8 +5643,6 @@
         "to_me",
         "you"
       ],
-      "roman": "theek",
-      "category": "sehat",
       "type": "word",
       "usageCount": 1,
       "lastUsedAt": 1775648520206,
@@ -6136,8 +5666,6 @@
         "to_me",
         "you"
       ],
-      "roman": "udaas",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -6164,8 +5692,6 @@
       "tags": [
         "square"
       ],
-      "roman": "udhar",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -6191,8 +5717,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "umeed",
-      "category": "jazbaat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -6215,8 +5739,6 @@
         "i",
         "to_me"
       ],
-      "roman": "uthao",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -6243,8 +5765,6 @@
       "tags": [
         "zigzag"
       ],
-      "roman": "utho",
-      "category": "kaam",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -6270,8 +5790,6 @@
       "tags": [
         "circle"
       ],
-      "roman": "waqt",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -6294,8 +5812,6 @@
         "better",
         "water"
       ],
-      "roman": "wheelchair",
-      "category": "zaroorat",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -6322,8 +5838,6 @@
       "tags": [
         "wave"
       ],
-      "roman": "wuzu",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -6346,8 +5860,6 @@
         "better",
         "water"
       ],
-      "roman": "ya",
-      "category": "core",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -6371,8 +5883,6 @@
         "open",
         "close"
       ],
-      "roman": "yeh",
-      "category": "core",
       "type": "word",
       "usageCount": 1,
       "lastUsedAt": 1775650754507,
@@ -6399,8 +5909,6 @@
       "tags": [
         "triangle"
       ],
-      "roman": "zakat",
-      "category": "ruhani",
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
@@ -6426,8 +5934,16 @@
       "tags": [
         "triangle"
       ],
-      "roman": "zuhr",
-      "category": "ruhani",
+      "type": "word",
+      "usageCount": 0,
+      "lastUsedAt": 0,
+      "timeBias": []
+    },
+    {
+      "id": "cat",
+      "icon": "smile",
+      "next": [],
+      "tags": [],
       "type": "word",
       "usageCount": 0,
       "lastUsedAt": 0,
