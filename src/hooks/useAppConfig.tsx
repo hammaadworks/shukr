@@ -6,21 +6,41 @@ import { dataAssembler } from '../lib/dataAssembler';
 import { useLanguage } from './useLanguage';
 import { audioStorage } from '../lib/audioStorage';
 import { DEFAULT_GESTURE_MAP, type GestureDefinition } from '../recognition/gestures/types';
+import { translator } from '../lib/translator';
 
 export interface AppConfig {
   version: number;
   timestamp: number;
+  user_nickname?: string;
   categories: any[];
-  quick_actions?: any[];
   gesture_map: Record<string, string>;
   gesture_mappings?: Record<string, GestureDefinition>;
   quotes: any[];
   emergency_contacts: any[];
+  sos_settings?: {
+    message_template: string;
+    countdown_seconds: number;
+    play_alarm_sound: boolean;
+  };
+  preferences?: {
+    theme?: string;
+    font_size?: string;
+    speech_rate?: number;
+    enable_vibration?: boolean;
+    enable_click_sound?: boolean;
+    auto_clear_minutes?: number;
+  };
+  language_pair?: {
+    primary: string;
+    secondary: string;
+  };
   activeVoiceProfile?: string;
   voiceProfiles?: any[];
-  sketches?: any[];
+  doodles?: any[];
   audio?: Record<string, string>;
   favorites?: string[];
+  family?: string[];
+  enableClickSound?: boolean; // Keep for backward compatibility if used in UI
 }
 
 interface ConfigContextType {
@@ -74,6 +94,17 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       if (finalConfig && !finalConfig.gesture_mappings) {
         finalConfig.gesture_mappings = DEFAULT_GESTURE_MAP;
       }
+
+      // Vital: Hydrate categories from the unified universeDb
+      const dbWords = await universeDb.words.toArray();
+      if (dbWords.length > 0 && finalConfig.categories) {
+        finalConfig.categories = finalConfig.categories.map((cat: any) => ({
+          ...cat,
+          items: dbWords.filter(w => w.category === cat.id || w.categoryId === cat.id)
+        }));
+      }
+
+      translator.refresh(finalConfig);
       setConfig(finalConfig);
     } catch (err: any) {
       console.error('[AppConfig] Boot failed:', err);
@@ -88,6 +119,7 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   }, [bootstrap]);
 
   const updateConfig = useCallback(async (newConfig: AppConfig) => {
+    translator.refresh(newConfig);
     setConfig(newConfig);
     const pair = `${primaryLanguage}_${secondaryLanguage}`;
     localStorage.setItem(`shukr_app_config_${pair}`, JSON.stringify(newConfig));

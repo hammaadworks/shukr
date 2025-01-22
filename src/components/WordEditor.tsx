@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Trash2, X, AlertCircle, Check } from 'lucide-react';
 import { translator } from '../lib/translator';
 import { useLanguage, SUPPORTED_LANGS } from '../hooks/useLanguage';
+import { useAppConfig } from '../hooks/useAppConfig';
 
 interface WordEditorProps {
   item: any | null;
@@ -43,9 +44,10 @@ const BilingualLabel: React.FC<{ primary: string; secondary: string; isRTL?: boo
 );
 
 export const WordEditor: React.FC<WordEditorProps> = ({ item: initialItem, onClose, onSave, onDelete, isNew, existingWords, onChange }) => {
+  const { config } = useAppConfig();
   const [item, setItem] = useState(initialItem);
   const [isTranslating, setIsTranslating] = useState(false);
-  const [isFamily, setIsFamily] = useState(initialItem?.categoryId === 'khandan');
+  const [isFamily, setIsFamily] = useState(() => initialItem ? (config?.family || []).includes(initialItem.id) : false);
   const [error, setError] = useState<string | null>(null);
   const { primaryLanguage, secondaryLanguage } = useLanguage();
 
@@ -53,10 +55,10 @@ export const WordEditor: React.FC<WordEditorProps> = ({ item: initialItem, onClo
 
   useEffect(() => {
     setItem(initialItem);
-    setIsFamily(initialItem?.categoryId === 'khandan');
+    setIsFamily(initialItem ? (config?.family || []).includes(initialItem.id) : false);
     setError(null);
     setShowDeleteConfirm(false);
-  }, [initialItem]);
+  }, [initialItem, config?.family]);
 
   if (!item) return null;
 
@@ -159,7 +161,6 @@ export const WordEditor: React.FC<WordEditorProps> = ({ item: initialItem, onClo
     onSave({ 
       ...item, 
       id: finalId, 
-      categoryId: isFamily ? 'khandan' : (item.categoryId === 'khandan' ? 'common' : (item.categoryId || 'common')),
       isFamily: isFamily 
     }, null);
   };

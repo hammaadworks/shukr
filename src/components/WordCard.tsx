@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Volume2, Plus, Heart, type LucideIcon } from 'lucide-react';
 import { useLanguage } from '../hooks/useLanguage';
 import { IconMap } from '../lib/icons';
+import { translator } from '../lib/translator';
 
 export type WordCardVariant = 1 | 2 | 3 | 4 | 5;
 
@@ -12,6 +13,7 @@ export type WordCardItem = {
   en?: string;
   ur?: string;
   roman?: string;
+  transliterations?: Record<string, string>;
   icon?: keyof typeof IconMap;
   isPrompt?: boolean;
 };
@@ -29,7 +31,9 @@ interface WordCardProps {
   variant?: WordCardVariant;
   className?: string;
   isPrimary?: boolean; // Optional override
-  languageOverride?: string; // e.g. 'en', 'ur', 'es', 'ar'
+  languageOverride?: string; // Overrides the display language
+  helperLanguageOverride?: string; // Overrides the translation/transliteration language
+  forceDualMode?: boolean; // Forces dual mode regardless of app settings
 }
 
 const LONG_PRESS_DELAY = 800; // For Favorites
@@ -44,23 +48,28 @@ const vibrate = (duration: number | number[]) => {
   }
 };
 
-const getDisplayText = (item: WordCardItem, isPrimary: boolean, languageOverride?: string): string => {
-  if (languageOverride) {
-    return (item as any)[languageOverride] || item.ur || item.text_primary || '';
-  }
-  const primary = item.text_primary || item.ur;
-  const secondary = item.text_secondary || item.en;
-  return isPrimary ? (primary ?? '') : (secondary ?? '');
+const getDisplayText = (item: WordCardItem, selectedLang: string): string => {
+  const t = translator.getTranslation(item.id, selectedLang);
+  if (t) return t;
+  
+  if (selectedLang === 'ur' && item.ur) return item.ur;
+  if (selectedLang === 'en' && item.en) return item.en;
+  if (selectedLang === 'es' && (item as any).es) return (item as any).es;
+  if (selectedLang === 'ar' && (item as any).ar) return (item as any).ar;
+  
+  return item.text_primary || item.ur || item.text_secondary || item.en || '';
 };
 
-const getFallbackText = (item: WordCardItem, isPrimary: boolean, languageOverride?: string): string => {
-  if (languageOverride) {
-    // If we have an override, maybe fallback to English if it's not the override
-    return languageOverride === 'en' ? (item.ur || item.text_primary || '') : (item.en || item.text_secondary || '');
-  }
-  const primary = item.text_primary || item.ur;
-  const secondary = item.text_secondary || item.en;
-  return isPrimary ? (secondary ?? '') : (primary ?? '');
+const getFallbackText = (item: WordCardItem, unselectedLang: string): string => {
+  const t = translator.getTranslation(item.id, unselectedLang);
+  if (t) return t;
+
+  if (unselectedLang === 'en' && item.en) return item.en;
+  if (unselectedLang === 'ur' && item.ur) return item.ur;
+  if (unselectedLang === 'es' && (item as any).es) return (item as any).es;
+  if (unselectedLang === 'ar' && (item as any).ar) return (item as any).ar;
+  
+  return item.text_secondary || item.en || item.text_primary || item.ur || '';
 };
 
 const getFontSize = ({
@@ -117,17 +126,31 @@ export const WordCard: React.FC<WordCardProps> = React.memo(({
   className = '',
   isPrimary: isPrimaryOverride,
   languageOverride,
+  helperLanguageOverride,
+  forceDualMode,
 }) => {
-  const { isPrimary: isPrimaryFromHook } = useLanguage();
+  const { isPrimary: isPrimaryFromHook, primaryLanguage, secondaryLanguage, isDualMode: isDualModeFromHook } = useLanguage();
   const isPrimary = isPrimaryOverride !== undefined ? isPrimaryOverride : isPrimaryFromHook;
+  const isDualMode = forceDualMode !== undefined ? forceDualMode : isDualModeFromHook;
   
+  const selectedLang = languageOverride || (isPrimary ? primaryLanguage : secondaryLanguage);
+  const unselectedLang = helperLanguageOverride || (isPrimary ? secondaryLanguage : primaryLanguage);
+
   const favTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const editTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const isPrompt = Boolean(item.isPrompt);
-  const displayText = useMemo(() => getDisplayText(item, isPrimary, languageOverride), [item, isPrimary, languageOverride]);
-  const fallbackText = useMemo(() => getFallbackText(item, isPrimary, languageOverride), [item, isPrimary, languageOverride]);
+  
+  const displayText = useMemo(() => getDisplayText(item, selectedLang), [item, selectedLang]);
+  const fallbackText = useMemo(() => getFallbackText(item, unselectedLang), [item, unselectedLang]);
   const fontSize = useMemo(() => getFontSize({ textLength: displayText.length, variant, isPrimary }), [displayText.length, variant, isPrimary]);
+
+  const transliteration = useMemo(() => {
+    const result = translator.getTransliteration(item.id, selectedLang, unselectedLang);
+    if (result) return result;
+    if (item.roman && unselectedLang === 'en') return item.roman;
+    return null;
+  }, [item.id, item.roman, selectedLang, unselectedLang]);
 
   const clearAllTimers = useCallback(() => {
     if (favTimerRef.current) clearTimeout(favTimerRef.current);
@@ -140,7 +163,6 @@ export const WordCard: React.FC<WordCardProps> = React.memo(({
     if (isPrompt) return;
     
     if (variant === 1) {
-      // For Variant 1: Only Edit Mode on Long Press (800ms)
       if (onEdit) {
         editTimerRef.current = setTimeout(() => {
           vibrate(EDIT_VIBRATION_MS);
@@ -149,14 +171,11 @@ export const WordCard: React.FC<WordCardProps> = React.memo(({
         }, LONG_PRESS_DELAY);
       }
     } else {
-      // For Other Variants: Existing behavior
-      // 1. Favorite Toggle (800ms)
       favTimerRef.current = setTimeout(() => {
         vibrate(LONG_PRESS_VIBRATION_MS);
         onToggleFavorite?.();
       }, LONG_PRESS_DELAY);
 
-      // 2. Edit Mode (2500ms)
       if (onEdit) {
         editTimerRef.current = setTimeout(() => {
           if (favTimerRef.current) clearTimeout(favTimerRef.current);
@@ -182,8 +201,9 @@ export const WordCard: React.FC<WordCardProps> = React.memo(({
     return () => clearAllTimers();
   }, [clearAllTimers]);
 
-  const shouldShowFullMeta = variant !== 3 && variant !== 4 && variant !== 5;
-  const shouldShowTranslationOnly = variant === 5;
+  // Variant 3, 4, 5 typically don't show full meta
+  const shouldShowFullMeta = isDualMode && variant !== 3 && variant !== 4 && variant !== 5;
+  const shouldShowTranslationOnly = isDualMode && variant === 5;
 
   return (
     <div
@@ -221,8 +241,8 @@ export const WordCard: React.FC<WordCardProps> = React.memo(({
 
       {shouldShowFullMeta && (
         <div className="card-bottom-meta">
-          {item.roman && <span className="card-transliteration">{item.roman}</span>}
-          {item.roman && <span className="card-divider">|</span>}
+          {transliteration && <span className="card-transliteration">{transliteration}</span>}
+          {transliteration && <span className="card-divider">|</span>}
           <span className="card-translation">{fallbackText}</span>
         </div>
       )}

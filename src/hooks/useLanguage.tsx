@@ -8,14 +8,17 @@ export interface DualLanguagePair {
   primary: LanguageCode;
   secondary: LanguageCode;
   current: LanguageCode;
+  isDualMode: boolean;
 }
 
 interface LanguageContextType {
   language: LanguageCode; // The currently active language code
   primaryLanguage: LanguageCode;
   secondaryLanguage: LanguageCode;
+  isDualMode: boolean;
   setLanguage: (lang: LanguageCode) => void; 
   setLanguagePair: (primary: LanguageCode, secondary: LanguageCode) => void;
+  setDualMode: (isDual: boolean) => void;
   isRTL: boolean;
   isPrimary: boolean;
   isSecondary: boolean;
@@ -42,13 +45,23 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   // Load the pair configuration from storage or default to Urdu + English
   const [pair, setPair] = useState<DualLanguagePair>(() => {
     const stored = localStorage.getItem('shukr_lang_pair');
-    if (stored) return JSON.parse(stored);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (parsed.primary === parsed.secondary) {
+        parsed.secondary = parsed.primary === 'en' ? 'ur' : 'en';
+      }
+      if (parsed.isDualMode === undefined) {
+        parsed.isDualMode = true;
+      }
+      return parsed;
+    }
     
     // Default: Primary = Urdu, Secondary = English
     const initialPair: DualLanguagePair = {
       primary: 'ur',
       secondary: 'en',
-      current: 'ur'
+      current: 'ur',
+      isDualMode: true
     };
     return initialPair;
   });
@@ -63,8 +76,15 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const newPair: DualLanguagePair = {
       primary,
       secondary,
-      current: primary // Reset to primary when pair changes
+      current: primary, // Reset to primary when pair changes
+      isDualMode: pair.isDualMode
     };
+    setPair(newPair);
+    localStorage.setItem('shukr_lang_pair', JSON.stringify(newPair));
+  };
+
+  const setDualMode = (isDualMode: boolean) => {
+    const newPair = { ...pair, isDualMode };
     setPair(newPair);
     localStorage.setItem('shukr_lang_pair', JSON.stringify(newPair));
   };
@@ -74,6 +94,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const dir = getDirection(pair.current);
     document.documentElement.lang = pair.current;
     document.documentElement.dir = dir;
+    // Explicitly prevent browser translation for all languages handled by the app
+    document.documentElement.setAttribute('translate', 'no');
   }, [pair.current]);
 
   const isRTL = getDirection(pair.current) === 'rtl';
@@ -85,13 +107,15 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       language: pair.current, 
       primaryLanguage: pair.primary,
       secondaryLanguage: pair.secondary,
+      isDualMode: pair.isDualMode,
       setLanguage, 
       setLanguagePair,
+      setDualMode,
       isRTL,
       isPrimary,
       isSecondary
     }}>
-      <div className={`lang-${pair.current} dir-${isRTL ? 'rtl' : 'ltr'}`}>
+      <div className={`lang-${pair.current} dir-${isRTL ? 'rtl' : 'ltr'}`} translate="no">
         {children}
       </div>
     </LanguageContext.Provider>

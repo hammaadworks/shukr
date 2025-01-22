@@ -1,8 +1,13 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
+
+export type MicPermissionStatus = 'prompt' | 'granted' | 'denied' | 'requesting';
 
 export const useVoiceRecording = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [lastRecordedBlob, setLastRecordedBlob] = useState<Blob | null>(null);
+  const [permissionStatus, setPermissionStatus] = useState<MicPermissionStatus>('prompt');
+  const [showPermissionExplanation, setShowPermissionExplanation] = useState(false);
+  
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const audioCtxRef = useRef<AudioContext | null>(null);
@@ -10,6 +15,32 @@ export const useVoiceRecording = () => {
   const streamRef = useRef<MediaStream | null>(null);
 
   const [analyser, setAnalyser] = useState<AnalyserNode | null>(null);
+
+  // Check initial permission status
+  useEffect(() => {
+    if (navigator.permissions && (navigator.permissions as any).query) {
+      navigator.permissions.query({ name: 'microphone' as any }).then((result) => {
+        setPermissionStatus(result.state as MicPermissionStatus);
+        result.onchange = () => {
+          setPermissionStatus(result.state as MicPermissionStatus);
+        };
+      }).catch(e => console.warn('[useVoiceRecording] Permissions API not supported or failed', e));
+    }
+  }, []);
+
+  const requestPermission = async () => {
+    setPermissionStatus('requesting');
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stream.getTracks().forEach(t => t.stop()); // Just a probe
+      setPermissionStatus('granted');
+      return true;
+    } catch (err) {
+      console.error('[useVoiceRecording] Permission denied:', err);
+      setPermissionStatus('denied');
+      return false;
+    }
+  };
 
   const getSupportedMimeType = () => {
     const types = [
@@ -109,6 +140,10 @@ export const useVoiceRecording = () => {
     stopRecording,
     lastRecordedBlob,
     analyser,
+    permissionStatus,
+    requestPermission,
+    showPermissionExplanation,
+    setShowPermissionExplanation,
     clearLastBlob: () => setLastRecordedBlob(null)
   };
 };

@@ -3,6 +3,10 @@ import { GestureModelLoader } from '../recognition/gestures/modelLoader';
 import { HandGestureRecognizer } from '../recognition/gestures/HandGestureRecognizer';
 import { FaceGestureRecognizer } from '../recognition/gestures/FaceGestureRecognizer';
 
+const FRAME_THROTTLE = 1000 / 20; // 20 FPS
+
+export type CameraPermissionStatus = 'prompt' | 'granted' | 'denied' | 'requesting';
+
 /**
  * High-Performance, Memory-Safe Camera Gesture Hook
  * Optimized for Mobile Browsers:
@@ -11,9 +15,10 @@ import { FaceGestureRecognizer } from '../recognition/gestures/FaceGestureRecogn
  * 3. WASM Memory Isolation
  */
 export const useCameraGestures = (onAction: (gestureKey: string) => void, forceDisabled: boolean = false) => {
-  const [isEnabled, setIsEnabled] = useState(true);
+  const [isEnabled, setIsEnabled] = useState(false);
   const [isRecognitionActive, setIsRecognitionActive] = useState(true);
   const [isModelLoaded, setIsModelLoaded] = useState(false);
+  const [permissionStatus, setPermissionStatus] = useState<CameraPermissionStatus>('prompt');
   
   const effectiveEnabled = isEnabled && !forceDisabled;
   
@@ -23,119 +28,77 @@ export const useCameraGestures = (onAction: (gestureKey: string) => void, forceD
   const lastProcessingTimeRef = useRef<number>(0);
   const lastActionTimeRef = useRef<Record<string, number>>({});
   const isComponentMounted = useRef<boolean>(true);
-  
-  // Stabilization Buffer
-  const gestureBufferRef = useRef<string[]>([]);
-  const STABILIZATION_THRESHOLD = 4; // Frames needed to confirm a gesture
+  const predictRef = useRef<() => void>();
 
-  // Configuration - Targeted for mobile performance
-  const FRAME_THROTTLE = 1000 / 20; // 20 FPS is the "sweet spot"
-  const ACTION_COOLDOWN = 1200; 
-
-  // Stable reference for the prediction function
-  const predictRef = useRef<() => void>(() => {});
-
-  // 1. Initial Model Setup
+  // Check initial permission status
   useEffect(() => {
-    isComponentMounted.current = true;
-    const loader = GestureModelLoader.getInstance();
-    
-    loader.loadModels()
-      .then(() => {
-        if (isComponentMounted.current) setIsModelLoaded(true);
-      })
-      .catch(err => console.error('[useCameraGestures] Model load failed:', err));
-
-    return () => { isComponentMounted.current = false; };
+    if (navigator.permissions && (navigator.permissions as any).query) {
+      navigator.permissions.query({ name: 'camera' as any }).then((result) => {
+        setPermissionStatus(result.state as CameraPermissionStatus);
+        result.onchange = () => {
+          setPermissionStatus(result.state as CameraPermissionStatus);
+        };
+      }).catch(e => console.warn('[useCameraGestures] Permissions API not supported or failed', e));
+    }
   }, []);
 
-  // 2. Gesture Dispatcher - Stabilized with useCallback
-  const handleDetectedGesture = useCallback((gestureKey: string | null) => {
-    // Fill buffer
-    const buffer = gestureBufferRef.current;
-    buffer.push(gestureKey || 'none');
-    if (buffer.length > STABILIZATION_THRESHOLD) buffer.shift();
-
-    // Check for stability
-    const mostFrequent = buffer.reduce((acc, curr) => {
-      acc[curr] = (acc[curr] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-
-    const stableGesture = Object.keys(mostFrequent).find(k => mostFrequent[k] >= STABILIZATION_THRESHOLD);
-    
-    if (!stableGesture || stableGesture === 'none') return;
-
-    const now = Date.now();
-    
-    // Check cooldowns based on physical gesture ID
-    if (now - (lastActionTimeRef.current[stableGesture] || 0) > ACTION_COOLDOWN) {
-      lastActionTimeRef.current[stableGesture] = now;
-      onAction(stableGesture);
+  const requestPermission = async () => {
+    setPermissionStatus('requesting');
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      stream.getTracks().forEach(t => t.stop()); // Just a probe
+      setPermissionStatus('granted');
+      setIsEnabled(true);
+      return true;
+    } catch (err) {
+      console.error('[useCameraGestures] Permission denied:', err);
+      setPermissionStatus('denied');
+      setIsEnabled(false);
+      return false;
     }
-  }, [onAction]);
+  };
+  
+  // Stabilization & Hit Tracking
+  const [gestureHits, setGestureHits] = useState<Record<string, number>>({});
+  const hitCounterRef = useRef<Record<string, number>>({});
+  const STABILIZATION_THRESHOLD = 5; // Frames needed to confirm a gesture
+  const ACTION_COOLDOWN = 1500; 
+
+  // 1. Load Models on Mount
+  useEffect(() => {
+    isComponentMounted.current = true;
+    
+    const load = async () => {
+      try {
+        await GestureModelLoader.getInstance().loadModels();
+        if (isComponentMounted.current) {
+          setIsModelLoaded(true);
+        }
+      } catch (err) {
+        console.error('[useCameraGestures] Model load failed:', err);
+      }
+    };
+
+    load();
+
+    return () => {
+      isComponentMounted.current = false;
+    };
+  }, []);
+
+  // 2. Gesture Dispatcher - Logic for Consecutive Hits
+  // ... (keep existing handleDetectedGesture) ...
 
   // 3. Optimized Prediction Loop - Stable loop assignment
-  useEffect(() => {
-    predictRef.current = () => {
-      if (!effectiveEnabled || !isModelLoaded || !videoRef.current || !isComponentMounted.current) return;
-
-      // Save battery when tab is hidden
-      if (document.visibilityState === 'hidden') {
-        requestRef.current = requestAnimationFrame(() => predictRef.current());
-        return;
-      }
-
-      // Defensive check for video playback state
-      if (videoRef.current.readyState < 2 || videoRef.current.paused) {
-        requestRef.current = requestAnimationFrame(() => predictRef.current());
-        return;
-      }
-
-      // CPU Throttling
-      const now = performance.now();
-      if (now - lastProcessingTimeRef.current < FRAME_THROTTLE) {
-        requestRef.current = requestAnimationFrame(() => predictRef.current());
-        return;
-      }
-      lastProcessingTimeRef.current = now;
-
-      try {
-        const { face, hand, isLoaded } = GestureModelLoader.getInstance().getModels();
-        if (!isLoaded || !face || !hand) {
-           requestRef.current = requestAnimationFrame(() => predictRef.current());
-           return;
-        }
-
-        const timestamp = performance.now();
-
-        // Only run detection if recognition is active (Saves CPU)
-        if (isRecognitionActive) {
-            // Hand Detection
-            const handResults = hand.detectForVideo(videoRef.current, timestamp);
-            const handGestureKey = HandGestureRecognizer.detectGesture(handResults);
-            if (handGestureKey) {
-                handleDetectedGesture(handGestureKey);
-            } else {
-                // Face Detection
-                const faceResults = face.detectForVideo(videoRef.current, timestamp);
-                const faceGestureKey = FaceGestureRecognizer.detectGesture(faceResults);
-                if (faceGestureKey) handleDetectedGesture(faceGestureKey);
-            }
-        }
-      } catch (error) {
-        // Catch transient MediaPipe errors without breaking the entire loop
-        console.warn('[useCameraGestures] Loop recovery:', error);
-      }
-      
-      requestRef.current = requestAnimationFrame(() => predictRef.current());
-    };
-  }, [effectiveEnabled, isModelLoaded, isRecognitionActive, handleDetectedGesture]);
+  // ... (keep existing useEffect for predictRef) ...
 
   // 4. Camera Stream Lifecycle (Robust & Cleanup-safe)
   useEffect(() => {
     if (!effectiveEnabled || !isModelLoaded) {
-      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
+        requestRef.current = 0;
+      }
       return;
     }
 
@@ -168,7 +131,7 @@ export const useCameraGestures = (onAction: (gestureKey: string) => void, forceD
               if (videoRef.current && isComponentMounted.current) {
                 await videoRef.current.play();
                 if (requestRef.current) cancelAnimationFrame(requestRef.current);
-                requestRef.current = requestAnimationFrame(() => predictRef.current());
+                requestRef.current = requestAnimationFrame(() => predictRef.current?.());
               }
             } catch (err) {
               console.error('[useCameraGestures] Video play failed:', err);
@@ -201,9 +164,12 @@ export const useCameraGestures = (onAction: (gestureKey: string) => void, forceD
     isEnabled, 
     effectiveEnabled,
     isRecognitionActive,
+    permissionStatus,
+    requestPermission,
     toggleTracking: () => setIsEnabled(!isEnabled),
     setIsRecognitionActive,
     videoRef, 
-    isModelLoaded 
+    isModelLoaded,
+    gestureHits
   };
 };
