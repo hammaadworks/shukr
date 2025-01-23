@@ -7,7 +7,7 @@ export interface WordUniverseItem {
   text_secondary: string;
   en: string; // Legacy support
   ur: string; // Legacy support
-  roman?: string;
+  transliterations: Record<string, string>;
   category: string;
   icon: string;
   type: 'word' | 'phrase' | 'number' | 'alphabet' | 'contact';
@@ -74,11 +74,16 @@ export class WordUniverseDatabase extends Dexie {
       sketchTemplates: '++id, wordId, category, createdAt',
       quotes: '++id, en, createdAt'
     });
-    this.version(3).stores({
+    this.version(4).stores({
       words: '++id, en, category, type, usageCount, lastUsedAt',
-      categories: 'id, order',
       sketchTemplates: '++id, wordId, category, createdAt',
       quotes: '++id, en, createdAt',
+      voiceProfiles: 'id, name, createdAt'
+    });
+    this.version(5).stores({
+      words: 'id, en, category, type, usageCount, lastUsedAt',
+      sketchTemplates: 'id, wordId, category, createdAt',
+      quotes: 'id, en, createdAt',
       voiceProfiles: 'id, name, createdAt'
     });
   }

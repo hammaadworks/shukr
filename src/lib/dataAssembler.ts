@@ -11,16 +11,16 @@ export const dataAssembler = {
   async assemble(primaryLang: string, secondaryLang: string): Promise<AppConfig> {
     try {
       // 1. Import Core Data dynamically (Vite handles this flawlessly)
-      const [metadataMod, structureMod, sketchesMod] = await Promise.all([
-        import('./data/core/metadata.json'),
-        import('./data/core/structure.json'),
-        import('./data/core/sketches.json')
+      const [settingsMod, structureMod, doodlesMod] = await Promise.all([
+        import('./data/core/settings.json'),
+        import('./data/core/vocabulary.json'),
+        import('./data/core/doodle.json')
       ]);
 
       // Handle default exports from JSON modules
-      const metadata = metadataMod.default || metadataMod;
+      const settings = settingsMod.default || settingsMod;
       const structure = structureMod.default || structureMod;
-      const sketches = sketchesMod.default || sketchesMod;
+      const doodles = doodlesMod.default || doodlesMod;
 
       // 2. Import Language Packs with fallback to English
       const [primaryMod, secondaryMod] = await Promise.all([
@@ -31,45 +31,45 @@ export const dataAssembler = {
       const primaryPack = primaryMod.default || primaryMod;
       const secondaryPack = secondaryMod.default || secondaryMod;
 
-      // 3. Merge Translations into Structure
-      const mergedCategories = structure.categories.map((cat: any) => {
-        const primaryText = primaryPack.categories[cat.id] || secondaryPack.categories[cat.id] || cat.id;
-        const secondaryText = secondaryPack.categories[cat.id] || primaryPack.categories[cat.id] || cat.id;
+      // 3. Define Fixed Categories
+      const fixedCategories = [
+        { id: 'favorite', icon: 'star', order: 0, isSystem: true },
+        { id: 'family', icon: 'users', order: 1, isSystem: false },
+        { id: 'general', icon: 'grid', order: 2, isSystem: true }
+      ];
+
+      const mergedCategories = fixedCategories.map((cat: any) => {
+        const primaryText = primaryPack.categories?.[cat.id] || secondaryPack.categories?.[cat.id] || cat.id;
+        const secondaryText = secondaryPack.categories?.[cat.id] || primaryPack.categories?.[cat.id] || cat.id;
         
+        let items = [];
+        if (cat.id === 'favorite') {
+          items = (structure.words || []).filter((w: any) => (settings.favorites || []).includes(w.id));
+        } else if (cat.id === 'family') {
+          items = (structure.words || []).filter((w: any) => (settings.family || []).includes(w.id));
+        } else {
+          // General: everything else (or all words as per user request?)
+          // "general (all words come here)" -> let's include everything in general for now.
+          items = (structure.words || []);
+        }
+
         return {
           ...cat,
           label_primary: primaryText,
           label_secondary: secondaryText,
-          // Legacy support
-          label_ur: primaryPack.categories[cat.id] || secondaryPack.categories[cat.id],
-          label_en: secondaryPack.categories[cat.id] || primaryPack.categories[cat.id],
-          items: (structure.words || [])
-            .filter((w: any) => w.category === cat.id)
-            .map((w: any) => {
-              const primaryWordText = primaryPack.words[w.id] || secondaryPack.words[w.id] || w.id;
-              const secondaryWordText = secondaryPack.words[w.id] || primaryPack.words[w.id] || w.id;
-              return {
-                ...w,
-                text_primary: primaryWordText,
-                text_secondary: secondaryWordText,
-                // Legacy support
-                ur: primaryPack.words[w.id] || secondaryPack.words[w.id],
-                en: secondaryPack.words[w.id] || primaryPack.words[w.id]
-              };
-            })
-        };
-      });
-
-      const mergedQuickActions = structure.quick_actions.map((qa: any) => {
-        const primaryText = primaryPack.quick_actions[qa.id] || secondaryPack.quick_actions[qa.id] || qa.id;
-        const secondaryText = secondaryPack.quick_actions[qa.id] || primaryPack.quick_actions[qa.id] || qa.id;
-        return {
-          ...qa,
-          text_primary: primaryText,
-          text_secondary: secondaryText,
-          // Legacy support
-          ur: primaryPack.quick_actions[qa.id] || secondaryPack.quick_actions[qa.id],
-          en: secondaryPack.quick_actions[qa.id] || primaryPack.quick_actions[qa.id]
+          items: items.map((w: any) => {
+            const primaryWordText = primaryPack.words[w.id] || secondaryPack.words[w.id] || w.id;
+            const secondaryWordText = secondaryPack.words[w.id] || primaryPack.words[w.id] || w.id;
+            return {
+              ...w,
+              text_primary: primaryWordText,
+              text_secondary: secondaryWordText,
+              // Legacy support
+              ur: primaryPack.words[w.id] || secondaryPack.words[w.id],
+              en: secondaryPack.words[w.id] || primaryPack.words[w.id],
+              transliterations: w.transliterations || {}
+            };
+          })
         };
       });
 
@@ -86,12 +86,28 @@ export const dataAssembler = {
         };
       });
 
+      // 4. Merge Translations for Doodles
+      const mergedDoodles = doodles.map((d: any) => {
+        const wordId = d.wordId || d.id;
+        const primaryText = primaryPack.words[wordId] || secondaryPack.words[wordId] || wordId;
+        const secondaryText = secondaryPack.words[wordId] || primaryPack.words[wordId] || wordId;
+        return {
+          ...d,
+          text_primary: primaryText,
+          text_secondary: secondaryText,
+          // Legacy support
+          label: primaryText,
+          ur: primaryPack.words[wordId] || secondaryPack.words[wordId],
+          en: secondaryPack.words[wordId] || primaryPack.words[wordId]
+        };
+      });
+
       return {
-        ...metadata,
+        ...settings,
         categories: mergedCategories,
-        quick_actions: mergedQuickActions,
         quotes: mergedQuotes,
-        sketches
+        doodles: mergedDoodles,
+        sketches: mergedDoodles // Keep for backward compatibility
       };
     } catch (err) {
       console.error('[DataAssembler] Failed to assemble data:', err);

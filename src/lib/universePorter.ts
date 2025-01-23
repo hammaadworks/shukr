@@ -6,8 +6,7 @@ export interface UniverseSnapshot {
   version: number;
   timestamp: number;
   words?: any[];
-  categories: any[];
-  sketches?: any[];
+  doodles?: any[];
   audio?: Record<string, string>; // key -> base64 DataURL
   gesture_map?: Record<string, string>;
   quotes?: any[];
@@ -15,6 +14,9 @@ export interface UniverseSnapshot {
   activeVoiceProfile?: string;
   voiceProfiles?: any[];
   langPair?: any;
+  user_nickname?: string;
+  sos_settings?: any;
+  preferences?: any;
 }
 
 /**
@@ -27,8 +29,7 @@ export const universePorter = {
    */
   async export(currentConfig: any = {}): Promise<UniverseSnapshot> {
     const words = await universeDb.words.toArray();
-    const categories = await universeDb.categories.toArray();
-    const sketches = await recognitionDb.templates.toArray();
+    const doodles = await recognitionDb.templates.toArray();
     const quotes = await universeDb.quotes.toArray();
     const audio = await this.serializeAllAudio();
 
@@ -38,13 +39,12 @@ export const universePorter = {
     return {
       version: currentConfig.version || 1,
       timestamp: Date.now(),
-      ...currentConfig, // Include metadata like gestures, etc.
+      ...currentConfig, // Include settings like gestures, etc.
       words,
-      categories,
-      sketches,
+      doodles,
       quotes,
       audio,
-      // Metadata extension for global shukr
+      // Settings extension for global shukr
       langPair: langPair ? JSON.parse(langPair) : undefined
     };
   },
@@ -58,8 +58,8 @@ export const universePorter = {
       await this.clearAllLocalData();
     }
 
-    await this.restoreCategoriesAndWords(snapshot);
-    await this.restoreSketches(snapshot);
+    await this.restoreWords(snapshot);
+    await this.restoreDoodles(snapshot);
     await this.restoreQuotes(snapshot);
     await this.restoreAudio(snapshot);
 
@@ -103,16 +103,12 @@ export const universePorter = {
     return serialized;
   },
 
-  async restoreCategoriesAndWords(snapshot: UniverseSnapshot) {
-    if (snapshot.categories) {
-      await universeDb.categories.bulkPut(snapshot.categories);
-    }
-    
-    // Words are often bundled inside categories in boot_data, 
-    // or as a flat array in full exports.
+  async restoreWords(snapshot: UniverseSnapshot) {
     let wordsToRestore = snapshot.words || [];
-    if (wordsToRestore.length === 0 && snapshot.categories) {
-      wordsToRestore = snapshot.categories.flatMap(cat => cat.items || []);
+    
+    // Legacy support: Words might be bundled inside categories in older snapshots
+    if (wordsToRestore.length === 0 && (snapshot as any).categories) {
+      wordsToRestore = (snapshot as any).categories.flatMap((cat: any) => cat.items || []);
     }
 
     if (wordsToRestore.length > 0) {
@@ -120,9 +116,10 @@ export const universePorter = {
     }
   },
 
-  async restoreSketches(snapshot: UniverseSnapshot) {
-    if (snapshot.sketches && snapshot.sketches.length > 0) {
-      await recognitionDb.templates.bulkPut(snapshot.sketches);
+  async restoreDoodles(snapshot: UniverseSnapshot) {
+    const doodles = snapshot.doodles || (snapshot as any).sketches || [];
+    if (doodles.length > 0) {
+      await recognitionDb.templates.bulkPut(doodles);
     }
   },
 
@@ -149,7 +146,6 @@ export const universePorter = {
   async clearAllLocalData() {
     await Promise.all([
       universeDb.words.clear(),
-      universeDb.categories.clear(),
       universeDb.quotes.clear(),
       universeDb.voiceProfiles.clear(),
       recognitionDb.templates.clear(),
