@@ -8,7 +8,7 @@ import { GestureEditModal } from './components/modals/GestureEditModal';
 import { type GestureDefinition, type GestureAction } from './recognition/gestures/types';
 import { useLogger } from './hooks/useLogger';
 import { useFuzzySearch } from './hooks/useFuzzySearch';
-import { wordNetwork } from './lib/wordNetwork';
+import { predictionsEngine } from './lib/predictionsEngine';
 import { translator } from './lib/translator';
 import { universeDb } from './lib/universeDb';
 import { audioStorage } from './lib/audioStorage';
@@ -30,6 +30,8 @@ import { WordAddModal } from './components/WordAddModal';
 import { WordEditor } from './components/WordEditor';
 
 import { LandingPage } from './components/LandingPage';
+
+import { PermissionDialog } from './components/modals/Dialogs';
 
 const AppContent = () => {
   const { language, setLanguage, primaryLanguage, secondaryLanguage, isPrimary } = useLanguage();
@@ -68,6 +70,7 @@ const AppContent = () => {
   const [randomQuote, setRandomQuote] = useState<any>(null);
   const [isDraggingPreview, setIsDraggingPreview] = useState(false);
   const [editingGesture, setEditingGesture] = useState<GestureDefinition | null>(null);
+  const [showPermissionExplanation, setShowPermissionExplanation] = useState(false);
 
   const actionHandlerRef = useRef<(gestureKey: string) => void>(() => {});
   const builderScrollRef = useRef<HTMLDivElement>(null);
@@ -78,10 +81,25 @@ const AppContent = () => {
     (window as any)._showSOS = () => setShowSOS(true);
   }, []);
 
-  const { isEnabled, effectiveEnabled, isRecognitionActive, setIsRecognitionActive, toggleTracking, videoRef, isModelLoaded, gestureHits } =
+  const { isEnabled, effectiveEnabled, isRecognitionActive, setIsRecognitionActive, toggleTracking, permissionStatus, requestPermission, videoRef, isModelLoaded, gestureHits } =
     useCameraGestures((action) => {
       actionHandlerRef.current(action);
-    }, route === '#voices');
+    }, route === '#voices' || showSplash || !isAppStarted || isConfigLoading);
+
+  const handleCameraToggle = useCallback(async () => {
+    if (permissionStatus !== 'granted') {
+      setShowPermissionExplanation(true);
+    } else {
+      toggleTracking();
+    }
+  }, [permissionStatus, toggleTracking]);
+
+  const handleConfirmPermission = useCallback(async () => {
+    const success = await requestPermission();
+    if (success) {
+      setShowPermissionExplanation(false);
+    }
+  }, [requestPermission]);
 
   const handleSaveGesture = useCallback(async (updated: GestureDefinition, blob?: Blob | null) => {
     if (!config) return;
@@ -216,6 +234,9 @@ const AppContent = () => {
     if (newConfig.favorites) {
       newConfig.favorites = newConfig.favorites.filter((fid: string) => fid !== id);
     }
+    if (newConfig.family) {
+      newConfig.family = newConfig.family.filter((fid: string) => fid !== id);
+    }
     updateConfig(newConfig);
     await universeDb.words.delete(id);
     await universeDb.sketchTemplates.where('wordId').equals(id).delete();
@@ -225,27 +246,17 @@ const AppContent = () => {
 
   const handleSaveEdit = useCallback(async (item: any, blob?: Blob | null) => {
     if (!config) return;
-    const newConfig = { ...config };
+    const newConfig: any = { ...config };
     
     // Handle isFamily toggle during edit
-    const isActuallyInFamily = newConfig.categories.find((c: any) => c.id === 'khandan')?.items?.some((i: any) => i.id === item.id);
+    const isActuallyInFamily = (newConfig.family || []).includes(item.id);
     
     if (item.isFamily && !isActuallyInFamily) {
         // Add to family
-        newConfig.categories = newConfig.categories.map((cat: any) => {
-            if (cat.id === 'khandan') {
-                return { ...cat, items: [...(cat.items || []), item] };
-            }
-            return cat;
-        });
+        newConfig.family = [...(newConfig.family || []), item.id];
     } else if (!item.isFamily && isActuallyInFamily) {
         // Remove from family
-        newConfig.categories = newConfig.categories.map((cat: any) => {
-            if (cat.id === 'khandan') {
-                return { ...cat, items: (cat.items || []).filter((i: any) => i.id !== item.id) };
-            }
-            return cat;
-        });
+        newConfig.family = (newConfig.family || []).filter((id: string) => id !== item.id);
     }
 
     // Update the item in its original categories
@@ -292,11 +303,17 @@ const AppContent = () => {
     if (!config) return;
     const newConfig: any = { ...config, categories: [...(config.categories || [])] };
     
-    // Default to general if not specified
-    let targetCatId = item.categoryId || 'general';
-    if (targetCatId === 'favorite') {
-        newConfig.favorites = [...(newConfig.favorites || []), item.id];
-    }
+    if (item.isFamily) {
+        newConfig.family = [...(newConfig.family || []), item.id];
+    } 
+
+    newConfig.categories = newConfig.categories.map((cat: any) => {
+      // Always put new un-categorized user words into general
+      if (cat.id === 'general') {
+        return { ...cat, items: [...(cat.items || []), item] };
+      }
+      return cat;
+    });
 
     updateConfig(newConfig);
     
@@ -319,8 +336,7 @@ const AppContent = () => {
       ur: res?.ur || searchQuery,
       roman: res?.roman || searchQuery,
       icon: 'list-plus',
-      next: [],
-      categoryId: 'general'
+      next: []
     });
   }, [searchQuery]);
 
@@ -350,8 +366,7 @@ const AppContent = () => {
       en: initialValue || '',
       roman: '',
       icon: 'list-plus',
-      next: [],
-      categoryId: catId
+      next: []
     });
   }, []);
 
@@ -368,13 +383,14 @@ const AppContent = () => {
   }, [dbWords, allItems, config, language, handleOpenAddWord]);
 
   const getFamilyItems = useCallback(() => {
-    const items = (dbWords.length > 0 ? dbWords : allItems).filter((i: any) => i.category === 'family' || i.category === 'khandan');
+    const fams = config?.family || [];
+    const items = (dbWords.length > 0 ? dbWords : allItems).filter((i: any) => fams.includes(i.id));
     const addLabel = language === 'ur' ? 'نیا لفظ؟' : 'Add Word?';
     return [
       { id: 'add_family_prompt', ur: addLabel, en: 'Add Word?', icon: 'list-plus', isPrompt: true, onClick: () => handleOpenAddWord('family') },
       ...items
     ];
-  }, [dbWords, allItems, language, handleOpenAddWord]);
+  }, [dbWords, allItems, config, language, handleOpenAddWord]);
 
   const gridItems = useMemo(() => {
     if (searchQuery) return getSearchItems();
@@ -397,12 +413,12 @@ const AppContent = () => {
 
   useEffect(() => {
     const updatePredictions = async () => {
-      if (allItems.length === 0) return;
-      const ranked = await wordNetwork.rankPredictions(allItems, sentence);
+      if (dbWords.length === 0) return;
+      const ranked = await predictionsEngine.rankPredictions(dbWords, sentence);
       setPredictions(ranked.slice(0, 6));
     };
     updatePredictions();
-  }, [sentence, allItems]);
+  }, [sentence, dbWords]);
 
   const sentenceRef = useRef<any[]>([]);
   useEffect(() => {
@@ -418,7 +434,7 @@ const AppContent = () => {
         setSentence((prev) => {
           const newSentence = [...prev, item];
           if (prev.length > 0) {
-            wordNetwork.recordTransition(prev[prev.length - 1].id, item.id);
+            predictionsEngine.recordTransition(prev[prev.length - 1].id, item.id);
           }
           return newSentence;
         });
@@ -432,7 +448,7 @@ const AppContent = () => {
         }
       }
       
-      wordNetwork.recordUsage(item.id);
+      predictionsEngine.recordUsage(item.id);
     },
     [speak, isPrimary, isSentenceBuilderActive, sentence.length]
   );
@@ -572,7 +588,7 @@ const AppContent = () => {
         onOpenSettings={(tab) => navigate('#settings', tab)}
         isTrackingEnabled={effectiveEnabled}
         isRecognitionActive={isRecognitionActive}
-        toggleTracking={toggleTracking}
+        toggleTracking={handleCameraToggle}
         hasUnsyncedChanges={hasUnsyncedChanges}
         isModelLoaded={isModelLoaded}
         onSOS={() => setShowSOS(true)}
@@ -586,6 +602,7 @@ const AppContent = () => {
         cameraButtonRef={cameraButtonRef}
         gestureMappings={config?.gesture_mappings}
         onLongPressGesture={setEditingGesture}
+        onTriggerGesture={handleGestureAction}
         gestureHits={gestureHits}
       />
 
@@ -619,7 +636,7 @@ const AppContent = () => {
                     setSentence(p => [...p.slice(1), item]);
                   }
                 }
-                wordNetwork.recordUsage(item.id);
+                predictionsEngine.recordUsage(item.id);
               }}
             />
           </>
@@ -732,6 +749,13 @@ const AppContent = () => {
           config={config}
           onClose={() => setEditingGesture(null)}
           onSave={handleSaveGesture}
+        />
+      )}
+      {showPermissionExplanation && (
+        <PermissionDialog 
+          status={permissionStatus === 'granted' ? 'prompt' : (permissionStatus as any)} 
+          onConfirm={handleConfirmPermission} 
+          onCancel={() => setShowPermissionExplanation(false)} 
         />
       )}
     </div>
