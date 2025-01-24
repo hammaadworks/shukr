@@ -209,6 +209,250 @@
   line-height: 1.2 !important;
   padding-bottom: 2px !important;
 }
+/* --- Compact Gesture Edit Modal (Optimized for Mobile) --- */
+.gesture-edit-header-compact {
+  padding: 12px 16px 8px;
+  background: white;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.gesture-badge-compact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.gesture-emoji-tiny {
+  font-size: 1.4rem;
+}
+
+.gesture-edit-header-compact h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-family: var(--font-ur);
+  color: var(--color-primary);
+}
+
+.gesture-id-text-compact {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 2px 0 0;
+}
+
+.sos-close-btn-compact {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: #f2f2f7;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.gesture-edit-tabs-compact {
+  display: flex;
+  background: white;
+  padding: 6px;
+  gap: 6px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.gesture-edit-tabs-compact button {
+  flex: 1;
+  height: 48px;
+  border: none;
+  background: #f8f9fa;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--color-text-muted);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.gesture-edit-tabs-compact button.active {
+  background: rgba(45, 90, 39, 0.1);
+  color: var(--color-primary);
+}
+
+.gesture-edit-tab-content-compact {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  background: var(--color-bg);
+}
+
+.word-picker-search-compact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 12px;
+}
+
+.word-picker-search-compact input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  background: transparent;
+}
+
+/* Audio Tab Compact */
+.audio-recording-zone-compact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 0;
+}
+
+.waveform-box {
+  width: 100%;
+  height: 60px;
+  background: white;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.recording-status-compact h3 {
+  margin: 0;
+  font-family: var(--font-ur);
+  font-size: 1.3rem;
+  color: var(--color-primary);
+}
+
+.record-center-compact {
+  display: flex;
+  justify-content: center;
+}
+
+.audio-review-zone-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 10px 0;
+}
+
+.trimmer-viewport-compact {
+  background: white;
+  border-radius: 20px;
+  height: 100px;
+  padding: 16px;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.review-actions-brand.compact {
+  gap: 20px;
+  margin-top: 8px;
+}
+
+.review-actions-brand.compact .review-btn {
+  width: 64px;
+  height: 64px;
+}
+
+/* Footer Compact */
+.gesture-edit-footer-compact {
+  padding: 12px 16px 16px;
+  background: white;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gesture-edit-labels-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.label-input-wrapper-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.label-input-wrapper-compact label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.label-input-wrapper-compact input {
+  height: 42px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(0,0,0,0.05);
+  padding: 0 10px;
+  font-size: 1rem;
+  outline: none;
+  background: var(--color-bg);
+  width: 100%;
+}
+
+.label-input-wrapper-compact[dir="rtl"] input {
+  font-family: var(--font-ur);
+  font-size: 1.3rem;
+  text-align: right;
+}
+
+.btn-save-gesture-compact {
+  width: 100%;
+  height: 56px;
+  border-radius: 16px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: 0 8px 20px rgba(45, 90, 39, 0.15);
+  cursor: pointer;
+}
+
+/* Mobile Tweaks */
+@media (max-width: 400px) {
+  .gesture-edit-labels-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-height: 667px) {
+  .gesture-edit-header-compact { padding: 8px 16px 4px; }
+  .gesture-edit-tabs-compact button { height: 40px; }
+  .gesture-edit-tab-content-compact { padding: 8px; }
+  .waveform-box { height: 40px; }
+  .audio-recording-zone-compact { padding: 10px 0; gap: 10px; }
+  .trimmer-viewport-compact { height: 80px; }
+  .btn-save-gesture-compact { height: 48px; }
+}
+
 /* --- Gesture Edit Modal (Enhanced) --- */
 .gesture-edit-overlay {
   z-index: 4000 !important;

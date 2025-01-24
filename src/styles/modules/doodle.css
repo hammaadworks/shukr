@@ -8,6 +8,26 @@
   background: var(--color-bg);
 }
 
+.doodle-predictions-container {
+  width: 100%;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  border: 1px dashed rgba(45, 90, 39, 0.2);
+  padding: 4px;
+}
+
+.doodle-predictions-bar {
+  width: 100%;
+  padding: 8px !important;
+  background: transparent !important;
+  border: none !important;
+}
+
 .mobile-drawing-container {
   display: flex;
   flex-direction: column;
@@ -79,6 +99,18 @@
   background: white;
   border-color: var(--color-primary);
   box-shadow: 0 0 0 4px rgba(8, 145, 178, 0.1);
+}
+
+.doodle-search-icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .doodle-search-icon {
@@ -153,13 +185,15 @@
 .custom-keyboard-container {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  background: #f2f2f7; /* iOS keyboard background color */
-  border-radius: 12px;
+  background: #d1d1d6; /* Prominent iOS keyboard color */
+  border-radius: 16px 16px 0 0;
   overflow: hidden;
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
-  margin-top: 4px;
-  max-height: 280px; /* Limit height to prevent cut-off */
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+  margin-top: auto;
+  width: 100%;
+  position: relative;
+  z-index: 100;
+  flex-shrink: 0; /* Don't allow it to be squashed */
 }
 
 .keyboard-header {
@@ -185,12 +219,10 @@
 .keyboard-keys {
   display: flex;
   flex-direction: column;
-  padding: 8px 4px;
-  gap: 6px;
-  flex: 1;
-  justify-content: flex-start;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  padding: 6px 4px;
+  gap: 4px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .keyboard-row {
@@ -204,15 +236,14 @@
   background: #ffffff;
   border: none;
   border-radius: 6px;
-  padding: 10px 0;
-  font-size: 1.1rem;
+  padding: clamp(8px, 1.5vh, 14px) 0;
+  font-size: clamp(1rem, 4vw, 1.3rem);
   font-family: var(--font-ur);
   color: #000000;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.3);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
   cursor: pointer;
   flex: 1;
-  min-width: 0; /* Allow keys to shrink below their content size */
-  max-width: 40px; /* Limit max width for better appearance on tablets */
+  min-width: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -222,15 +253,14 @@
 }
 
 .keyboard-key:active {
-  background: #d1d1d6;
+  background: #acb3bd;
   transform: translateY(1px);
 }
 
 .backspace-key {
   background: #acb3bd;
   color: #000000;
-  flex: 1.2;
-  max-width: 50px;
+  flex: 1.5; /* Backspace is slightly wider */
 }
 
 @media (max-width: 340px) {
