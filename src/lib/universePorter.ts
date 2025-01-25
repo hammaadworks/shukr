@@ -1,6 +1,4 @@
 import { universeDb } from './universeDb';
-import { db as recognitionDb } from '../recognition/db';
-import { audioStorage } from './audioStorage';
 
 export interface UniverseSnapshot {
   version: number;
@@ -8,15 +6,8 @@ export interface UniverseSnapshot {
   words?: any[];
   doodles?: any[];
   audio?: Record<string, string>; // key -> base64 DataURL
-  gesture_map?: Record<string, string>;
   quotes?: any[];
-  emergency_contacts?: any[];
-  activeVoiceProfile?: string;
-  voiceProfiles?: any[];
-  langPair?: any;
-  user_nickname?: string;
-  sos_settings?: any;
-  preferences?: any;
+  settings?: any[];
 }
 
 /**
@@ -29,23 +20,22 @@ export const universePorter = {
    */
   async export(currentConfig: any = {}): Promise<UniverseSnapshot> {
     const words = await universeDb.words.toArray();
-    const doodles = await recognitionDb.templates.toArray();
+    const doodles = await universeDb.doodles.toArray();
     const quotes = await universeDb.quotes.toArray();
+    const settings = await universeDb.settings.toArray();
+    const voiceProfiles = await universeDb.voiceProfiles.toArray();
     const audio = await this.serializeAllAudio();
-
-    // Include the language pair from localStorage if it exists
-    const langPair = localStorage.getItem('shukr_lang_pair');
 
     return {
       version: currentConfig.version || 1,
       timestamp: Date.now(),
-      ...currentConfig, // Include settings like gestures, etc.
+      ...currentConfig,
       words,
       doodles,
       quotes,
-      audio,
-      // Settings extension for global shukr
-      langPair: langPair ? JSON.parse(langPair) : undefined
+      settings,
+      voiceProfiles,
+      audio
     };
   },
 
@@ -61,13 +51,9 @@ export const universePorter = {
     await this.restoreWords(snapshot);
     await this.restoreDoodles(snapshot);
     await this.restoreQuotes(snapshot);
+    await this.restoreSettings(snapshot);
     await this.restoreAudio(snapshot);
 
-    // Restore language pair if provided
-    if (snapshot.langPair) {
-      localStorage.setItem('shukr_lang_pair', JSON.stringify(snapshot.langPair));
-    }
-    
     console.log(`[Porter] Successfully imported universe snapshot from ${new Date(snapshot.timestamp).toLocaleString()}`);
   },
 
@@ -91,13 +77,12 @@ export const universePorter = {
   // --- Private Helpers (Internal Logic) ---
 
   async serializeAllAudio(): Promise<Record<string, string>> {
-    const keys = await audioStorage.getAllKeys();
+    const records = await universeDb.audio.toArray();
     const serialized: Record<string, string> = {};
     
-    for (const key of keys) {
-      const blob = await audioStorage.get(key);
-      if (blob) {
-        serialized[key] = await this.serializeBlob(blob);
+    for (const record of records) {
+      if (record.blob) {
+        serialized[record.id] = await this.serializeBlob(record.blob);
       }
     }
     return serialized;
@@ -112,34 +97,52 @@ export const universePorter = {
     }
 
     if (wordsToRestore.length > 0) {
-      await universeDb.words.bulkPut(wordsToRestore);
+      const formattedWords = wordsToRestore.map((w: any) => ({
+        ...w,
+        translations: w.translations || { 
+          ur: w.ur || w.text_primary || '', 
+          en: w.en || w.text_secondary || '' 
+        },
+        transliterations: w.transliterations || {}
+      }));
+      await universeDb.words.bulkPut(formattedWords);
     }
   },
 
   async restoreDoodles(snapshot: UniverseSnapshot) {
     const doodles = snapshot.doodles || (snapshot as any).sketches || [];
     if (doodles.length > 0) {
-      await recognitionDb.templates.bulkPut(doodles);
+      await universeDb.doodles.bulkPut(doodles);
     }
   },
 
   async restoreQuotes(snapshot: UniverseSnapshot) {
     if (snapshot.quotes && snapshot.quotes.length > 0) {
-      // Create valid IDs if they are missing
-      const quotesToPut = snapshot.quotes.map((q: any, i: number) => ({
+      const formattedQuotes = snapshot.quotes.map((q: any, i: number) => ({
         ...q,
-        id: q.id || `quote_imp_${crypto.randomUUID()}_${i}`
+        id: q.id || `q${i}`,
+        translations: q.translations || {
+          ur: q.ur || q.text_primary || '',
+          en: q.en || q.text_secondary || ''
+        }
       }));
-      await universeDb.quotes.bulkPut(quotesToPut);
+      await universeDb.quotes.bulkPut(formattedQuotes);
+    }
+  },
+
+  async restoreSettings(snapshot: UniverseSnapshot) {
+    const settings = snapshot.settings || [];
+    if (settings.length > 0) {
+      await universeDb.settings.bulkPut(settings);
     }
   },
 
   async restoreAudio(snapshot: UniverseSnapshot) {
     if (!snapshot.audio) return;
 
-    for (const [key, dataUrl] of Object.entries(snapshot.audio)) {
+    for (const [id, dataUrl] of Object.entries(snapshot.audio)) {
       const blob = await this.deserializeBlob(dataUrl);
-      await audioStorage.set(key, blob);
+      await universeDb.audio.put({ id, blob });
     }
   },
 
@@ -147,9 +150,10 @@ export const universePorter = {
     await Promise.all([
       universeDb.words.clear(),
       universeDb.quotes.clear(),
+      universeDb.doodles.clear(),
       universeDb.voiceProfiles.clear(),
-      recognitionDb.templates.clear(),
-      audioStorage.clear()
+      universeDb.audio.clear(),
+      universeDb.settings.clear()
     ]);
   },
 

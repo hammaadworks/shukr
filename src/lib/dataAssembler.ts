@@ -1,56 +1,99 @@
 import type { AppConfig } from '../hooks/useAppConfig';
+import { universeDb } from './universeDb';
 
 /**
- * The Data Assembler is responsible for merging core structure with 
- * language-specific translation packs.
+ * The Data Assembler is responsible for preparing the AppConfig 
+ * using the centralized vocabulary and settings.
  */
 export const dataAssembler = {
   /**
-   * Dynamically imports and merges data components into a full AppConfig.
+   * Dynamically imports and prepares data components into a full AppConfig.
    */
   async assemble(primaryLang: string, secondaryLang: string): Promise<AppConfig> {
     try {
-      // 1. Import Core Data dynamically (Vite handles this flawlessly)
-      const [settingsMod, structureMod, doodlesMod] = await Promise.all([
+      // 1. Fetch Dynamic Settings from IndexedDB
+      const dbSettingsItems = await universeDb.settings.toArray();
+      let dynamicSettings: Record<string, any> = {};
+      dbSettingsItems.forEach(item => {
+        dynamicSettings[item.key] = item.value;
+      });
+
+      // 2. Import Core Data dynamically (Fallback & Data Sources)
+      const [settingsMod, vocabMod, quotesMod, doodlesMod, vpMod] = await Promise.all([
         import('./data/core/settings.json'),
         import('./data/core/vocabulary.json'),
-        import('./data/core/doodle.json')
+        import('./data/core/quotes.json'),
+        import('./data/core/doodle.json'),
+        import('./data/core/voiceProfiles.json').catch(() => ({ default: [] }))
       ]);
 
-      // Handle default exports from JSON modules
-      const settings = settingsMod.default || settingsMod;
-      const structure = structureMod.default || structureMod;
+      const staticSettings: any = settingsMod.default || settingsMod;
+      const defaultVoiceProfiles: any[] = vpMod.default || vpMod || [];
+      
+      // Merge dynamic over static settings
+      const settings: any = {
+        ...staticSettings,
+        ...dynamicSettings
+      };
+
+      const dbVoiceProfiles = await universeDb.voiceProfiles.toArray();
+      if (dbVoiceProfiles.length > 0) {
+        settings.voiceProfiles = dbVoiceProfiles;
+      } else {
+        settings.voiceProfiles = defaultVoiceProfiles;
+      }
+
+      // Seed settings DB if empty
+      if (dbSettingsItems.length === 0) {
+        const seedData = Object.keys(staticSettings)
+          .filter(k => k !== 'voiceProfiles')
+          .map(k => ({ key: k, value: staticSettings[k] }));
+        await universeDb.settings.bulkPut(seedData);
+
+        if (defaultVoiceProfiles && defaultVoiceProfiles.length > 0) {
+          await universeDb.voiceProfiles.bulkPut(defaultVoiceProfiles);
+        }
+      }
+
+      const vocab: any = vocabMod.default || vocabMod;
+      const quotes = quotesMod.default || quotesMod;
       const doodles = doodlesMod.default || doodlesMod;
 
-      // 2. Import Language Packs with fallback to English
-      const [primaryMod, secondaryMod] = await Promise.all([
-        import(`./data/i18n/${primaryLang}.json`).catch(() => import('./data/i18n/en.json')),
-        import(`./data/i18n/${secondaryLang}.json`).catch(() => import('./data/i18n/en.json'))
-      ]);
+      const wordsArray = (vocab.words || []).filter(Boolean).map((w: any) => ({
+        ...w,
+        ur: w?.ur || w?.translations?.ur || '',
+        en: w?.en || w?.translations?.en || '',
+        roman: w?.roman || w?.transliterations?.ur?.en || ''
+      }));
 
-      const primaryPack = primaryMod.default || primaryMod;
-      const secondaryPack = secondaryMod.default || secondaryMod;
-
-      // 3. Define Fixed Categories
-      const fixedCategories = [
-        { id: 'favorite', icon: 'star', order: 0, isSystem: true },
-        { id: 'family', icon: 'users', order: 1, isSystem: false },
-        { id: 'general', icon: 'grid', order: 2, isSystem: true }
+      // Define standard categories if they don't exist
+      const baseCategories = settings.categories || [
+        { id: 'favorite', translations: { ur: 'پسندیدہ', en: 'Favorite' }, icon: 'heart', order: 0, isSystem: true },
+        { id: 'family', translations: { ur: 'خاندان', en: 'Family' }, icon: 'users', order: 1, isSystem: true },
+        { id: 'general', translations: { ur: 'عام', en: 'General' }, icon: 'layout-grid', order: 2, isSystem: true }
       ];
 
-      const mergedCategories = fixedCategories.map((cat: any) => {
-        const primaryText = primaryPack.categories?.[cat.id] || secondaryPack.categories?.[cat.id] || cat.id;
-        const secondaryText = secondaryPack.categories?.[cat.id] || primaryPack.categories?.[cat.id] || cat.id;
+      // 3. Prepare Categories
+      const mergedCategories = baseCategories.map((cat: any) => {
+        const translations = cat.translations || {};
+        const primaryText = translations[primaryLang] || translations[secondaryLang] || translations['en'] || cat.id;
+        const secondaryText = translations[secondaryLang] || translations[primaryLang] || translations['en'] || cat.id;
         
-        let items = [];
+        let items: any[] = [];
         if (cat.id === 'favorite') {
-          items = (structure.words || []).filter((w: any) => (settings.favorites || []).includes(w.id));
+          items = wordsArray.filter((w: any) => ((settings.favorites || []) as string[]).includes(w.id));
         } else if (cat.id === 'family') {
-          items = (structure.words || []).filter((w: any) => (settings.family || []).includes(w.id));
+          items = wordsArray.filter((w: any) => ((settings.family || []) as string[]).includes(w.id));
         } else {
-          // General: everything else (or all words as per user request?)
-          // "general (all words come here)" -> let's include everything in general for now.
-          items = (structure.words || []);
+          items = wordsArray.filter((w: any) => 
+            w.category === cat.id || 
+            w.categoryId === cat.id ||
+            (w.doodle_shapes && w.doodle_shapes.includes(cat.id))
+          );
+          
+          if (cat.id === 'general' && items.length === 0) {
+            items = wordsArray.slice(0, 100); 
+          }
         }
 
         return {
@@ -58,47 +101,50 @@ export const dataAssembler = {
           label_primary: primaryText,
           label_secondary: secondaryText,
           items: items.map((w: any) => {
-            const primaryWordText = primaryPack.words[w.id] || secondaryPack.words[w.id] || w.id;
-            const secondaryWordText = secondaryPack.words[w.id] || primaryPack.words[w.id] || w.id;
+            const wTrans = w?.translations || {};
+            const primaryWordText = wTrans[primaryLang] || wTrans[secondaryLang] || wTrans['en'] || w?.id;
+            const secondaryWordText = wTrans[secondaryLang] || wTrans[primaryLang] || wTrans['en'] || w?.id;
             return {
               ...w,
               text_primary: primaryWordText,
               text_secondary: secondaryWordText,
-              // Legacy support
-              ur: primaryPack.words[w.id] || secondaryPack.words[w.id],
-              en: secondaryPack.words[w.id] || primaryPack.words[w.id],
-              transliterations: w.transliterations || {}
+              ur: wTrans['ur'] || primaryWordText,
+              en: wTrans['en'] || secondaryWordText,
+              roman: w?.transliterations?.[primaryLang]?.[secondaryLang] || w?.transliterations?.[primaryLang]?.['en'] || w?.roman || '',
+              transliterations: w?.transliterations || {}
             };
           })
         };
       });
 
-      const mergedQuotes = structure.quotes.map((q: any) => {
-        const primaryText = primaryPack.quotes[q.id] || secondaryPack.quotes[q.id] || q.id;
-        const secondaryText = secondaryPack.quotes[q.id] || primaryPack.quotes[q.id] || q.id;
+      // 4. Prepare Quotes
+      const mergedQuotes = (quotes || []).map((q: any) => {
+        const qTrans = q?.translations || {};
+        const primaryText = qTrans[primaryLang] || qTrans[secondaryLang] || qTrans['en'] || q?.id;
+        const secondaryText = qTrans[secondaryLang] || qTrans[primaryLang] || qTrans['en'] || q?.id;
         return {
           ...q,
           text_primary: primaryText,
           text_secondary: secondaryText,
-          // Legacy support
-          ur: primaryPack.quotes[q.id] || secondaryPack.quotes[q.id],
-          en: secondaryPack.quotes[q.id] || primaryPack.quotes[q.id]
+          ur: qTrans['ur'] || primaryText,
+          en: qTrans['en'] || secondaryText
         };
       });
 
-      // 4. Merge Translations for Doodles
-      const mergedDoodles = doodles.map((d: any) => {
+      // 5. Prepare Doodles
+      const mergedDoodles = (doodles || []).map((d: any) => {
         const wordId = d.wordId || d.id;
-        const primaryText = primaryPack.words[wordId] || secondaryPack.words[wordId] || wordId;
-        const secondaryText = secondaryPack.words[wordId] || primaryPack.words[wordId] || wordId;
+        const word = wordsArray.find((w: any) => w.id === wordId);
+        const translations: any = word ? (word.translations || {}) : {};
+        const primaryText = word ? (translations[primaryLang] || translations['en'] || wordId) : wordId;
+        const secondaryText = word ? (translations[secondaryLang] || translations['en'] || wordId) : wordId;
         return {
           ...d,
           text_primary: primaryText,
           text_secondary: secondaryText,
-          // Legacy support
           label: primaryText,
-          ur: primaryPack.words[wordId] || secondaryPack.words[wordId],
-          en: secondaryPack.words[wordId] || primaryPack.words[wordId]
+          ur: translations['ur'] || primaryText,
+          en: translations['en'] || secondaryText
         };
       });
 
@@ -107,8 +153,8 @@ export const dataAssembler = {
         categories: mergedCategories,
         quotes: mergedQuotes,
         doodles: mergedDoodles,
-        sketches: mergedDoodles // Keep for backward compatibility
-      };
+        gesture_map: settings.gesture_map || {}
+      } as AppConfig;
     } catch (err) {
       console.error('[DataAssembler] Failed to assemble data:', err);
       throw err;

@@ -39,7 +39,7 @@ export const predictionsEngine = {
     if (!fromWord) return;
 
     // Use a transitions dictionary to count frequencies: { toId: count }
-    const transitions: Record<string, number> = (fromWord as any).transitions || {};
+    const transitions: Record<string, number> = fromWord.transitions || {};
     transitions[toId] = (transitions[toId] || 0) + 1;
 
     // Keep legacy 'next' array updated for backwards compatibility
