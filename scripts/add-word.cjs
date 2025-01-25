@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-// Usage: node scripts/add-word.cjs --id=apple --en=Apple --ur=سیب --es=Manzana --ar=تفاحة --icon=smile --category=general --isFamily=true
+// Usage: node scripts/add-word.cjs --en=Apple --ur=سیب --es=Manzana --ar=تفاحة --hi=सेब --fr=Pomme --zh=苹果 --icon=smile --doodle_shapes=circle,fruit
 
 const args = process.argv.slice(2);
 const params = {};
@@ -12,21 +12,19 @@ args.forEach(arg => {
   }
 });
 
-if (!params.id || !params.en) {
-  console.error("Error: --id and --en are required parameters.");
-  console.log("Usage: node scripts/add-word.cjs --id=apple --en=Apple --ur=سیب --es=Manzana --ar=تفاحة --icon=smile --category=general --isFamily=true");
+const LANGS = ["en", "es", "ur", "ar", "hi", "zh", "fr"];
+
+if (!params.en) {
+  console.error("Error: --en is required parameter.");
+  console.log("Usage: node scripts/add-word.cjs --en=Apple --ur=سیب --es=Manzana --ar=تفاحة --hi=सेب --fr=Pomme --zh=苹果 --icon=smile --doodle_shapes=circle,fruit");
   process.exit(1);
 }
 
-const id = params.id;
-const category = params.category || 'general';
-const isFamily = params.isFamily === 'true';
+// Generate ID from English
+const id = params.id || params.en.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '_');
 
 const vocabPath = path.join(__dirname, '../src/lib/data/core/vocabulary.json');
-const settingsPath = path.join(__dirname, '../src/lib/data/core/settings.json');
-const i18nDir = path.join(__dirname, '../src/lib/data/i18n');
 
-// 1. Update Vocabulary (Core Structure)
 const vocab = JSON.parse(fs.readFileSync(vocabPath, 'utf-8'));
 const exists = vocab.words.find(w => w.id === id);
 if (exists) {
@@ -34,48 +32,35 @@ if (exists) {
   process.exit(1);
 }
 
+const translations = {};
+LANGS.forEach(lang => {
+  translations[lang] = params[lang] || params.en;
+});
+
+// Basic phonetic placeholder for new manual entries
+const transliterations = {};
+LANGS.forEach(from => {
+  transliterations[from] = {};
+  LANGS.forEach(to => {
+    if (from === to) return;
+    transliterations[from][to] = translations[from].toLowerCase(); 
+  });
+});
+
+const shapes = (params.doodle_shapes || params.tags || '').split(',').map(t => t.trim()).filter(t => t);
+while (shapes.length < 5) shapes.push('simple');
+
 vocab.words.push({
   id: id,
   icon: params.icon || 'star',
   next: [],
-  tags: [],
-  type: 'word',
   usageCount: 0,
   lastUsedAt: 0,
-  timeBias: []
+  timeBias: [],
+  doodle_shapes: shapes.slice(0, 10),
+  translations: translations,
+  transliterations: transliterations
 });
+
 fs.writeFileSync(vocabPath, JSON.stringify(vocab, null, 2));
-console.log(`[+] Added ${id} to vocabulary.json`);
-
-// 2. Update Settings (Family Category)
-if (isFamily) {
-  const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf-8'));
-  if (!settings.family) settings.family = [];
-  if (!settings.family.includes(id)) {
-    settings.family.push(id);
-    fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2));
-    console.log(`[+] Added ${id} to settings.json family array`);
-  }
-}
-
-// 3. Update i18n Files
-const langs = ['en', 'es', 'ur', 'ar'];
-langs.forEach(lang => {
-  const filePath = path.join(i18nDir, `${lang}.json`);
-  if (fs.existsSync(filePath)) {
-    const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    
-    // Add Translation
-    if (params[lang]) {
-      data.words[id] = params[lang];
-    } else {
-      // Fallback to English if translation missing
-      data.words[id] = params.en;
-    }
-
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
-    console.log(`[+] Updated ${lang}.json for ${id}`);
-  }
-});
-
-console.log(`\nSuccess! Successfully injected '${id}' across the Data Universe.`);
+console.log(`[+] Added '${id}' to vocabulary.json with strict schema.`);
