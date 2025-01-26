@@ -1,6 +1,6 @@
 import React, { useRef, useLayoutEffect, useEffect, useCallback, memo } from 'react';
 import { getStroke } from 'perfect-freehand';
-import type { Stroke, StrokePoint } from '../../recognition/db';
+import type { Stroke, Point as StrokePoint } from '../../recognition/sketchTypes';
 
 interface DoodleCanvasProps {
   strokes: Stroke[];

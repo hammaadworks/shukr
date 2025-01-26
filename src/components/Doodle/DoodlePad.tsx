@@ -5,7 +5,7 @@ import { useAudio } from '../../hooks/useAudio';
 import { useFuzzySearch } from '../../hooks/useFuzzySearch';
 import { recognitionEngine } from '../../recognition/engine';
 import { predictionsEngine } from '../../lib/predictionsEngine';
-import type { Stroke, StrokePoint } from '../../recognition/db';
+import type { Stroke, Point as StrokePoint } from '../../recognition/sketchTypes';
 
 import { DoodleCanvas } from './DoodleCanvas';
 import { WordPredictions } from '../WordPredictions';
@@ -55,11 +55,18 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focus
   const displayedPredictions = useMemo(() => {
     if (searchQuery.trim().length > 0) {
       if (searchResults.length === 0) {
-        const addLabel = language === 'ur' ? 'نیا لفظ؟' : 'Add Word?';
+        const labels: Record<string, string> = {
+          ur: 'نیا لفظ؟',
+          en: 'Add Word?',
+          es: '¿Añadir palabra?',
+          ar: 'إضافة كلمة؟'
+        };
+        const addLabel = labels[language] || labels['en'];
         return [{ 
           id: 'doodle_add_prompt', 
           ur: addLabel, 
           en: 'Add Word?', 
+          translations: labels,
           icon: 'plus', 
           isPrompt: true, 
           onClick: () => onOpenAddWord?.(searchQuery)
@@ -80,7 +87,7 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focus
 
     // fallback to all words if still empty
     if (results.length < 5) {
-        const remaining = allWords.filter(w => !results.find(r => r.id === w.id));
+        const remaining = allWords.filter((w: any) => !results.find(r => r.id === w.id));
         results.push(...remaining.slice(0, 10 - results.length));
     }
 

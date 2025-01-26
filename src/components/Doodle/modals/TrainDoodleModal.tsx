@@ -96,6 +96,7 @@ export const TrainDoodleModal: React.FC<TrainDoodleModalProps> = ({ onSave, onCa
               isNew={true}
               onChange={setEditingItem}
               onSave={handleEditorSave}
+              onDelete={() => {}}
             />
           )}
         </div>
