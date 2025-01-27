@@ -908,7 +908,6 @@
 
 @media (max-width: 480px) {
   #gesture-legend-root.gesture-legend-container { gap: 4px !important; padding: 0 8px !important; }
-...
   #gesture-legend-root .gesture-emoji-large { font-size: 1.4rem !important; }
   #gesture-legend-root .gesture-label-text { font-size: 0.75rem !important; }
   #gesture-legend-root .gesture-label-text.is-urdu { font-size: 0.95rem !important; }

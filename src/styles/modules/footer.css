@@ -72,8 +72,10 @@
   color: var(--color-primary);
   cursor: pointer;
   width: 100%;
-  height: 100%;
+  max-width: 72px;
+  height: 64px; /* Matches footer height exactly */
   gap: 2px;
+  align-self: flex-end; /* Align to bottom for perfect top-squircle look */
 }
 
 .bar-category-btn:active, .big-round-doodle-btn:active, .footer-mini-card:active {
@@ -81,10 +83,18 @@
   opacity: 0.8;
 }
 
-.bar-category-btn.active-category {
-  color: var(--color-accent);
-  background: rgba(45, 90, 39, 0.05);
-  border-radius: 12px;
+.bar-category-btn.favorite-btn.active-category {
+  background: var(--color-danger);
+  color: white;
+  border-radius: 20px 20px 0 0; /* Deep squircle top */
+  box-shadow: 0 -4px 12px rgba(220, 38, 38, 0.1);
+}
+
+.bar-category-btn.family-btn.active-category {
+  background: var(--color-primary);
+  color: white;
+  border-radius: 20px 20px 0 0; /* Deep squircle top */
+  box-shadow: 0 -4px 12px rgba(45, 90, 39, 0.1);
 }
 
 .bar-category-btn.favorite-btn { color: var(--color-danger); }
