@@ -1,12 +1,12 @@
-import type { StrokePoint, Stroke } from './db';
+import type { Point as StrokePoint, Stroke } from './sketchTypes';
 
 export const normalizeStrokes = (strokes: Stroke[]): Stroke[] => {
   if (strokes.length === 0) return [];
   
   // 1. Find bounding box
   let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-  strokes.forEach(stroke => {
-    stroke.forEach(p => {
+  strokes.forEach((stroke: Stroke) => {
+    stroke.forEach((p: StrokePoint) => {
       minX = Math.min(minX, p.x);
       minY = Math.min(minY, p.y);
       maxX = Math.max(maxX, p.x);
@@ -19,8 +19,8 @@ export const normalizeStrokes = (strokes: Stroke[]): Stroke[] => {
   const size = Math.max(width, height);
 
   // 2. Center and scale to 0-100
-  return strokes.map(stroke => 
-    stroke.map(p => ({
+  return strokes.map((stroke: Stroke) => 
+    stroke.map((p: StrokePoint) => ({
       x: ((p.x - minX) / size) * 100,
       y: ((p.y - minY) / size) * 100
     }))

@@ -1,7 +1,6 @@
-import { db } from './db';
-import type { SketchRecognitionMode, Stroke, StrokePoint } from './db';
 import { normalizeStrokes, resampleStroke } from './utils';
 import { universeDb } from '../lib/universeDb';
+import type { Point as StrokePoint, Stroke, RecognitionMode as SketchRecognitionMode } from './sketchTypes';
 import Fuse from 'fuse.js';
 
 export interface RecognitionResult {
@@ -55,20 +54,20 @@ export const recognitionEngine = {
   fuse: null as Fuse<any> | null,
 
   async init(_config: any) {
-    // 1. Seed geometric templates for tags
+    // 1. Seed geometric templates for doodle_shapes
     this.seedGeometricTemplates();
 
     // 2. Load user templates
-    const userTemplates = await db.templates.toArray();
-    userTemplates.forEach(t => {
-      this.matcher.addTemplate(t.id, t.label, t.strokes, t.category === 'contacts' ? 'contact' : 'custom', t.en, t.ur);
+    const userTemplates = await universeDb.doodles.toArray();
+    userTemplates.forEach((t: any) => {
+      this.matcher.addTemplate(t.id, t.label || t.en || 'unlabeled', t.strokes, 'custom', t.en || '', t.ur || '');
     });
 
     // 3. Initialize Fuse for Word Universe
     const allWords = await universeDb.words.toArray();
     this.fuse = new Fuse(allWords, {
       keys: [
-        { name: 'tags', weight: 1.0 },
+        { name: 'doodle_shapes', weight: 1.0 },
         { name: 'en', weight: 0.3 },
         { name: 'ur', weight: 0.3 },
         { name: 'roman', weight: 0.1 }
@@ -79,26 +78,38 @@ export const recognitionEngine = {
   },
 
   seedGeometricTemplates() {
-    // Circle (Swelling, Redness, Food, Clock)
+    // Circle (Domes, Round Food, People, Clock)
     const circle: StrokePoint[] = [];
     for (let i = 0; i <= 32; i++) {
       const t = (i / 32) * Math.PI * 2;
       circle.push({ x: 50 + 40 * Math.cos(t), y: 50 + 40 * Math.sin(t) });
     }
-    this.matcher.addTemplate('circle_tpl', 'circle', [circle], 'custom', 'Circle', 'دائرہ');
+    this.matcher.addTemplate('circle_tpl', 'circle', [circle], 'custom', 'Round/Dome', 'گول/گنبد');
 
-    // Zigzag (Pain, Itching, Burning, Cold)
+    // Zigzag (Pain, Fever, Sharpness)
     const zigzag: StrokePoint[] = [
       {x:10,y:10}, {x:90,y:30}, {x:10,y:50}, {x:90,y:70}, {x:10,y:90}
     ];
-    this.matcher.addTemplate('zigzag_tpl', 'zigzag', [zigzag], 'custom', 'Sharp', 'تیز');
+    this.matcher.addTemplate('zigzag_tpl', 'zigzag', [zigzag], 'custom', 'Sharp/Pain', 'تیز/درد');
 
-    // Wave (Water, Cream, Burning)
+    // Wave (Water, Dua, Tasbeeh, Flow)
     const wave: StrokePoint[] = [];
     for (let i = 0; i <= 20; i++) {
       wave.push({ x: i * 5, y: 50 + 20 * Math.sin(i * 0.5) });
     }
-    this.matcher.addTemplate('wave_tpl', 'wave', [wave], 'custom', 'Wave', 'لہر');
+    this.matcher.addTemplate('wave_tpl', 'wave', [wave], 'custom', 'Flow/Dua', 'بہاؤ/دعا');
+
+    // Triangle (Samosa, Direction)
+    const triangle: StrokePoint[] = [
+      { x: 50, y: 10 }, { x: 10, y: 90 }, { x: 90, y: 90 }, { x: 50, y: 10 }
+    ];
+    this.matcher.addTemplate('triangle_tpl', 'triangle', [triangle], 'custom', 'Samosa/Direction', 'سموسہ/اشارہ');
+
+    // Square (Quran, Janamaz, Kaaba, Furniture)
+    const square: StrokePoint[] = [
+      {x:10,y:10}, {x:90,y:10}, {x:90,y:90}, {x:10,y:90}, {x:10,y:10}
+    ];
+    this.matcher.addTemplate('square_tpl', 'square', [square], 'custom', 'Box/Book', 'چوکور/کتاب');
 
     // Basic Letters for "Writing" support
     this.matcher.addTemplate('char_a', 'a', [[{x:50,y:10}, {x:10,y:90}, {x:90,y:90}, {x:50,y:10}]], 'letter', 'A', 'اے');
@@ -206,22 +217,19 @@ export const recognitionEngine = {
 
   async train(label: string, en: string, ur: string, strokes: Stroke[], _mode: SketchRecognitionMode) {
     const normalized = normalizeStrokes(strokes);
-    const id = `tpl_${crypto.randomUUID()}`;
-    // The "en" here is effectively our language-agnostic semantic wordId
     const wordId = en.toLowerCase()
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '_')
       .trim();
+    const id = `${wordId}_${Date.now()}`;
 
-    await db.templates.add({
+    await universeDb.doodles.add({
       id,
       wordId,
       label,
       en,
       ur,
-      category: _mode,
-      strokes: normalized,
-      createdAt: Date.now()
+      strokes: normalized
     });
     this.matcher.addTemplate(id, label, normalized, _mode === 'contacts' ? 'contact' : 'custom', en, ur);
   }
