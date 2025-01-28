@@ -32,15 +32,6 @@ const getDirection = (lang: LanguageCode): 'rtl' | 'ltr' => {
   return rtlLangs.includes(lang.toLowerCase()) ? 'rtl' : 'ltr';
 };
 
-export const SUPPORTED_LANGS = [
-  { code: 'ur', label: 'Urdu (اردو)' },
-  { code: 'en', label: 'English' },
-  { code: 'es', label: 'Spanish (Español)' },
-  { code: 'ar', label: 'Arabic (العربية)' },
-  { code: 'bn', label: 'Bengali (بنگالی)' },
-  { code: 'hi', label: 'Hindi (ہندی)' }
-];
-
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Load the pair configuration from storage or default to Urdu + English
   const [pair, setPair] = useState<DualLanguagePair>(() => {

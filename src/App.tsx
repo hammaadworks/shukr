@@ -5,13 +5,12 @@ import { useAudio } from './hooks/useAudio';
 import { ConfigProvider, useAppConfig } from './hooks/useAppConfig';
 import { useCameraGestures } from './hooks/useCameraGestures';
 import { GestureEditModal } from './components/modals/GestureEditModal';
-import { type GestureDefinition, type GestureAction } from './recognition/gestures/types';
-import { useLogger } from './hooks/useLogger';
+import { type GestureDefinition } from './recognition/gestures/types';
 import { useFuzzySearch } from './hooks/useFuzzySearch';
 import { predictionsEngine } from './lib/predictionsEngine';
 import { translator } from './lib/translator';
 import { universeDb } from './lib/universeDb';
-import { audioStorage } from './lib/audioStorage';
+import { generateAudioStorageKey } from './lib/constants';
 
 // Extracted Components
 import { SplashScreen } from './components/SplashScreen';
@@ -28,15 +27,13 @@ import { CameraPreview } from './components/CameraPreview';
 import { ScreenFlashes } from './components/ScreenFlashes';
 import { WordAddModal } from './components/WordAddModal';
 import { WordEditor } from './components/WordEditor';
-
+import { WordManager } from './components/WordManager';
 import { LandingPage } from './components/LandingPage';
-
 import { PermissionDialog } from './components/modals/Dialogs';
 
 const AppContent = () => {
   const { language, setLanguage, primaryLanguage, secondaryLanguage, isPrimary } = useLanguage();
   const { speak, speakSequence, playClick, currentlyPlayingId } = useAudio();
-  const { logEvent } = useLogger();
   const { config, updateConfig, isLoading: isConfigLoading } = useAppConfig();
 
   const [editingWord, setEditingWord] = useState<any | null>(null);
@@ -55,18 +52,16 @@ const AppContent = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [showSplash, setShowSplash] = useState(isAppStarted); 
   const [addingWord, setAddingWord] = useState<any | null>(null);
-  const [hasUnsyncedChanges, setHasUnsyncedChanges] = useState(false);
   const [route, setRoute] = useState(window.location.hash || '#');
   const [showSOS, setShowSOS] = useState(false);
   const [initialEditingItem, setInitialEditingItem] = useState<any>(null);
   const [initialSettingsTab, setInitialSettingsTab] = useState<any>(null);
+  const [voiceParams, setVoiceParams] = useState<{ wordId?: string, voiceId?: string, language?: string } | null>(null);
   const [dbWords, setDbWords] = useState<any[]>([]);
   const [isSentenceBuilderActive, setIsSentenceBuilderActive] = useState(false);
-  const [canAddWords, setCanAddWords] = useState(true);
   const [flashSentenceBuilder, setFlashSentenceBuilder] = useState(false);
   const [showYesFlash, setShowYesFlash] = useState(false);
   const [showNoFlash, setShowNoFlash] = useState(false);
-  const [displayLimit, setDisplayLimit] = useState(24);
   const [randomQuote, setRandomQuote] = useState<any>(null);
   const [isDraggingPreview, setIsDraggingPreview] = useState(false);
   const [editingGesture, setEditingGesture] = useState<GestureDefinition | null>(null);
@@ -81,7 +76,7 @@ const AppContent = () => {
     (window as any)._showSOS = () => setShowSOS(true);
   }, []);
 
-  const { isEnabled, effectiveEnabled, isRecognitionActive, setIsRecognitionActive, toggleTracking, permissionStatus, requestPermission, videoRef, isModelLoaded, gestureHits } =
+  const { effectiveEnabled, isRecognitionActive, toggleTracking, permissionStatus, requestPermission, videoRef, isModelLoaded, gestureHits } =
     useCameraGestures((action) => {
       actionHandlerRef.current(action);
     }, route === '#voices' || showSplash || !isAppStarted || isConfigLoading);
@@ -112,7 +107,7 @@ const AppContent = () => {
     };
     updateConfig(newConfig);
     if (blob) {
-      await audioStorage.set(`gesture_${updated.id}`, blob);
+      await universeDb.audio.put({ id: `gesture_${updated.id}`, blob });
     }
     setEditingGesture(null);
   }, [config, updateConfig]);
@@ -132,12 +127,9 @@ const AppContent = () => {
       bottom: dropRect.bottom + padding
     };
 
-    // Calculate center of the dropped preview
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
 
-    // Detection logic: Is the center of the preview inside the expanded target area?
-    // OR: Is there a substantial overlap? 
     const isOverlapping = (
       centerX >= target.left && 
       centerX <= target.right && 
@@ -171,6 +163,11 @@ const AppContent = () => {
     window.location.hash = newRoute;
   }, []);
 
+  const navigateVoiceStudio = useCallback((params: { wordId?: string, voiceId?: string, language?: string }) => {
+    setVoiceParams(params);
+    window.location.hash = '#voices';
+  }, []);
+
   const toggleSentenceBuilder = useCallback(() => {
     setIsSentenceBuilderActive((prev) => !prev);
     setFocusedIndex(-1);
@@ -185,7 +182,7 @@ const AppContent = () => {
   }, [config, randomQuote]);
 
   useEffect(() => {
-    if (config?.quotes?.length > 0 && !randomQuote) {
+    if (config?.quotes && config.quotes.length > 0 && !randomQuote) {
       setRandomQuote(config.quotes[Math.floor(Math.random() * config.quotes.length)]);
     }
   }, [config, randomQuote]);
@@ -239,7 +236,7 @@ const AppContent = () => {
     }
     updateConfig(newConfig);
     await universeDb.words.delete(id);
-    await universeDb.sketchTemplates.where('wordId').equals(id).delete();
+    await universeDb.doodles.where('wordId').equals(id).delete();
     refreshWords();
     setEditingWord(null);
   }, [config, updateConfig, refreshWords]);
@@ -252,14 +249,11 @@ const AppContent = () => {
     const isActuallyInFamily = (newConfig.family || []).includes(item.id);
     
     if (item.isFamily && !isActuallyInFamily) {
-        // Add to family
         newConfig.family = [...(newConfig.family || []), item.id];
     } else if (!item.isFamily && isActuallyInFamily) {
-        // Remove from family
         newConfig.family = (newConfig.family || []).filter((id: string) => id !== item.id);
     }
 
-    // Update the item in its original categories
     newConfig.categories = newConfig.categories.map((cat: any) => ({
       ...cat,
       items: (cat.items || []).map((i: any) => i.id === item.id ? item : i)
@@ -268,35 +262,28 @@ const AppContent = () => {
     updateConfig(newConfig);
     await universeDb.words.put(item);
     if (blob) {
-      const storageKey = `${config.activeVoiceProfile || 'default'}_${item.id}_${language}`;
-      await audioStorage.set(storageKey, blob);
+      const voiceId = config.active_voice || 'default';
+      const audioKey = generateAudioStorageKey(item.id, voiceId);
+      await universeDb.audio.put({ id: audioKey, blob });
     }
     refreshWords();
     setEditingWord(null);
-  }, [config, updateConfig, language, refreshWords]);
+  }, [config, updateConfig, refreshWords]);
 
   const displayCategories = useMemo(() => {
     if (!config?.categories) return [];
-    // Generic system categories
-    const favLabel = language === 'ur' ? 'پسندیدہ' : (language === 'es' ? 'Favoritos' : (language === 'ar' ? 'المفضلة' : 'Favorite'));
-    const familyLabel = language === 'ur' ? 'خاندان' : (language === 'es' ? 'Familia' : (language === 'ar' ? 'عائلة' : 'Family'));
-    const generalLabel = language === 'ur' ? 'عام' : (language === 'es' ? 'General' : (language === 'ar' ? 'عام' : 'General'));
-    
-    return [
-      { id: 'favorite', label_primary: favLabel, label_secondary: 'Favorite', icon: 'heart' },
-      { id: 'family', label_primary: familyLabel, label_secondary: 'Family', icon: 'users' },
-      { id: 'general', label_primary: generalLabel, label_secondary: 'General', icon: 'grid' },
-    ];
-  }, [config, language]);
+    return config.categories.map((cat: any) => ({
+      id: cat.id,
+      label_primary: cat.label_primary,
+      label_secondary: cat.label_secondary,
+      icon: cat.icon
+    }));
+  }, [config]);
 
   const searchResults = useFuzzySearch(allItems, searchQuery);
 
   const handleScroll = useCallback(() => {
-    if (!mainContentRef.current) return;
-    const { scrollTop, scrollHeight, clientHeight } = mainContentRef.current;
-    if (scrollHeight - scrollTop <= clientHeight + 100) {
-      setDisplayLimit((prev) => prev + 24);
-    }
+    // Scroll limits omitted
   }, []);
 
   const handleAddCustomWord = async (item: any, blob?: Blob | null) => {
@@ -308,7 +295,6 @@ const AppContent = () => {
     } 
 
     newConfig.categories = newConfig.categories.map((cat: any) => {
-      // Always put new un-categorized user words into general
       if (cat.id === 'general') {
         return { ...cat, items: [...(cat.items || []), item] };
       }
@@ -319,8 +305,9 @@ const AppContent = () => {
     
     await universeDb.words.put(item);
     if (blob) {
-      const storageKey = `${config.activeVoiceProfile || 'default'}_${item.id}_${language}`;
-      await audioStorage.set(storageKey, blob);
+      const voiceId = config.active_voice || 'default';
+      const audioKey = generateAudioStorageKey(item.id, voiceId);
+      await universeDb.audio.put({ id: audioKey, blob });
     }
     refreshWords();
     setAddingWord(null);
@@ -357,7 +344,7 @@ const AppContent = () => {
     return dbWords.length > 0 ? [...dbWords].sort((a, b) => (b.usageCount || 0) - (a.usageCount || 0)) : allItems;
   }, [dbWords, allItems]);
 
-  const handleOpenAddWord = useCallback((catId: string, initialValue?: string) => {
+  const handleOpenAddWord = useCallback((_catId: string, initialValue?: string) => {
     setAddingWord({
       id: 'pending_id',
       text_primary: initialValue || '',
@@ -374,7 +361,6 @@ const AppContent = () => {
     const favs = config?.favorites || [];
     const items = (dbWords.length > 0 ? dbWords : allItems).filter((i: any) => favs.includes(i.id));
     
-    // Add prompt as first button
     const addLabel = language === 'ur' ? 'نیا لفظ؟' : 'Add Word?';
     return [
       { id: 'add_fav_prompt', ur: addLabel, en: 'Add Word?', icon: 'list-plus', isPrompt: true, onClick: () => handleOpenAddWord('favorite') },
@@ -397,7 +383,6 @@ const AppContent = () => {
     if (currentCategory === 'favorite') return getFavoriteItems();
     if (currentCategory === 'family') return getFamilyItems();
     
-    // Default or General
     const items = getHomeItems();
     if (currentCategory === 'general') {
         const addLabel = language === 'ur' ? 'نیا لفظ؟' : 'Add Word?';
@@ -443,7 +428,6 @@ const AppContent = () => {
           setFlashSentenceBuilder(true);
           setTimeout(() => setFlashSentenceBuilder(false), 500);
         } else {
-          // If builder is off, keep updating context by shifting
           setSentence((prev) => [...prev.slice(1), item]);
         }
       }
@@ -509,9 +493,9 @@ const AppContent = () => {
     // 1. Handle Audio Mapping
     if (mapping.type === 'audio') {
       const audioId = `gesture_${gestureKey}`;
-      const blob = await audioStorage.get(audioId);
-      if (blob) {
-        const url = URL.createObjectURL(blob);
+      const record = await universeDb.audio.get(audioId);
+      if (record?.blob) {
+        const url = URL.createObjectURL(record.blob);
         const audio = new Audio(url);
         audio.play();
         return;
@@ -584,31 +568,46 @@ const AppContent = () => {
   return (
     <div className="app-viewport" dir={document.documentElement.dir}>
       {isDraggingPreview && <div className="dragging-backdrop" />}
-      <Header
-        onOpenSettings={(tab) => navigate('#settings', tab)}
-        isTrackingEnabled={effectiveEnabled}
-        isRecognitionActive={isRecognitionActive}
-        toggleTracking={handleCameraToggle}
-        hasUnsyncedChanges={hasUnsyncedChanges}
-        isModelLoaded={isModelLoaded}
-        onSOS={() => setShowSOS(true)}
-        onHome={() => { setSentence([]); setCurrentCategory(null); navigate('#'); }}
-        isSentenceBuilderActive={isSentenceBuilderActive}
-        toggleSentenceBuilder={toggleSentenceBuilder}
-        lastGesture={lastGesture}
-        isPrimary={isPrimary}
-        focusedIndex={focusedIndex}
-        showCloseDropzone={isDraggingPreview}
-        cameraButtonRef={cameraButtonRef}
-        gestureMappings={config?.gesture_mappings}
-        onLongPressGesture={setEditingGesture}
-        onTriggerGesture={handleGestureAction}
-        gestureHits={gestureHits}
-      />
+
+      {route !== '#voices' && (
+        <Header
+          onOpenSettings={(tab) => navigate('#settings', tab)}
+          isTrackingEnabled={effectiveEnabled}
+          isRecognitionActive={isRecognitionActive}
+          toggleTracking={handleCameraToggle}
+          hasUnsyncedChanges={false}
+          isModelLoaded={isModelLoaded}
+          onSOS={() => setShowSOS(true)}
+          onHome={() => { setSentence([]); setCurrentCategory(null); navigate('#'); }}
+          isSentenceBuilderActive={isSentenceBuilderActive}
+          toggleSentenceBuilder={toggleSentenceBuilder}
+          lastGesture={lastGesture}
+          isPrimary={isPrimary}
+          focusedIndex={focusedIndex}
+          showCloseDropzone={isDraggingPreview}
+          cameraButtonRef={cameraButtonRef}
+          gestureMappings={config?.gesture_mappings}
+          onLongPressGesture={setEditingGesture}
+          onTriggerGesture={handleGestureAction}
+          gestureHits={gestureHits}
+        />
+      )}
 
       <div className="main-content-wrapper" style={{ flex: 1, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         {route === '#voices' ? (
-          <VoiceStudio config={config} updateConfig={updateConfig} onClose={() => navigate('#settings')} />
+          <VoiceStudio 
+            config={config} 
+            updateConfig={updateConfig} 
+            onClose={() => { setVoiceParams(null); navigate('#settings'); }}
+            initialWordId={voiceParams?.wordId}
+            initialVoiceId={voiceParams?.voiceId}
+            initialLanguage={voiceParams?.language}
+          />
+        ) : route === '#words' ? (
+          <WordManager 
+            onClose={() => navigate('#')} 
+            onRecord={navigateVoiceStudio}
+          />
         ) : route === '#settings' ? (
           <SettingsPanel
             config={config} updateConfig={updateConfig}
@@ -690,43 +689,45 @@ const AppContent = () => {
         )}
       </div>
 
-      <Footer
-        currentCategory={currentCategory}
-        onCategoryClick={(catId) => {
-          playClick(); if (route !== '#') navigate('#');
-          setCurrentCategory(catId === currentCategory ? null : catId);
-          setFocusedIndex(-1); setSearchQuery('');
-        }}
-        onDoodleClick={() => {
-          playClick(); 
-          if (currentCategory) { 
-            setCurrentCategory(null); 
-            navigate('#'); 
-            return; 
-          }
-          if (route === '#doodle') {
-            navigate('#');
-          } else {
-            navigate('#doodle');
-          }
-        }}
-        onYesClick={() => {
-          const yesText = language === 'ur' ? 'ہاں' : 'Yes';
-          speak(yesText, 'sys_yes');
-          setShowYesFlash(true);
-          setTimeout(() => setShowYesFlash(false), 1000);
-          if (route === '#doodle') navigate('#');
-        }}
-        onNoClick={() => {
-          const noText = language === 'ur' ? 'نہیں' : 'No';
-          speak(noText, 'sys_no');
-          setShowNoFlash(true);
-          setTimeout(() => setShowNoFlash(false), 1000);
-          if (route === '#doodle') navigate('#');
-        }}
-        focusedIndex={focusedIndex} 
-        offset={5 + displayCategories.length + predictions.length + gridItems.length + (isSentenceBuilderActive ? 3 : 0)}
-      />
+      {route !== '#voices' && (
+        <Footer
+          currentCategory={currentCategory}
+          onCategoryClick={(catId) => {
+            playClick(); if (route !== '#') navigate('#');
+            setCurrentCategory(catId === currentCategory ? null : catId);
+            setFocusedIndex(-1); setSearchQuery('');
+          }}
+          onDoodleClick={() => {
+            playClick(); 
+            if (currentCategory) { 
+              setCurrentCategory(null); 
+              navigate('#'); 
+              return; 
+            }
+            if (route === '#doodle') {
+              navigate('#');
+            } else {
+              navigate('#doodle');
+            }
+          }}
+          onYesClick={() => {
+            const yesText = language === 'ur' ? 'ہاں' : 'Yes';
+            speak(yesText, 'sys_yes');
+            setShowYesFlash(true);
+            setTimeout(() => setShowYesFlash(false), 1000);
+            if (route === '#doodle') navigate('#');
+          }}
+          onNoClick={() => {
+            const noText = language === 'ur' ? 'نہیں' : 'No';
+            speak(noText, 'sys_no');
+            setShowNoFlash(true);
+            setTimeout(() => setShowNoFlash(false), 1000);
+            if (route === '#doodle') navigate('#');
+          }}
+          focusedIndex={focusedIndex} 
+          offset={5 + displayCategories.length + predictions.length + gridItems.length + (isSentenceBuilderActive ? 3 : 0)}
+        />
+      )}
 
       <ScreenFlashes showYes={showYesFlash} showNo={showNoFlash} />
       {showSOS && <SOSModal onClose={() => setShowSOS(false)} emergencyContacts={config?.emergency_contacts || []} />}
@@ -753,6 +754,7 @@ const AppContent = () => {
       )}
       {showPermissionExplanation && (
         <PermissionDialog 
+          type="camera"
           status={permissionStatus === 'granted' ? 'prompt' : (permissionStatus as any)} 
           onConfirm={handleConfirmPermission} 
           onCancel={() => setShowPermissionExplanation(false)} 
@@ -771,3 +773,4 @@ export default function App() {
     </LanguageProvider>
   );
 }
+

@@ -1,10 +1,8 @@
 import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from 'react';
 import { universeDb } from '../lib/universeDb';
 import { universePorter } from '../lib/universePorter';
-import type { WordUniverseItem, CategoryFolder } from '../lib/universeDb';
 import { dataAssembler } from '../lib/dataAssembler';
 import { useLanguage } from './useLanguage';
-import { audioStorage } from '../lib/audioStorage';
 import { DEFAULT_GESTURE_MAP, type GestureDefinition } from '../recognition/gestures/types';
 import { translator } from '../lib/translator';
 
@@ -34,13 +32,22 @@ export interface AppConfig {
     primary: string;
     secondary: string;
   };
-  activeVoiceProfile?: string;
-  voiceProfiles?: any[];
+  active_voice?: string;
+  voices?: any[];
+  ai_config?: {
+    endpoint?: string;
+    apiKey?: string;
+    model?: string;
+    authType?: 'none' | 'bearer' | 'basic';
+    username?: string;
+    password?: string;
+  };
+  words?: any[];
   doodles?: any[];
   audio?: Record<string, string>;
   favorites?: string[];
   family?: string[];
-  enableClickSound?: boolean; // Keep for backward compatibility if used in UI
+  enableClickSound?: boolean;
 }
 
 interface ConfigContextType {
@@ -59,16 +66,10 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [error, setError] = useState<string | null>(null);
   const { primaryLanguage, secondaryLanguage } = useLanguage();
 
-  const getStoredConfig = useCallback((): AppConfig | null => {
-    const saved = localStorage.getItem(`shukr_app_config_${primaryLanguage}_${secondaryLanguage}`);
-    return saved ? JSON.parse(saved) : null;
-  }, [primaryLanguage, secondaryLanguage]);
-
   const bootstrap = useCallback(async () => {
     setIsLoading(true);
     try {
       const bootData = await dataAssembler.assemble(primaryLanguage, secondaryLanguage);
-      const localConfig = getStoredConfig();
 
       const lastHydratedPair = localStorage.getItem('shukr_last_hydrated_pair');
       const currentPair = `${primaryLanguage}_${secondaryLanguage}`;
@@ -78,19 +79,19 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
       const isNewer = bootData.version > lastVersion || (bootData.version === lastVersion && bootData.timestamp > lastTimestamp);
       const isDifferentPair = lastHydratedPair !== currentPair;
+      
+      const dbWordsCount = await universeDb.words.count();
+      const isMissingWords = bootData.words && dbWordsCount < bootData.words.length;
 
-      let activeConfig = localConfig;
-
-      if ((isNewer || isDifferentPair) && bootData) {
+      if ((isNewer || isDifferentPair || isMissingWords) && bootData) {
         console.log(`[AppConfig] Hydrating database for ${currentPair}...`);
         await universePorter.import(bootData as any, true);
         localStorage.setItem(`shukr_last_boot_version_${currentPair}`, bootData.version.toString());
         localStorage.setItem(`shukr_last_boot_ts_${currentPair}`, bootData.timestamp.toString());
         localStorage.setItem('shukr_last_hydrated_pair', currentPair);
-        activeConfig = bootData;
       }
 
-      const finalConfig = activeConfig || bootData;
+      const finalConfig = bootData;
       if (finalConfig && !finalConfig.gesture_mappings) {
         finalConfig.gesture_mappings = DEFAULT_GESTURE_MAP;
       }
@@ -98,10 +99,29 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       // Vital: Hydrate categories from the unified universeDb
       const dbWords = await universeDb.words.toArray();
       if (dbWords.length > 0 && finalConfig.categories) {
-        finalConfig.categories = finalConfig.categories.map((cat: any) => ({
-          ...cat,
-          items: dbWords.filter(w => w.category === cat.id || w.categoryId === cat.id)
-        }));
+        finalConfig.categories = finalConfig.categories.map((cat: any) => {
+          let items = [];
+          if (cat.id === 'favorite') {
+            items = dbWords.filter(w => (finalConfig.favorites || []).includes(w.id));
+          } else if (cat.id === 'family') {
+            items = dbWords.filter(w => (finalConfig.family || []).includes(w.id));
+          } else {
+            items = dbWords.filter(w => w.category === cat.id || w.categoryId === cat.id || (w.doodle_shapes && w.doodle_shapes.includes(cat.id)));
+            if (cat.id === 'general' && items.length === 0) {
+              items = dbWords;
+            }
+          }
+          return { ...cat, items };
+        });
+      }
+
+      // Apply AI defaults from environment variables if not set
+      if (finalConfig) {
+        if (!finalConfig.ai_config) finalConfig.ai_config = {};
+        if (!finalConfig.ai_config.endpoint) finalConfig.ai_config.endpoint = import.meta.env.VITE_AI_ENDPOINT || 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+        if (!finalConfig.ai_config.apiKey) finalConfig.ai_config.apiKey = import.meta.env.VITE_AI_API_KEY || import.meta.env.VITE_AI_GEMINI_KEY || '';
+        if (!finalConfig.ai_config.model) finalConfig.ai_config.model = import.meta.env.VITE_AI_MODEL || 'gemini-1.5-flash';
+        if (!finalConfig.ai_config.authType) finalConfig.ai_config.authType = (import.meta.env.VITE_AI_AUTH_TYPE as any) || 'none';
       }
 
       translator.refresh(finalConfig);
@@ -112,7 +132,7 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     } finally {
       setIsLoading(false);
     }
-  }, [primaryLanguage, secondaryLanguage, getStoredConfig]);
+  }, [primaryLanguage, secondaryLanguage]);
 
   useEffect(() => {
     bootstrap();
@@ -121,38 +141,24 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const updateConfig = useCallback(async (newConfig: AppConfig) => {
     translator.refresh(newConfig);
     setConfig(newConfig);
-    const pair = `${primaryLanguage}_${secondaryLanguage}`;
-    localStorage.setItem(`shukr_app_config_${pair}`, JSON.stringify(newConfig));
-    localStorage.setItem(`shukr_last_boot_ts_${pair}`, Date.now().toString());
     
-    // Sync to DB
     try {
-      const categories: CategoryFolder[] = newConfig.categories.map((c: any, idx: number) => ({
-        id: c.id,
-        label_primary: c.label_primary || c.label_ur || c.ur,
-        label_secondary: c.label_secondary || c.label_en || c.en,
-        label_en: c.label_en || c.en,
-        label_ur: c.label_ur || c.ur,
-        icon: c.icon || 'folder',
-        order: idx,
-        isSystem: c.id === 'core'
-      }));
-      await universeDb.categories.bulkPut(categories);
-
-      const words: WordUniverseItem[] = newConfig.categories.flatMap((cat: any) => 
-        (cat.items || []).map((item: any) => ({
-          ...item,
-          text_primary: item.text_primary || item.ur,
-          text_secondary: item.text_secondary || item.en,
-          category: cat.id,
-          type: item.type || 'word'
-        }))
-      );
-      await universeDb.words.bulkPut(words);
+      const keysToSave = ['favorites', 'family', 'sos_settings', 'preferences', 'language_pair', 'active_voice', 'ai_config', 'gesture_mappings'];
+      const settingsItems = keysToSave
+        .map(k => ({ key: k, value: (newConfig as any)[k] }))
+        .filter(item => item.value !== undefined);
+        
+      await universeDb.settings.bulkPut(settingsItems);
+      
+      // Sync Voices to their dedicated table
+      await universeDb.voices.clear();
+      if (newConfig.voices && newConfig.voices.length > 0) {
+        await universeDb.voices.bulkPut(newConfig.voices);
+      }
     } catch (err) {
       console.error('[AppConfig] DB Sync failed:', err);
     }
-  }, [primaryLanguage, secondaryLanguage]);
+  }, []);
 
   const value = useMemo(() => ({
     config,
