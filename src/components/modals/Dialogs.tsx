@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Camera, ShieldAlert, X, Check } from 'lucide-react';
+import { Camera, ShieldAlert, X, Check, Mic } from 'lucide-react';
 import { useLanguage } from '../../hooks/useLanguage';
 
 interface PermissionDialogProps {

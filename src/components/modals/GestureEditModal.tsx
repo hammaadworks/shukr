@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
-import { X, Save, Mic, List, Activity, Play, Square, Scissors, RotateCcw, Check, Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, Save, Mic, List, Activity, Play, Square, RotateCcw, Check, Search } from 'lucide-react';
 import { useLanguage } from '../../hooks/useLanguage';
 import { type GestureDefinition, type GestureMappingType } from '../../recognition/gestures/types';
 import { useFuzzySearch } from '../../hooks/useFuzzySearch';
@@ -7,7 +7,7 @@ import { useVoiceRecording } from '../../hooks/useVoiceRecording';
 import { AudioTrimmer } from '../VoiceStudio/AudioTrimmer';
 import { AudioWaveform } from '../VoiceStudio/AudioWaveform';
 import { decodeAudioData, trimAudioBuffer, audioBufferToWavBlob } from '../../lib/audioUtils';
-import { audioStorage } from '../../lib/audioStorage';
+import { universeDb } from '../../lib/universeDb';
 import { PermissionDialog } from './Dialogs';
 
 interface GestureEditModalProps {
@@ -147,8 +147,8 @@ export const GestureEditModal: React.FC<GestureEditModalProps> = ({ gesture, con
 
   useEffect(() => {
     const checkAudio = async () => {
-      const existing = await audioStorage.get(`gesture_${gesture.id}`);
-      if (existing) setHasExistingAudio(true);
+      const existing = await universeDb.audio.get(`gesture_${gesture.id}`);
+      if (existing?.blob) setHasExistingAudio(true);
     };
     if (activeTab === 'audio') checkAudio();
   }, [gesture.id, activeTab]);
@@ -250,8 +250,8 @@ export const GestureEditModal: React.FC<GestureEditModalProps> = ({ gesture, con
             <div className="sequence-scroll">
               {selectedItems.map((w: any, idx: number) => (
                 <div key={`${w.id}-${idx}`} className="sequence-item-pill">
-                  <span className="ur">{w.ur}</span>
-                  <span className="en">{w.en}</span>
+                  <span className="ur">{w.translations?.['ur'] || w.ur}</span>
+                  <span className="en">{w.translations?.['en'] || w.en}</span>
                   <button className="remove-btn" onClick={() => toggleWordSelection(w.id)}><X size={14}/></button>
                 </div>
               ))}
@@ -282,8 +282,8 @@ export const GestureEditModal: React.FC<GestureEditModalProps> = ({ gesture, con
               onClick={() => toggleWordSelection(item.id)}
             >
               <div className="pick-card-inner">
-                 <span className="pick-ur">{item.ur}</span>
-                 <span className="pick-en">{item.en}</span>
+                 <span className="pick-ur">{item.translations?.['ur'] || item.ur}</span>
+                 <span className="pick-en">{item.translations?.['en'] || item.en}</span>
               </div>
               {selectedWords.includes(item.id) && <div className="selected-check">✓</div>}
             </div>
