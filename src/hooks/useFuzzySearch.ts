@@ -1,7 +1,20 @@
 import { useMemo } from 'react';
 import Fuse from 'fuse.js';
 
-export const useFuzzySearch = <T>(items: T[], query: string, keys: string[] = ['en', 'ur', 'roman']) => {
+export const useFuzzySearch = <T>(
+  items: T[], 
+  query: string, 
+  keys: string[] = [
+    'translations.en', 
+    'translations.ur', 
+    'translations.es', 
+    'translations.ar',
+    'transliterations.ur.en',
+    'en', 
+    'ur', 
+    'roman'
+  ]
+) => {
   const fuse = useMemo(() => {
     return new Fuse(items, {
       keys,

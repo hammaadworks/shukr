@@ -6,8 +6,8 @@ export const useLongPress = (
   { delay = 500, shouldPreventDefault = true } = {}
 ) => {
   const [longPressTriggered, setLongPressTriggered] = useState(false);
-  const timerRef = useRef<any>();
-  const targetRef = useRef<any>();
+  const timerRef = useRef<any>(null);
+  const targetRef = useRef<any>(null);
 
   const start = useCallback(
     (event: any) => {
