@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { Sparkles, Settings, Plus, X, Check, Trash2 } from 'lucide-react';
+import { Sparkles, Settings, X, Check, Trash2 } from 'lucide-react';
 import { useLanguage } from '../hooks/useLanguage';
 import { universeDb } from '../lib/universeDb';
+import { generateQuoteId } from '../lib/constants';
 
 interface MotivateCardProps {
   quote: any;
@@ -27,35 +28,28 @@ export const MotivateCard: React.FC<MotivateCardProps> = ({
 
   const activeQuoteText = useMemo(() => {
     if (!quote) return '';
-    return isPrimary ? (quote.text_primary || quote.ur) : (quote.text_secondary || quote.en);
+    return isPrimary ? quote.text_primary : quote.text_secondary;
   }, [quote, isPrimary]);
 
   const secondaryQuoteText = useMemo(() => {
     if (!quote) return '';
-    return isPrimary ? (quote.text_secondary || quote.en) : (quote.text_primary || quote.ur);
+    return isPrimary ? quote.text_secondary : quote.text_primary;
   }, [quote, isPrimary]);
 
   const handleAddQuote = async () => {
     if (!newPrimary || !newSecondary) return;
-    const newQuote = {
-      id: `quote_user_${Date.now()}`,
-      text_primary: newPrimary,
-      text_secondary: newSecondary,
-      ur: language === 'ur' ? newPrimary : (primaryLanguage === 'ur' ? newPrimary : ''),
-      en: language === 'en' ? newPrimary : (secondaryLanguage === 'en' ? newSecondary : ''),
+    const newQuote: any = {
+      id: generateQuoteId(),
+      [primaryLanguage]: newPrimary,
+      [secondaryLanguage]: newSecondary,
+      translations: {
+        [primaryLanguage]: newPrimary,
+        [secondaryLanguage]: newSecondary
+      },
       source: 'User',
       createdAt: Date.now()
     };
     
-    // Ensure ur/en are correctly mapped for legacy support
-    if (language === 'ur') {
-      newQuote.ur = newPrimary;
-      newQuote.en = newSecondary;
-    } else {
-      newQuote.en = newPrimary;
-      newQuote.ur = newSecondary;
-    }
-
     const newQuotes = [newQuote, ...(config.quotes || [])];
     updateConfig({ ...config, quotes: newQuotes });
     await universeDb.quotes.put(newQuote);

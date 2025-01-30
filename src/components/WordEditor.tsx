@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Trash2, X, AlertCircle, Check } from 'lucide-react';
 import { translator } from '../lib/translator';
-import { useLanguage, SUPPORTED_LANGS } from '../hooks/useLanguage';
+import { useLanguage } from '../hooks/useLanguage';
+import { SUPPORTED_LANGS } from '../lib/languages';
 import { useAppConfig } from '../hooks/useAppConfig';
 
 interface WordEditorProps {
@@ -66,14 +67,22 @@ export const WordEditor: React.FC<WordEditorProps> = ({ item: initialItem, onClo
     setError(null);
     const updated = { ...item };
     
+    if (!updated.translations) updated.translations = {};
+    if (!updated.transliterations) updated.transliterations = {};
+
     // Update the field being typed in immediately
     if (field === 'primary') {
-        updated.text_primary = val;
-        updated.ur = val;
+        updated.translations[primaryLanguage] = val;
+        updated.text_primary = val; // for immediate UI update
     } else if (field === 'secondary') {
-        updated.text_secondary = val;
-        updated.en = val;
+        updated.translations[secondaryLanguage] = val;
+        updated.text_secondary = val; // for immediate UI update
     } else {
+        // Assume roman is transliteration for primary if primary is Urdu
+        if (primaryLanguage === 'ur') {
+          if (!updated.transliterations['ur']) updated.transliterations['ur'] = {};
+          updated.transliterations['ur']['en'] = val;
+        }
         updated.roman = val;
     }
     
@@ -84,25 +93,14 @@ export const WordEditor: React.FC<WordEditorProps> = ({ item: initialItem, onClo
     if (val.length > 0) {
       setIsTranslating(true);
       try {
-        const res = await translator.translate(val, field);
+        const res = await translator.translate(val);
         if (res) {
           const finalItem = { ...updated };
+          finalItem.translations = { ...finalItem.translations, ...res };
           
-          // Apply results to the OTHER fields
-          if (field === 'primary') {
-            finalItem.text_secondary = res.en;
-            finalItem.en = res.en;
-            finalItem.roman = res.roman;
-          } else if (field === 'secondary') {
-            finalItem.text_primary = res.ur;
-            finalItem.ur = res.ur;
-            finalItem.roman = res.roman;
-          } else if (field === 'roman') {
-            finalItem.text_primary = res.ur;
-            finalItem.ur = res.ur;
-            finalItem.text_secondary = res.en;
-            finalItem.en = res.en;
-          }
+          // Update UI helper fields
+          finalItem.text_primary = finalItem.translations[primaryLanguage];
+          finalItem.text_secondary = finalItem.translations[secondaryLanguage];
           
           setItem(finalItem);
           if (onChange) onChange(finalItem);
@@ -116,27 +114,27 @@ export const WordEditor: React.FC<WordEditorProps> = ({ item: initialItem, onClo
   };
 
   const handleSaveClick = () => {
-    const pText = (item.text_primary || item.ur || '').trim();
-    const sText = (item.text_secondary || item.en || '').trim();
+    const translations = item.translations || {};
+    const pText = (translations[primaryLanguage] || '').trim();
+    const sText = (translations[secondaryLanguage] || '').trim();
 
     if (!pText && !sText) {
         setError("Please enter a word.");
         return;
     }
 
-    // 1. Generate a semantic ID from the English or Roman text (slugify)
-    // We prioritize English (secondary if ur is primary) or Roman text for the ID
-    const baseForId = (sText || item.roman || pText || '').trim();
+    // 1. Generate a semantic ID from the English text (slugify)
+    const englishText = (translations['en'] || sText || pText || '').trim();
     let finalId = item.id;
 
     if (isNew || item.id.startsWith('word_')) {
-      finalId = baseForId.toLowerCase()
+      finalId = englishText.toLowerCase()
         .replace(/[^a-z0-9\s-]/g, '') // remove special chars
         .replace(/\s+/g, '_'); // replace spaces with underscores
     }
 
     if (!finalId) {
-       setError("Could not generate a valid ID. Please provide English or Roman text.");
+       setError("Could not generate a valid ID.");
        return;
     }
 
@@ -145,11 +143,13 @@ export const WordEditor: React.FC<WordEditorProps> = ({ item: initialItem, onClo
         const isDuplicate = existingWords.some(w => {
             if (w.id === item.id) return false; 
             
-            const matchP = pText && (w.ur === pText || w.text_primary === pText);
-            const matchS = sText && (w.en?.toLowerCase() === sText.toLowerCase() || w.text_secondary?.toLowerCase() === sText.toLowerCase());
-            const matchId = w.id === finalId;
+            // Check if any language translation matches
+            const anyMatch = Object.keys(translations).some(lang => {
+                const val = translations[lang];
+                return val && w.translations?.[lang]?.toLowerCase() === val.toLowerCase();
+            });
 
-            return matchP || matchS || matchId;
+            return anyMatch || w.id === finalId;
         });
 
         if (isDuplicate) {
@@ -160,8 +160,10 @@ export const WordEditor: React.FC<WordEditorProps> = ({ item: initialItem, onClo
 
     onSave({ 
       ...item, 
-      id: finalId, 
-      isFamily: isFamily 
+      id: finalId,
+      translations: translations,
+      transliterations: item.transliterations || {},
+      doodle_shapes: item.doodle_shapes || ['custom']
     }, null);
   };
 
@@ -356,7 +358,7 @@ export const WordEditor: React.FC<WordEditorProps> = ({ item: initialItem, onClo
           <span style={{ fontSize: '0.9rem', fontWeight: 700, fontFamily: 'var(--font-main)', opacity: 0.9 }}>Save Word</span>
         </button>
         
-        {onDelete && !isNew && (
+        {!isNew && (
           <button 
             className="btn-delete" 
             onClick={() => setShowDeleteConfirm(true)} 

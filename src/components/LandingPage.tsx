@@ -3,6 +3,7 @@ import '../styles/modules/landing.css';
 import { WordCard } from './WordCard';
 import { SentenceBuilder } from './SentenceBuilder';
 import { useLanguage } from '../hooks/useLanguage';
+import { SUPPORTED_LANGS as REGISTRY_LANGS } from '../lib/languages';
 import { SelectDialog } from './modals/Dialogs';
 import { ChevronDown } from 'lucide-react';
 
@@ -10,14 +11,21 @@ interface LandingPageProps {
   onStart: () => void;
 }
 
-const SUPPORTED_LANGS = [
-    { code: 'ur', label: 'Urdu (اردو)', font: "'Noto Nastaliq Urdu', serif", align: 'right' },
-    { code: 'en', label: 'English', font: "'Inter', sans-serif", align: 'left' },
-    { code: 'es', label: 'Spanish (Español)', font: "'Inter', sans-serif", align: 'left' },
-    { code: 'ar', label: 'Arabic (العربية)', font: "'Noto Nastaliq Urdu', serif", align: 'right' },
-    { code: 'bn', label: 'Bengali (বাংলা)', font: "'Inter', sans-serif", align: 'left' },
-    { code: 'hi', label: 'Hindi (हिन्दी)', font: "'Inter', sans-serif", align: 'left' }
-];
+const METADATA: Record<string, { font: string, align: string }> = {
+    ur: { font: "'Noto Nastaliq Urdu', serif", align: 'right' },
+    en: { font: "'Inter', sans-serif", align: 'left' },
+    es: { font: "'Inter', sans-serif", align: 'left' },
+    ar: { font: "'Noto Nastaliq Urdu', serif", align: 'right' },
+    hi: { font: "'Inter', sans-serif", align: 'left' },
+    zh: { font: "'Inter', sans-serif", align: 'left' },
+    fr: { font: "'Inter', sans-serif", align: 'left' }
+};
+
+const SUPPORTED_LANGS = REGISTRY_LANGS.map(l => ({
+    ...l,
+    font: METADATA[l.code]?.font || "'Inter', sans-serif",
+    align: METADATA[l.code]?.align || 'left'
+}));
 
 const LANDING_CONTENT: Record<string, any> = {
   ur: {
@@ -500,13 +508,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
                 <div className="mockup-phone-tilted">
                    <div style={{ padding: '4.5rem 1.25rem 1.25rem 1.25rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                       <WordCard 
-                        item={{ ur: 'مجھے', en: 'I want', roman: 'mujhe', icon: 'user' }} 
+                        item={{ id: 'sys_iwant', ur: 'مجھے', en: 'I want', roman: 'mujhe', icon: 'user' }} 
                         isFocused={false} 
                         variant={1} 
                         onClick={() => {}} 
                       />
                       <WordCard 
-                        item={{ ur: 'پانی', en: 'Water', roman: 'paani', icon: 'droplets' }} 
+                        item={{ id: 'sys_water', ur: 'پانی', en: 'Water', roman: 'paani', icon: 'droplets' }} 
                         isFocused={true} 
                         variant={1} 
                         onClick={() => {}} 
@@ -546,7 +554,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
                 </div>
                 <div className="mockup-ui-card-floating" style={{ bottom: '-15%', right: '5%' }}>
                    <WordCard 
-                      item={{ ur: 'سیب', en: 'Apple', roman: 'saib', icon: 'utensils' }} 
+                      item={{ id: 'sys_apple', ur: 'سیب', en: 'Apple', roman: 'saib', icon: 'utensils' }} 
                       isFocused={false} 
                       variant={1} 
                       onClick={() => {}} 

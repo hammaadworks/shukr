@@ -8,12 +8,13 @@ export type WordCardVariant = 1 | 2 | 3 | 4 | 5;
 
 export type WordCardItem = {
   id: string;
+  translations?: Record<string, string>;
   text_primary?: string;
   text_secondary?: string;
   en?: string;
   ur?: string;
   roman?: string;
-  transliterations?: Record<string, string>;
+  transliterations?: Record<string, any>;
   icon?: keyof typeof IconMap;
   isPrompt?: boolean;
 };
@@ -120,6 +121,7 @@ export const WordCard: React.FC<WordCardProps> = React.memo(({
   isFavorite = false,
   onClick,
   onEdit,
+  // @ts-ignore
   onDelete,
   onToggleFavorite,
   variant = 1,
@@ -159,7 +161,7 @@ export const WordCard: React.FC<WordCardProps> = React.memo(({
     editTimerRef.current = null;
   }, []);
 
-  const handlePressStart = useCallback((e: React.MouseEvent | React.TouchEvent) => {
+  const handlePressStart = useCallback((_e: React.MouseEvent | React.TouchEvent) => {
     if (isPrompt) return;
     
     if (variant === 1) {

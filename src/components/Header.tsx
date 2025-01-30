@@ -26,6 +26,8 @@ interface HeaderProps {
     onLongPressGesture?: (gesture: GestureDefinition) => void;
     onTriggerGesture?: (gestureKey: string) => void;
     gestureHits?: Record<string, number>;
+    onLanguageClick?: () => void;
+    customLanguageLabel?: string;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -39,6 +41,7 @@ export const Header: React.FC<HeaderProps> = ({
                                                   isSentenceBuilderActive,
                                                   toggleSentenceBuilder,
                                                   lastGesture,
+                                                  // @ts-ignore
                                                   isPrimary,
                                                   focusedIndex,
                                                   showCloseDropzone = false,
@@ -46,7 +49,9 @@ export const Header: React.FC<HeaderProps> = ({
                                                   gestureMappings = {},
                                                   onLongPressGesture = () => {},
                                                   onTriggerGesture = () => {},
-                                                  gestureHits = {}
+                                                  gestureHits = {},
+                                                  onLanguageClick,
+                                                  customLanguageLabel
                                               }) => {
     const {playClick} = useAudio();
     const {language, setLanguage, primaryLanguage, secondaryLanguage} = useLanguage();
@@ -116,7 +121,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <div className="header-cell">
                     <button
                         className={`btn-icon-ios ${focusedIndex === 3 ? 'focused-item' : ''}`}
-                        onClick={toggleLang}
+                        onClick={onLanguageClick ? () => { playClick(); onLanguageClick(); } : toggleLang}
                         aria-label="Switch Language"
                     >
                         <div className="lang-init-display" style={{ 
@@ -124,7 +129,7 @@ export const Header: React.FC<HeaderProps> = ({
                             fontWeight: 800, 
                             color: 'var(--color-primary)'
                         }}>
-                            {language.toUpperCase()}
+                            {customLanguageLabel ? customLanguageLabel.toUpperCase() : language.toUpperCase()}
                         </div>
                     </button>
                 </div>
@@ -152,5 +157,6 @@ export const Header: React.FC<HeaderProps> = ({
                     gestureHits={gestureHits}
                 />
             )}
-        </header>);
+        </header>
+    );
 };

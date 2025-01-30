@@ -6,7 +6,8 @@ import {universeDb} from '../lib/universeDb';
 import {WordEditor} from './WordEditor';
 import {AlertDialog, ConfirmDialog, PromptDialog, SelectDialog} from './modals/Dialogs';
 
-import { useLanguage, SUPPORTED_LANGS } from '../hooks/useLanguage';
+import { useLanguage } from '../hooks/useLanguage';
+import { SUPPORTED_LANGS } from '../lib/languages';
 
 interface SettingsPanelProps {
     config: any;
@@ -34,7 +35,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
     const { primaryLanguage, secondaryLanguage, setLanguagePair, language, isDualMode, setDualMode } = useLanguage();
     const [activeTab, setActiveTab] = useState<TabType>(initialTab || 'contact');
     const [editingItem, setEditingItem] = useState<any | null>(initialEditingItem || null);
-    const [editingType] = useState<EditingType>(initialEditingItem ? (initialEditingItem.type || 'word') : 'word');
+    const [editingType] = useState<EditingType>('word');
     const [editMode] = useState<'edit' | 'new'>('edit');
     const [isExporting, setIsExporting] = useState(false);
 
@@ -56,30 +57,57 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
     const [showPrimarySelect, setShowPrimarySelect] = useState(false);
     const [showSecondarySelect, setShowSecondarySelect] = useState(false);
 
-    const voiceOptions = [{
-        value: 'default',
-        label: 'System Default (سیسم ڈیفالٹ)'
-    }, ...(config.voiceProfiles || []).map((p: any) => ({value: p.id, label: p.name}))];
-    const currentVoiceName = voiceOptions.find(o => o.value === (config?.activeVoiceProfile || 'default'))?.label || 'System Default (سیسم ڈیفالٹ)';
+    const voiceOptions = (config?.voices || []).map((p: any) => ({
+        value: p.id,
+        label: `${p.name} (${p.language?.toUpperCase() || '?'})${p.editable === false ? ' [🔒]' : ''}`
+    }));
+    const currentVoiceName = voiceOptions.find((o: any) => o.value === (config?.activeVoice || ''))?.label || 'Select Voice';
 
     const handleRenameVoice = () => {
-        const activeId = config?.activeVoiceProfile || 'default';
-        if (activeId === 'default') {
-            setAlertInfo({title: "Cannot Rename", desc: "You cannot rename the system default profile."});
+        const activeId = config?.activeVoice;
+        if (!activeId) return;
+        const voice = (config?.voices || []).find((p: any) => p.id === activeId);
+        if (!voice) return;
+        
+        if (voice.editable === false) {
+            setAlertInfo({title: "System Voice", desc: "System pre-loaded voices cannot be renamed."});
             return;
         }
 
-        const profile = config.voiceProfiles.find((p: any) => p.id === activeId);
-        if (!profile) return;
-
         setPromptInfo({
-            title: "Rename Voice Profile",
+            title: "Rename Voice",
             placeholder: "e.g. My Voice",
-            defaultValue: profile.name,
+            defaultValue: voice.name,
             action: (newName) => {
                 if (!newName.trim()) return;
-                const newProfiles = config.voiceProfiles.map((p: any) => p.id === activeId ? {...p, name: newName} : p);
-                updateConfig({...config, voiceProfiles: newProfiles});
+                const newVoices = (config?.voices || []).map((p: any) => p.id === activeId ? {...p, name: newName} : p);
+                updateConfig({...config, voices: newVoices});
+            }
+        });
+    };
+
+    const handleDeleteVoice = () => {
+        const activeId = config?.activeVoice;
+        if (!activeId) return;
+        const voice = (config?.voices || []).find((p: any) => p.id === activeId);
+        if (!voice) return;
+
+        if (voice.editable === false) {
+            setAlertInfo({title: "System Voice", desc: "System pre-loaded voices cannot be deleted."});
+            return;
+        }
+
+        setConfirmInfo({
+            title: "Delete Voice?",
+            desc: "Are you sure you want to delete this voice and all its recordings?",
+            isDanger: true,
+            action: async () => {
+                const newVoices = (config?.voices || []).filter((p: any) => p.id !== activeId);
+                updateConfig({
+                    ...config,
+                    voices: newVoices,
+                    activeVoice: newVoices.length > 0 ? newVoices[0].id : ''
+                });
             }
         });
     };
@@ -145,7 +173,12 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
             case 'word': {
                 // Check for duplicates
                 const allWords = newConfig.categories.flatMap((c: any) => c.items || []);
-                const isDuplicate = allWords.some((i: any) => i.id !== item.id && (i.en.toLowerCase() === item.en.toLowerCase() || i.ur === item.ur));
+                const isDuplicate = allWords.some((i: any) => {
+                    if (i.id === item.id) return false;
+                    const matchEn = i.translations?.en?.toLowerCase() === item.translations?.en?.toLowerCase() || i.en?.toLowerCase() === item.translations?.en?.toLowerCase();
+                    const matchUr = i.translations?.ur === item.translations?.ur || i.ur === item.translations?.ur;
+                    return matchEn || matchUr;
+                });
 
                 if (isDuplicate) {
                     setAlertInfo({title: "Duplicate Entry", desc: "This word already exists!"});
@@ -153,7 +186,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 }
 
                 // Find the correct category and save
-                const categoryId = item.categoryId || item.category || 'core';
+                const categoryId = item.categoryId || item.category || 'general';
 
                 newConfig.categories = newConfig.categories.map((cat: any) => ({
                     ...cat,
@@ -164,31 +197,33 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 await universeDb.words.put({
                     ...item,
                     category: categoryId,
-                    type: item.type || 'word',
                     usageCount: item.usageCount || 0,
                     lastUsedAt: item.lastUsedAt || Date.now(),
                     next: item.next || [],
-                    tags: item.tags || []
+                    doodle_shapes: item.doodle_shapes || []
                 });
                 break;
             }
             case 'quote': {
                 let finalQuote = {...item};
 
+                if (!finalQuote.translations) finalQuote.translations = { ur: item.ur, en: item.en };
+
                 if (editMode === 'new') {
                     finalQuote = {
                         id: `quote_user_${crypto.randomUUID()}`,
-                        en: item.en,
-                        ur: item.ur,
+                        translations: finalQuote.translations,
                         source: item.source || '',
                         createdAt: Date.now()
                     };
                     newConfig.quotes = [finalQuote, ...quotes];
                 } else {
-                    const idx = quotes.findIndex((q: any) => q.id === item.id || q.en === item.oldEn);
+                    const idx = quotes.findIndex((q: any) => q.id === item.id);
                     if (idx > -1) {
                         finalQuote = {
-                            ...quotes[idx], ur: item.ur, en: item.en, source: item.source
+                            ...quotes[idx], 
+                            translations: finalQuote.translations,
+                            source: item.source
                         };
                         newConfig.quotes[idx] = finalQuote;
                     }
@@ -205,7 +240,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
         setEditingItem(null);
     };
 
-    const handleDelete = (itemId: string, itemEn?: string) => {
+    const handleDelete = (itemId: string, _itemEn?: string) => {
         setConfirmInfo({
             title: "Delete Item?",
             desc: "Are you sure you want to delete this? This action is irreversible.",
@@ -223,15 +258,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                         break;
                     }
                     case 'quote': {
-                        newConfig.quotes = quotes.filter((q: any) => q.id !== itemId && q.en !== itemEn);
+                        newConfig.quotes = quotes.filter((q: any) => q.id !== itemId);
                         if (itemId) {
                             await universeDb.quotes.delete(itemId);
-                        } else if (itemEn) {
-                            // Fallback for older quotes without an ID
-                            const qToDelete = await universeDb.quotes.where('en').equals(itemEn).first();
-                            if (qToDelete && qToDelete.id) {
-                                await universeDb.quotes.delete(qToDelete.id);
-                            }
                         }
                         break;
                     }
@@ -377,19 +406,40 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                             <ChevronDown size={24} color="var(--color-text-muted)"/>
                         </button>
 
-                        {(config?.activeVoiceProfile && config.activeVoiceProfile !== 'default') && (<button
-                                className="btn-icon"
-                                style={{
-                                    background: 'var(--color-bg)',
-                                    border: '1px solid rgba(45,90,39,0.1)',
-                                    height: 84,
-                                    width: 84,
-                                    borderRadius: 24
-                                }}
-                                onClick={handleRenameVoice}
-                            >
-                                <Edit2 size={28} color="var(--color-primary)"/>
-                            </button>)}
+                        {(() => {
+                            const activeVoice = (config?.voices || []).find((p: any) => p.id === config?.activeVoice);
+                            if (!activeVoice || activeVoice.editable === false) return null;
+                            return (
+                                <div style={{ display: 'flex', gap: 12 }}>
+                                    <button
+                                        className="btn-icon"
+                                        style={{
+                                            background: 'var(--color-bg)',
+                                            border: '1px solid rgba(45,90,39,0.1)',
+                                            height: 84,
+                                            width: 84,
+                                            borderRadius: 24
+                                        }}
+                                        onClick={handleRenameVoice}
+                                    >
+                                        <Edit2 size={28} color="var(--color-primary)"/>
+                                    </button>
+                                    <button
+                                        className="btn-icon"
+                                        style={{
+                                            background: '#fff5f5',
+                                            border: '1px solid rgba(220,38,38,0.1)',
+                                            height: 84,
+                                            width: 84,
+                                            borderRadius: 24
+                                        }}
+                                        onClick={handleDeleteVoice}
+                                    >
+                                        <Trash2 size={28} color="#ff3b30"/>
+                                    </button>
+                                </div>
+                            );
+                        })()}
                     </div>
 
                     <button
@@ -496,9 +546,11 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                         desc: "This will DELETE all your custom words, voices, and reset the app. Are you absolutely sure?",
                                         isDanger: true,
                                         action: async () => {
-                                            localStorage.removeItem('shukr_last_boot_version');
-                                            localStorage.removeItem('shukr_last_boot_ts');
-                                            localStorage.removeItem('shukr_app_config');
+                                            Object.keys(localStorage).forEach(key => {
+                                                if (key.startsWith('shukr_')) {
+                                                    localStorage.removeItem(key);
+                                                }
+                                            });
                                             await universePorter.clearAllLocalData();
                                             window.location.reload();
                                         }
@@ -702,11 +754,11 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
         <SelectDialog
             isOpen={showVoiceSelect}
             onClose={() => setShowVoiceSelect(false)}
-            title="Select Voice Profile"
+            title="Select Voice"
             options={voiceOptions}
-            selectedValue={config?.activeVoiceProfile || 'default'}
+            selectedValue={config?.activeVoice || 'default'}
             onSelect={(val) => {
-                const newConfig = {...config, activeVoiceProfile: val};
+                const newConfig = {...config, activeVoice: val};
                 updateConfig(newConfig);
             }}
         />

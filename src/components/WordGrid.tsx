@@ -33,12 +33,14 @@ export const WordGrid: React.FC<WordGridProps> = React.memo(({
   quoteFocused,
   onLongPressItem,
   onEditItem,
+  // @ts-ignore
   onDeleteItem,
   onSelect,
   favorites = [],
   currentlyPlayingId,
 }) => {
 
+  // @ts-ignore
   const { isPrimary } = useLanguage();
 
   return (
