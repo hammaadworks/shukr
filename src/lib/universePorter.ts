@@ -23,7 +23,7 @@ export const universePorter = {
     const doodles = await universeDb.doodles.toArray();
     const quotes = await universeDb.quotes.toArray();
     const settings = await universeDb.settings.toArray();
-    const voiceProfiles = await universeDb.voiceProfiles.toArray();
+    const voices = (await universeDb.voices.toArray()).map(vp => ({ ...vp, editable: false }));
     const audio = await this.serializeAllAudio();
 
     return {
@@ -34,7 +34,7 @@ export const universePorter = {
       doodles,
       quotes,
       settings,
-      voiceProfiles,
+      voices,
       audio
     };
   },
@@ -118,14 +118,21 @@ export const universePorter = {
 
   async restoreQuotes(snapshot: UniverseSnapshot) {
     if (snapshot.quotes && snapshot.quotes.length > 0) {
-      const formattedQuotes = snapshot.quotes.map((q: any, i: number) => ({
-        ...q,
-        id: q.id || `q${i}`,
-        translations: q.translations || {
+      const formattedQuotes = snapshot.quotes.map((q: any, i: number) => {
+        const id = q.id || `q${i}`;
+        const translations = q.translations || {
           ur: q.ur || q.text_primary || '',
           en: q.en || q.text_secondary || ''
-        }
-      }));
+        };
+        return {
+          ...q,
+          id,
+          translations,
+          // Maintain flat keys if they exist, or sync from translations
+          ur: q.ur || translations.ur,
+          en: q.en || translations.en
+        };
+      });
       await universeDb.quotes.bulkPut(formattedQuotes);
     }
   },
@@ -151,7 +158,7 @@ export const universePorter = {
       universeDb.words.clear(),
       universeDb.quotes.clear(),
       universeDb.doodles.clear(),
-      universeDb.voiceProfiles.clear(),
+      universeDb.voices.clear(),
       universeDb.audio.clear(),
       universeDb.settings.clear()
     ]);

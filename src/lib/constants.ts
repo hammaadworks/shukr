@@ -11,7 +11,7 @@ export const TABLES = {
   WORDS: 'words',
   DOODLES: 'doodles',
   QUOTES: 'quotes',
-  VOICE_PROFILES: 'voiceProfiles',
+  VOICES: 'voices',
   AUDIO: 'audio',
   SETTINGS: 'settings',
 } as const;
@@ -19,21 +19,29 @@ export const TABLES = {
 /**
  * Generates a unique key for audio storage.
  * @param wordId The unique ID of the word (e.g., 'want')
- * @param voiceProfileId The profile ID which includes the language (e.g., 'en_voice_hammaad')
+ * @param voiceId The voice ID which includes the language (e.g., 'en_voice_hammaad')
  * @returns A composite key string (e.g., 'en_voice_hammaad_want')
  */
-export const generateAudioStorageKey = (wordId: string, voiceProfileId: string): string => {
-  if (!wordId || !voiceProfileId) {
-    console.warn('[Constants] generateAudioStorageKey called with missing parameters:', { wordId, voiceProfileId });
+export const generateAudioStorageKey = (wordId: string, voiceId: string): string => {
+  if (!wordId || !voiceId) {
+    console.warn('[Constants] generateAudioStorageKey called with missing parameters:', { wordId, voiceId });
   }
-  return `${voiceProfileId}_${wordId}`;
+  return `${voiceId}_${wordId}`;
+};
+
+/**
+ * Generates a unique key for quotes.
+ * @returns A unique quote ID (e.g., 'q_1712451857000')
+ */
+export const generateQuoteId = (): string => {
+  return `q_${Date.now()}`;
 };
 
 /**
  * Parses an audio storage key back into its components.
  * Useful for extraction scripts.
  * @param storageKey The composite key string
- * @returns The wordId and voiceProfileId
+ * @returns The wordId and voiceId
  */
 export const parseAudioStorageKey = (storageKey: string) => {
   // Format: <lang>_voice_<name>_<wordId>
@@ -45,9 +53,9 @@ export const parseAudioStorageKey = (storageKey: string) => {
     const name = parts[2];
     const wordId = parts.slice(3).join('_'); // Word ID could potentially contain underscores
     return {
-      voiceProfileId: `${lang}_${voice}_${name}`,
+      voiceId: `${lang}_${voice}_${name}`,
       wordId
     };
   }
-  return { voiceProfileId: '', wordId: storageKey };
+  return { voiceId: '', wordId: storageKey };
 };

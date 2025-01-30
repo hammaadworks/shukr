@@ -24,11 +24,11 @@ export const dataAssembler = {
         import('./data/core/vocabulary.json'),
         import('./data/core/quotes.json'),
         import('./data/core/doodle.json'),
-        import('./data/core/voiceProfiles.json').catch(() => ({ default: [] }))
+        import('./data/core/voices.json').catch(() => ({ default: [] }))
       ]);
 
       const staticSettings: any = settingsMod.default || settingsMod;
-      const defaultVoiceProfiles: any[] = vpMod.default || vpMod || [];
+      const defaultVoices: any[] = vpMod.default || vpMod || [];
       
       // Merge dynamic over static settings
       const settings: any = {
@@ -36,22 +36,22 @@ export const dataAssembler = {
         ...dynamicSettings
       };
 
-      const dbVoiceProfiles = await universeDb.voiceProfiles.toArray();
-      if (dbVoiceProfiles.length > 0) {
-        settings.voiceProfiles = dbVoiceProfiles;
+      const dbVoices = await universeDb.voices.toArray();
+      if (dbVoices.length > 0) {
+        settings.voices = dbVoices;
       } else {
-        settings.voiceProfiles = defaultVoiceProfiles;
+        settings.voices = defaultVoices;
       }
 
       // Seed settings DB if empty
       if (dbSettingsItems.length === 0) {
         const seedData = Object.keys(staticSettings)
-          .filter(k => k !== 'voiceProfiles')
+          .filter(k => k !== 'voices')
           .map(k => ({ key: k, value: staticSettings[k] }));
         await universeDb.settings.bulkPut(seedData);
 
-        if (defaultVoiceProfiles && defaultVoiceProfiles.length > 0) {
-          await universeDb.voiceProfiles.bulkPut(defaultVoiceProfiles);
+        if (defaultVoices && defaultVoices.length > 0) {
+          await universeDb.voices.bulkPut(defaultVoices);
         }
       }
 
@@ -79,7 +79,7 @@ export const dataAssembler = {
         const primaryText = translations[primaryLang] || translations[secondaryLang] || translations['en'] || cat.id;
         const secondaryText = translations[secondaryLang] || translations[primaryLang] || translations['en'] || cat.id;
         
-        let items: any[] = [];
+        let items: any[];
         if (cat.id === 'favorite') {
           items = wordsArray.filter((w: any) => ((settings.favorites || []) as string[]).includes(w.id));
         } else if (cat.id === 'family') {
@@ -88,11 +88,11 @@ export const dataAssembler = {
           items = wordsArray.filter((w: any) => 
             w.category === cat.id || 
             w.categoryId === cat.id ||
-            (w.doodle_shapes && w.doodle_shapes.includes(cat.id))
+            (w.doodle_shapes?.includes(cat.id))
           );
           
           if (cat.id === 'general' && items.length === 0) {
-            items = wordsArray.slice(0, 100); 
+            items = wordsArray; 
           }
         }
 
@@ -120,14 +120,15 @@ export const dataAssembler = {
       // 4. Prepare Quotes
       const mergedQuotes = (quotes || []).map((q: any) => {
         const qTrans = q?.translations || {};
-        const primaryText = qTrans[primaryLang] || qTrans[secondaryLang] || qTrans['en'] || q?.id;
-        const secondaryText = qTrans[secondaryLang] || qTrans[primaryLang] || qTrans['en'] || q?.id;
+        
+        // Dynamic resolution: Check flat keys first, then translations object, then fallback to English or ID
+        const primaryText = q[primaryLang] || qTrans[primaryLang] || q['en'] || qTrans['en'] || q?.id;
+        const secondaryText = q[secondaryLang] || qTrans[secondaryLang] || q['en'] || qTrans['en'] || q?.id;
+
         return {
           ...q,
           text_primary: primaryText,
-          text_secondary: secondaryText,
-          ur: qTrans['ur'] || primaryText,
-          en: qTrans['en'] || secondaryText
+          text_secondary: secondaryText
         };
       });
 
@@ -150,6 +151,7 @@ export const dataAssembler = {
 
       return {
         ...settings,
+        words: wordsArray,
         categories: mergedCategories,
         quotes: mergedQuotes,
         doodles: mergedDoodles,

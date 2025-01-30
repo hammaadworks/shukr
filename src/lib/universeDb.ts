@@ -37,10 +37,11 @@ export interface QuoteItem {
   source: string;
 }
 
-export interface VoiceProfile {
+export interface Voice {
   id: string;
   name: string;
   language?: string;
+  editable?: boolean;
 }
 
 export interface AudioItem {
@@ -57,7 +58,7 @@ export class WordUniverseDatabase extends Dexie {
   words!: Table<WordUniverseItem>;
   doodles!: Table<DoodleItem>;
   quotes!: Table<QuoteItem>;
-  voiceProfiles!: Table<VoiceProfile>;
+  voices!: Table<Voice>;
   audio!: Table<AudioItem>;
   settings!: Table<SettingsItem>;
 
@@ -69,7 +70,7 @@ export class WordUniverseDatabase extends Dexie {
       [TABLES.WORDS]: 'id, usageCount, lastUsedAt, *doodle_shapes, verified',
       [TABLES.DOODLES]: 'id, wordId',
       [TABLES.QUOTES]: 'id',
-      [TABLES.VOICE_PROFILES]: 'id, name, language',
+      [TABLES.VOICES]: 'id, name, language',
       [TABLES.AUDIO]: 'id',
       [TABLES.SETTINGS]: 'key'
     });
