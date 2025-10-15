@@ -1,4 +1,8 @@
 {
+  "version": 1,
+  "timestamp": 1712451857000,
+  "sketches": [],
+  "audio": {},
   "gesture_map": {
     "one_finger": "DOODLE",
     "thumb_up": "YES",
