@@ -1,0 +1,96 @@
+/* --- Brand Header (Matches test.png) --- */
+.apple-header.consistent-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  height: 64px; /* Tightened height */
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+}
+
+.header-main-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+.header-group-left, .header-group-right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex: 1;
+}
+
+.header-group-left { justify-content: flex-start; }
+.header-group-right { justify-content: flex-end; }
+.header-group-center { flex: 0 0 auto; }
+
+.apple-header.consistent-header .btn-icon-ios {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: white;
+  border: 1.5px solid rgba(45, 90, 39, 0.1);
+  color: var(--color-primary);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.brand-badge-btn {
+  background: #f8f9f8;
+  border: 2px solid var(--color-primary);
+  padding: 6px 20px;
+  border-radius: 100px; /* Pill shape */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  height: 44px;
+}
+
+.brand-badge-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  z-index: 2;
+  position: relative;
+}
+
+.brand-badge {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--color-primary);
+}
+
+.brand-badge-divider {
+  width: 1.5px;
+  height: 18px;
+  background: rgba(45, 90, 39, 0.2);
+}
+
+.brand-badge-lang {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--color-accent);
+}
+
+.press-progress-bar {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  background: rgba(220, 38, 38, 0.15); /* Red tint for SOS hold */
+  animation: sos-progress 1s linear forwards;
+  z-index: 1;
+}
+
+@keyframes sos-progress { from { width: 0%; } to { width: 100%; } }

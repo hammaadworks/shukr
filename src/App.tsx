@@ -1,10 +1,10 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import './styles/app.css';
 import './styles/settings.css';
-import './styles/drawing.css';
+import './hooks/useLanguage';
 import { LanguageProvider, useLanguage } from './hooks/useLanguage';
 import { useAudio } from './hooks/useAudio';
-import { useRemoteConfig } from './hooks/useRemoteConfig';
+import { useAppConfig } from './hooks/useAppConfig';
 import { useCameraGestures } from './hooks/useCameraGestures';
 import { type GestureAction } from './recognition/gestures/types';
 import { useLogger } from './hooks/useLogger';
@@ -35,7 +35,7 @@ const AppContent = () => {
   const { language, isUrdu } = useLanguage();
   const { speak, speakSequence, playClick } = useAudio();
   const { logEvent } = useLogger();
-  const { config, updateConfig } = useRemoteConfig();
+  const { config, updateConfig, isOfflineMode, isLoading: isConfigLoading } = useAppConfig();
 
   const [currentCategory, setCurrentCategory] = useState<string | null>(null);
   const [sentence, setSentence] = useState<any[]>([]);
@@ -463,9 +463,21 @@ const AppContent = () => {
     </div>
   );
 
-  if (showSplash) return <SplashScreen quote={randomQuote || { ur: 'Shukr', en: 'Shukr' }} />;
+  if (showSplash || isConfigLoading) {
+    return <SplashScreen quote={randomQuote || { ur: 'شکراً', en: 'Shukr' }} isLoading={isConfigLoading} />;
+  }
 
-  return appContent;
+  return (
+    <>
+      {appContent}
+      {isOfflineMode && (
+        <div className="offline-badge">
+          <Activity size={20} />
+          <span>آف لائن موڈ (ڈیٹا محفوظ ہے) | Offline Mode</span>
+        </div>
+      )}
+    </>
+  );
 };
 
 export default function App() { return ( <LanguageProvider><AppContent /></LanguageProvider> ); }

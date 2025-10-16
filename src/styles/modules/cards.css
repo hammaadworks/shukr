@@ -1,0 +1,151 @@
+/* --- Unified Word Card Root --- */
+.word-card-root {
+  position: relative;
+  width: 100%;
+  background: var(--color-surface);
+  border: none;
+  border-radius: var(--radius-empathy);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  user-select: none;
+  border: 1.5px solid transparent;
+}
+
+.word-card-root.focused-item {
+  transform: scale(0.96);
+  box-shadow: 0 0 0 4px var(--color-accent), 0 10px 30px rgba(0,0,0,0.1);
+  border-color: var(--color-accent);
+}
+
+.word-card-root:active {
+  transform: scale(0.94);
+}
+
+.card-word-display {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 4px 8px;
+}
+
+.card-word-display .u-text {
+  font-family: var(--font-ur);
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.4;
+  text-align: center;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+.card-bottom-meta {
+  background: rgba(45, 90, 39, 0.04);
+  border-top: 1px solid rgba(45, 90, 39, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* --- Variant 1: Hero Grid Card --- */
+.word-card-root.variant-1 {
+  aspect-ratio: 1.45 / 1;
+}
+
+.word-card-root.variant-1 .card-icon-top-left {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: var(--color-primary);
+  opacity: 0.3;
+}
+
+.word-card-root.variant-1 .card-bottom-meta {
+  height: 32px;
+  gap: 6px;
+  padding: 0 8px;
+}
+
+.word-card-root.variant-1 .card-translation,
+.word-card-root.variant-1 .card-transliteration {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #4B5563;
+}
+
+.word-card-root.variant-1 .card-divider {
+  color: var(--color-accent);
+  opacity: 0.5;
+}
+
+/* --- Variant 2: Compact Card --- */
+.word-card-root.variant-2 {
+  min-width: 64px;
+  padding: 4px;
+  border-radius: 12px;
+  background: white;
+  border: 1px solid rgba(45, 90, 39, 0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.word-card-root.variant-2 .card-word-display {
+  padding: 2px 4px;
+}
+
+.word-card-root.variant-2 .card-bottom-meta {
+  height: 20px;
+  border-top: none;
+  background: transparent;
+}
+
+.word-card-root.variant-2 .card-transliteration {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+/* --- Variant 3: Minimal Card --- */
+.word-card-root.variant-3 {
+  flex-direction: row;
+  height: 48px;
+  padding: 0 12px;
+  border-radius: 100px;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border: 1px solid rgba(45, 90, 39, 0.08);
+}
+
+.word-card-root.variant-3 .card-word-display {
+  flex: 0 0 auto;
+  padding: 0;
+}
+
+.word-card-root.variant-3 .u-text {
+  font-size: 1.2rem !important;
+}
+
+/* Specific Context Fixes */
+.yes-btn { background: #e8f5e9 !important; border-color: #2D5A27 !important; }
+.no-btn { background: #ffebee !important; border-color: #DC2626 !important; }
+
+.prompt-card {
+  background: var(--color-primary) !important;
+  color: white !important;
+  border-color: var(--color-accent) !important;
+}
+
+.prompt-card .u-text,
+.prompt-card .card-translation,
+.prompt-card .card-transliteration,
+.prompt-card .card-icon-top-left {
+  color: white !important;
+  opacity: 1 !important;
+}

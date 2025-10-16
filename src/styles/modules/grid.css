@@ -1,0 +1,38 @@
+/* --- Main Grid Area --- */
+.main-content-area { 
+  flex: 1; 
+  overflow-y: auto; 
+  padding: 12px 12px clamp(180px, 40dvh, 220px) 12px;
+  scrollbar-width: none; 
+}
+.main-content-area::-webkit-scrollbar { display: none; }
+
+.smart-grid-apple {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 10px;
+}
+
+/* --- Quote Banner --- */
+.quote-banner {
+  grid-column: span 2;
+  padding: 24px;
+  background: white;
+  border-radius: 20px;
+  border: 1px dashed var(--color-accent);
+  text-align: center;
+  margin-top: 12px;
+}
+
+.quote-banner-ur { 
+  font-family: var(--font-ur); 
+  font-size: 1.6rem; 
+  color: var(--color-primary); 
+  margin-bottom: 8px; 
+}
+
+.quote-banner-en { 
+  font-size: 0.95rem; 
+  color: var(--color-text-muted); 
+  font-style: italic; 
+}

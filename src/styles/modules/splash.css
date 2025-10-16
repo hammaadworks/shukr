@@ -1,0 +1,98 @@
+/* --- Splash Screen --- */
+.splash-screen {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, #FDFBF7 0%, #F5F1E6 100%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  text-align: center;
+}
+
+.splash-logo {
+  font-family: var(--font-ur);
+  font-size: 5rem;
+  font-weight: 900;
+  color: var(--color-primary);
+  margin-bottom: 32px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.splash-quote {
+  max-width: 500px;
+  margin-bottom: 48px;
+}
+
+.splash-quote-ur {
+  font-family: var(--font-ur);
+  font-size: 1.8rem;
+  color: var(--color-primary);
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.splash-quote-en {
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.splash-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.loader-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(45, 90, 39, 0.1);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loader-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.loader-text-en {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.offline-badge {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(31, 41, 55, 0.9);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  z-index: 10000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  backdrop-filter: blur(10px);
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes slideUp { from { transform: translate(-50%, 100%); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }

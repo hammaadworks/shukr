@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap');
+
+/* --- Shukr Unified Design Tokens (MASTER) --- */
+:root {
+  --color-primary: #2D5A27; /* Deep Sage Green (Calming & Spiritual) */
+  --color-accent: #D4AF37;  /* Soft Gold (Empathy & Warmth) */
+  --color-bg: #FDFBF7;      /* Warm Cream (Tactile feel) */
+  --color-surface: #FFFFFF;
+  --color-text: #1F2937;
+  --color-text-muted: #6B7280;
+  --color-danger: #DC2626;
+  --radius-empathy: 24px;
+  --shadow-soft: 0 10px 25px -5px rgba(45, 90, 39, 0.1), 0 8px 10px -6px rgba(45, 90, 39, 0.1);
+  --font-main: 'Inter', sans-serif;
+  --font-ur: 'Noto Nastaliq Urdu', serif;
+}
