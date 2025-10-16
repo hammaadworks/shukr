@@ -13,6 +13,8 @@
 @import './modules/splash.css';
 @import './modules/gesture.css';
 @import './modules/voice-studio.css';
+@import './modules/doodle.css';
+@import './modules/settings.css';
 
 /* Extra Utility Classes */
 .listening-pulse {

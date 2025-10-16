@@ -1,6 +1,5 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import './styles/app.css';
-import './styles/settings.css';
 import './hooks/useLanguage';
 import { LanguageProvider, useLanguage } from './hooks/useLanguage';
 import { useAudio } from './hooks/useAudio';
@@ -297,12 +296,68 @@ const AppContent = () => {
       }));
   }, [sentence, allItems, isUrdu, speak, contextualSuggestions]);
 
+  const navigableActions = useMemo(() => {
+    const actions: (() => void)[] = [];
+
+    // 0: Backspace
+    actions.push(() => {
+      setSentence(prev => prev.slice(0, -1));
+      playClick();
+    });
+    // 1: Clear
+    actions.push(() => {
+      setSentence([]);
+      playClick();
+    });
+    // 2: Play
+    actions.push(() => {
+      playSentence();
+    });
+
+    // 3 to 3+predictions.length-1: Predictions
+    predictions.forEach(p => actions.push(p.onClick));
+
+    // Grid Items
+    gridItems.forEach((g: any) => actions.push(g.onClick));
+
+    // Footer Actions
+    actions.push(() => {
+      playClick();
+      setCurrentCategory('cat_fav' === currentCategory ? null : 'cat_fav');
+      setFocusedIndex(-1);
+      setSearchQuery('');
+    }); // fav
+    actions.push(() => {
+      playClick();
+      setCurrentCategory('khandan' === currentCategory ? null : 'khandan');
+      setFocusedIndex(-1);
+      setSearchQuery('');
+    }); // fam
+    actions.push(() => {
+      playClick();
+      navigate('#doodle');
+    }); // doodle
+    actions.push(() => {
+      speak(isUrdu ? 'ہاں' : 'Yes', 'sys_yes');
+      setSentence(prev => [...prev, { id: 'sys_yes', en: 'Yes', ur: 'ہاں', isWord: true }]);
+    }); // Yes
+    actions.push(() => {
+      speak(isUrdu ? 'نہیں' : 'No', 'sys_no');
+      setSentence(prev => [...prev, { id: 'sys_no', en: 'No', ur: 'نہیں', isWord: true }]);
+    }); // No
+
+    // Quote
+    actions.push(handleNextQuote);
+
+    return actions;
+  }, [sentence, playSentence, predictions, gridItems, currentCategory, navigate, speak, isUrdu, handleNextQuote, playClick, setSentence, setCurrentCategory, setFocusedIndex, setSearchQuery]);
+
   const actionHandlerRef = useRef<(action: GestureAction) => void>(undefined);
   const { isEnabled, isRecognitionActive, toggleTracking, videoRef, isModelLoaded } = useCameraGestures((action) => actionHandlerRef.current?.(action));
 
   const handleGestureAction = useCallback((action: GestureAction) => {
     setLastGesture(action);
-    
+
     setTimeout(() => {
       setLastGesture('');
     }, 2000);
@@ -317,12 +372,30 @@ const AppContent = () => {
           window.location.href = `tel:${config.emergency_contacts[0].phone}`;
         }
         break;
-      case 'HOME': setSentence([]); setCurrentCategory(null); setFocusedIndex(-1); break;
-      case 'CLEAR': setSentence([]); setCurrentCategory(null); setFocusedIndex(-1); break;
+      case 'HOME': 
+      case 'CLEAR': 
+        setSentence([]); setCurrentCategory(null); setFocusedIndex(-1); 
+        playClick();
+        break;
       case 'TOGGLE_RECOGNITION': playClick(); break;
+      case 'NEXT': 
+        setFocusedIndex(prev => (prev + 1) % navigableActions.length);
+        playClick();
+        break;
+      case 'PREV':
+        setFocusedIndex(prev => prev <= 0 ? navigableActions.length - 1 : prev - 1);
+        playClick();
+        break;
+      case 'SELECT':
+        setFocusedIndex(prev => {
+          if (prev >= 0 && prev < navigableActions.length) {
+            navigableActions[prev]();
+          }
+          return prev;
+        });
+        break;
     }
-  }, [playClick, speak, isUrdu, playSentence, config]);
-
+  }, [playClick, speak, isUrdu, playSentence, config, navigableActions]);
   useEffect(() => {
     actionHandlerRef.current = handleGestureAction;
   }, [handleGestureAction]);
@@ -396,47 +469,46 @@ const AppContent = () => {
                 focusedIndex={focusedIndex}
                 offset={3}
               />
-              <WordGrid 
+              <WordGrid
                 gridItems={gridItems}
                 focusedIndex={focusedIndex}
                 offset={3 + predictions.length}
                 randomQuote={randomQuote}
                 onNextQuote={handleNextQuote}
-                quoteFocused={focusedIndex === 3 + predictions.length + gridItems.length + displayCategories.length}
+                quoteFocused={focusedIndex === 3 + predictions.length + gridItems.length + 5}
                 onLongPressItem={(item) => toggleFavorite(item.id)}
                 favorites={config?.favorites || []}
-              />
-            </div>
+              />            </div>
           </>
         )}
       </div>
 
-      <Footer 
-        categories={displayCategories}
-        currentCategory={currentCategory}
-        onCategoryClick={(catId) => {
-          playClick();
-          if (route !== '#') navigate('#');
-          setCurrentCategory(catId === currentCategory ? null : catId);
-          setFocusedIndex(-1);
-          setSearchQuery('');
-        }}
-        onDoodleClick={() => {
-          playClick();
-          if (route === '#doodle') navigate('#');
-          else navigate('#doodle');
-        }}
-        onYesClick={() => {
-          speak(isUrdu ? 'ہاں' : 'Yes', 'sys_yes');
-          setSentence(prev => [...prev, { id: 'sys_yes', en: 'Yes', ur: 'ہاں', isWord: true }]);
-        }}
-        onNoClick={() => {
-          speak(isUrdu ? 'نہیں' : 'No', 'sys_no');
-          setSentence(prev => [...prev, { id: 'sys_no', en: 'No', ur: 'نہیں', isWord: true }]);
-        }}
-        focusedIndex={focusedIndex}
-        offset={3 + predictions.length + gridItems.length}
-      />
+      {route === '#' && (
+        <Footer 
+          categories={displayCategories}
+          currentCategory={currentCategory}
+          onCategoryClick={(catId) => {
+            playClick();
+            setCurrentCategory(catId === currentCategory ? null : catId);
+            setFocusedIndex(-1);
+            setSearchQuery('');
+          }}
+          onDoodleClick={() => {
+            playClick();
+            navigate('#doodle');
+          }}
+          onYesClick={() => {
+            speak(isUrdu ? 'ہاں' : 'Yes', 'sys_yes');
+            setSentence(prev => [...prev, { id: 'sys_yes', en: 'Yes', ur: 'ہاں', isWord: true }]);
+          }}
+          onNoClick={() => {
+            speak(isUrdu ? 'نہیں' : 'No', 'sys_no');
+            setSentence(prev => [...prev, { id: 'sys_no', en: 'No', ur: 'نہیں', isWord: true }]);
+          }}
+          focusedIndex={focusedIndex}
+          offset={3 + predictions.length + gridItems.length}
+        />
+      )}
 
       {showSOS && (
         <SOSModal 
