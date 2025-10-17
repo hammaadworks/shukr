@@ -1,10 +1,10 @@
 /* --- Unified Smart Dock (The Top Floating Pill) --- */
 .top-system-area {
-  padding: 0 16px 12px 16px;
+  padding: 0 8px 4px 8px;
   background: transparent;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0; /* Merge builder and predictions */
   flex-shrink: 0;
 }
 
@@ -12,10 +12,10 @@
 .glass-container {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
-  border-radius: 28px;
-  padding: 12px 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  border: 1.5px solid rgba(45, 90, 39, 0.1);
+  border-radius: 24px;
+  padding: 8px 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  border: 1px solid rgba(45, 90, 39, 0.1);
   width: 100%;
   box-sizing: border-box;
 }
@@ -23,32 +23,39 @@
 .sentence-dock-glass {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: none;
 }
 
 .prediction-scroller, .doodle-predictions-bar {
   display: flex;
-  gap: 8px;
-  align-items: center;
-  overflow: hidden !important; /* No scrolling as requested */
-  flex-wrap: wrap !important; /* Fit in two lines */
-  min-height: 120px; /* Space for 2 rows of compact cards */
-  max-height: 128px;
-  justify-content: center; /* Center them if few, fit more if many */
+  gap: 6px;
+  align-items: flex-start;
+  overflow: hidden !important;
+  flex-wrap: wrap !important;
+  min-height: 96px; /* Optimized for 2 compact rows */
+  max-height: 104px;
+  justify-content: flex-start;
+  padding-top: 8px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
 }
 
 .prediction-scroller .word-card-root, 
 .doodle-predictions-bar .word-card-root {
-  flex: 0 0 auto; /* Prevent shrinking/stretching */
+  flex: 0 0 auto;
   width: auto !important;
-  min-width: 80px;
+  min-width: 72px;
 }
 
 .smart-input-area {
   display: flex;
   align-items: center;
-  gap: 10px;
-  min-height: 48px;
+  gap: 8px;
+  min-height: 40px;
   width: 100%;
 }
 
@@ -56,11 +63,11 @@
   flex: 1;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
   scrollbar-width: none;
-  max-height: 168px; /* Approx 3 lines of cards (52px each + gaps) */
-  overflow: hidden; /* Fit maximum words, but limit lines */
+  max-height: 120px;
+  overflow: hidden;
 }
 .builder-scroll::-webkit-scrollbar { display: none; }
 
@@ -68,29 +75,30 @@
   flex: 1;
   border: none;
   background: transparent;
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--color-text);
   padding: 0;
-  min-width: 80px;
+  min-width: 60px;
 }
 .search-input-dock:focus { outline: none; }
 
 .dock-actions {
   display: flex;
-  gap: 6px;
+  gap: 4px;
   border-top: 1px solid rgba(0,0,0,0.05);
-  padding-top: 6px;
+  padding-top: 4px;
 }
 
 .btn-dock-ios {
-  padding: 8px 12px;
+  padding: 6px 10px;
+  height: 36px;
   border-radius: 10px;
   font-weight: 700;
   border: 1px solid rgba(45, 90, 39, 0.1);
   background: white;
   color: var(--color-primary);
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   display: flex;
   align-items: center;
   justify-content: center;

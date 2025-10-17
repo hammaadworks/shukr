@@ -12,8 +12,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 16px;
-  height: 72px; /* Slimmer height */
+  padding: 4px 16px;
+  height: 60px; /* Slimmer height */
   width: 100%;
   position: relative;
 }
@@ -21,14 +21,14 @@
 .dock-section {
   display: flex;
   align-items: center;
-  gap: 20px; /* Better horizontal spacing */
+  gap: 12px;
   height: 100%;
 }
 
 .dock-left { flex: 1; justify-content: flex-start; }
 .dock-right { flex: 1; justify-content: flex-end; }
 .dock-center { 
-  flex: 0 0 72px;
+  flex: 0 0 60px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,11 +46,7 @@
 }
 
 .doodle-floating-label {
-  font-family: var(--font-ur);
-  font-size: 0.85rem;
-  font-weight: 800;
-  color: var(--color-primary);
-  margin-top: 36px; /* Below the floating button */
+  display: none; /* Hide label to save space as requested */
 }
 
 .bar-category-btn {
@@ -62,50 +58,50 @@
   border: none;
   color: var(--color-primary);
   cursor: pointer;
-  min-width: 60px;
+  min-width: 50px;
   height: 100%;
-  gap: 2px;
+  gap: 1px;
 }
 
 .bar-category-btn .dock-label {
   font-family: var(--font-ur);
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 800;
   color: inherit;
 }
 
 .big-round-doodle-btn {
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   background: var(--color-primary);
-  border: 4px solid white;
-  box-shadow: 0 8px 24px rgba(45, 90, 39, 0.3);
+  border: 3px solid white;
+  box-shadow: 0 6px 16px rgba(45, 90, 39, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: transform 0.2s;
   position: absolute;
-  top: -32px; /* Balanced floating */
+  top: -28px;
 }
 
 .big-round-doodle-btn:active { transform: scale(0.9) translateY(4px); }
 
 .footer-quick-actions {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
 }
 
 .footer-mini-card {
-  width: 52px !important;
-  height: 52px !important;
+  width: 44px !important;
+  height: 44px !important;
   aspect-ratio: 1/1 !important;
-  border-radius: 14px !important;
+  border-radius: 12px !important;
   padding: 0 !important;
   box-shadow: none !important;
-  border: 2px solid rgba(45, 90, 39, 0.1) !important;
+  border: 1.5px solid rgba(45, 90, 39, 0.1) !important;
   display: flex;
   align-items: center;
   justify-content: center;
