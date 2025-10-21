@@ -9,44 +9,71 @@
 .integrated-smart-bar.brand-dock-style {
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(25px);
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
   align-items: center;
+  justify-items: center;
   justify-content: space-between;
   padding: 4px 16px;
-  height: 60px; /* Slimmer height */
+  height: 80px; /* Made slightly bigger */
   width: 100%;
   position: relative;
+  gap: 8px;
 }
 
 .dock-section {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  height: 100%;
+  display: contents; /* Strip out intermediate div wrapping for grid */
 }
 
-.dock-left { flex: 1; justify-content: flex-start; }
-.dock-right { flex: 1; justify-content: flex-end; }
-.dock-center { 
-  flex: 0 0 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
+/* Center element handling */
 .doodle-btn-wrapper {
-  position: absolute;
-  top: 0;
+  position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: 100%;
+  grid-column: 3;
 }
 
-.doodle-floating-label {
-  display: none; /* Hide label to save space as requested */
+.big-round-doodle-btn {
+  width: 60px; /* Adjusted to match mini cards better */
+  height: 60px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 3px solid white;
+  box-shadow: 0 4px 12px rgba(45, 90, 39, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.bar-category-btn:active, .big-round-doodle-btn:active, .footer-mini-card:active {
+  transform: scale(0.92);
+  opacity: 0.8;
+}
+
+.bar-category-btn.active-category {
+  color: var(--color-accent);
+  background: rgba(45, 90, 39, 0.05);
+  border-radius: 12px;
+}
+
+.footer-mini-card {
+  width: 100% !important;
+  max-width: 60px;
+  height: 60px !important;
+  aspect-ratio: 1/1 !important;
+  border-radius: 16px !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  border: 1.5px solid rgba(45, 90, 39, 0.1) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .bar-category-btn {
@@ -70,42 +97,8 @@
   color: inherit;
 }
 
-.big-round-doodle-btn {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: var(--color-primary);
-  border: 3px solid white;
-  box-shadow: 0 6px 16px rgba(45, 90, 39, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.2s;
-  position: absolute;
-  top: -28px;
-}
-
-.big-round-doodle-btn:active { transform: scale(0.9) translateY(4px); }
-
-.footer-quick-actions {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.footer-mini-card {
-  width: 44px !important;
-  height: 44px !important;
-  aspect-ratio: 1/1 !important;
-  border-radius: 12px !important;
-  padding: 0 !important;
-  box-shadow: none !important;
-  border: 1.5px solid rgba(45, 90, 39, 0.1) !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.footer-mini-card.yes-btn { grid-column: 4; }
+.footer-mini-card.no-btn { grid-column: 5; }
 
 .bar-category-btn.focused-item {
   color: var(--color-accent);

@@ -80,6 +80,18 @@ const AppContent = () => {
   }, [config, refreshWords]);
   const [canAddWords, setCanAddWords] = useState(true); 
   const [flashSentenceBuilder, setFlashSentenceBuilder] = useState(false); 
+  const [showYesFlash, setShowYesFlash] = useState(false);
+  const [showNoFlash, setShowNoFlash] = useState(false);
+
+  const triggerYesFlash = useCallback(() => {
+    setShowYesFlash(true);
+    setTimeout(() => setShowYesFlash(false), 800);
+  }, []);
+
+  const triggerNoFlash = useCallback(() => {
+    setShowNoFlash(true);
+    setTimeout(() => setShowNoFlash(false), 800);
+  }, []);
 
   // Default Emergency Contacts & Favorites if none exist
   useEffect(() => {
@@ -227,12 +239,22 @@ const AppContent = () => {
   const handleAddCustomWord = async (item: any) => {
     if (!config || !config.categories) return;
     const newConfig = { ...config, categories: [...config.categories] };
-    let customCat = newConfig.categories.find((c: any) => c.id === 'cat_custom');
-    if (!customCat) {
-      customCat = { id: 'cat_custom', label_ur: 'میرے الفاظ', label_en: 'My Words', icon: 'star', items: [] };
-      newConfig.categories.push(customCat);
+    const targetCatId = item.categoryId || 'cat_custom';
+    
+    let targetCat = newConfig.categories.find((c: any) => c.id === targetCatId);
+    if (!targetCat) {
+      if (targetCatId === 'cat_custom') {
+        targetCat = { id: 'cat_custom', label_ur: 'میرے الفاظ', label_en: 'My Words', icon: 'star', items: [] };
+      } else if (targetCatId === 'khandan') {
+        targetCat = { id: 'khandan', label_ur: 'خاندان', label_en: 'Family', icon: 'users', items: [] };
+      }
+      if (targetCat) newConfig.categories.push(targetCat);
     }
-    customCat.items = [...(customCat.items || []), item];
+    
+    if (targetCat) {
+      targetCat.items = [...(targetCat.items || []), item];
+    }
+    
     updateConfig(newConfig as any);
     setAddingWord(null);
   };
@@ -297,15 +319,18 @@ const AppContent = () => {
     } else if (!currentCategory) {
       // Home view: Show ALL words from all items, sorted by usageCount
       items = dbWords.length > 0 ? [...dbWords].sort((a, b) => (b.usageCount || 0) - (a.usageCount || 0)) : allItems;
-    } else if (currentCategory === 'cat_fav' || currentCategory === 'fav') {
+    } else if (currentCategory === 'cat_fav' || currentCategory === 'fav' || currentCategory === 'favorites') {
       const favs = config?.favorites || [];
       items = (dbWords.length > 0 ? dbWords : allItems).filter((i: any) => favs.includes(i.id));
     } else {
-      const targetId = currentCategory.startsWith('cat_') ? currentCategory.substring(4) : currentCategory;
+      const targetId = currentCategory === 'family' ? 'khandan' : 
+                       currentCategory.startsWith('cat_') ? currentCategory.substring(4) : 
+                       currentCategory;
       const cat = config?.categories?.find((c: any) => 
         c.id === currentCategory || 
         c.id === targetId || 
-        (targetId === 'fam' && (c.id === 'khandan' || c.id === 'family'))
+        (targetId === 'fam' && (c.id === 'khandan' || c.id === 'family')) ||
+        (targetId === 'khandan' && c.id === 'family')
       );
       
       const backItem = { 
@@ -315,6 +340,27 @@ const AppContent = () => {
       const catIds = (cat?.items || []).map((i: any) => i.id);
       const catItems = (dbWords.length > 0 ? dbWords : allItems).filter((i: any) => catIds.includes(i.id));
       items = [backItem, ...catItems];
+      
+      if (targetId === 'khandan' || targetId === 'family') {
+        items.push({
+          id: 'add_family_member',
+          ur: 'نیا ممبر؟',
+          en: 'Add Member?',
+          icon: 'user-plus',
+          isPrompt: true,
+          onClick: () => {
+            setAddingWord({
+              id: `word_${Date.now()}`,
+              en: '',
+              ur: '',
+              roman: '',
+              icon: 'user',
+              next: [],
+              categoryId: 'khandan'
+            });
+          }
+        });
+      }
     }
 
     return items.map((item: any) => {
@@ -602,19 +648,30 @@ const AppContent = () => {
         }}
         onDoodleClick={() => {
           playClick();
-          navigate('#doodle');
+          if (route === '#doodle') {
+            navigate('#');
+          } else {
+            navigate('#doodle');
+          }
         }}
         onYesClick={() => {
           speak(isUrdu ? 'ہاں' : 'Yes', 'sys_yes');
           setSentence(prev => [...prev, { id: 'sys_yes', en: 'Yes', ur: 'ہاں', isWord: true }]);
+          triggerYesFlash();
+          if (route === '#doodle') navigate('#');
         }}
         onNoClick={() => {
           speak(isUrdu ? 'نہیں' : 'No', 'sys_no');
           setSentence(prev => [...prev, { id: 'sys_no', en: 'No', ur: 'نہیں', isWord: true }]);
+          triggerNoFlash();
+          if (route === '#doodle') navigate('#');
         }}
         focusedIndex={focusedIndex}
         offset={route === '#' ? (5 + 3 + predictions.length + gridItems.length) : 5}
       />
+
+      {showYesFlash && <div className="screen-flash flash-green" />}
+      {showNoFlash && <div className="screen-flash flash-red" />}
 
       {showSOS && (
         <SOSModal 

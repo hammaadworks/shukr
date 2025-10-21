@@ -56,40 +56,40 @@
   width: 100%;
 }
 
-/* --- Variant 1: Hero Grid Card --- */
-.word-card-root.variant-1 { aspect-ratio: 1.45 / 1; }
-.word-card-root.variant-1 .card-icon-top-left { position: absolute; top: 10px; left: 10px; color: var(--color-primary); opacity: 0.3; }
-.word-card-root.variant-1 .card-bottom-meta { height: 32px; gap: 6px; padding: 0 8px; }
-.word-card-root.variant-1 .card-translation, .word-card-root.variant-1 .card-transliteration { font-size: 0.85rem; font-weight: 700; color: #4B5563; }
-.word-card-root.variant-1 .card-divider { color: var(--color-accent); opacity: 0.5; }
+/* --- Variant 1: Hero Grid Card (Made Smaller) --- */
+.word-card-root.variant-1 { aspect-ratio: 1.8 / 1; }
+.word-card-root.variant-1 .card-icon-top-left { position: absolute; top: 6px; left: 6px; color: var(--color-primary); opacity: 0.3; }
+.word-card-root.variant-1 .card-bottom-meta { height: 26px; gap: 4px; padding: 0 6px; }
+.word-card-root.variant-1 .card-translation, .word-card-root.variant-1 .card-transliteration { font-size: 0.7rem; font-weight: 700; color: #4B5563; }
+.word-card-root.variant-1 .card-divider { color: var(--color-accent); opacity: 0.5; font-size: 0.7rem; }
 
-/* --- Variant 2: Compact Card --- */
+/* --- Variant 2: Compact Card (Made Bigger) --- */
 .word-card-root.variant-2 {
-  min-width: 60px;
+  min-width: 90px;
   padding: 0;
-  border-radius: 14px;
+  border-radius: 16px;
   background: white;
-  border: 1px solid rgba(45, 90, 39, 0.1);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  border: 1.5px solid rgba(45, 90, 39, 0.12);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.06);
 }
-.word-card-root.variant-2 .card-word-display { padding: 4px 8px; min-height: 32px; }
+.word-card-root.variant-2 .card-word-display { padding: 6px 12px; min-height: 46px; }
 .word-card-root.variant-2 .card-bottom-meta { 
-  height: 24px; 
-  padding: 0 6px;
-  gap: 4px;
+  height: 30px; 
+  padding: 0 10px;
+  gap: 8px;
   background: rgba(45, 90, 39, 0.04);
-  border-top: 1px solid rgba(45, 90, 39, 0.06);
+  border-top: 1px solid rgba(45, 90, 39, 0.08);
 }
 .word-card-root.variant-2 .card-transliteration, 
 .word-card-root.variant-2 .card-translation { 
-  font-size: 0.65rem; 
+  font-size: 0.8rem; 
   font-weight: 700; 
   color: #4B5563; 
 }
 .word-card-root.variant-2 .card-divider { 
   color: var(--color-accent); 
   opacity: 0.5; 
-  font-size: 0.65rem;
+  font-size: 0.8rem;
 }
 /* --- Variant 3: Minimal Card --- */
 .word-card-root.variant-3 { flex-direction: row; height: 48px; padding: 0 12px; border-radius: 100px; align-items: center; justify-content: center; background: white; border: 1px solid rgba(45, 90, 39, 0.08); }

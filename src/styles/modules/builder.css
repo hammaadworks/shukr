@@ -12,7 +12,7 @@
 .glass-container {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
-  border-radius: 24px;
+  border-radius: 0; /* REMOVED DEFAULT ROUNDING */
   padding: 8px 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.06);
   border: 1px solid rgba(45, 90, 39, 0.1);
@@ -24,31 +24,34 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border-top-left-radius: 24px; /* Round ONLY top corners of the whole block */
+  border-top-right-radius: 24px;
   border-bottom: none;
 }
 
 .prediction-scroller, .doodle-predictions-bar {
   display: flex;
-  gap: 6px;
-  align-items: flex-start;
+  gap: 8px;
+  align-content: flex-start;
   overflow: hidden !important;
   flex-wrap: wrap !important;
-  min-height: 96px; /* Optimized for 2 compact rows */
-  max-height: 104px;
+  min-height: auto;
+  max-height: 180px; /* ~2 lines of V2 cards + padding */
   justify-content: flex-start;
-  padding-top: 8px;
+  padding: 8px 12px 8px 12px;
   border-top: 1px solid rgba(0,0,0,0.05);
-  border-top-left-radius: 0 !important;
-  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 24px !important; /* Round ONLY bottom corners of the whole block */
+  border-bottom-right-radius: 24px !important;
+  scrollbar-width: none;
 }
+.prediction-scroller::-webkit-scrollbar, .doodle-predictions-bar::-webkit-scrollbar { display: none; }
 
 .prediction-scroller .word-card-root, 
 .doodle-predictions-bar .word-card-root {
   flex: 0 0 auto;
   width: auto !important;
   min-width: 72px;
+  margin-bottom: 4px;
 }
 
 .smart-input-area {
@@ -66,10 +69,17 @@
   gap: 6px;
   align-items: center;
   scrollbar-width: none;
-  max-height: 120px;
-  overflow: hidden;
+  max-height: 250px; /* Up to ~3 lines max */
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .builder-scroll::-webkit-scrollbar { display: none; }
+
+.builder-scroll .word-card-root {
+  flex: 0 0 auto;
+  width: auto !important;
+  min-width: 80px;
+}
 
 .search-input-dock {
   flex: 1;
