@@ -18,12 +18,9 @@ export interface GestureMapping {
 }
 
 export const FIXED_GESTURE_MAP: Record<string, GestureAction> = {
-  mouth_open: 'SPEAK',
   fist: 'SELECT',
-  thumb_up: 'YES',
-  peace_sign: 'SALAM',
   one_finger: 'NEXT',
   two_fingers: 'PREV',
-  three_fingers: 'DOODLE',
+  thumb_up: 'YES',
   palm: 'CLEAR'
 };
