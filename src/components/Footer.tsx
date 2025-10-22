@@ -29,61 +29,59 @@ export const Footer: React.FC<FooterProps> = ({
   onNoClick,
   focusedIndex,
   offset,
+  currentCategory,
 }) => {
   return (
     <div className="bottom-system-area">
       <div className="integrated-smart-bar central-dock brand-dock-style">
-        {/* Left: Quick Affirmations (Urdu UX: Start here) */}
-        <div className="dock-section dock-left">
-          <div className="footer-quick-actions">
-            <WordCard
-              variant={2}
-              item={{ id: 'sys_yes', ur: 'ہاں', en: 'Yes' }}
-              isFocused={focusedIndex === offset + 3}
-              onClick={onYesClick}
-              className="yes-btn footer-mini-card"
-            />
-            <WordCard
-              variant={2}
-              item={{ id: 'sys_no', ur: 'نہیں', en: 'No' }}
-              isFocused={focusedIndex === offset + 4}
-              onClick={onNoClick}
-              className="no-btn footer-mini-card"
-            />
-          </div>
-        </div>
+        {/* 1: Favorite */}
+        <button 
+          className={`bar-category-btn ${focusedIndex === offset ? 'focused-item' : ''} ${currentCategory === 'cat_fav' || currentCategory === 'favorites' ? 'active-category' : ''}`}
+          onClick={() => onCategoryClick('cat_fav')}
+          style={{ gridColumn: 1 }}
+        >
+          <Heart size={24} />
+          <span className="dock-label">پسندیدہ</span>
+        </button>
 
-        {/* Center: Action */}
-        <div className="dock-section dock-center">
-          <div className="doodle-btn-wrapper">
-            <button 
-              className={`big-round-doodle-btn ${focusedIndex === offset + 2 ? 'focused-item' : ''}`}
-              onClick={onDoodleClick}
-              aria-label="Draw"
-            >
-              <Waves size={28} color="white" strokeWidth={2.5} />
-            </button>
-          </div>
-        </div>
+        {/* 2: Family */}
+        <button 
+          className={`bar-category-btn ${focusedIndex === offset + 1 ? 'focused-item' : ''} ${currentCategory === 'khandan' || currentCategory === 'family' ? 'active-category' : ''}`}
+          onClick={() => onCategoryClick('khandan')}
+          style={{ gridColumn: 2 }}
+        >
+          <Users size={24} />
+          <span className="dock-label">خاندان</span>
+        </button>
 
-        {/* Right: Collections */}
-        <div className="dock-section dock-right">
+        {/* 3: Center Action (Doodle) */}
+        <div className="doodle-btn-wrapper" style={{ gridColumn: 3 }}>
           <button 
-            className={`bar-category-btn ${focusedIndex === offset + 1 ? 'focused-item' : ''}`}
-            onClick={() => onCategoryClick('family')}
+            className={`big-round-doodle-btn ${focusedIndex === offset + 2 ? 'focused-item' : ''}`}
+            onClick={onDoodleClick}
+            aria-label="Draw"
           >
-            <Users size={24} />
-            <span className="dock-label">خاندان</span>
-          </button>
-          
-          <button 
-            className={`bar-category-btn ${focusedIndex === offset ? 'focused-item' : ''}`}
-            onClick={() => onCategoryClick('favorites')}
-          >
-            <Heart size={24} />
-            <span className="dock-label">پسندیدہ</span>
+            <Waves size={28} color="white" strokeWidth={2.5} />
           </button>
         </div>
+
+        {/* 4: Yes */}
+        <WordCard
+          variant={2}
+          item={{ id: 'sys_yes', ur: 'ہاں', en: 'Yes' }}
+          isFocused={focusedIndex === offset + 3}
+          onClick={onYesClick}
+          className="yes-btn footer-mini-card"
+        />
+
+        {/* 5: No */}
+        <WordCard
+          variant={2}
+          item={{ id: 'sys_no', ur: 'نہیں', en: 'No' }}
+          isFocused={focusedIndex === offset + 4}
+          onClick={onNoClick}
+          className="no-btn footer-mini-card"
+        />
       </div>
     </div>
   );

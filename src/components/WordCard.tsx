@@ -40,22 +40,22 @@ export const WordCard: React.FC<WordCardProps> = ({
     
     if (variant === 1) {
       if (isUrdu) {
-        if (len > 10) return '1.4rem';
-        if (len > 6) return '1.8rem';
-        return '2.2rem'; // Adjusted for perfect fit
-      } else {
         if (len > 10) return '1.2rem';
-        if (len > 6) return '1.5rem';
-        return '1.8rem'; // Reduced English base size
+        if (len > 6) return '1.6rem';
+        return '2.0rem'; // Adjusted for perfect fit, smaller
+      } else {
+        if (len > 10) return '1.1rem';
+        if (len > 6) return '1.3rem';
+        return '1.6rem'; // Reduced English base size
       }
     }
     if (variant === 2) {
       if (isUrdu) {
-        if (len > 10) return '0.75rem';
-        return '0.85rem'; // Reduced to fit mini cards
+        if (len > 10) return '0.85rem';
+        return '0.95rem'; // Increased to fit mini cards
       } else {
-        if (len > 10) return '0.7rem';
-        return '0.8rem';
+        if (len > 10) return '0.8rem';
+        return '0.9rem';
       }
     }
     return isUrdu ? '1.1rem' : '1rem';

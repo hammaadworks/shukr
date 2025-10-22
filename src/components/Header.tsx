@@ -50,9 +50,9 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="apple-header consistent-header" dir="ltr">
-      <div className="header-main-row">
-        {/* Left: Functional Controls */}
-        <div className="header-group-left header-gap-wide">
+      <div className="header-grid-layout">
+        {/* 1fr: Camera */}
+        <div className="header-cell">
           <button 
             className={`btn-icon-ios ${isTrackingEnabled ? 'active' : ''} ${focusedIndex === 0 ? 'focused-item' : ''}`}
             onClick={() => { playClick(); toggleTracking(); }}
@@ -61,7 +61,10 @@ export const Header: React.FC<HeaderProps> = ({
             {isTrackingEnabled ? <Camera size={22} /> : <CameraOff size={22} />}
             {isTrackingEnabled && !isModelLoaded && <div className="loading-dot-ios-mini" />}
           </button>
+        </div>
 
+        {/* 1fr: Mic */}
+        <div className="header-cell">
           <button 
             className={`btn-icon-ios ${isListening ? 'active listening-pulse' : ''} ${focusedIndex === 1 ? 'focused-item' : ''}`}
             onClick={() => { playClick(); toggleListening(); }}
@@ -71,8 +74,8 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         </div>
 
-        {/* Center: Branding (Single Tap Home, Long SOS) */}
-        <div className="header-group-center">
+        {/* 2fr: Shukr (Branding) */}
+        <div className="header-cell span-2">
           <ShukrButton 
             onSOS={onSOS} 
             onHome={onHome}
@@ -83,8 +86,8 @@ export const Header: React.FC<HeaderProps> = ({
           />
         </div>
 
-        {/* Right: Preference Controls */}
-        <div className="header-group-right header-gap-wide">
+        {/* 1fr: Language */}
+        <div className="header-cell">
           <button 
             className={`btn-icon-ios lang-switcher-pill ${focusedIndex === 3 ? 'focused-item' : ''}`}
             onClick={toggleLang}
@@ -95,7 +98,10 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="lang-label en">EN</span>
             </div>
           </button>
+        </div>
 
+        {/* 1fr: Settings */}
+        <div className="header-cell">
           <button 
             className={`btn-icon-ios ${focusedIndex === 4 ? 'focused-item' : ''}`}
             onClick={() => { playClick(); onOpenSettings(); }}

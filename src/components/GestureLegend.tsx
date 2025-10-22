@@ -9,14 +9,11 @@ export const GestureLegend: React.FC<GestureLegendProps> = ({ lastGesture }) => 
   const { isUrdu } = useLanguage();
 
   const gestures = [
-  { id: 'SELECT', icon: '✊', labelEn: 'Select', labelUr: 'منتخب کریں' },
-  { id: 'NEXT', icon: '☝️', labelEn: 'Next', labelUr: 'اگلا' },
-  { id: 'PREV', icon: '✌️', labelEn: 'Prev', labelUr: 'پچھلا' },
-  { id: 'SALAM', icon: '✌️', labelEn: 'Salam', labelUr: 'سلام' },
-  { id: 'YES', icon: '👍', labelEn: 'Yes', labelUr: 'جی ہاں' },
-  { id: 'DOODLE', icon: '🤟', labelEn: 'Doodle', labelUr: 'ڈوڈل' },
-  { id: 'SPEAK', icon: '😮', labelEn: 'Speak', labelUr: 'بولیں' },
-  { id: 'CLEAR', icon: '🖐️', labelEn: 'Clear', labelUr: 'صاف کریں' },
+    { id: 'SELECT', icon: '✊', labelEn: 'Select', labelUr: 'منتخب کریں' },
+    { id: 'NEXT', icon: '☝️', labelEn: 'Next', labelUr: 'اگلا' },
+    { id: 'PREV', icon: '✌️', labelEn: 'Prev', labelUr: 'پچھلا' },
+    { id: 'YES', icon: '👍', labelEn: 'Yes', labelUr: 'جی ہاں' },
+    { id: 'CLEAR', icon: '🖐️', labelEn: 'Clear', labelUr: 'صاف کریں' },
   ];
   return (
     <div className="gesture-legend-container" dir={isUrdu ? 'rtl' : 'ltr'}>

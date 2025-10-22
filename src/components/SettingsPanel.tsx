@@ -409,26 +409,13 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ config, updateConf
 
         {/* Edit Form */}
         {editingItem && (
-          <div className="edit-form simple-form">
-            <WordEditor 
-              item={editingItem} 
-              isNew={editMode === 'new'}
-              onChange={(newItem) => setEditingItem({ ...editingItem, ...newItem })} 
-              onSave={handleSave}
-              onDelete={handleDelete}
-            />
-
-            {editingType === 'quote' && (
-              <div className="form-group large-group" style={{ marginTop: '-20px', marginBottom: '20px' }}>
-                <label>Source (حوالہ)</label>
-                <input 
-                  type="text" className="massive-input" 
-                  value={editingItem.source} 
-                  onChange={e => setEditingItem({...editingItem, source: e.target.value})} 
-                />
-              </div>
-            )}
-          </div>
+          <WordEditor 
+            item={editingItem} 
+            isNew={editMode === 'new'}
+            onChange={(newItem) => setEditingItem({ ...editingItem, ...newItem })} 
+            onSave={handleSave}
+            onDelete={handleDelete}
+          />
         )}
       </div>
     </div>

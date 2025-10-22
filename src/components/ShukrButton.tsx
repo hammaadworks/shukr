@@ -1,4 +1,5 @@
 import React, { useRef, useState, useCallback } from 'react';
+import { Home } from 'lucide-react';
 
 interface ShukrButtonProps {
   onSOS: () => void;
@@ -80,7 +81,9 @@ export const ShukrButton: React.FC<ShukrButtonProps> = ({
       onContextMenu={(e) => e.preventDefault()}
     >
       <div className="brand-badge-inner">
-        <span className="brand-badge">Shukr</span>
+        <Home size={18} color="var(--color-accent)" strokeWidth={2.5} />
+        <div className="shukr-home-divider" />
+        <span className="brand-badge-text">Shukr</span>
       </div>
       {isPressing && <div className="press-progress-bar" />}
       {hasUnsyncedChanges && !isPressing && <div className="shukr-sync-indicator" />}
