@@ -1,73 +1,59 @@
-# React + TypeScript + Vite
+# Shukr: Adaptive Urdu-First AAC 🌙
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Shukr** (Arabic: "Gratitude") is a modern, offline-first Augmentative and Alternative Communication (AAC) platform. It is specifically designed to help seniors and individuals with mobility or speech challenges communicate their daily needs effectively, with a focus on **Urdu-first** accessibility and **gesture-driven** interaction.
 
-Currently, two official plugins are available:
+[![Vercel Deployment](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)](https://shukr.vercel.app)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![Shukr Banner](shukr_shots/hero.png)
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+-   🌍 **Urdu-First Design:** Full support for Urdu (Nastaliq script) and English, with built-in transliteration support.
+-   🖐️ **Gesture Recognition:** Control the app without touching the screen. Use face and hand gestures (Mouth Open, Pointing) to navigate and select words.
+-   🎨 **Doodle Mode:** Communicate through sketches and hand-drawn symbols, powered by local machine learning.
+-   🎙️ **Voice Studio:** Record custom voices for family members to make communication feel personal and familiar.
+-   🧠 **Adaptive Prediction:** Learns from user habits to suggest the most likely next word based on historical usage and time of day.
+-   👂 **Ambient Listener:** Voice-activated navigation and triggers for hands-free operation.
+-   💾 **Offline-First (PWA):** Works entirely offline once installed. Secure, private, and local-only data storage.
+-   📁 **Data Portability:** Export and import your entire configuration (Universe Porter) to sync across devices effortlessly.
 
-## Expanding the ESLint configuration
+## 🚀 Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### For Users (Installation)
+The easiest way to use Shukr is to visit the [Live App](https://shukr.vercel.app) and "Add to Home Screen" to install it as a PWA on your Android or iOS device.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### For Developers (Setup)
+```bash
+git clone https://github.com/hammaadworks/shukr.git
+cd shukr
+pnpm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📖 Documentation
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Explore our extensive documentation to get the most out of Shukr:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+-   **[Architecture Overview](./docs/architecture.md)**: Deep dive into the technical design.
+-   **[Design System](./docs/design-system.md)**: UI/UX principles, typography, and color palette.
+-   **[Getting Started](./docs/getting-started.md)**: Setup guide for users and developers.
+-   **[Customization Guide](./docs/customization.md)**: Add categories, words, and custom recordings.
+-   **[Gesture Control Guide](./docs/features/gestures.md)**: Learn how to control Shukr with face and hands.
+-   **[Doodle Mode](./docs/features/doodle.md)**: Sketch-based communication and training.
+-   **[Voice Studio](./docs/features/voice-studio.md)**: Managing custom voice recordings.
+-   **[Deployment & PWA](./docs/deployment.md)**: How to host and install Shukr.
+-   **[Contribution Guidelines](./docs/CONTRIBUTING.md)**: How to help improve Shukr.
+
+## 🤝 Contributing
+
+We welcome contributions! Whether it's fixing a bug, adding a new feature, or improving the documentation, please check our [Contributing Guide](./docs/CONTRIBUTING.md) to get started.
+
+## 📄 License
+
+This project is licensed under the [MIT License](./LICENSE).
+
+---
+
+Built with ❤️ by [hammaadworks](https://github.com/hammaadworks)
