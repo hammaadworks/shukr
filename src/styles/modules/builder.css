@@ -29,7 +29,7 @@
   border-bottom: none;
 }
 
-.prediction-scroller, .doodle-predictions-bar {
+.prediction-scroller, .doodle-predictions-bar, .word-predictions-container {
   display: flex;
   gap: 8px;
   align-content: flex-start;
@@ -44,16 +44,16 @@
   border-bottom-right-radius: 24px !important;
   scrollbar-width: none;
 }
-.prediction-scroller::-webkit-scrollbar, .doodle-predictions-bar::-webkit-scrollbar { display: none; }
+.prediction-scroller::-webkit-scrollbar, .doodle-predictions-bar::-webkit-scrollbar, .word-predictions-container::-webkit-scrollbar { display: none; }
 
-.prediction-scroller .word-card-root, 
-.doodle-predictions-bar .word-card-root {
+.prediction-scroller .word-card-root,
+.doodle-predictions-bar .word-card-root,
+.word-predictions-container .word-card-root {
   flex: 0 0 auto;
   width: auto !important;
   min-width: 72px;
   margin-bottom: 4px;
 }
-
 .smart-input-area {
   display: flex;
   align-items: center;

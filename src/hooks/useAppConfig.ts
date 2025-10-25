@@ -34,7 +34,6 @@ export const useAppConfig = () => {
   const [config, setConfig] = useState<AppConfig | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isOfflineMode, setIsOfflineMode] = useState(false);
 
   /**
    * Main Bootstrapping logic:
@@ -51,7 +50,6 @@ export const useAppConfig = () => {
       // If we are offline and have no local config, we use the BUNDLED fallback.
       if (!bootData && !localConfig) {
         console.warn('[AppConfig] Fetch failed and no local data. Using bundled fallback.');
-        setIsOfflineMode(true);
         await hydrateLocalDatabase(bootDataFallback as any);
         persistBootMetadata(bootDataFallback as any);
         setConfig(bootDataFallback as any);
@@ -171,5 +169,5 @@ export const useAppConfig = () => {
     await syncConfigToIndexedDB(newConfig);
   }, []);
 
-  return { config, isLoading, error, refresh: bootstrap, updateConfig, isOfflineMode };
+  return { config, isLoading, error, refresh: bootstrap, updateConfig };
 };

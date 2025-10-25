@@ -163,51 +163,70 @@
 /* --- Legend Style --- */
 .gesture-legend-container {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   margin-top: 8px;
   width: 100%;
   max-width: 600px;
   justify-content: center;
+  align-items: center;
   flex-wrap: nowrap;
 }
 
-.gesture-item {
+.gesture-mini-card {
   flex: 1;
+  min-width: 0 !important;
+  height: 60px !important; /* Fixed height for consistency */
+  padding: 0 !important;
+  background: #FFFDE7 !important; /* Soft yellow tint */
+  border: 1.5px solid #FBC02D !important; /* Yellow border */
+  border-radius: 12px !important;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+
+.gesture-mini-card .card-word-display {
+  padding: 4px 2px !important;
+  min-height: 36px !important;
+  display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.gesture-mini-card .u-text {
+  font-size: 1.4rem !important; /* Large emoji size */
+  line-height: 1 !important;
+}
+
+.gesture-mini-card .card-bottom-meta {
+  height: 22px !important;
+  display: flex !important; /* Re-enabled */
+  background: rgba(251, 192, 45, 0.1);
+  border-top: 1px solid rgba(251, 192, 45, 0.2);
   gap: 2px;
-  background: white;
-  border: 1px solid rgba(0,0,0,0.08);
-  padding: 6px 4px;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-  transition: all 0.2s ease;
-  min-width: 0;
-}
-
-.gesture-item.gesture-active {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-}
-
-.gesture-label {
-  font-size: 0.75rem;
+  padding: 0 4px;
   font-weight: 700;
-  color: var(--color-text-muted);
 }
 
-.gesture-icon {
-  font-size: 0.9rem;
+.gesture-mini-card .card-translation, 
+.gesture-mini-card .card-transliteration { 
+  font-size: 0.55rem !important; 
+  color: #5D4037 !important;
+  white-space: nowrap;
 }
 
-.gesture-item.gesture-active .gesture-label {
-  color: white;
+.gesture-mini-card .card-divider {
+  font-size: 0.55rem !important;
+  opacity: 0.4;
 }
 
-[dir="rtl"] .gesture-label {
-  font-family: var(--font-ur);
-  font-size: 0.8rem;
-  padding-top: 2px;
+.gesture-mini-card.focused-item {
+  background: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: white !important;
+  transform: scale(1.02);
+}
+
+.gesture-mini-card.focused-item .u-text {
+  color: white !important;
 }

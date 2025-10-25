@@ -1,25 +1,57 @@
 /* --- Gesture Recognition UI --- */
 .apple-gesture-preview {
   position: fixed;
-  top: 140px; 
-  left: 16px;
-  width: 90px; 
-  height: 120px; 
+  bottom: 110px; 
+  right: 16px;
+  width: 100px; 
+  height: 130px; 
   border-radius: 16px;
   overflow: hidden; 
-  z-index: 500;
+  z-index: 1500; /* Increased to be above almost everything */
   border: 3px solid var(--color-primary); 
-  box-shadow: 0 8px 16px rgba(45, 90, 39, 0.15);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
   background: black;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+  user-select: none;
+}
+
+.apple-gesture-preview.dragging {
+  transition: none !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  opacity: 0.9;
+}
+
+.pip-drag-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 24px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.apple-gesture-preview:hover .pip-drag-handle, 
+.apple-gesture-preview.dragging .pip-drag-handle {
+  opacity: 1;
+}
+
+.handle-bar {
+  width: 32px;
+  height: 4px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 10px;
 }
 
 @media (min-width: 768px) {
   .apple-gesture-preview {
-    width: 110px; 
-    height: 140px;
-    top: 150px; 
-    left: 20px; 
+    width: 130px; 
+    height: 170px;
   }
 }
 

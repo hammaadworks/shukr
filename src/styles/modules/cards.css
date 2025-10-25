@@ -56,8 +56,21 @@
   width: 100%;
 }
 
-/* --- Variant 1: Hero Grid Card (Made Smaller) --- */
-.word-card-root.variant-1 { aspect-ratio: 1.8 / 1; }
+/* --- Variant 1: Hero Grid Card (Dynamic Responsiveness) --- */
+.word-card-root.variant-1 { 
+  aspect-ratio: 1.2 / 1; /* Taller vertically on small screens */
+}
+
+.word-card-root.variant-1 .card-word-display {
+  padding: 12px 8px;
+}
+
+@media (min-width: 600px) {
+  .word-card-root.variant-1 { 
+    aspect-ratio: 2.1 / 1; /* More landscape/smaller on larger screens */
+  }
+}
+
 .word-card-root.variant-1 .card-icon-top-left { position: absolute; top: 6px; left: 6px; color: var(--color-primary); opacity: 0.3; }
 .word-card-root.variant-1 .card-bottom-meta { height: 26px; gap: 4px; padding: 0 6px; }
 .word-card-root.variant-1 .card-translation, .word-card-root.variant-1 .card-transliteration { font-size: 0.7rem; font-weight: 700; color: #4B5563; }
