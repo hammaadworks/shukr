@@ -1,4 +1,5 @@
 import React from 'react';
+import { WordCard } from './WordCard';
 import { useLanguage } from '../hooks/useLanguage';
 
 interface GestureLegendProps {
@@ -9,23 +10,32 @@ export const GestureLegend: React.FC<GestureLegendProps> = ({ lastGesture }) => 
   const { isUrdu } = useLanguage();
 
   const gestures = [
-    { id: 'SELECT', icon: '✊', labelEn: 'Select', labelUr: 'منتخب کریں' },
-    { id: 'NEXT', icon: '☝️', labelEn: 'Next', labelUr: 'اگلا' },
-    { id: 'PREV', icon: '✌️', labelEn: 'Prev', labelUr: 'پچھلا' },
-    { id: 'YES', icon: '👍', labelEn: 'Yes', labelUr: 'جی ہاں' },
-    { id: 'CLEAR', icon: '🖐️', labelEn: 'Clear', labelUr: 'صاف کریں' },
+    { id: 'CLEAR', emoji: '🖐️', en: 'Clear', ur: 'صاف کریں' },
+    { id: 'YES', emoji: '👍', en: 'Yes', ur: 'جی ہاں' },
+    { id: 'PREV', emoji: '✌️', en: 'Prev', ur: 'پچھلا' },
+    { id: 'NEXT', emoji: '☝️', en: 'Next', ur: 'اگلا' },
+    { id: 'SELECT', emoji: '✊', en: 'Select', ur: 'منتخب کریں' },
   ];
+
   return (
-    <div className="gesture-legend-container" dir={isUrdu ? 'rtl' : 'ltr'}>
-      {gestures.map((g) => {
-        const isActive = lastGesture === g.id;
-        return (
-          <div key={g.id} className={`gesture-item ${isActive ? 'gesture-active' : ''}`}>
-            <span className="gesture-icon">{g.icon}</span>
-            <span className="gesture-label mobile-small-text">{isUrdu ? g.labelUr : g.labelEn}</span>
-          </div>
-        );
-      })}
+    <div className="gesture-legend-container" dir="ltr">
+      {gestures.map((g) => (
+        <WordCard
+          key={g.id}
+          variant={2}
+          item={{
+            id: g.id,
+            ur: g.emoji,
+            en: g.emoji,
+            roman: g.en,
+            // We force the meta to show En | Ur by tricking the WordCard fields
+            ...(isUrdu ? { en: g.ur } : { ur: g.ur })
+          }}
+          isFocused={lastGesture === g.id}
+          onClick={() => {}}
+          className="gesture-mini-card"
+        />
+      ))}
     </div>
   );
 };

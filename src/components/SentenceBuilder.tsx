@@ -38,7 +38,7 @@ export const SentenceBuilder: React.FC<SentenceBuilderProps> = ({
       <div className="smart-input-area">
         <div className="builder-scroll" ref={builderScrollRef}>
           {words.map((w: any, i: number) => (
-            <WordCard key={`${w.id}-${i}`} item={w} variant={2} isFocused={false} onClick={() => {}} />
+            <WordCard key={`${w.id}-${i}`} item={w} variant={3} isFocused={false} onClick={() => {}} />
           ))}
           <input
             ref={inputRef}
