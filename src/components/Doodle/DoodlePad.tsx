@@ -5,7 +5,7 @@ import { recognitionEngine } from '../../recognition/engine';
 import type { Stroke, StrokePoint } from '../../recognition/db';
 
 import { DoodleCanvas } from './DoodleCanvas';
-import { DoodlePredictions } from './DoodlePredictions';
+import { WordPredictions } from '../WordPredictions';
 import { DoodleToolbar } from './DoodleToolbar';
 import { TrainDoodleModal } from './modals/TrainDoodleModal';
 
@@ -109,11 +109,12 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focus
     <div className="doodle-page-container">
       <div className="mobile-drawing-container">
         {/* Predictions Area */}
-        <DoodlePredictions 
+        <WordPredictions 
           predictions={displayedPredictions} 
           onSelect={onRecognize} 
           focusedIndex={focusedIndex}
           offset={0}
+          className="doodle-predictions-bar"
         />
 
         {/* Canvas */}
