@@ -295,24 +295,36 @@ const AppContent = () => {
             items = dbWords.length > 0 ? [...dbWords].sort((a, b) => (b.usageCount || 0) - (a.usageCount || 0)) : allItems;
         } else if (currentCategory === 'cat_fav' || currentCategory === 'fav' || currentCategory === 'favorites') {
             const favs = config?.favorites || [];
-            items = (dbWords.length > 0 ? dbWords : allItems).filter((i: any) => favs.includes(i.id));
+            const favItems = (dbWords.length > 0 ? dbWords : allItems).filter((i: any) => favs.includes(i.id));
+            
+            const addWordItem = {
+                id: 'add_fav_prompt',
+                ur: 'نیا لفظ؟',
+                en: 'Add Word?',
+                icon: 'list-plus',
+                isPrompt: true,
+                onClick: () => {
+                    setAddingWord({
+                        id: `word_${Date.now()}`,
+                        en: '',
+                        ur: '',
+                        roman: '',
+                        icon: 'star',
+                        next: [],
+                        categoryId: 'cat_custom'
+                    });
+                }
+            };
+            items = [addWordItem, ...favItems];
         } else {
             const targetId = currentCategory === 'family' ? 'khandan' : currentCategory.startsWith('cat_') ? currentCategory.substring(4) : currentCategory;
             const cat = config?.categories?.find((c: any) => c.id === currentCategory || c.id === targetId || (targetId === 'fam' && (c.id === 'khandan' || c.id === 'family')) || (targetId === 'khandan' && c.id === 'family'));
 
-            const backItem = {
-                id: 'back', ur: 'واپس', en: 'Back', icon: 'arrow-left', isPrompt: true, onClick: () => {
-                    playClick();
-                    setCurrentCategory(null);
-                    setFocusedIndex(-1);
-                }
-            };
             const catIds = (cat?.items || []).map((i: any) => i.id);
             const catItems = (dbWords.length > 0 ? dbWords : allItems).filter((i: any) => catIds.includes(i.id));
-            items = [backItem, ...catItems];
-
+            
             if (targetId === 'khandan' || targetId === 'family') {
-                items.push({
+                const addMemberItem = {
                     id: 'add_family_member',
                     ur: 'نیا ممبر؟',
                     en: 'Add Member?',
@@ -329,7 +341,17 @@ const AppContent = () => {
                             categoryId: 'khandan'
                         });
                     }
-                });
+                };
+                items = [addMemberItem, ...catItems];
+            } else {
+                const backItem = {
+                    id: 'back', ur: 'واپس', en: 'Back', icon: 'arrow-left', isPrompt: true, onClick: () => {
+                        playClick();
+                        setCurrentCategory(null);
+                        setFocusedIndex(-1);
+                    }
+                };
+                items = [backItem, ...catItems];
             }
         }
 
@@ -581,6 +603,7 @@ const AppContent = () => {
                             config={config}
                             focusedIndex={focusedIndex}
                             onRecognize={(item: any) => {
+                                speak(isUrdu ? item.ur : item.en, item.id);
                                 if (isSentenceBuilderActive) {
                                     setSentence(prev => [...prev, item]);
                                     navigate('#');
@@ -644,6 +667,12 @@ const AppContent = () => {
                 }}
                 onDoodleClick={() => {
                     playClick();
+                    if (currentCategory) {
+                        setCurrentCategory(null);
+                        setFocusedIndex(-1);
+                        if (route !== '#') navigate('#');
+                        return;
+                    }
                     if (route === '#doodle') {
                         navigate('#');
                     } else {
