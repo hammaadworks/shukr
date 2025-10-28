@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   Camera, CameraOff, 
-  Mic, MicOff, 
+  Type,
   Settings
 } from 'lucide-react';
 import { ShukrButton } from './ShukrButton';
@@ -18,8 +18,8 @@ interface HeaderProps {
   isModelLoaded: boolean;
   onSOS: () => void;
   onHome: () => void;
-  isListening: boolean;
-  toggleListening: () => void;
+  isSentenceBuilderActive: boolean;
+  toggleSentenceBuilder: () => void;
   lastGesture: string;
   isUrdu: boolean;
   focusedIndex: number;
@@ -33,8 +33,8 @@ export const Header: React.FC<HeaderProps> = ({
   isModelLoaded,
   onSOS,
   onHome,
-  isListening,
-  toggleListening,
+  isSentenceBuilderActive,
+  toggleSentenceBuilder,
   lastGesture,
   isUrdu,
   focusedIndex
@@ -63,14 +63,14 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         </div>
 
-        {/* 1fr: Mic */}
+        {/* 1fr: Sentence Builder Toggle */}
         <div className="header-cell">
           <button 
-            className={`btn-icon-ios ${isListening ? 'active listening-pulse' : ''} ${focusedIndex === 1 ? 'focused-item' : ''}`}
-            onClick={() => { playClick(); toggleListening(); }}
-            aria-label={isListening ? "Stop Listening" : "Start Listening"}
+            className={`btn-icon-ios ${isSentenceBuilderActive ? 'active' : ''} ${focusedIndex === 1 ? 'focused-item' : ''}`}
+            onClick={() => { playClick(); toggleSentenceBuilder(); }}
+            aria-label={isSentenceBuilderActive ? "Hide Sentence Builder" : "Show Sentence Builder"}
           >
-            {isListening ? <Mic size={22} /> : <MicOff size={22} color="#6B7280" />}
+            <Type size={22} color={isSentenceBuilderActive ? "#007AFF" : "#6B7280"} />
           </button>
         </div>
 
