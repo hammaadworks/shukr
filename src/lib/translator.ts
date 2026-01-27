@@ -11,11 +11,11 @@ class Translator {
 
   async init() {
     if (!this.staticVocab) {
-      const vocabMod = await import('./data/core/vocabulary.json');
+      const vocabMod = await import('./data/vocabulary.json');
       this.staticVocab = vocabMod.default || vocabMod;
     }
     if (!this.staticQuotes) {
-      const quotesMod = await import('./data/core/quotes.json');
+      const quotesMod = await import('./data/quotes.json');
       this.staticQuotes = quotesMod.default || quotesMod;
     }
   }

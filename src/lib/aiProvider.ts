@@ -2,240 +2,245 @@ import type { AppConfig } from '../hooks/useAppConfig';
 import { SUPPORTED_LANGS } from './languages';
 
 export interface AISuggestion {
-  translations: Record<string, string>;
-  transliterations: Record<string, Record<string, string>>;
-  doodle_shapes: string[];
+  translations?: Record<string, string>;
+  translation?: string;
+  transliterations: Record<string, any>;
+  icon?: string;
+  shape?: string;
 }
 
+const SYSTEM_PROMPT = `You are a linguist and AAC expert. Generate high-quality data for an AAC app.
+RULES:
+1. TRANSLATION: EXACTLY ONE WORD per language. Avoid phrases (e.g., use "Mukammal" instead of "Mukammal karna").
+2. TRANSLITERATION: Phonetic spelling of source word in target script. (e.g., English "Apple" in Urdu is "ایپل").
+3. ICON: Suggest the most relevant Lucide icon name (kebab-case).
+4. SHAPE: A simple descriptive word for the visual concept (e.g., "circle", "square", "tick", "cross").
+5. TOKEN EFFICIENCY: Respond ONLY with the requested JSON.`;
+
 export const aiProvider = {
-  async getSuggestion(wordOrText: any, config: AppConfig): Promise<AISuggestion | null> {
-    const aiConfig = config.ai_config;
-    if (!aiConfig || !aiConfig.endpoint) {
-      throw new Error('AI Provider not configured. Please set endpoint and API key in settings.');
-    }
-
+  async getSuggestion(wordOrText: string, config: AppConfig, feedback?: string): Promise<AISuggestion | null> {
     const langCodes = SUPPORTED_LANGS.map(l => l.code);
-    const langLabels = SUPPORTED_LANGS.map(l => `${l.label} (${l.code})`).join(', ');
+    const feedbackSection = feedback ? `\nUSER FEEDBACK: "${feedback}"\nPlease adjust the previous response based on this feedback.` : '';
+    const prompt = `Input: "${wordOrText}"${feedbackSection}
+Schema: {
+  "translations": { ${langCodes.map(c => `"${c}": "single_word"`).join(', ')} },
+  "transliterations": { ${langCodes.map(src => `"${src}": { ${langCodes.filter(t => t !== src).map(t => `"${t}": "phonetic"`).join(', ')} }`).join(', ')} },
+  "icon": "lucide_icon_name",
+  "shape": "descriptive_shape"
+}`;
+    return this.callAI(prompt, config, 'data_gen');
+  },
 
-    const isObject = typeof wordOrText === 'object';
-    const inputJson = isObject ? JSON.stringify(wordOrText, null, 2) : wordOrText;
+  async getSingleLanguageSuggestion(wordOrText: string, targetLang: string, config: AppConfig, withRecommendations: boolean = false, feedback?: string): Promise<AISuggestion | null> {
+    const otherLangs = SUPPORTED_LANGS.filter(l => l.code !== targetLang);
+    const recommendationsSchema = withRecommendations ? `,
+  "icon": "lucide_icon_name",
+  "shape": "descriptive_shape"` : '';
+    
+    const feedbackSection = feedback ? `\nUSER FEEDBACK: "${feedback}"\nPlease adjust the previous response based on this feedback.` : '';
+    const prompt = `Input: "${wordOrText}" to ${targetLang}${feedbackSection}
+Schema: {
+  "translation": "single_word",
+  "transliterations": { ${otherLangs.map(l => `"${l.code}": "phonetic"`).join(', ')} }${recommendationsSchema}
+}`;
+    return this.callAI(prompt, config, 'data_gen');
+  },
 
-    const prompt = `
-      You are an expert linguist and visual designer for an AAC (Augmentative and Alternative Communication) app.
-      Your task is to provide high-quality translations, precise transliterations, and doodle classification for the following supported languages:
-      ${langLabels}
+  async generateTTS(text: string, language: string, config: AppConfig, gender: 'male' | 'female' = 'male'): Promise<Blob | null> {
+    const ai = config.ai_config?.tts;
+    if (!ai) throw new Error('AI configuration for TTS is missing.');
+    if (!ai.apiKey) throw new Error('AI API Key for TTS is missing. Please provide it in AI Settings.');
 
-      ---
-      1. TRANSLATION RULES:
-      - Semantic Consistency: Ensure the concept is identical across all languages.
-      - Usage: Use common, conversational words suitable for daily communication.
+    const model = ai.model || 'gemini-2.5-flash-preview-tts'; 
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${ai.apiKey}`;
 
-      ---
-      2. TRANSLITERATION RULES (Critical):
-      - Phonetic Accuracy: Prioritize how the word SOUNDS in the target script, not how it is spelled.
-      - Mapping: Provide a nested map where transliterations[source_lang][target_lang] is the phonetic pronunciation of the source_lang word written in the target_lang's script.
-      - Generation Logic: For each language pair (source -> target), mentally vocalize the word in the source language and then write that exact sound using the characters and phonetics of the target language.
-      - Examples: 
-        * Urdu -> English: "tokri" (Roman Urdu).
-        * English -> Urdu: "باسکٹ" (Phonetic English in Urdu script).
+    const voiceName = gender === 'female' ? 'Aoede' : 'Charon';
+    const prompt = `Say the following word in ${language}: "${text}"`;
 
-      ---
-      3. DOODLE SHAPES RULES (Mandatory Selection):
-      Assign shapes that represent the VISUAL CONCEPT of the word. Choose 2-3 tags from the following list ONLY:
-
-      Geometric Core (Native Templates):
-      - circle: Round items (Apple, Face, Clock, Plate).
-      - square: Boxy items (Book, Quran, Phone, Tablet).
-      - triangle: Pointy items (Samosa, Direction, Carrot).
-      - wave: Flowing items (Water, Juice, Dua, Praying).
-      - zigzag: Sharp/Urgent (Pain, Fever, Danger).
-
-      Structural Descriptors:
-      - outline: Hollow shapes or borders.
-      - stroke: Simple lines or single-path drawings.
-      - compact: Small, dense drawings.
-
-      Note: Using these alongside a geometric core (e.g., ["circle", "outline"]) improves accuracy.
-
-      ---
-      GOOD EXAMPLE:
-      Input: "basket"
-      Response: {
-        "translations": {
-          "en": "Basket", "es": "Canasta", "ur": "ٹوکری", "ar": "سلة", "hi": "टोकरी", "zh": "篮子", "fr": "Panier"
-        },
-        "transliterations": {
-          "en": { "es": "basket", "ur": "باسکٹ", "ar": "باسكيت", "hi": "बास्केट", "zh": "巴斯克特", "fr": "basket" },
-          "es": { "en": "canasta", "ur": "کاناستا", "ar": "كاناستا", "hi": "कनास्ता", "zh": "卡纳斯塔", "fr": "canasta" },
-          "ur": { "en": "tokri", "es": "tokri", "ar": "ٹوكري", "hi": "टोकरी", "zh": "托克里", "fr": "tokri" },
-          "ar": { "en": "salla", "es": "salla", "ur": "سلا", "hi": "सल्ला", "zh": "萨拉", "fr": "salla" },
-          "hi": { "en": "tokri", "es": "tokri", "ur": "ٹوکری", "ar": "तोकरी", "zh": "托克里", "fr": "tokri" },
-          "zh": { "en": "lanzi", "es": "lanzi", "ur": "لانزی", "ar": "لانزي", "hi": "लान्ज़ी", "fr": "lanzi" },
-          "fr": { "en": "panier", "es": "panier", "ur": "پانیے", "ar": "بانييه", "hi": "पानिये", "zh": "帕尼耶" }
-        },
-        "doodle_shapes": ["square", "outline"]
+    const body: any = {
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: {
+        responseModalities: ["AUDIO"],
+        speechConfig: {
+          voiceConfig: {
+            prebuiltVoiceConfig: {
+              voiceName: voiceName
+            }
+          }
+        }
       }
-
-      ---
-      Input to process: ${inputJson}
-
-      Respond ONLY with a JSON object matching this schema:
-      {
-        "translations": { ${langCodes.map(c => `"${c}": "..."`).join(', ')} },
-        "transliterations": {
-          ${langCodes.map(src => `"${src}": { ${langCodes.filter(t => t !== src).map(t => `"${t}": "..."`).join(', ')} }`).join(',\n          ')}
-        },
-        "doodle_shapes": ["geometric_core", "structural_descriptor"]
-      }
-    `;
+    };
 
     try {
-      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-      
-      if (aiConfig.authType === 'bearer' && aiConfig.apiKey) {
-        headers['Authorization'] = `Bearer ${aiConfig.apiKey}`;
-      } else if (aiConfig.authType === 'basic' && aiConfig.username && aiConfig.password) {
-        headers['Authorization'] = `Basic ${btoa(`${aiConfig.username}:${aiConfig.password}`)}`;
-      }
-
-      const isGemini = aiConfig.endpoint.includes('generativelanguage.googleapis.com');
-      const url = isGemini && aiConfig.apiKey ? `${aiConfig.endpoint}?key=${aiConfig.apiKey}` : aiConfig.endpoint;
-
-      let body: any;
-      if (isGemini) {
-        body = {
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { response_mime_type: "application/json" }
-        };
-      } else {
-        body = {
-          model: aiConfig.model || 'gpt-4o-mini',
-          messages: [{ role: 'user', content: prompt }],
-          response_format: { type: "json_object" },
-          prompt: prompt,
-          stream: false,
-          format: 'json'
-        };
-      }
-
-      const response = await fetch(url, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(body)
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`AI request failed (${response.status}): ${errorText}`);
+      if (!res.ok) {
+        const errText = await res.text();
+        let errJson;
+        try { errJson = JSON.parse(errText); } catch(e) {}
+        throw new Error(`AI TTS error (${res.status}): ${errJson?.error?.message || errText}`);
       }
 
-      const data = await response.json();
-      let text = '';
-
-      if (isGemini) {
-        text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      } else if (data.choices?.[0]?.message?.content) {
-        text = data.choices[0].message.content;
-      } else if (data.response) {
-        text = data.response;
-      } else if (data.message?.content) {
-        text = data.message.content;
-      } else {
-        text = JSON.stringify(data);
-      }
-
-      if (!text) return null;
+      const data = await res.json();
+      const parts = data?.candidates?.[0]?.content?.parts || [];
+      const audioPart = parts.find((p: any) => p.inlineData && p.inlineData.mimeType?.startsWith('audio/'));
       
-      const cleanedText = text.replace(/```json\n?|```/g, '').trim();
-      return JSON.parse(cleanedText);
-    } catch (e) {
-      console.error('AI call failed', e);
-      return null;
+      if (!audioPart || !audioPart.inlineData?.data) {
+        throw new Error('No audio data received. Ensure the model supports speech generation.');
+      }
+
+      const mimeType = audioPart.inlineData.mimeType;
+      const rawData = audioPart.inlineData.data;
+
+      let buffer: Uint8Array;
+      if (mimeType.includes('format=l16')) {
+         buffer = this.createWavFromPcm(rawData, mimeType);
+      } else {
+         const binaryString = atob(rawData);
+         buffer = new Uint8Array(binaryString.length);
+         for (let i = 0; i < binaryString.length; i++) {
+           buffer[i] = binaryString.charCodeAt(i);
+         }
+      }
+
+      return new Blob([buffer as any], { type: 'audio/wav' });
+    } catch (e: any) {
+      console.error('AI TTS failed', e);
+      throw e;
     }
   },
-  async getSingleLanguageSuggestion(wordOrText: string, targetLang: string, config: AppConfig): Promise<{ translation: string, transliteration: string } | null> {
-    const aiConfig = config.ai_config;
-    if (!aiConfig || !aiConfig.endpoint) {
-      throw new Error('AI Provider not configured. Please set endpoint and API key in settings.');
+
+  createWavFromPcm(base64Data: string, mimeType: string): Uint8Array {
+    const binaryString = atob(base64Data);
+    const dataLength = binaryString.length;
+    
+    let sampleRate = 24000;
+    const rateMatch = mimeType.match(/rate=(\d+)/);
+    if (rateMatch) sampleRate = parseInt(rateMatch[1], 10);
+
+    const numChannels = 1;
+    const bitsPerSample = 16;
+    const byteRate = sampleRate * numChannels * bitsPerSample / 8;
+    const blockAlign = numChannels * bitsPerSample / 8;
+
+    const buffer = new Uint8Array(44 + dataLength);
+    const view = new DataView(buffer.buffer);
+
+    this.writeString(view, 0, 'RIFF');
+    view.setUint32(4, 36 + dataLength, true);
+    this.writeString(view, 8, 'WAVE');
+    this.writeString(view, 12, 'fmt ');
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, numChannels, true);
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, byteRate, true);
+    view.setUint16(32, blockAlign, true);
+    view.setUint16(34, bitsPerSample, true);
+    this.writeString(view, 36, 'data');
+    view.setUint32(40, dataLength, true);
+
+    // Standard copy without byte-swapping for now (most modern APIs return LE)
+    for (let i = 0; i < dataLength; i++) {
+      buffer[44 + i] = binaryString.charCodeAt(i);
     }
 
-    const targetLangObj = SUPPORTED_LANGS.find(l => l.code === targetLang) || { label: targetLang, code: targetLang };
+    return buffer;
+  },
 
-    const prompt = `
-      You are an expert linguist for an AAC app.
-      Translate the following word or concept into ${targetLangObj.label}.
-      Also provide the phonetic transliteration (how it sounds) written in English alphabet (Romanization).
+  writeString(view: DataView, offset: number, string: string) {
+    for (let i = 0; i < string.length; i++) {
+      view.setUint8(offset + i, string.charCodeAt(i));
+    }
+  },
 
-      Word/Concept: "${wordOrText}"
+  async callAI(prompt: string, config: AppConfig, type: 'data_gen' | 'tts' = 'data_gen'): Promise<any> {
+    const ai = config.ai_config?.[type];
+    if (!ai || !ai.endpoint) throw new Error(`AI configuration for ${type} is missing endpoint.`);
 
-      Respond ONLY with a JSON object matching this schema:
-      {
-        "translation": "...",
-        "transliteration": "..."
-      }
-    `;
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    if (ai.authType === "bearer") {
+      headers["Authorization"] = `Bearer ${ai.apiKey}`;
+    } else if (ai.authType === "x-api-key") {
+      headers["x-api-key"] = ai.apiKey || "";
+      headers["anthropic-version"] = "2023-06-01";
+    } else if (ai.authType === "google") {
+      headers["X-goog-api-key"] = ai.apiKey || "";
+    }
 
-    try {
-      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-      
-      if (aiConfig.authType === 'bearer' && aiConfig.apiKey) {
-        headers['Authorization'] = `Bearer ${aiConfig.apiKey}`;
-      } else if (aiConfig.authType === 'basic' && aiConfig.username && aiConfig.password) {
-        headers['Authorization'] = `Basic ${btoa(`${aiConfig.username}:${aiConfig.password}`)}`;
-      }
+    let body: any;
+    const fullPrompt = `${SYSTEM_PROMPT}\n${prompt}`;
+    const format = ai.format || (ai.endpoint.includes('generativelanguage.googleapis.com') ? 'gemini' : 'openai');
 
-      const isGemini = aiConfig.endpoint.includes('generativelanguage.googleapis.com');
-      const url = isGemini && aiConfig.apiKey ? `${aiConfig.endpoint}?key=${aiConfig.apiKey}` : aiConfig.endpoint;
-
-      let body: any;
-      if (isGemini) {
+    switch (format) {
+      case "openai":
         body = {
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { response_mime_type: "application/json" }
+          model: ai.model || (type === 'tts' ? "gemini-2.5-flash-preview-tts" : "gemini-flash-lite-latest"),
+          messages: [{ role: "system", content: SYSTEM_PROMPT }, { role: "user", content: prompt }],
+          response_format: { type: "json_object" }
         };
-      } else {
+        break;
+      case "anthropic":
         body = {
-          model: aiConfig.model || 'gpt-4o-mini',
-          messages: [{ role: 'user', content: prompt }],
-          response_format: { type: "json_object" },
-          prompt: prompt,
+          model: ai.model || "claude-3-haiku-20240307",
+          max_tokens: 1000,
+          system: SYSTEM_PROMPT,
+          messages: [{ role: "user", content: prompt }],
+        };
+        break;
+      case "gemini":
+        body = {
+          contents: [{ parts: [{ text: fullPrompt }] }],
+          generation_config: { response_mime_type: "application/json" }
+        };
+        break;
+      case "ollama":
+        body = {
+          model: ai.model || "llama3",
+          prompt: fullPrompt,
           stream: false,
-          format: 'json'
+          format: "json"
         };
-      }
-
-      const response = await fetch(url, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(body)
-      });
-
-      if (!response.ok) {
-        throw new Error(`AI request failed (${response.status})`);
-      }
-
-      const data = await response.json();
-      let text = '';
-
-      if (isGemini) {
-        text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      } else if (data.choices?.[0]?.message?.content) {
-        text = data.choices[0].message.content;
-      } else if (data.response) {
-        text = data.response;
-      } else if (data.message?.content) {
-        text = data.message.content;
-      } else {
-        text = JSON.stringify(data);
-      }
-
-      if (!text) return null;
-      
-      const cleanedText = text.replace(/```json\n?|```/g, '').trim();
-      return JSON.parse(cleanedText);
-    } catch (e) {
-      console.error('AI single lang call failed', e);
-      return null;
+        break;
+      default:
+        throw new Error("Unsupported format");
     }
+
+    const res = await fetch(ai.endpoint, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`AI error (${res.status}): ${err}`);
+    }
+
+    const data = await res.json();
+    let text = "";
+    switch (format) {
+      case "gemini":
+        text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+        break;
+      case "anthropic":
+        text = data?.content?.[0]?.text || "";
+        break;
+      case "openai":
+        text = data?.choices?.[0]?.message?.content || "";
+        break;
+      case "ollama":
+        text = data?.response || "";
+        break;
+      default:
+        text = JSON.stringify(data);
+    }
+
+    if (!text) throw new Error('Empty AI response');
+    return JSON.parse(text.replace(/```json\n?|```/g, '').trim());
   }
 };

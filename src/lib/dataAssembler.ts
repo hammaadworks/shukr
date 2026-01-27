@@ -20,11 +20,11 @@ export const dataAssembler = {
 
       // 2. Import Core Data dynamically (Fallback & Data Sources)
       const [settingsMod, vocabMod, quotesMod, doodlesMod, vpMod] = await Promise.all([
-        import('./data/core/settings.json'),
-        import('./data/core/vocabulary.json'),
-        import('./data/core/quotes.json'),
-        import('./data/core/doodle.json'),
-        import('./data/core/voices.json').catch(() => ({ default: [] }))
+        import('./data/settings.json'),
+        import('./data/vocabulary.json'),
+        import('./data/quotes.json'),
+        import('./data/doodle.json'),
+        import('./data/voices.json').catch(() => ({ default: [] }))
       ]);
 
       const staticSettings: any = settingsMod.default || settingsMod;

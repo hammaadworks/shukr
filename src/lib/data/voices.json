@@ -1,0 +1,16 @@
+[
+  { "id": "ar_voice_sakina", "name": "Sakina", "language": "ar", "editable": false, "gender": "female" },
+  { "id": "ar_voice_sukoon", "name": "Sukoon", "language": "ar", "editable": false, "gender": "male" },
+  { "id": "en_voice_sakina", "name": "Sakina", "language": "en", "editable": false, "gender": "female" },
+  { "id": "en_voice_sukoon", "name": "Sukoon", "language": "en", "editable": false, "gender": "male" },
+  { "id": "ur_voice_sakina", "name": "Sakina", "language": "ur", "editable": false, "gender": "female" },
+  { "id": "ur_voice_sukoon", "name": "Sukoon", "language": "ur", "editable": false, "gender": "male" },
+  { "id": "hi_voice_sakina", "name": "Sakina", "language": "hi", "editable": false, "gender": "female" },
+  { "id": "hi_voice_sukoon", "name": "Sukoon", "language": "hi", "editable": false, "gender": "male" },
+  { "id": "es_voice_sakina", "name": "Sakina", "language": "es", "editable": false, "gender": "female" },
+  { "id": "es_voice_sukoon", "name": "Sukoon", "language": "es", "editable": false, "gender": "male" },
+  { "id": "fr_voice_sakina", "name": "Sakina", "language": "fr", "editable": false, "gender": "female" },
+  { "id": "fr_voice_sukoon", "name": "Sukoon", "language": "fr", "editable": false, "gender": "male" },
+  { "id": "zh_voice_sakina", "name": "Sakina", "language": "zh", "editable": false, "gender": "female" },
+  { "id": "zh_voice_sukoon", "name": "Sukoon", "language": "zh", "editable": false, "gender": "male" }
+]
