@@ -55,7 +55,7 @@ Shukr is an open-source project. We welcome contributors to help expand our gest
 For AI features (automated word fixes), you can set defaults in a `.env` file:
 *   `VITE_AI_ENDPOINT`: Your AI provider URL.
 *   `VITE_AI_API_KEY`: Your API key.
-*   `VITE_AI_MODEL`: Target model (e.g., `gemini-1.5-flash`).
+*   `VITE_AI_MODEL`: Target model (e.g., `gemini-flash-latest`).
 
 ---
 
