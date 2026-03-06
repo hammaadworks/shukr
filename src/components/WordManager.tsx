@@ -5,7 +5,6 @@ import type { WordUniverseItem } from '../lib/universeDb';
 import { aiProvider } from '../lib/aiProvider';
 import { useAppConfig } from '../hooks/useAppConfig';
 import { SUPPORTED_LANGS, GEOMETRIC_CORES, STRUCTURAL_DESCRIPTORS } from '../lib/languages';
-import { generateAudioStorageKey } from '../lib/constants';
 import { DoodleCanvas } from './Doodle/DoodleCanvas';
 import type { Stroke, Point as StrokePoint } from '../recognition/sketchTypes';
 
@@ -17,23 +16,34 @@ const VoiceAudioItem: React.FC<{
 }> = ({ wordId, voice, lang, onRecord }) => {
   const [hasRecordedAudio, setHasRecordedAudio] = useState(false);
   const voiceId = voice.id === 'default' ? `${lang}_default` : voice.id;
-  const audioCacheKey = generateAudioStorageKey(wordId, voiceId);
 
   useEffect(() => {
     const checkIfAudioExists = async () => {
-      const record = await universeDb.audio.get(audioCacheKey);
-      setHasRecordedAudio(!!record?.blob);
+      const v = await universeDb.voices.where({ id: voiceId }).first();
+      const vNumericId = v?.numericId;
+      
+      if (vNumericId !== undefined) {
+          const record = await universeDb.audio.get([vNumericId, wordId]);
+          setHasRecordedAudio(!!record?.blob);
+      } else {
+          setHasRecordedAudio(false);
+      }
     };
     checkIfAudioExists();
-  }, [audioCacheKey]);
+  }, [wordId, voiceId]);
 
   const handlePlayAudio = async () => {
-    const record = await universeDb.audio.get(audioCacheKey);
-    if (record?.blob) {
-      const url = URL.createObjectURL(record.blob);
-      const audioInstance = new Audio(url);
-      audioInstance.onended = () => URL.revokeObjectURL(url);
-      audioInstance.play();
+    const v = await universeDb.voices.where({ id: voiceId }).first();
+    const vNumericId = v?.numericId;
+
+    if (vNumericId !== undefined) {
+        const record = await universeDb.audio.get([vNumericId, wordId]);
+        if (record?.blob) {
+          const url = URL.createObjectURL(record.blob);
+          const audioInstance = new Audio(url);
+          audioInstance.onended = () => URL.revokeObjectURL(url);
+          audioInstance.play();
+        }
     }
   };
 
