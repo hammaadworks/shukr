@@ -152,5 +152,90 @@ export const aiProvider = {
       console.error('AI call failed', e);
       return null;
     }
+  },
+  async getSingleLanguageSuggestion(wordOrText: string, targetLang: string, config: AppConfig): Promise<{ translation: string, transliteration: string } | null> {
+    const aiConfig = config.ai_config;
+    if (!aiConfig || !aiConfig.endpoint) {
+      throw new Error('AI Provider not configured. Please set endpoint and API key in settings.');
+    }
+
+    const targetLangObj = SUPPORTED_LANGS.find(l => l.code === targetLang) || { label: targetLang, code: targetLang };
+
+    const prompt = `
+      You are an expert linguist for an AAC app.
+      Translate the following word or concept into ${targetLangObj.label}.
+      Also provide the phonetic transliteration (how it sounds) written in English alphabet (Romanization).
+
+      Word/Concept: "${wordOrText}"
+
+      Respond ONLY with a JSON object matching this schema:
+      {
+        "translation": "...",
+        "transliteration": "..."
+      }
+    `;
+
+    try {
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+      
+      if (aiConfig.authType === 'bearer' && aiConfig.apiKey) {
+        headers['Authorization'] = `Bearer ${aiConfig.apiKey}`;
+      } else if (aiConfig.authType === 'basic' && aiConfig.username && aiConfig.password) {
+        headers['Authorization'] = `Basic ${btoa(`${aiConfig.username}:${aiConfig.password}`)}`;
+      }
+
+      const isGemini = aiConfig.endpoint.includes('generativelanguage.googleapis.com');
+      const url = isGemini && aiConfig.apiKey ? `${aiConfig.endpoint}?key=${aiConfig.apiKey}` : aiConfig.endpoint;
+
+      let body: any;
+      if (isGemini) {
+        body = {
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { response_mime_type: "application/json" }
+        };
+      } else {
+        body = {
+          model: aiConfig.model || 'gpt-4o-mini',
+          messages: [{ role: 'user', content: prompt }],
+          response_format: { type: "json_object" },
+          prompt: prompt,
+          stream: false,
+          format: 'json'
+        };
+      }
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(body)
+      });
+
+      if (!response.ok) {
+        throw new Error(`AI request failed (${response.status})`);
+      }
+
+      const data = await response.json();
+      let text = '';
+
+      if (isGemini) {
+        text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      } else if (data.choices?.[0]?.message?.content) {
+        text = data.choices[0].message.content;
+      } else if (data.response) {
+        text = data.response;
+      } else if (data.message?.content) {
+        text = data.message.content;
+      } else {
+        text = JSON.stringify(data);
+      }
+
+      if (!text) return null;
+      
+      const cleanedText = text.replace(/```json\n?|```/g, '').trim();
+      return JSON.parse(cleanedText);
+    } catch (e) {
+      console.error('AI single lang call failed', e);
+      return null;
+    }
   }
 };

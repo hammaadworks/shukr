@@ -36,6 +36,9 @@ export const dataAssembler = {
         ...dynamicSettings
       };
 
+      // Normalize active_voice key
+      settings.active_voice = settings.active_voice || settings.activeVoice || settings.activeVoiceProfile || 'en_voice_hammaad';
+
       const dbVoices = await universeDb.voices.toArray();
       if (dbVoices.length > 0) {
         settings.voices = dbVoices;
@@ -49,9 +52,22 @@ export const dataAssembler = {
           .filter(k => k !== 'voices')
           .map(k => ({ key: k, value: staticSettings[k] }));
         await universeDb.settings.bulkPut(seedData);
+      }
 
-        if (defaultVoices && defaultVoices.length > 0) {
-          await universeDb.voices.bulkPut(defaultVoices);
+      // Seed voices DB if empty
+      const finalDbVoices = await universeDb.voices.toArray();
+      if (defaultVoices && defaultVoices.length > 0) {
+        // Resolve numericId if they already exist to avoid duplicates
+        const voicesToPut = defaultVoices.map(dv => {
+          const existing = finalDbVoices.find(fv => fv.id === dv.id);
+          return existing ? { ...dv, numericId: existing.numericId } : dv;
+        });
+        
+        if (finalDbVoices.length === 0) {
+          await universeDb.voices.bulkPut(voicesToPut);
+          settings.voices = await universeDb.voices.toArray();
+        } else {
+          settings.voices = finalDbVoices;
         }
       }
 

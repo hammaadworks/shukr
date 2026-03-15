@@ -8,6 +8,7 @@ export interface UniverseSnapshot {
   audio?: Record<string, string>; // key -> base64 DataURL
   quotes?: any[];
   settings?: any[];
+  voices?: any[];
 }
 
 /**
@@ -52,6 +53,7 @@ export const universePorter = {
     await this.restoreDoodles(snapshot);
     await this.restoreQuotes(snapshot);
     await this.restoreSettings(snapshot);
+    await this.restoreVoices(snapshot);
     await this.restoreAudio(snapshot);
 
     console.log(`[Porter] Successfully imported universe snapshot from ${new Date(snapshot.timestamp).toLocaleString()}`);
@@ -75,18 +77,25 @@ export const universePorter = {
   },
 
   // --- Private Helpers (Internal Logic) ---
+async serializeAllAudio(): Promise<Record<string, string>> {
+  const records = await universeDb.audio.toArray();
+  const voices = await universeDb.voices.toArray();
+  const serialized: Record<string, string> = {};
 
-  async serializeAllAudio(): Promise<Record<string, string>> {
-    const records = await universeDb.audio.toArray();
-    const serialized: Record<string, string> = {};
-    
-    for (const record of records) {
-      if (record.blob) {
-        serialized[record.id] = await this.serializeBlob(record.blob);
+  for (const record of records) {
+    if (record.blob) {
+      let voiceSlug = 'system';
+      if (record.voiceNumericId !== 0) {
+          const voice = voices.find(v => v.numericId === record.voiceNumericId);
+          voiceSlug = voice?.id || 'unknown';
       }
+
+      const key = `${voiceSlug}_${record.wordId}`;
+      serialized[key] = await this.serializeBlob(record.blob);
     }
-    return serialized;
-  },
+  }
+  return serialized;
+},
 
   async restoreWords(snapshot: UniverseSnapshot) {
     let wordsToRestore = snapshot.words || [];
@@ -119,7 +128,16 @@ export const universePorter = {
   async restoreQuotes(snapshot: UniverseSnapshot) {
     if (snapshot.quotes && snapshot.quotes.length > 0) {
       const formattedQuotes = snapshot.quotes.map((q: any, i: number) => {
-        const id = q.id || `q${i}`;
+        // Version 8: Ensure ID is numeric
+        let id: number;
+        if (typeof q.id === 'number') {
+            id = q.id;
+        } else if (typeof q.id === 'string') {
+            id = parseInt(q.id.replace(/\D/g, '')) || (i + 1);
+        } else {
+            id = i + 1;
+        }
+
         const translations = q.translations || {
           ur: q.ur || q.text_primary || '',
           en: q.en || q.text_secondary || ''
@@ -144,12 +162,46 @@ export const universePorter = {
     }
   },
 
+  async restoreVoices(snapshot: UniverseSnapshot) {
+    const voices = snapshot.voices || [];
+    if (voices.length > 0) {
+      const dbVoices = await universeDb.voices.toArray();
+      const voicesToPut = voices.map((v: any) => {
+        const existing = dbVoices.find(dv => dv.id === v.id);
+        return {
+          ...v,
+          numericId: existing?.numericId || v.numericId
+        };
+      });
+      await universeDb.voices.bulkPut(voicesToPut);
+    }
+  },
+
   async restoreAudio(snapshot: UniverseSnapshot) {
     if (!snapshot.audio) return;
+    const voices = await universeDb.voices.toArray();
 
-    for (const [id, dataUrl] of Object.entries(snapshot.audio)) {
+    for (const [compositeKey, dataUrl] of Object.entries(snapshot.audio)) {
       const blob = await this.deserializeBlob(dataUrl);
-      await universeDb.audio.put({ id, blob });
+      
+      let vNumericId = 0;
+      let wordId = compositeKey;
+
+      if (!compositeKey.startsWith('system_')) {
+          const matchingVoice = voices.find(v => compositeKey.startsWith(v.id + '_'));
+          if (matchingVoice?.numericId) {
+              vNumericId = matchingVoice.numericId;
+              wordId = compositeKey.substring(matchingVoice.id.length + 1);
+          }
+      } else {
+          wordId = compositeKey.substring(7); // remove 'system_'
+      }
+
+      await universeDb.audio.put({
+          voiceNumericId: vNumericId,
+          wordId,
+          blob
+      });
     }
   },
 

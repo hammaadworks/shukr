@@ -3,8 +3,8 @@
  */
 
 // Database configuration
-export const DB_NAME = 'shukr_universe_db';
-export const DB_VERSION = 1;
+export const DB_NAME = 'shukr_universe_v1';
+export const DB_VERSION = 2;
 
 // Table Names
 export const TABLES = {
@@ -17,24 +17,14 @@ export const TABLES = {
 } as const;
 
 /**
- * Generates a unique key for audio storage.
- * @param wordId The unique ID of the word (e.g., 'want')
- * @param voiceId The voice ID which includes the language (e.g., 'en_voice_hammaad')
- * @returns A composite key string (e.g., 'en_voice_hammaad_want')
+ * @deprecated Audio is now stored in IndexedDB using numeric foreign keys.
+ * This is kept only for identifying static assets in src/lib/data/audio/
  */
 export const generateAudioStorageKey = (wordId: string, voiceId: string): string => {
   if (!wordId || !voiceId) {
     console.warn('[Constants] generateAudioStorageKey called with missing parameters:', { wordId, voiceId });
   }
   return `${voiceId}_${wordId}`;
-};
-
-/**
- * Generates a unique key for quotes.
- * @returns A unique quote ID (e.g., 'q_1712451857000')
- */
-export const generateQuoteId = (): string => {
-  return `q_${Date.now()}`;
 };
 
 /**

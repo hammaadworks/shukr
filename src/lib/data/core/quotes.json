@@ -1,17 +1,6 @@
 [
   {
-    "id": "q0",
-    "ur": "میرے رب! میرے لیے میرا سینہ کھول دے۔",
-    "en": "My Lord, expand for me my breast [with assurance].",
-    "es": "Señor mío, abre mi pecho [y dame valor].",
-    "ar": "رَبِّ اشْرَحْ لِي صَدْرِي",
-    "hi": "मेरे रब, मेरे लिए मेरा सीना खोल दे।",
-    "zh": "我的主啊！求你为我而使我的胸襟宽大。",
-    "fr": "Seigneur, épanouis-moi ma poitrine.",
-    "source": "Quran 20:25"
-  },
-  {
-    "id": "q1",
+    "id": 1,
     "ur": "اور میرے کام کو میرے لیے آسان کر دے۔",
     "en": "And ease for me my task.",
     "es": "Y facilita mi misión.",
@@ -22,7 +11,7 @@
     "source": "Quran 20:26"
   },
   {
-    "id": "q2",
+    "id": 2,
     "ur": "اور میری زبان کی گرہ کھول دے۔",
     "en": "And untie the knot from my tongue.",
     "es": "Y desata el nudo de mi lengua.",
@@ -33,7 +22,7 @@
     "source": "Quran 20:27"
   },
   {
-    "id": "q3",
+    "id": 3,
     "ur": "تاکہ وہ میری بات سمجھ سکیں۔",
     "en": "That they may understand my speech.",
     "es": "Para que comprendan mis palabras.",
@@ -44,7 +33,7 @@
     "source": "Quran 20:28"
   },
   {
-    "id": "q4",
+    "id": 4,
     "ur": "پس یقیناً مشکل کے ساتھ آسانی ہے۔",
     "en": "For indeed, with hardship [will be] ease.",
     "es": "Porque, en verdad, con la dificultad viene la facilidad.",
@@ -55,7 +44,7 @@
     "source": "Quran 94:5"
   },
   {
-    "id": "q5",
+    "id": 5,
     "ur": "بے شک مشکل کے ساتھ آسانی ہے۔",
     "en": "Indeed, with hardship [will be] ease.",
     "es": "En verdad, con la dificultad viene la facilidad.",
@@ -66,7 +55,7 @@
     "source": "Quran 94:6"
   },
   {
-    "id": "q6",
+    "id": 6,
     "ur": "اور نہ ہمت ہارو اور نہ غمگین ہو۔",
     "en": "So do not weaken and do not grieve.",
     "es": "No os desaniméis ni os entristezcáis.",
@@ -77,7 +66,7 @@
     "source": "Quran 3:139"
   },
   {
-    "id": "q7",
+    "id": 7,
     "ur": "اللہ کسی جان پر اس کی طاقت سے زیادہ بوجھ نہیں ڈالتا۔",
     "en": "Allah does not charge a soul except [with that within] its capacity.",
     "es": "Allah no impone a nadie sino lo que puede soportar.",
@@ -88,7 +77,7 @@
     "source": "Quran 2:286"
   },
   {
-    "id": "q8",
+    "id": 8,
     "ur": "اللہ کی رحمت سے مایوس نہ ہو۔",
     "en": "And despair not of relief from Allah.",
     "es": "Y no desesperéis de la misericordia de Allah.",
@@ -99,7 +88,7 @@
     "source": "Quran 12:87"
   },
   {
-    "id": "q9",
+    "id": 9,
     "ur": "بے شک اللہ صبر کرنے والوں کے ساتھ ہے۔",
     "en": "Indeed, Allah is with the patient.",
     "es": "En verdad, Allah está con los que tienen paciencia.",
@@ -110,7 +99,7 @@
     "source": "Quran 2:153"
   },
   {
-    "id": "q10",
+    "id": 10,
     "ur": "مجھ سے دعا کرو، میں تمہاری پکار سنوں گا۔",
     "en": "Call upon Me; I will respond to you.",
     "es": "Invocadme, que os responderé.",
@@ -121,7 +110,7 @@
     "source": "Quran 40:60"
   },
   {
-    "id": "q11",
+    "id": 11,
     "ur": "اور جب میں بیمار ہوتا ہوں تو وہی مجھے شفا دیتا ہے۔",
     "en": "And when I am ill, it is He who cures me.",
     "es": "Y cuando enfermo, Él es Quien me cura.",
@@ -132,7 +121,7 @@
     "source": "Quran 26:80"
   },
   {
-    "id": "q12",
+    "id": 12,
     "ur": "قوی مومن کمزور مومن سے بہتر اور اللہ کو زیادہ محبوب ہے۔",
     "en": "The strong believer is better and more beloved to Allah than the weak believer.",
     "es": "El creyente fuerte es mejor y más amado por Allah que el creyente débil.",
@@ -143,7 +132,7 @@
     "source": "Hadith Muslim"
   },
   {
-    "id": "q13",
+    "id": 13,
     "ur": "مومن کا معاملہ بھی عجیب ہے، اس کے ہر کام میں خیر ہے۔",
     "en": "Strange is the affair of the believer, for there is good in every affair of his.",
     "es": "Asombroso es el asunto del creyente, pues todo lo que le sucede es para su bien.",
@@ -154,7 +143,7 @@
     "source": "Hadith Muslim"
   },
   {
-    "id": "q14",
+    "id": 14,
     "ur": "اور عنقریب تمہارا رب تمہیں اتنا دے گا کہ تم خوش ہو جاؤ گے۔",
     "en": "And your Lord is going to give you, and you will be satisfied.",
     "es": "Tu Señor te dará tanto que quedarás satisfecho.",
@@ -165,7 +154,7 @@
     "source": "Quran 93:5"
   },
   {
-    "id": "q15",
+    "id": 15,
     "ur": "یاد رکھو! اللہ کے ذکر سے ہی دلوں کو اطمینان نصیب ہوتا ہے۔",
     "en": "Unquestionably, by the remembrance of Allah hearts are assured.",
     "es": "Ciertamente, en el recuerdo de Allah encuentran consuelo los corazones.",
@@ -176,7 +165,7 @@
     "source": "Quran 13:28"
   },
   {
-    "id": "q16",
+    "id": 16,
     "ur": "میں قریب ہوں۔ میں پکارنے والے کی پکار سنتا ہوں۔",
     "en": "I am near. I respond to the invocation of the supplicant.",
     "es": "Estoy cerca. Respondo a la súplica del que Me invoca.",
@@ -187,7 +176,7 @@
     "source": "Quran 2:186"
   },
   {
-    "id": "q17",
+    "id": 17,
     "ur": "اللہ بہترین منصوبہ بندی کرنے والا ہے۔",
     "en": "And Allah is the best of planners.",
     "es": "Y Allah es el mejor de los que planean.",
@@ -198,7 +187,7 @@
     "source": "Quran 8:30"
   },
   {
-    "id": "q18",
+    "id": 18,
     "ur": "اللہ صبر کرنے والوں کو پسند کرتا ہے۔",
     "en": "And Allah loves the steadfast.",
     "es": "Y Allah ama a los pacientes.",
@@ -209,7 +198,7 @@
     "source": "Quran 3:146"
   },
   {
-    "id": "q19",
+    "id": 19,
     "ur": "اللہ عنقریب تنگی کے بعد آسانی پیدا کر دے گا۔",
     "en": "Allah will bring about, after hardship, ease.",
     "es": "Allah traerá, tras la dificultad, la facilidad.",
@@ -218,5 +207,16 @@
     "zh": "在艰难之后，安拉将召致容易。",
     "fr": "Allah fera succéder l'aisance à la gêne.",
     "source": "Quran 65:7"
+  },
+  {
+    "id": 20,
+    "ur": "میرے رب! میرے لیے میرا سینہ کھول دے۔",
+    "en": "My Lord, expand for me my breast [with assurance].",
+    "es": "Señor mío, abre mi pecho [y dame valor].",
+    "ar": "رَبِّ اشْرَحْ لِي صَدْرِي",
+    "hi": "मेरे रब, मेरे लिए मेरा सीना खोल दे।",
+    "zh": "我的主啊！求你为我而使我的胸襟宽大。",
+    "fr": "Seigneur, épanouis-moi ma poitrine.",
+    "source": "Quran 20:25"
   }
 ]
