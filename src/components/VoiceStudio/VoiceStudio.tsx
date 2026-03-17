@@ -7,7 +7,6 @@ import { WordEditor } from '../WordEditor';
 import { useVoiceRecording } from '../../hooks/useVoiceRecording';
 import { useAudio } from '../../hooks/useAudio';
 import { universeDb } from '../../lib/universeDb';
-import { generateAudioStorageKey } from '../../lib/constants';
 import { useLanguage } from '../../hooks/useLanguage';
 import { SUPPORTED_LANGS } from '../../lib/languages';
 import { useFuzzySearch } from '../../hooks/useFuzzySearch';
@@ -15,7 +14,7 @@ import { AudioWaveform } from './AudioWaveform';
 import { AudioTrimmer } from './AudioTrimmer';
 import { decodeAudioData, trimAudioBuffer, audioBufferToWavBlob } from '../../lib/audioUtils';
 import { WordCard } from '../WordCard';
-import { AlertDialog, ConfirmDialog, PromptDialog, SelectDialog } from '../modals/Dialogs';
+import { AlertDialog, ConfirmDialog, PromptDialog, SelectDialog, VoiceAddDialog } from '../modals/Dialogs';
 
 interface VoiceStudioProps {
   config: any;
@@ -28,12 +27,9 @@ interface VoiceStudioProps {
 
 type RecordingState = 'idle' | 'recording' | 'reviewing';
 
-const normalizeId = (text: string) => text.toLowerCase().trim().replace(/\s+/g, '');
-
 export const VoiceStudio: React.FC<VoiceStudioProps> = ({ 
   config, 
   updateConfig, 
-  // @ts-ignore
   onClose,
   initialWordId,
   initialVoiceId,
@@ -60,7 +56,7 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
 
   const [activeVoice, setActiveVoice] = useState(() => {
     if (initialVoiceId && initialVoiceId !== 'default') return initialVoiceId;
-    if (config.activeVoice && config.activeVoice !== 'default') return config.activeVoice;
+    if (config.active_voice && config.active_voice !== 'default') return config.active_voice;
     return voiceOptions.length > 0 ? voiceOptions[0].value : '';
   });
 
@@ -74,11 +70,12 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
     }
   }, [recordingLanguage, voiceOptions, activeVoice]);
 
-  const [recordedKeys, setRecordedKeys] = useState<string[]>([]);
+  const [recordedWordIds, setRecordedWordIds] = useState<Set<string>>(new Set());
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [recordingState, setRecordingState] = useState<RecordingState>('idle');
   const [hasAutoNavigated, setHasAutoNavigated] = useState(false);
+  const [hasAutoJumped, setHasAutoJumped] = useState(false);
   
   const [alertInfo, setAlertInfo] = useState<{title: string, desc: string} | null>(null);
   const [confirmInfo, setConfirmInfo] = useState<{title: string, desc: string, isDanger?: boolean, action: () => void} | null>(null);
@@ -86,6 +83,7 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
   const [showVoiceSelect, setShowVoiceSelect] = useState(false);
   const [showLanguageSelect, setShowLanguageSelect] = useState(false);
   const [showHelperSelect, setShowHelperSelect] = useState(false);
+  const [showVoiceAddDialog, setShowVoiceAddDialog] = useState(false);
 
   const currentVoiceName = voiceOptions.find((o: any) => o.value === activeVoice)?.label || 'No Voice Selected';
   const activeVoiceData = (config.voices || []).find((p: any) => p.id === activeVoice);
@@ -105,8 +103,6 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
 
   const { isRecording, startRecording, stopRecording, lastRecordedBlob, analyser, clearLastBlob } = useVoiceRecording();
-
-  const getActiveVoiceId = useCallback(() => activeVoice, [activeVoice]);
 
   const stopReviewAudio = useCallback(() => {
     if (sourceNodeRef.current) {
@@ -134,12 +130,25 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
   }, [stopReviewAudio, clearLastBlob]);
 
   const refreshRecordedStatus = useCallback(async () => {
-    const keys = await universeDb.audio.toCollection().primaryKeys();
-    setRecordedKeys(keys as string[]);
-  }, []);
+    if (!activeVoice) {
+      setRecordedWordIds(new Set());
+      return;
+    }
+    
+    // Resolve slug to numericId
+    const voice = await universeDb.voices.where({ id: activeVoice }).first();
+    if (!voice?.numericId) {
+      setRecordedWordIds(new Set());
+      return;
+    }
+    
+    const records = await universeDb.audio.where('voiceNumericId').equals(voice.numericId).toArray();
+    setRecordedWordIds(new Set(records.map(r => r.wordId as string)));
+  }, [activeVoice]);
 
   useEffect(() => { 
     refreshRecordedStatus();
+    setHasAutoJumped(false); // Reset jump flag when voice/lang changes
     return () => stopReviewAudio();
   }, [refreshRecordedStatus, activeVoice, recordingLanguage, stopReviewAudio]);
 
@@ -156,9 +165,39 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
       if (idx !== -1) {
         setCurrentIndex(idx);
         setHasAutoNavigated(true);
+        setHasAutoJumped(true); // Don't double jump if navigated by ID
       }
     }
   }, [initialWordId, filteredWords, hasAutoNavigated]);
+
+  // Auto-jump to first unrecorded word if not manually navigated by initialWordId
+  useEffect(() => {
+    // We only jump if we haven't jumped yet, we have words, and we have FETCHED the recorded status
+    // recordedWordIds.size might be 0 if nothing is recorded, but we need to know if it's the 
+    // result of a query or just initial state. 
+    // Since we reset hasAutoJumped when activeVoice/recordingLanguage changes, 
+    // and refreshRecordedStatus is called in the same effect, 
+    // we should wait until we have a definitive answer.
+    
+    if (!hasAutoJumped && filteredWords.length > 0) {
+      // Find first word ID that is NOT in recordedWordIds
+      const firstUnrecordedIdx = filteredWords.findIndex(w => !recordedWordIds.has(w.id));
+      
+      // If we find an unrecorded word that is NOT the first one, it means we definitely have data
+      // If we are at index 0, and it is unrecorded, we should only 'jump' (set flag) if we are sure 
+      // the recordedWordIds query has finished.
+      if (firstUnrecordedIdx > 0) {
+        setCurrentIndex(firstUnrecordedIdx);
+        setHasAutoJumped(true);
+      } else if (firstUnrecordedIdx === 0) {
+        // If we have at least one recorded word in the whole set, then we know query finished
+        if (recordedWordIds.size > 0) {
+           // We are already at 0, and it's unrecorded. Just mark as jumped.
+           setHasAutoJumped(true);
+        }
+      }
+    }
+  }, [filteredWords, recordedWordIds, hasAutoJumped]);
 
   const getAudioContext = () => {
     if (!audioCtxRef.current || audioCtxRef.current.state === 'closed') {
@@ -200,7 +239,7 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
       animationRef.current = requestAnimationFrame(updateProgress);
     };
     updateProgress();
-    source.onended = () => {};
+    source.onended = () => { /* no-op */ };
   }, [audioBuffer, trimStart, trimEnd, stopReviewAudio]);
 
   useEffect(() => {
@@ -244,11 +283,20 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
     const duration = audioBuffer.duration;
     const trimmedBuffer = trimAudioBuffer(audioBuffer, ctx, trimStart * duration, trimEnd * duration);
     const finalBlob = audioBufferToWavBlob(trimmedBuffer);
-    const audioKey = generateAudioStorageKey(currentWord.id, getActiveVoiceId());
-    await universeDb.audio.put({ id: audioKey, blob: finalBlob });
-    refreshRecordedStatus();
-    handleNext();
-  }, [currentWord, audioBuffer, trimStart, trimEnd, getActiveVoiceId, refreshRecordedStatus, handleNext, isEditable]);
+    
+    // Resolve slug to numericId
+    const voice = await universeDb.voices.where({ id: activeVoice }).first();
+    if (voice?.numericId) {
+        // Use native compound primary key [voiceNumericId, wordId] for absolute best performance
+        await universeDb.audio.put({ 
+          voiceNumericId: voice.numericId, 
+          wordId: currentWord.id, 
+          blob: finalBlob 
+        });
+        refreshRecordedStatus();
+        handleNext();
+    }
+  }, [currentWord, audioBuffer, trimStart, trimEnd, activeVoice, refreshRecordedStatus, handleNext, isEditable]);
 
   const toggleRecording = useCallback(async () => {
     if (!activeVoice) {
@@ -270,38 +318,80 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
   };
 
   const handleAddVoice = () => {
-    setPromptInfo({
-        title: `New Voice (${recordingLanguage.toUpperCase()})`,
-        placeholder: "e.g. My Voice",
-        defaultValue: "My Voice",
-        action: (name) => {
-            const trimmedName = name.trim();
-            if (!trimmedName) return;
-            const isDuplicate = (config.voices || []).some((p: any) => p.name.toLowerCase() === trimmedName.toLowerCase() && p.language === recordingLanguage);
-            if (isDuplicate) {
-              setAlertInfo({ title: "Duplicate Name", desc: `A voice named "${trimmedName}" already exists.` });
-              return;
-            }
-            const id = `${recordingLanguage}_voice_${normalizeId(trimmedName)}`;
-            const newVoices = [...(config.voices || []), { id, name: trimmedName, language: recordingLanguage, editable: true }];
-            updateConfig({ ...config, voices: newVoices, activeVoice: id });
-            setActiveVoice(id);
-        }
-    });
+    setShowVoiceAddDialog(true);
+  };
+
+  const handleFinishAddVoice = async (name: string, lang: string) => {
+    const trimmed = name.trim();
+    if (!trimmed) return;
+
+    if (!/^[a-zA-Z]+$/.test(trimmed)) {
+      setAlertInfo({ title: "Invalid Name", desc: "Name must contain only English alphabets." });
+      return;
+    }
+
+    const sanitizedName = trimmed.charAt(0).toUpperCase() + trimmed.slice(1).toLowerCase();
+    
+    const isDuplicate = await universeDb.voices.where({ name: sanitizedName, language: lang }).count() > 0;
+    if (isDuplicate) {
+      setAlertInfo({ title: "Duplicate Name", desc: `A voice named "${sanitizedName}" already exists for ${lang.toUpperCase()}.` });
+      return;
+    }
+
+    const id = `${lang}_voice_${sanitizedName.toLowerCase()}`;
+    const voiceData = { id, name: sanitizedName, language: lang, editable: true };
+    await universeDb.voices.put(voiceData);
+    
+    const newVoices = [...(config.voices || []), voiceData];
+    updateConfig({ ...config, voices: newVoices, active_voice: id });
+    setActiveVoice(id);
+    setRecordingLanguage(lang);
+    setShowVoiceAddDialog(false);
   };
 
   const handleRenameVoice = () => {
-    if (!isEditable) return;
-    const voice = (config.voices || []).find((p: any) => p.id === activeVoice);
-    if (!voice) return;
+    if (!isEditable || !activeVoiceData) return;
+    const placeholder = `${activeVoiceData.name} (${activeVoiceData.language?.toUpperCase()})`;
+    
     setPromptInfo({
       title: "Rename Voice",
-      placeholder: "e.g. New Name",
-      defaultValue: voice.name,
-      action: (newName) => {
-        if (!newName.trim()) return;
-        const newVoices = config.voices.map((p: any) => p.id === activeVoice ? { ...p, name: newName } : p);
-        updateConfig({ ...config, voices: newVoices });
+      placeholder: placeholder,
+      defaultValue: activeVoiceData.name,
+      action: async (newName) => {
+        const trimmed = newName.trim();
+        if (!trimmed || trimmed === activeVoiceData.name) return;
+        
+        if (!/^[a-zA-Z]+$/.test(trimmed)) {
+          setAlertInfo({ title: "Invalid Name", desc: "Name must contain only English alphabets." });
+          return;
+        }
+
+        const sanitizedName = trimmed.charAt(0).toUpperCase() + trimmed.slice(1).toLowerCase();
+        if (sanitizedName === activeVoiceData.name) return;
+
+        const newId = `${activeVoiceData.language}_voice_${sanitizedName.toLowerCase()}`;
+
+        const duplicateCheck = await universeDb.voices.where({ id: newId }).first();
+        if (duplicateCheck && duplicateCheck.id !== activeVoice) {
+          setAlertInfo({ title: "Duplicate Name", desc: `A voice named "${sanitizedName}" already exists for ${activeVoiceData.language?.toUpperCase()}.` });
+          return;
+        }
+
+        if (activeVoiceData.numericId) {
+            await universeDb.voices.update(activeVoiceData.numericId, { 
+                id: newId, 
+                name: sanitizedName 
+            });
+        }
+
+        const newVoices = config.voices.map((p: any) => p.id === activeVoice ? { ...p, id: newId, name: sanitizedName } : p);
+        updateConfig({ 
+          ...config, 
+          voices: newVoices,
+          active_voice: config.active_voice === activeVoice ? newId : config.active_voice
+        });
+        
+        setActiveVoice(newId);
       }
     });
   };
@@ -313,12 +403,14 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
         desc: "Are you sure? This will delete all its recordings permanently.",
         isDanger: true,
         action: async () => {
-            const allKeys = await universeDb.audio.toCollection().primaryKeys() as string[];
-            const voiceKeys = allKeys.filter(k => k.startsWith(`${activeVoice}_`));
-            await universeDb.audio.bulkDelete(voiceKeys);
+            if (activeVoiceData?.numericId !== undefined) {
+                await universeDb.audio.where('voiceNumericId').equals(activeVoiceData.numericId).delete();
+                await universeDb.voices.delete(activeVoiceData.numericId);
+            }
+
             const newVoices = (config.voices || []).filter((p: any) => p.id !== activeVoice);
             const fallbackVoice = newVoices.find((p: any) => p.language === recordingLanguage)?.id || (newVoices.length > 0 ? newVoices[0].id : '');
-            updateConfig({ ...config, voices: newVoices, activeVoice: fallbackVoice });
+            updateConfig({ ...config, voices: newVoices, active_voice: fallbackVoice });
             setActiveVoice(fallbackVoice);
             refreshRecordedStatus();
         }
@@ -326,17 +418,13 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
   };
 
   const totalWords = allWords.length || 1;
-  const recordedCount = recordedKeys.filter(k => k.startsWith(`${getActiveVoiceId()}_`)).length;
+  const recordedCount = recordedWordIds.size;
   const progressPercent = Math.round((recordedCount / totalWords) * 100) || 0;
-  const isCurrentRecorded = currentWord && recordedKeys.includes(generateAudioStorageKey(currentWord.id, getActiveVoiceId()));
+  const isCurrentRecorded = currentWord && recordedWordIds.has(currentWord.id);
 
   const handleGoHome = () => {
     stopReviewAudio();
-    if (onClose) {
-       onClose();
-    } else {
-       window.location.hash = '#';
-    }
+    onClose();
   };
 
   const handleSaveWord = async (word: any) => {
@@ -344,7 +432,6 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
     refreshRecordedStatus();
     setEditingWord(null);
     setIsNewWord(false);
-    // Explicitly update config words for immediate studio refresh
     const updatedWords = (config.words || []).map((w: any) => w.id === word.id ? word : w);
     if (!updatedWords.find((w: any) => w.id === word.id)) updatedWords.push(word);
     updateConfig({ ...config, words: updatedWords });
@@ -352,7 +439,7 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
 
   const handleDeleteWord = async (wordId: string) => {
     await universeDb.words.delete(wordId);
-    await universeDb.audio.where('id').startsWith(`${wordId}_`).delete();
+    await universeDb.audio.where('wordId').equals(wordId).delete();
     await universeDb.doodles.where('wordId').equals(wordId).delete();
     refreshRecordedStatus();
     setEditingWord(null);
@@ -378,15 +465,12 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
     <div className="voice-studio-fullscreen" dir="ltr">
       <header className="apple-header consistent-header" dir="ltr">
         <div className="header-grid-layout">
-          {/* 1fr: Recording Language (Mic Icon) */}
           <div className="header-cell">
             <button className="btn-icon-ios" onClick={() => setShowLanguageSelect(true)} aria-label="Recording Language" style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <Mic size={16} color="var(--color-primary)" />
               <div style={{ fontSize: '0.65rem', fontWeight: 900, color: 'var(--color-primary)' }}>{recordingLanguage.toUpperCase()}</div>
             </button>
           </div>
-
-          {/* 1fr: Info Language Selector (Languages Icon) */}
           <div className="header-cell">
             <button 
               className="btn-icon-ios highlight" 
@@ -398,24 +482,16 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
               <div style={{ fontSize: '0.65rem', fontWeight: 900 }}>{helperLanguage.toUpperCase()}</div>
             </button>
           </div>
-          
-          {/* 2fr: Shukr Button (Home) */}
           <div className="header-cell span-2">
             <div className="shukr-button-wrapper">
               <ShukrButton
-                onSOS={() => {
-                  if (typeof (window as any)._showSOS === 'function') {
-                    (window as any)._showSOS();
-                  }
-                }}
+                onSOS={() => (window as any)._showSOS?.()}
                 onHome={handleGoHome}
                 playClick={playClick}
                 onOpenSettings={() => window.location.hash = '#settings'}
               />
             </div>
           </div>
-
-          {/* 1fr: Circular Progress Button */}
           <div className="header-cell">
             <button 
               className={`btn-icon-ios ${showProgressInfo ? 'active' : ''}`} 
@@ -425,21 +501,11 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
             >
                <svg width="34" height="34" viewBox="0 0 34 34">
                   <circle cx="17" cy="17" r="14" fill="none" stroke="rgba(45, 90, 39, 0.1)" strokeWidth="3" />
-                  <circle 
-                    cx="17" cy="17" r="14" fill="none" 
-                    stroke="var(--color-primary)" 
-                    strokeWidth="3" 
-                    strokeDasharray={2 * Math.PI * 14} 
-                    strokeDashoffset={2 * Math.PI * 14 * (1 - progressPercent / 100)} 
-                    strokeLinecap="round"
-                    transform="rotate(-90 17 17)"
-                  />
+                  <circle cx="17" cy="17" r="14" fill="none" stroke="var(--color-primary)" strokeWidth="3" strokeDasharray={2 * Math.PI * 14} strokeDashoffset={2 * Math.PI * 14 * (1 - progressPercent / 100)} strokeLinecap="round" transform="rotate(-90 17 17)" />
                </svg>
                <div style={{ position: 'absolute', fontSize: '0.6rem', fontWeight: 900, color: 'var(--color-primary)' }}>{progressPercent}%</div>
             </button>
           </div>
-
-          {/* 1fr: Settings */}
           <div className="header-cell">
             <button className="btn-icon-ios" onClick={() => window.location.hash = '#settings'} aria-label="Settings">
               <Settings size={22} color="var(--color-primary)" />
@@ -466,23 +532,11 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
                 </span>
                 <ChevronDown size={20} style={{ flexShrink: 0 }} />
             </button>
-
             <div className="voice-actions-mini">
-              <button className="nav-btn-brand action-btn" onClick={handleRenameVoice} disabled={!isEditable}>
-                  <Edit2 size={20} />
-              </button>
-
-              <button className="nav-btn-brand action-btn theme-primary" onClick={handleAddVoice}>
-                  <Plus size={24} />
-              </button>
-              
-              <button className="nav-btn-brand action-btn" onClick={handleOpenAddWord} title="Add New Word" style={{ background: 'var(--color-accent)', color: 'white' }}>
-                  <Type size={20} />
-              </button>
-
-              <button className="nav-btn-brand action-btn theme-danger" onClick={handleDeleteVoice} disabled={!isEditable}>
-                  <Trash2 size={20} />
-              </button>
+              <button className="nav-btn-brand action-btn" onClick={handleRenameVoice} disabled={!isEditable}><Edit2 size={20} /></button>
+              <button className="nav-btn-brand action-btn theme-primary" onClick={handleAddVoice}><Plus size={24} /></button>
+              <button className="nav-btn-brand action-btn" onClick={handleOpenAddWord} title="Add New Word" style={{ background: 'var(--color-accent)', color: 'white' }}><Type size={20} /></button>
+              <button className="nav-btn-brand action-btn theme-danger" onClick={handleDeleteVoice} disabled={!isEditable}><Trash2 size={20} /></button>
             </div>
         </div>
 
@@ -497,73 +551,39 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
           {currentWord ? (
             <>
               <div className="word-card-wrap" style={{ position: 'relative' }}>
-                <WordCard 
-                    item={currentWord} 
-                    isFocused={false} 
-                    onClick={() => {}} 
-                    variant={1} 
-                    className={isCurrentRecorded ? 'recorded-card' : ''}
-                    languageOverride={recordingLanguage}
-                    helperLanguageOverride={helperLanguage}
-                    forceDualMode={true}
-                />
-                <button 
-                  onClick={() => { setIsNewWord(false); setEditingWord(currentWord); }}
-                  style={{ 
-                    position: 'absolute', top: -10, right: -10, background: 'var(--color-primary)', 
-                    color: 'white', border: 'none', borderRadius: '50%', width: 44, height: 44,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-soft)',
-                    cursor: 'pointer', zIndex: 10
-                  }}
-                  title="Edit word metadata"
-                >
-                  <Edit2 size={20} />
-                </button>
+                <WordCard item={currentWord} isFocused={false} onClick={() => {}} variant={1} className={isCurrentRecorded ? 'recorded-card' : ''} languageOverride={recordingLanguage} helperLanguageOverride={helperLanguage} forceDualMode={true} />
+                <button onClick={() => { setIsNewWord(false); setEditingWord(currentWord); }} style={{ position: 'absolute', top: -10, right: -10, background: 'var(--color-primary)', color: 'white', border: 'none', borderRadius: '50%', width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-soft)', cursor: 'pointer', zIndex: 10 }} title="Edit word metadata"><Edit2 size={20} /></button>
               </div>
-              
               <div className="record-center-brand">
                 {recordingState !== 'idle' && (
                   <div className="waveform-container-brand">
                     {recordingState === 'reviewing' ? (
-                      <AudioTrimmer 
-                          audioBuffer={audioBuffer}
-                          onTrimChange={(s, e) => { setTrimStart(s); setTrimEnd(e); }}
-                          onDragStart={stopReviewAudio}
-                          onDragEnd={() => playReviewAudioRef.current?.()}
-                          playbackProgress={playbackProgress}
-                          color="var(--color-primary)"
-                      />
+                      <AudioTrimmer audioBuffer={audioBuffer} onTrimChange={(s, e) => { setTrimStart(s); setTrimEnd(e); }} onDragStart={stopReviewAudio} onDragEnd={() => playReviewAudioRef.current?.()} playbackProgress={playbackProgress} color="var(--color-primary)" />
                     ) : (
                       <AudioWaveform analyser={analyser} isRecording={recordingState === 'recording'} color="var(--color-danger)" />
                     )}
                   </div>
                 )}
-
                 <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
                   {recordingState === 'reviewing' ? (
                     <div className="review-actions-brand">
-                      <button className="review-btn btn-redo" onClick={handleRedo} title="Redo">
-                        <RotateCcw size={32} strokeWidth={2.5} />
-                      </button>
-                      <button className="review-btn btn-play" onClick={isPlaying ? stopReviewAudio : () => playReviewAudioRef.current?.()} style={{ background: '#f2f2f7', color: 'var(--color-primary)' }}>
-                        <Play size={36} fill={isPlaying ? "var(--color-primary)" : "none"} />
-                      </button>
-                      {isEditable && (
-                        <button className="review-btn btn-tick" onClick={handleConfirm} title="Confirm">
-                          <Check size={40} strokeWidth={3} />
-                        </button>
-                      )}
+                      <button className="review-btn btn-redo" onClick={handleRedo} title="Redo"><RotateCcw size={32} strokeWidth={2.5} /></button>
+                      <button className="review-btn btn-play" onClick={isPlaying ? stopReviewAudio : () => playReviewAudioRef.current?.()} style={{ background: '#f2f2f7', color: 'var(--color-primary)' }}><Play size={36} fill={isPlaying ? "var(--color-primary)" : "none"} /></button>
+                      {isEditable && <button className="review-btn btn-tick" onClick={handleConfirm} title="Confirm"><Check size={40} strokeWidth={3} /></button>}
                     </div>
                   ) : (
                     <>
                       {isCurrentRecorded && (
                         <button className="record-btn-brand" onClick={async () => {
-                          const record = await universeDb.audio.get(generateAudioStorageKey(currentWord.id, activeVoice));
-                          if (record?.blob) {
-                            const url = URL.createObjectURL(record.blob);
-                            const a = new Audio(url);
-                            a.onended = () => URL.revokeObjectURL(url);
-                            a.play();
+                          const voice = await universeDb.voices.where({ id: activeVoice }).first();
+                          if (voice?.numericId) {
+                            const record = await universeDb.audio.get([voice.numericId, currentWord.id]);
+                            if (record?.blob) {
+                              const url = URL.createObjectURL(record.blob);
+                              const a = new Audio(url);
+                              a.onended = () => URL.revokeObjectURL(url);
+                              a.play();
+                            }
                           }
                         }} style={{ background: '#f2f2f7', color: 'var(--color-primary)', border: 'none' }}>
                           <Play size={36} fill="var(--color-primary)" />
@@ -585,15 +605,10 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
                   )}
                 </div>
               </div>
-
               <div className="focal-nav-brand">
-                <button className="nav-btn-brand" onClick={() => { setCurrentIndex(p => Math.max(0, p - 1)); handleRedo(); }} disabled={currentIndex === 0}>
-                  <ChevronLeft size={36} strokeWidth={2.5} />
-                </button>
+                <button className="nav-btn-brand" onClick={() => { setCurrentIndex(p => Math.max(0, p - 1)); handleRedo(); }} disabled={currentIndex === 0}><ChevronLeft size={36} strokeWidth={2.5} /></button>
                 <div className="word-counter-brand">{currentIndex + 1} OF {filteredWords.length}</div>
-                <button className="nav-btn-brand" onClick={handleNext} disabled={currentIndex === filteredWords.length - 1}>
-                  <ChevronRight size={36} strokeWidth={2.5} />
-                </button>
+                <button className="nav-btn-brand" onClick={handleNext} disabled={currentIndex === filteredWords.length - 1}><ChevronRight size={36} strokeWidth={2.5} /></button>
               </div>
             </>
           ) : <div className="no-results">No words found.</div>}
@@ -603,19 +618,12 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
       <AlertDialog isOpen={!!alertInfo} onClose={() => setAlertInfo(null)} title={alertInfo?.title || ''} description={alertInfo?.desc || ''} />
       <ConfirmDialog isOpen={!!confirmInfo} onClose={() => setConfirmInfo(null)} title={confirmInfo?.title || ''} description={confirmInfo?.desc || ''} isDanger={confirmInfo?.isDanger} onConfirm={() => confirmInfo?.action()} />
       <PromptDialog isOpen={!!promptInfo} onClose={() => setPromptInfo(null)} title={promptInfo?.title || ''} placeholder={promptInfo?.placeholder} defaultValue={promptInfo?.defaultValue} onSubmit={(val) => promptInfo?.action(val)} />
-      <SelectDialog isOpen={showVoiceSelect} onClose={() => setShowVoiceSelect(false)} title="Select Voice" options={voiceOptions} selectedValue={activeVoice} onSelect={(val) => { setActiveVoice(val); updateConfig({ ...config, activeVoice: val }); handleRedo(); }} />
+      <SelectDialog isOpen={showVoiceSelect} onClose={() => setShowVoiceSelect(false)} title="Select Voice" options={voiceOptions} selectedValue={activeVoice} onSelect={(val) => { setActiveVoice(val); updateConfig({ ...config, active_voice: val }); handleRedo(); }} />
       <SelectDialog isOpen={showLanguageSelect} onClose={() => setShowLanguageSelect(false)} title="Recording Language" options={languageOptions} selectedValue={recordingLanguage} onSelect={(val) => { setRecordingLanguage(val); handleRedo(); }} />
       <SelectDialog isOpen={showHelperSelect} onClose={() => setShowHelperSelect(false)} title="Info Language (Display)" options={languageOptions} selectedValue={helperLanguage} onSelect={(val) => setHelperLanguage(val)} />
-
+      <VoiceAddDialog isOpen={showVoiceAddDialog} onClose={() => setShowVoiceAddDialog(false)} title="New Voice" languages={languageOptions} initialLanguage={recordingLanguage} onSubmit={handleFinishAddVoice} />
       {editingWord && (
-        <WordEditor 
-          item={editingWord} 
-          isNew={isNewWord}
-          onClose={() => setEditingWord(null)}
-          onSave={handleSaveWord}
-          onDelete={handleDeleteWord}
-          existingWords={allWords}
-        />
+        <WordEditor item={editingWord} isNew={isNewWord} onClose={() => setEditingWord(null)} onSave={handleSaveWord} onDelete={handleDeleteWord} existingWords={allWords} />
       )}
     </div>
   );

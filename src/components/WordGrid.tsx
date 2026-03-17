@@ -1,18 +1,11 @@
 import React from 'react';
 import { WordCard } from './WordCard';
 import { useLanguage } from '../hooks/useLanguage';
-import { MotivateCard } from './MotivateCard';
 
 interface WordGridProps {
   gridItems: any[];
   focusedIndex: number;
   offset: number;
-  randomQuote: any;
-  quotes: any[];
-  onNextQuote?: () => void;
-  updateConfig?: (newConfig: any) => void;
-  config?: any;
-  quoteFocused: boolean;
   onLongPressItem?: (item: any) => void;
   onEditItem?: (item: any) => void;
   onDeleteItem?: (id: string) => void;
@@ -25,12 +18,6 @@ export const WordGrid: React.FC<WordGridProps> = React.memo(({
   gridItems,
   focusedIndex,
   offset,
-  randomQuote,
-  quotes,
-  onNextQuote,
-  updateConfig,
-  config,
-  quoteFocused,
   onLongPressItem,
   onEditItem,
   // @ts-ignore
@@ -67,17 +54,6 @@ export const WordGrid: React.FC<WordGridProps> = React.memo(({
           isFavorite={favorites.includes(item.id)}
         />
       ))}
-
-      {randomQuote && onNextQuote && updateConfig && config && (
-        <MotivateCard 
-          quote={randomQuote}
-          quotes={quotes}
-          onNext={onNextQuote}
-          updateConfig={updateConfig}
-          config={config}
-          isFocused={quoteFocused}
-        />
-      )}
     </div>
   );
 });

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Camera, ShieldAlert, X, Check, Mic } from 'lucide-react';
 import { useLanguage } from '../../hooks/useLanguage';
+import { getLanguageLabel } from '../../lib/languages';
 
 interface PermissionDialogProps {
   onConfirm: () => void;
@@ -153,6 +154,10 @@ interface PromptDialogProps {
 export const PromptDialog: React.FC<PromptDialogProps> = ({ isOpen, onClose, title, placeholder, defaultValue = '', onSubmit }) => {
   const [val, setVal] = useState(defaultValue);
 
+  React.useEffect(() => {
+    if (isOpen) setVal(defaultValue);
+  }, [isOpen, defaultValue]);
+
   if (!isOpen) return null;
   return (
     <div className="shukr-dialog-overlay" onClick={onClose}>
@@ -164,8 +169,15 @@ export const PromptDialog: React.FC<PromptDialogProps> = ({ isOpen, onClose, tit
             style={{ width: '100%', padding: '12px', borderRadius: '12px', fontSize: '1.1rem' }}
             placeholder={placeholder}
             value={val}
-            onChange={e => setVal(e.target.value)}
+            onChange={e => {
+              const inputVal = e.target.value;
+              // Only accept English alphabets
+              if (/^[a-zA-Z]*$/.test(inputVal)) {
+                setVal(inputVal);
+              }
+            }}
             autoFocus
+            onKeyDown={e => { if (e.key === 'Enter') { onSubmit(val); onClose(); } }}
           />
         </div>
         <div className="shukr-dialog-actions">
@@ -181,6 +193,111 @@ export const PromptDialog: React.FC<PromptDialogProps> = ({ isOpen, onClose, tit
         </div>
       </div>
     </div>
+  );
+};
+
+interface VoiceAddDialogProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title: string;
+  languages: { value: string; label: string }[];
+  initialLanguage: string;
+  onSubmit: (name: string, lang: string) => void;
+}
+
+export const VoiceAddDialog: React.FC<VoiceAddDialogProps> = ({ isOpen, onClose, title, languages, initialLanguage, onSubmit }) => {
+  const [name, setName] = useState('');
+  const [lang, setLang] = useState(initialLanguage);
+  const [showLangSelect, setShowLangSelect] = useState(false);
+
+  React.useEffect(() => {
+    if (isOpen) {
+      setName('');
+      setLang(initialLanguage);
+      setShowLangSelect(false);
+    }
+  }, [isOpen, initialLanguage]);
+
+  if (!isOpen) return null;
+
+  return (
+    <>
+      <div className="shukr-dialog-overlay" onClick={onClose}>
+        <div className="shukr-dialog naani-friendly" onClick={e => e.stopPropagation()}>
+          <h2 className="shukr-dialog-title" style={{ marginTop: 0 }}>{title}</h2>
+          
+          <div className="shukr-dialog-desc" style={{ marginBottom: 20 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 20, marginBottom: 20 }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 800, marginBottom: 8, color: 'var(--color-primary)' }}>VOICE NAME</label>
+                <input 
+                  className="massive-input"
+                  style={{ width: '100%', padding: '12px', borderRadius: '12px', fontSize: '1.1rem' }}
+                  placeholder="e.g. MyVoice"
+                  value={name}
+                  onChange={e => {
+                    const val = e.target.value;
+                    // Only accept English alphabets
+                    if (/^[a-zA-Z]*$/.test(val)) {
+                      setName(val);
+                    }
+                  }}
+                  autoFocus
+                  onKeyDown={e => { if (e.key === 'Enter' && name.trim()) { onSubmit(name, lang); onClose(); } }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 800, marginBottom: 8, color: 'var(--color-primary)' }}>RECORDING LANGUAGE</label>
+                <button 
+                  className="btn-icon-ios" 
+                  onClick={() => setShowLangSelect(true)} 
+                  aria-label="Recording Language" 
+                  style={{ 
+                    display: 'flex', 
+                    alignItems: 'center',
+                    gap: 12,
+                    width: '100%', 
+                    height: 52, 
+                    borderRadius: 14,
+                    padding: '0 16px',
+                    background: 'white',
+                    border: '1.5px solid rgba(45, 90, 39, 0.15)',
+                    boxShadow: 'var(--shadow-soft)',
+                    justifyContent: 'flex-start'
+                  }}
+                >
+                  <Mic size={18} color="var(--color-primary)" />
+                  <div style={{ fontSize: '0.9rem', fontWeight: 900, color: 'var(--color-primary)' }}>{getLanguageLabel(lang).toUpperCase()}</div>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="shukr-dialog-actions">
+            <button className="shukr-dialog-btn btn-cancel" onClick={onClose}>
+              Cancel
+            </button>
+            <button 
+              className="shukr-dialog-btn btn-confirm" 
+              disabled={!name.trim()}
+              onClick={() => { onSubmit(name, lang); onClose(); }}
+            >
+              Create
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <SelectDialog 
+        isOpen={showLangSelect} 
+        onClose={() => setShowLangSelect(false)} 
+        title="Select Language" 
+        options={languages} 
+        selectedValue={lang} 
+        onSelect={(val) => setLang(val)} 
+      />
+    </>
   );
 };
 

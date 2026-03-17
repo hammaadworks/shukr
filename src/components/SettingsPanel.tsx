@@ -9,6 +9,8 @@ import {AlertDialog, ConfirmDialog, PromptDialog, SelectDialog} from './modals/D
 import { useLanguage } from '../hooks/useLanguage';
 import { SUPPORTED_LANGS } from '../lib/languages';
 
+import { QuoteCard } from './QuoteCard';
+
 interface SettingsPanelProps {
     config: any;
     updateConfig: (newConfig: any) => void;
@@ -17,6 +19,8 @@ interface SettingsPanelProps {
     onClose: () => void;
     initialTab?: TabType;
     initialEditingItem?: any;
+    randomQuote?: any;
+    onNextQuote?: () => void;
 }
 
 type EditingType = 'word' | 'category' | 'quote';
@@ -30,7 +34,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                                                 onShowLanding,
                                                                 onClose,
                                                                 initialTab,
-                                                                initialEditingItem
+                                                                initialEditingItem,
+                                                                randomQuote,
+                                                                onNextQuote
                                                             }) => {
     const { primaryLanguage, secondaryLanguage, setLanguagePair, language, isDualMode, setDualMode } = useLanguage();
     const [activeTab, setActiveTab] = useState<TabType>(initialTab || 'contact');
@@ -61,10 +67,10 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
         value: p.id,
         label: `${p.name} (${p.language?.toUpperCase() || '?'})${p.editable === false ? ' [🔒]' : ''}`
     }));
-    const currentVoiceName = voiceOptions.find((o: any) => o.value === (config?.activeVoice || ''))?.label || 'Select Voice';
+    const currentVoiceName = voiceOptions.find((o: any) => o.value === (config?.active_voice || ''))?.label || 'Select Voice';
 
     const handleRenameVoice = () => {
-        const activeId = config?.activeVoice;
+        const activeId = config?.active_voice;
         if (!activeId) return;
         const voice = (config?.voices || []).find((p: any) => p.id === activeId);
         if (!voice) return;
@@ -74,20 +80,55 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
             return;
         }
 
+        const placeholder = `${voice.name} (${voice.language?.toUpperCase()})`;
+
         setPromptInfo({
             title: "Rename Voice",
-            placeholder: "e.g. My Voice",
+            placeholder: placeholder,
             defaultValue: voice.name,
-            action: (newName) => {
-                if (!newName.trim()) return;
-                const newVoices = (config?.voices || []).map((p: any) => p.id === activeId ? {...p, name: newName} : p);
-                updateConfig({...config, voices: newVoices});
+            action: async (newName) => {
+                const trimmed = newName.trim();
+                if (!trimmed || trimmed === voice.name) return;
+
+                // Validation: Only English alphabets
+                if (!/^[a-zA-Z]+$/.test(trimmed)) {
+                    setAlertInfo({ title: "Invalid Name", desc: "Name must contain only English alphabets." });
+                    return;
+                }
+
+                // Sanitization: Title Case
+                const sanitizedName = trimmed.charAt(0).toUpperCase() + trimmed.slice(1).toLowerCase();
+                if (sanitizedName === voice.name) return;
+
+                const newId = `${voice.language}_voice_${sanitizedName.toLowerCase()}`;
+
+                // Duplicate check
+                const isDuplicate = await universeDb.voices.get(newId);
+                if (isDuplicate) {
+                    setAlertInfo({ title: "Duplicate Name", desc: `A voice named "${sanitizedName}" already exists for ${voice.language?.toUpperCase()}.` });
+                    return;
+                }
+
+                // --- STABLE LINK RENAMING (Zero Cascading Updates) ---
+                if (voice.numericId) {
+                    await universeDb.voices.update(voice.numericId, { 
+                        id: newId, 
+                        name: sanitizedName 
+                    });
+                }
+
+                const newVoices = (config?.voices || []).map((p: any) => p.id === activeId ? { ...p, id: newId, name: sanitizedName } : p);
+                updateConfig({
+                    ...config,
+                    voices: newVoices,
+                    active_voice: config.active_voice === activeId ? newId : config.active_voice
+                });
             }
         });
     };
 
     const handleDeleteVoice = () => {
-        const activeId = config?.activeVoice;
+        const activeId = config?.active_voice;
         if (!activeId) return;
         const voice = (config?.voices || []).find((p: any) => p.id === activeId);
         if (!voice) return;
@@ -102,11 +143,16 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
             desc: "Are you sure you want to delete this voice and all its recordings?",
             isDanger: true,
             action: async () => {
+                if (voice.numericId !== undefined) {
+                    await universeDb.audio.where('voiceNumericId').equals(voice.numericId).delete();
+                    await universeDb.voices.delete(voice.numericId);
+                }
+                
                 const newVoices = (config?.voices || []).filter((p: any) => p.id !== activeId);
                 updateConfig({
                     ...config,
                     voices: newVoices,
-                    activeVoice: newVoices.length > 0 ? newVoices[0].id : ''
+                    active_voice: newVoices.length > 0 ? newVoices[0].id : ''
                 });
             }
         });
@@ -724,6 +770,18 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 existingWords={(config?.categories || []).flatMap((c: any) => c.items || [])}
                 onOpenVoiceStudio={onOpenVoiceStudio}
             />)}
+
+            {!editingItem && randomQuote && onNextQuote && (
+                <div style={{ marginTop: 32 }}>
+                    <QuoteCard 
+                        quote={randomQuote}
+                        quotes={config?.quotes || []}
+                        onNext={onNextQuote}
+                        updateConfig={updateConfig}
+                        config={config}
+                    />
+                </div>
+            )}
         </div>
 
         {/* Modals */}
@@ -752,18 +810,17 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
             onSubmit={(val) => promptInfo?.action(val)}
         />
 
-        <SelectDialog
-            isOpen={showVoiceSelect}
-            onClose={() => setShowVoiceSelect(false)}
-            title="Select Voice"
-            options={voiceOptions}
-            selectedValue={config?.activeVoice || 'default'}
+        <SelectDialog 
+            isOpen={showVoiceSelect} 
+            onClose={() => setShowVoiceSelect(false)} 
+            title="Select Voice" 
+            options={voiceOptions} 
+            selectedValue={config?.active_voice || 'default'} 
             onSelect={(val) => {
-                const newConfig = {...config, activeVoice: val};
+                const newConfig = {...config, active_voice: val};
                 updateConfig(newConfig);
-            }}
+            }} 
         />
-
         <SelectDialog
             isOpen={showPrimarySelect}
             onClose={() => setShowPrimarySelect(false)}
