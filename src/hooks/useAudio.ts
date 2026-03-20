@@ -137,9 +137,23 @@ export const useAudio = () => {
         try {
           if (wordId) {
             setGlobalPlayingId(wordId);
-            const audioRecordCacheKey = generateAudioStorageKey(wordId, activeVoice);
-            const record = await universeDb.audio.get(audioRecordCacheKey);
-            const recordedBlob = record?.blob;
+            
+            let vNumericId: number | undefined;
+            
+            if (wordId.startsWith('gesture_')) {
+              vNumericId = 0; // System reserved
+            } else {
+              // Resolve slug to numericId
+              const voice = await universeDb.voices.where({ id: activeVoice }).first();
+              vNumericId = voice?.numericId;
+            }
+            
+            let recordedBlob: Blob | undefined;
+            if (vNumericId !== undefined) {
+                // Search by native compound primary key [voiceNumericId, wordId]
+                const record = await universeDb.audio.get([vNumericId, wordId]);
+                recordedBlob = record?.blob;
+            }
             
             if (recordedBlob) {
               objectUrl = URL.createObjectURL(recordedBlob);
@@ -147,6 +161,7 @@ export const useAudio = () => {
             } else {
               // Try to find in ingested audio (src/lib/data/audio)
               try {
+                const audioRecordCacheKey = generateAudioStorageKey(wordId, activeVoice);
                 const ingestedModules = import.meta.glob('../lib/data/audio/*.wav', { eager: false });
                 const matchingPath = `../lib/data/audio/${audioRecordCacheKey}.wav`;
                 

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { universeDb } from '../lib/universeDb';
 import { universePorter } from '../lib/universePorter';
 import { dataAssembler } from '../lib/dataAssembler';
@@ -65,8 +65,11 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { primaryLanguage, secondaryLanguage } = useLanguage();
+  const isBootstrappingRef = useRef(false);
 
   const bootstrap = useCallback(async () => {
+    if (isBootstrappingRef.current) return;
+    isBootstrappingRef.current = true;
     setIsLoading(true);
     try {
       const bootData = await dataAssembler.assemble(primaryLanguage, secondaryLanguage);
@@ -131,6 +134,7 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       setError(err.message);
     } finally {
       setIsLoading(false);
+      isBootstrappingRef.current = false;
     }
   }, [primaryLanguage, secondaryLanguage]);
 
@@ -145,15 +149,31 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     try {
       const keysToSave = ['favorites', 'family', 'sos_settings', 'preferences', 'language_pair', 'active_voice', 'ai_config', 'gesture_mappings'];
       const settingsItems = keysToSave
-        .map(k => ({ key: k, value: (newConfig as any)[k] }))
+        .map(k => ({ key: k, value: (newConfig as any)[k] || (newConfig as any)[k === 'active_voice' ? 'activeVoice' : k] }))
         .filter(item => item.value !== undefined);
         
       await universeDb.settings.bulkPut(settingsItems);
       
       // Sync Voices to their dedicated table
-      await universeDb.voices.clear();
       if (newConfig.voices && newConfig.voices.length > 0) {
-        await universeDb.voices.bulkPut(newConfig.voices);
+        const dbVoices = await universeDb.voices.toArray();
+        const voicesToPut = newConfig.voices.map((v: any) => {
+          const existing = dbVoices.find(dv => dv.id === v.id);
+          return {
+            ...v,
+            numericId: existing?.numericId || v.numericId
+          };
+        });
+        await universeDb.voices.bulkPut(voicesToPut);
+        
+        // Remove voices that are no longer in config
+        const configVoiceIds = newConfig.voices.map((v: any) => v.id);
+        const voicesToDelete = dbVoices.filter(dv => !configVoiceIds.includes(dv.id)).map(dv => dv.numericId).filter(Boolean) as number[];
+        if (voicesToDelete.length > 0) {
+          await universeDb.voices.bulkDelete(voicesToDelete);
+        }
+      } else {
+        await universeDb.voices.clear();
       }
     } catch (err) {
       console.error('[AppConfig] DB Sync failed:', err);
