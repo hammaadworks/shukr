@@ -10,7 +10,6 @@ import { useFuzzySearch } from './hooks/useFuzzySearch';
 import { predictionsEngine } from './lib/predictionsEngine';
 import { translator } from './lib/translator';
 import { universeDb } from './lib/universeDb';
-import { generateAudioStorageKey } from './lib/constants';
 
 // Extracted Components
 import { SplashScreen } from './components/SplashScreen';
@@ -107,7 +106,8 @@ const AppContent = () => {
     };
     updateConfig(newConfig);
     if (blob) {
-      await universeDb.audio.put({ id: `gesture_${updated.id}`, blob });
+      const gestureId = `gesture_${updated.id}`;
+      await universeDb.audio.put({ voiceNumericId: 0, wordId: gestureId, blob });
     }
     setEditingGesture(null);
   }, [config, updateConfig]);
@@ -243,6 +243,7 @@ const AppContent = () => {
     }
     updateConfig(newConfig);
     await universeDb.words.delete(id);
+    await universeDb.audio.where({ wordId: id }).delete();
     await universeDb.doodles.where('wordId').equals(id).delete();
     refreshWords();
     setEditingWord(null);
@@ -269,9 +270,15 @@ const AppContent = () => {
     updateConfig(newConfig);
     await universeDb.words.put(item);
     if (blob) {
-      const voiceId = config.active_voice || 'default';
-      const audioKey = generateAudioStorageKey(item.id, voiceId);
-      await universeDb.audio.put({ id: audioKey, blob });
+      const voiceSlug = config.active_voice || 'en_voice_hammaad';
+      const voiceRecord = await universeDb.voices.where({ id: voiceSlug }).first();
+      if (voiceRecord?.numericId !== undefined) {
+          await universeDb.audio.put({
+            voiceNumericId: voiceRecord.numericId,
+            wordId: item.id,
+            blob
+          });
+      }
     }
     refreshWords();
     setEditingWord(null);
@@ -312,9 +319,15 @@ const AppContent = () => {
     
     await universeDb.words.put(item);
     if (blob) {
-      const voiceId = config.active_voice || 'default';
-      const audioKey = generateAudioStorageKey(item.id, voiceId);
-      await universeDb.audio.put({ id: audioKey, blob });
+      const voiceSlug = config.active_voice || 'en_voice_hammaad';
+      const voiceRecord = await universeDb.voices.where({ id: voiceSlug }).first();
+      if (voiceRecord?.numericId !== undefined) {
+          await universeDb.audio.put({
+            voiceNumericId: voiceRecord.numericId,
+            wordId: item.id,
+            blob
+          });
+      }
     }
     refreshWords();
     setAddingWord(null);
@@ -499,8 +512,8 @@ const AppContent = () => {
 
     // 1. Handle Audio Mapping
     if (mapping.type === 'audio') {
-      const audioId = `gesture_${gestureKey}`;
-      const record = await universeDb.audio.get(audioId);
+      const gestureId = `gesture_${gestureKey}`;
+      const record = await universeDb.audio.get([0, gestureId]);
       if (record?.blob) {
         const url = URL.createObjectURL(record.blob);
         const audio = new Audio(url);
@@ -609,7 +622,8 @@ const AppContent = () => {
             initialWordId={voiceParams?.wordId}
             initialVoiceId={voiceParams?.voiceId}
             initialLanguage={voiceParams?.language}
-          />        ) : route === '#words' ? (
+          />
+        ) : route === '#words' ? (
           <WordManager 
             onClose={() => navigate('#')} 
             onRecord={navigateVoiceStudio}
@@ -621,6 +635,8 @@ const AppContent = () => {
             onOpenVoiceStudio={(wordId?: string, language?: string) => navigateVoiceStudio({ wordId, language })}
             onShowLanding={() => { setIsAppStarted(false); navigate('#'); }}
             onClose={() => { setInitialEditingItem(null); setInitialSettingsTab(null); navigate('#'); }}
+            randomQuote={randomQuote}
+            onNextQuote={handleNextQuote}
           />
         ) : route === '#doodle' ? (
           <>
@@ -663,13 +679,7 @@ const AppContent = () => {
                 gridItems={gridItems}
                 focusedIndex={focusedIndex}
                 offset={5 + displayCategories.length + predictions.length}
-                randomQuote={randomQuote}
-                quotes={config?.quotes || []}
-                onNextQuote={handleNextQuote}
-                updateConfig={updateConfig}
-                config={config}
                 currentlyPlayingId={currentlyPlayingId}
-                quoteFocused={false}
                 onLongPressItem={(item) => toggleFavorite(item.id)}
                 onDeleteItem={handleDeleteWord}
                 onEditItem={(item) => setEditingWord(item)}
@@ -779,4 +789,3 @@ export default function App() {
     </LanguageProvider>
   );
 }
-

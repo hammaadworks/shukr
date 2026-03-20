@@ -30,3 +30,4 @@ downsides: wated a lot of time gtm
 i still need to perfect the app for aphasia patients
 and elderly too
 and also must do a complete code audit
+talk about longkeys in postgres and indexed db and their differences how to wrap your head around dexie
