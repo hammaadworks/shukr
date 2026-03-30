@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {ChevronLeft, Download, Mic, RefreshCw, Settings, Upload, X} from 'lucide-react';
+import {ChevronDown, ChevronLeft, Download, Edit2, Mic, RefreshCw, Settings, Trash2, Upload, X, Volume2, VolumeX} from 'lucide-react';
 import {translator} from '../lib/translator';
-import {db} from '../recognition/db';
 import {universePorter} from '../lib/universePorter';
 import {universeDb} from '../lib/universeDb';
 import {WordEditor} from './WordEditor';
-import { AlertDialog, ConfirmDialog, PromptDialog, SelectDialog } from './modals/Dialogs';
-import { ChevronDown } from 'lucide-react';
+import {AlertDialog, ConfirmDialog, PromptDialog, SelectDialog} from './modals/Dialogs';
 
 interface SettingsPanelProps {
     config: any;
@@ -36,16 +34,48 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
     const [isExporting, setIsExporting] = useState(false);
 
     // Modal States
-    const [alertInfo, setAlertInfo] = useState<{title: string, desc: string} | null>(null);
-    const [confirmInfo, setConfirmInfo] = useState<{title: string, desc: string, isDanger?: boolean, action: () => void} | null>(null);
-    const [promptInfo, setPromptInfo] = useState<{title: string, placeholder?: string, defaultValue?: string, action: (val: string) => void} | null>(null);
+    const [alertInfo, setAlertInfo] = useState<{ title: string, desc: string } | null>(null);
+    const [confirmInfo, setConfirmInfo] = useState<{
+        title: string,
+        desc: string,
+        isDanger?: boolean,
+        action: () => void
+    } | null>(null);
+    const [promptInfo, setPromptInfo] = useState<{
+        title: string,
+        placeholder?: string,
+        defaultValue?: string,
+        action: (val: string) => void
+    } | null>(null);
     const [showVoiceSelect, setShowVoiceSelect] = useState(false);
 
-    const voiceOptions = [
-        { value: 'default', label: 'System Default (سیسم ڈیفالٹ)' },
-        ...(config.voiceProfiles || []).map((p: any) => ({ value: p.id, label: p.name }))
-    ];
+    const voiceOptions = [{
+        value: 'default',
+        label: 'System Default (سیسم ڈیفالٹ)'
+    }, ...(config.voiceProfiles || []).map((p: any) => ({value: p.id, label: p.name}))];
     const currentVoiceName = voiceOptions.find(o => o.value === (config?.activeVoiceProfile || 'default'))?.label || 'System Default (سیسم ڈیفالٹ)';
+
+    const handleRenameVoice = () => {
+        const activeId = config?.activeVoiceProfile || 'default';
+        if (activeId === 'default') {
+            setAlertInfo({title: "Cannot Rename", desc: "You cannot rename the system default profile."});
+            return;
+        }
+
+        const profile = config.voiceProfiles.find((p: any) => p.id === activeId);
+        if (!profile) return;
+
+        setPromptInfo({
+            title: "Rename Voice Profile",
+            placeholder: "e.g. My Voice",
+            defaultValue: profile.name,
+            action: (newName) => {
+                if (!newName.trim()) return;
+                const newProfiles = config.voiceProfiles.map((p: any) => p.id === activeId ? {...p, name: newName} : p);
+                updateConfig({...config, voiceProfiles: newProfiles});
+            }
+        });
+    };
 
     // Persistence: Universe Snapshot (Portable Backup)
     const handleExportUniverse = async () => {
@@ -54,7 +84,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
             const snapshot = await universePorter.export(config);
             universePorter.download(snapshot);
         } catch (err) {
-            setAlertInfo({ title: "Backup Failed", desc: "Please check the console for details." });
+            setAlertInfo({title: "Backup Failed", desc: "Please check the console for details."});
             console.error(err);
         } finally {
             setIsExporting(false);
@@ -73,45 +103,12 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     desc: "This will merge the imported data into your current universe. Proceed?",
                     action: async () => {
                         await universePorter.import(snapshot);
-                        setAlertInfo({ title: "Success", desc: "Universe restored successfully!" });
+                        setAlertInfo({title: "Success", desc: "Universe restored successfully!"});
                         setTimeout(() => window.location.reload(), 1500);
                     }
                 });
             } catch (err) {
-                setAlertInfo({ title: "Error", desc: "Invalid backup file format." });
-            }
-        };
-        reader.readAsText(file);
-    };
-
-    // Persistence: Export Training Data (Doodles)
-    const exportTrainingData = async () => {
-        const templates = await db.templates.toArray();
-        const dataStr = JSON.stringify(templates, null, 2);
-        const blob = new Blob([dataStr], {type: 'application/json'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `shukr_training_data_${Date.now()}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-    };
-
-    // Persistence: Import Training Data
-    const importTrainingData = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = async (event) => {
-            try {
-                const templates = JSON.parse(event.target?.result as string);
-                if (Array.isArray(templates)) {
-                    await db.templates.bulkAdd(templates);
-                    setAlertInfo({ title: "Success", desc: "Training data imported successfully!" });
-                    setTimeout(() => window.location.reload(), 1500);
-                }
-            } catch (err) {
-                setAlertInfo({ title: "Error", desc: "Invalid file format for training data." });
+                setAlertInfo({title: "Error", desc: "Invalid backup file format."});
             }
         };
         reader.readAsText(file);
@@ -144,35 +141,36 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 const isDuplicate = allWords.some((i: any) => i.id !== item.id && (i.en.toLowerCase() === item.en.toLowerCase() || i.ur === item.ur));
 
                 if (isDuplicate) {
-                    setAlertInfo({ title: "Duplicate Entry", desc: "This word already exists!" });
+                    setAlertInfo({title: "Duplicate Entry", desc: "This word already exists!"});
                     return;
                 }
 
                 // Find the correct category and save
                 const categoryId = item.categoryId || item.category || 'core';
-                
+
                 newConfig.categories = newConfig.categories.map((cat: any) => ({
-                    ...cat, items: cat.id === categoryId ? (editMode === 'new' ? [...cat.items, item] : cat.items.map((i: any) => i.id === item.id ? item : i)) : cat.items
+                    ...cat,
+                    items: cat.id === categoryId ? (editMode === 'new' ? [...cat.items, item] : cat.items.map((i: any) => i.id === item.id ? item : i)) : cat.items
                 }));
-                
+
                 // Persist to IndexedDB safely
                 await universeDb.words.put({
-                   ...item,
-                   category: categoryId,
-                   type: item.type || 'word',
-                   usageCount: item.usageCount || 0,
-                   lastUsedAt: item.lastUsedAt || Date.now(),
-                   next: item.next || [],
-                   tags: item.tags || []
+                    ...item,
+                    category: categoryId,
+                    type: item.type || 'word',
+                    usageCount: item.usageCount || 0,
+                    lastUsedAt: item.lastUsedAt || Date.now(),
+                    next: item.next || [],
+                    tags: item.tags || []
                 });
                 break;
             }
             case 'quote': {
-                let finalQuote = { ...item };
-                
+                let finalQuote = {...item};
+
                 if (editMode === 'new') {
                     finalQuote = {
-                        id: `quote_user_${Date.now()}`,
+                        id: `quote_user_${crypto.randomUUID()}`,
                         en: item.en,
                         ur: item.ur,
                         source: item.source || '',
@@ -182,16 +180,13 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 } else {
                     const idx = quotes.findIndex((q: any) => q.id === item.id || q.en === item.oldEn);
                     if (idx > -1) {
-                        finalQuote = { 
-                            ...quotes[idx], 
-                            ur: item.ur, 
-                            en: item.en, 
-                            source: item.source 
+                        finalQuote = {
+                            ...quotes[idx], ur: item.ur, en: item.en, source: item.source
                         };
                         newConfig.quotes[idx] = finalQuote;
                     }
                 }
-                
+
                 if (finalQuote.id) {
                     await universeDb.quotes.put(finalQuote);
                 }
@@ -210,7 +205,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
             isDanger: true,
             action: async () => {
                 const newConfig = {...config};
-        
+
                 switch (editingType) {
                     case 'word': {
                         newConfig.categories = newConfig.categories.map((cat: any) => ({
@@ -234,7 +229,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                         break;
                     }
                 }
-        
+
                 updateConfig(newConfig);
                 setEditingItem(null);
             }
@@ -254,7 +249,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
 
         {/* Tabs */}
         {!editingItem && (<div className="settings-tabs">
-            {[{id: 'contact', label: 'Contact', urdu: 'رابطہ', icon: Settings}, {
+            {[{id: 'contact', label: 'Call', urdu: 'کال کریں', icon: Settings}, {
                 id: 'voice', label: 'Voice', urdu: 'آواز', icon: Mic
             }, {id: 'data', label: 'Data', urdu: 'ڈیٹا', icon: RefreshCw},].map(tab => (<button
                 key={tab.id}
@@ -269,15 +264,6 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
             {!editingItem && (<>
                 {/* Contact Settings */}
                 {activeTab === 'contact' && (<div className="gestures-settings-container">
-                    <div style={{width: '100%', marginBottom: 16}}>
-                        <h3 style={{margin: 0, color: 'var(--color-primary)'}}>Emergency Contacts (ہنگامی
-                            رابطے)</h3>
-                        <p dir="ltr" style={{
-                            fontSize: '0.9rem', color: '#8e8e93', marginTop: 4, textAlign: 'inherit'
-                        }}>
-                            Configure the contacts shown in the SOS screen.
-                        </p>
-                    </div>
                     <div className="list-group">
                         {(config.emergency_contacts || []).map((contact: any, idx: number) => (
                             <div key={idx} className="massive-item"
@@ -285,6 +271,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                 <div style={{display: 'flex', width: '100%', gap: 12}}>
                                     <input
                                         className="massive-input"
+                                        dir="ltr"
                                         style={{flex: 1}}
                                         placeholder="Name (نام)"
                                         value={contact.name}
@@ -296,6 +283,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                     />
                                     <input
                                         className="massive-input"
+                                        dir="ltr"
                                         style={{flex: 1.5}}
                                         placeholder="Phone (فون نمبر)"
                                         value={contact.phone}
@@ -312,51 +300,103 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
 
                 {/* Voice Settings */}
                 {activeTab === 'voice' && (<div className="gestures-settings-container">
-                    <div className="list-group">
-                        <div style={{width: '100%', marginBottom: 24}}>
-                            <h3 style={{margin: 0, color: 'var(--color-primary)', fontSize: '1.4rem'}}>Voice & Sound (آواز)</h3>
-                            <p dir="ltr" style={{
-                                fontSize: '1.05rem', color: '#666', marginTop: 8, textAlign: 'inherit'
-                            }}>
-                                Choose the active voice profile or record your own.
-                            </p>
-                        </div>
-                        
-                        <div className="list-item massive-item"
-                             style={{flexDirection: 'column', alignItems: 'stretch', gap: 16}}>
-                            <label className="massive-label-ur" style={{display: 'flex', flexDirection: 'column'}}>
-                                <span>فعال آواز</span>
-                                <span dir="ltr" style={{fontFamily: 'var(--font-primary)', fontSize: '1rem', color: 'var(--color-text-muted)'}}>Active Voice Profile</span>
-                            </label>
-                            
-                            <button
-                                className="massive-input"
-                                dir="ltr"
-                                style={{ textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
-                                onClick={() => setShowVoiceSelect(true)}
+                    <div style={{display: 'flex', gap: 12, marginBottom: 12}}>
+                        <button
+                            className="massive-input"
+                            dir="ltr"
+                            style={{
+                                flex: 1,
+                                textAlign: 'left',
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                cursor: 'pointer',
+                                height: 84,
+                                borderRadius: 24,
+                                fontSize: '1.2rem'
+                            }}
+                            onClick={() => setShowVoiceSelect(true)}
+                        >
+                            <span>{currentVoiceName}</span>
+                            <ChevronDown size={24} color="var(--color-text-muted)"/>
+                        </button>
+
+                        {(config?.activeVoiceProfile && config.activeVoiceProfile !== 'default') && (<button
+                                className="btn-icon"
+                                style={{
+                                    background: 'var(--color-bg)',
+                                    border: '1px solid rgba(45,90,39,0.1)',
+                                    height: 84,
+                                    width: 84,
+                                    borderRadius: 24
+                                }}
+                                onClick={handleRenameVoice}
                             >
-                                <span>{currentVoiceName}</span>
-                                <ChevronDown size={20} color="var(--color-text-muted)" />
-                            </button>
-                        </div>
+                                <Edit2 size={28} color="var(--color-primary)"/>
+                            </button>)}
                     </div>
 
                     <button
-                        className="btn-primary huge-btn w-full mt-6"
-                        style={{background: '#ff3b30', height: 100, color: 'white', borderRadius: 28, boxShadow: '0 8px 20px rgba(255,59,48,0.3)'}}
+                        className="btn-primary huge-btn w-full"
+                        style={{
+                            background: '#ff3b30',
+                            height: 180,
+                            color: 'white',
+                            borderRadius: 36,
+                            boxShadow: '0 12px 30px rgba(255,59,48,0.3)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 12,
+                            marginBottom: 24
+                        }}
                         onClick={() => onOpenVoiceStudio()}
                     >
-                        <Mic size={32}/> 
-                        <span style={{fontSize: '1.2rem', fontWeight: 900}}>ریکارڈنگ ہوم (Open Voice Studio)</span>
+                        <Mic size={56}/>
+                        <span style={{fontSize: '1.6rem', fontWeight: 900}}>ریکارڈنگ ہوم (Open Voice Studio)</span>
                     </button>
+
+                    <div className="massive-item" style={{ height: 100 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                            <div style={{ 
+                                background: config?.enableClickSound !== false ? 'rgba(45,90,39,0.1)' : '#f2f2f7',
+                                padding: 16,
+                                borderRadius: 18,
+                                color: config?.enableClickSound !== false ? 'var(--color-primary)' : '#8e8e93'
+                            }}>
+                                {config?.enableClickSound !== false ? <Volume2 size={32}/> : <VolumeX size={32}/>}
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <span style={{ fontSize: '1.2rem', fontWeight: 800 }}>Button Sound</span>
+                                <span className="urdu-tab" style={{ fontSize: '1.4rem', color: 'var(--color-primary)', lineHeight: 1 }}>بٹن کی آواز</span>
+                            </div>
+                        </div>
+                        <button 
+                            className={`huge-btn ${config?.enableClickSound !== false ? 'active' : ''}`}
+                            style={{ 
+                                width: 120, 
+                                height: 64, 
+                                borderRadius: 32,
+                                background: config?.enableClickSound !== false ? 'var(--color-primary)' : '#e5e5ea',
+                                color: config?.enableClickSound !== false ? 'white' : '#8e8e93',
+                                transition: 'all 0.3s ease',
+                                fontSize: '1.2rem',
+                                fontWeight: 900
+                            }}
+                            onClick={() => {
+                                const newState = config?.enableClickSound !== false ? false : true;
+                                updateConfig({
+                                    ...config,
+                                    enableClickSound: newState
+                                });
+                            }}
+                        >
+                            {config?.enableClickSound !== false ? 'ON' : 'OFF'}
+                        </button>
+                    </div>
                 </div>)}
 
                 {/* Data Settings (System) */}
                 {activeTab === 'data' && (<div className="gestures-settings-container">
-                    <p className="settings-hint">
-                        Manage your data. Backup everything to a single file.
-                        <br/><i>اپنا ڈیٹا سنبھالیں اور بیک اپ لیں۔</i>
-                    </p>
                     <div className="list-group">
                         <div className="list-item massive-item"
                              style={{flexDirection: 'column', alignItems: 'flex-start', gap: 16}}>
@@ -400,20 +440,39 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                             </label>
                         </div>
 
-                        <div className="action-buttons-row" style={{marginTop: 24}}>
-                            <button className="btn-save" style={{background: '#0a84ff'}}
-                                    onClick={exportTrainingData}>
-                                Export Sketches (ڈرائنگ محفوظ کریں)
-                            </button>
-                            <div className="btn-delete" style={{background: '#333', position: 'relative'}}>
-                                Import Sketches (ڈرائنگ لائیں)
-                                <input
-                                    type="file"
-                                    accept=".json"
-                                    onChange={importTrainingData}
-                                    style={{position: 'absolute', opacity: 0, inset: 0, cursor: 'pointer'}}
-                                />
+                        <div className="list-item massive-item"
+                             style={{flexDirection: 'column', alignItems: 'flex-start', gap: 16, borderTop: '1px solid #eee', paddingTop: 24, marginTop: 12}}>
+                            <div style={{width: '100%'}}>
+                                <h3 style={{margin: 0, color: '#ff3b30'}}>Hard Reset (مکمل ری سیٹ)</h3>
+                                <p style={{fontSize: '0.9rem', color: '#8e8e93', marginTop: 4}}>
+                                    Clear all local data and reset the version back to 1.
+                                </p>
                             </div>
+                            <button 
+                                className="btn-save w-full" 
+                                style={{
+                                    background: '#ff3b30', 
+                                    color: 'white',
+                                    boxShadow: '0 8px 20px rgba(255,59,48,0.2)'
+                                }}
+                                onClick={() => {
+                                    setConfirmInfo({
+                                        title: "Hard Reset?",
+                                        desc: "This will DELETE all your custom words, voices, and reset the app. Are you absolutely sure?",
+                                        isDanger: true,
+                                        action: async () => {
+                                            localStorage.removeItem('shukr_last_boot_version');
+                                            localStorage.removeItem('shukr_last_boot_ts');
+                                            localStorage.removeItem('shukr_app_config');
+                                            await universePorter.clearAllLocalData();
+                                            window.location.reload();
+                                        }
+                                    });
+                                }}
+                            >
+                                <Trash2 size={24}/>
+                                Hard Reset App
+                            </button>
                         </div>
                     </div>
                 </div>)}
@@ -430,13 +489,13 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
         </div>
 
         {/* Modals */}
-        <AlertDialog 
+        <AlertDialog
             isOpen={!!alertInfo}
             onClose={() => setAlertInfo(null)}
             title={alertInfo?.title || ''}
             description={alertInfo?.desc || ''}
         />
-        
+
         <ConfirmDialog
             isOpen={!!confirmInfo}
             onClose={() => setConfirmInfo(null)}

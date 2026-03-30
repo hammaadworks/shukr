@@ -206,7 +206,7 @@ export const recognitionEngine = {
 
   async train(label: string, en: string, ur: string, strokes: Stroke[], _mode: SketchRecognitionMode) {
     const normalized = normalizeStrokes(strokes);
-    const id = `tpl_${Date.now()}`;
+    const id = `tpl_${crypto.randomUUID()}`;
     await db.templates.add({
       id,
       label,
