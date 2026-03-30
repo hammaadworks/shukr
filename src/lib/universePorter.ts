@@ -120,7 +120,7 @@ export const universePorter = {
       // Create valid IDs if they are missing
       const quotesToPut = snapshot.quotes.map((q: any, i: number) => ({
         ...q,
-        id: q.id || `quote_imp_${Date.now()}_${i}`
+        id: q.id || `quote_imp_${crypto.randomUUID()}_${i}`
       }));
       await universeDb.quotes.bulkPut(quotesToPut);
     }
@@ -140,6 +140,7 @@ export const universePorter = {
       universeDb.words.clear(),
       universeDb.categories.clear(),
       universeDb.quotes.clear(),
+      universeDb.voiceProfiles.clear(),
       recognitionDb.templates.clear(),
       audioStorage.clear()
     ]);

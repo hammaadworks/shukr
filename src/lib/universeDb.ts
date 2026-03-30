@@ -33,6 +33,12 @@ export interface QuoteItem {
   createdAt: number;
 }
 
+export interface VoiceProfile {
+  id: string;
+  name: string;
+  createdAt: number;
+}
+
 export interface SketchTemplate {
   id: string;
   wordId: string;
@@ -47,6 +53,7 @@ export class WordUniverseDatabase extends Dexie {
   categories!: Table<CategoryFolder>;
   sketchTemplates!: Table<SketchTemplate>;
   quotes!: Table<QuoteItem>;
+  voiceProfiles!: Table<VoiceProfile>;
 
   constructor() {
     super('shukr_universe_db');
@@ -60,6 +67,13 @@ export class WordUniverseDatabase extends Dexie {
       categories: 'id, order',
       sketchTemplates: '++id, wordId, category, createdAt',
       quotes: '++id, en, createdAt'
+    });
+    this.version(3).stores({
+      words: '++id, en, category, type, usageCount, lastUsedAt',
+      categories: 'id, order',
+      sketchTemplates: '++id, wordId, category, createdAt',
+      quotes: '++id, en, createdAt',
+      voiceProfiles: 'id, name, createdAt'
     });
   }
 }

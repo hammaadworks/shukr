@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './styles/app.css';
 import { LanguageProvider, useLanguage } from './hooks/useLanguage';
 import { useAudio } from './hooks/useAudio';
-import { useAppConfig } from './hooks/useAppConfig';
+import { ConfigProvider, useAppConfig } from './hooks/useAppConfig';
 import { useCameraGestures } from './hooks/useCameraGestures';
 import { type GestureAction } from './recognition/gestures/types';
 import { useLogger } from './hooks/useLogger';
@@ -946,8 +946,10 @@ const AppContent = () => {
 
 export default function App() {
   return (
-    <LanguageProvider>
-      <AppContent />
-    </LanguageProvider>
+    <ConfigProvider>
+      <LanguageProvider>
+        <AppContent />
+      </LanguageProvider>
+    </ConfigProvider>
   );
 }
