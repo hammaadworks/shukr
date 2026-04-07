@@ -10,10 +10,12 @@ import { useLogger } from './hooks/useLogger';
 import { useFuzzySearch } from './hooks/useFuzzySearch';
 import { wordNetwork } from './lib/wordNetwork';
 import { translator } from './lib/translator';
+import { universeDb } from './lib/universeDb';
 
 // Lucide Icons
 import {
-  XCircle
+  XCircle,
+  Activity
 } from 'lucide-react';
 
 // Extracted Components
@@ -31,10 +33,20 @@ import { DoodlePad } from './components/Doodle/DoodlePad';
 import { useAmbientListener } from './hooks/useAmbientListener';
 
 const AppContent = () => {
-  const { language, isUrdu } = useLanguage();
+  const { language, isUrdu, setLanguage } = useLanguage();
   const { speak, speakSequence, playClick } = useAudio();
   const { logEvent } = useLogger();
   const { config, updateConfig, isOfflineMode, isLoading: isConfigLoading } = useAppConfig();
+
+  useEffect(() => {
+    (window as any)._showSOS = () => setShowSOS(true);
+  }, []);
+
+  const actionHandlerRef = useRef<(action: any) => void>(() => {});
+
+  const { isEnabled, isRecognitionActive, toggleTracking, videoRef, isModelLoaded } = useCameraGestures((action) => {
+    actionHandlerRef.current(action);
+  });
 
   const [currentCategory, setCurrentCategory] = useState<string | null>(null);
   const [sentence, setSentence] = useState<any[]>([]);
@@ -50,16 +62,24 @@ const AppContent = () => {
   const [initialEditingItem, setInitialEditingItem] = useState<any>(null);
   const [initialSettingsTab, setInitialSettingsTab] = useState<any>(null);
   const [contextualSuggestions, setContextualSuggestions] = useState<string[]>([]);
+  const [dbWords, setDbWords] = useState<any[]>([]);
   const builderScrollRef = useRef<HTMLDivElement>(null); 
+
+  // Fetch words with latest usage counts
+  const refreshWords = useCallback(async () => {
+    try {
+      const words = await universeDb.words.toArray();
+      setDbWords(words);
+    } catch (err) {
+      console.error('Failed to fetch words from DB:', err);
+    }
+  }, []);
+
+  useEffect(() => {
+    refreshWords();
+  }, [config, refreshWords]);
   const [canAddWords, setCanAddWords] = useState(true); 
   const [flashSentenceBuilder, setFlashSentenceBuilder] = useState(false); 
-
-  // Ambient Listener integration
-  const { isListening, toggleListening } = useAmbientListener(language, (suggestedIds) => {
-    setContextualSuggestions(suggestedIds);
-    if ((window as any)._suggest_timer) clearTimeout((window as any)._suggest_timer);
-    (window as any)._suggest_timer = setTimeout(() => setContextualSuggestions([]), 15000);
-  });
 
   // Default Emergency Contacts & Favorites if none exist
   useEffect(() => {
@@ -67,10 +87,11 @@ const AppContent = () => {
       const updates: any = {};
       let needsUpdate = false;
 
-      if (!config.emergency_contacts) {
+      if (!config.emergency_contacts || config.emergency_contacts.length < 3) {
         updates.emergency_contacts = [
-          { name: 'Family', phone: '911' },
-          { name: 'Doctor', phone: '112' }
+          { name: 'مسعود (Masood)', phone: '9513631315' },
+          { name: 'حماد (Hammaad)', phone: '9663527755' },
+          { name: 'Emergency', phone: '112' }
         ];
         needsUpdate = true;
       }
@@ -134,13 +155,45 @@ const AppContent = () => {
     };
   }, [sentence, builderScrollRef]); 
 
-  const navigate = (newRoute: string, tab?: string) => {
-    if (tab) setInitialSettingsTab(tab);
-    window.location.hash = newRoute;
-  };
-  
   const quotes = useMemo(() => config?.quotes || [], [config]);
   const [randomQuote, setRandomQuote] = useState<any>(null);
+
+  const navigate = useCallback((newRoute: string, tab?: string) => {
+    if (tab) setInitialSettingsTab(tab);
+    window.location.hash = newRoute;
+  }, []);
+
+  // Ambient Listener integration
+  const { isListening, toggleListening } = useAmbientListener(language, (suggestedIds) => {
+    // Check for direct actions
+    if (suggestedIds.includes('doodle_action')) {
+       navigate('#doodle');
+       playClick();
+    }
+    
+    // Auto-respond for basic affirmations if very strong match (e.g. they say "Yes")
+    if (suggestedIds.includes('sys_salam')) {
+       speak(isUrdu ? 'السلام علیکم' : 'Assalamualikum', 'sys_salam');
+    }
+    if (suggestedIds.includes('sys_yes')) {
+       speak(isUrdu ? 'ہاں' : 'Yes', 'sys_yes');
+    }
+
+    // Direct navigation actions via voice
+    if (suggestedIds.includes('next_action')) {
+      actionHandlerRef.current('NEXT');
+    }
+    if (suggestedIds.includes('prev_action')) {
+      actionHandlerRef.current('PREV');
+    }
+    if (suggestedIds.includes('select_action')) {
+      actionHandlerRef.current('SELECT');
+    }
+
+    setContextualSuggestions(suggestedIds.filter(id => !id.endsWith('_action')));
+    if ((window as any)._suggest_timer) clearTimeout((window as any)._suggest_timer);
+    (window as any)._suggest_timer = setTimeout(() => setContextualSuggestions([]), 15000);
+  });
 
   const handleNextQuote = useCallback(() => {
     if (quotes.length === 0) return;
@@ -172,24 +225,25 @@ const AppContent = () => {
   }, [config]);
 
   const handleAddCustomWord = async (item: any) => {
-    const newConfig = { ...config };
+    if (!config || !config.categories) return;
+    const newConfig = { ...config, categories: [...config.categories] };
     let customCat = newConfig.categories.find((c: any) => c.id === 'cat_custom');
     if (!customCat) {
       customCat = { id: 'cat_custom', label_ur: 'میرے الفاظ', label_en: 'My Words', icon: 'star', items: [] };
       newConfig.categories.push(customCat);
     }
-    customCat.items.push(item);
-    updateConfig(newConfig);
+    customCat.items = [...(customCat.items || []), item];
+    updateConfig(newConfig as any);
     setAddingWord(null);
   };
 
   const toggleFavorite = useCallback((itemId: string) => {
-    const newConfig = { ...config };
-    if (!newConfig.favorites) newConfig.favorites = [];
+    if (!config) return;
+    const newConfig = { ...config, favorites: [...(config.favorites || [])] };
     const idx = newConfig.favorites.indexOf(itemId);
     if (idx > -1) newConfig.favorites.splice(idx, 1);
     else newConfig.favorites.push(itemId);
-    updateConfig(newConfig);
+    updateConfig(newConfig as any);
   }, [config, updateConfig]);
 
   const displayCategories = useMemo(() => {
@@ -201,6 +255,17 @@ const AppContent = () => {
   }, [config]);
 
   const searchResults = useFuzzySearch(allItems, searchQuery);
+
+  const [displayLimit, setDisplayLimit] = useState(24);
+  const mainContentRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = useCallback(() => {
+    if (!mainContentRef.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = mainContentRef.current;
+    if (scrollHeight - scrollTop <= clientHeight + 100) {
+      setDisplayLimit(prev => prev + 24);
+    }
+  }, []);
 
   const gridItems = useMemo(() => {
     let items = [];
@@ -230,10 +295,11 @@ const AppContent = () => {
       }
       items = results;
     } else if (!currentCategory) {
-      const coreCat = config?.categories?.find((c: any) => c.id === 'core' || c.id === 'cat_core' || c.label_en?.toLowerCase().includes('core'));
-      items = coreCat?.items || [];
+      // Home view: Show ALL words from all items, sorted by usageCount
+      items = dbWords.length > 0 ? [...dbWords].sort((a, b) => (b.usageCount || 0) - (a.usageCount || 0)) : allItems;
     } else if (currentCategory === 'cat_fav' || currentCategory === 'fav') {
-      items = allItems.filter((i: any) => config?.favorites?.includes(i.id));
+      const favs = config?.favorites || [];
+      items = (dbWords.length > 0 ? dbWords : allItems).filter((i: any) => favs.includes(i.id));
     } else {
       const targetId = currentCategory.startsWith('cat_') ? currentCategory.substring(4) : currentCategory;
       const cat = config?.categories?.find((c: any) => 
@@ -246,7 +312,8 @@ const AppContent = () => {
         id: 'back', ur: 'واپس', en: 'Back', icon: 'arrow-left', isPrompt: true, 
         onClick: () => { playClick(); setCurrentCategory(null); setFocusedIndex(-1); } 
       };
-      const catItems = cat?.items || [];
+      const catIds = (cat?.items || []).map((i: any) => i.id);
+      const catItems = (dbWords.length > 0 ? dbWords : allItems).filter((i: any) => catIds.includes(i.id));
       items = [backItem, ...catItems];
     }
 
@@ -254,7 +321,7 @@ const AppContent = () => {
       if (item.onClick) return item; 
       return {
         ...item,
-        onClick: () => {
+        onClick: async () => {
           speak(isUrdu ? item.ur : item.en, item.id);
           if (canAddWords) {
             setSentence(prev => [...prev, item]);
@@ -263,12 +330,13 @@ const AppContent = () => {
             setFlashSentenceBuilder(true);
             setTimeout(() => setFlashSentenceBuilder(false), 500);
           }
-          wordNetwork.recordUsage(item.id);
+          await wordNetwork.recordUsage(item.id);
+          refreshWords(); // Dynamically re-sort after usage
           setFocusedIndex(-1);
         }
       };
-    }).slice(0, 8); 
-  }, [currentCategory, config, isUrdu, speak, playClick, searchQuery, allItems, searchResults]);
+    }).slice(0, displayLimit); 
+  }, [currentCategory, config, isUrdu, speak, playClick, searchQuery, allItems, searchResults, displayLimit, dbWords, canAddWords, refreshWords]);
 
   const predictions = useMemo(() => {
     const lastWord = sentence.length > 0 ? sentence[sentence.length - 1] : null;
@@ -298,41 +366,66 @@ const AppContent = () => {
 
   const navigableActions = useMemo(() => {
     const actions: (() => void)[] = [];
-
-    // 0: Backspace
-    actions.push(() => {
-      setSentence(prev => prev.slice(0, -1));
-      playClick();
-    });
-    // 1: Clear
+    
+    // --- Header Group ---
+    // 0: Toggle Camera
+    actions.push(toggleTracking);
+    // 1: Toggle Listening
+    actions.push(toggleListening);
+    // 2: Shukr (Home)
     actions.push(() => {
       setSentence([]);
+      setCurrentCategory(null);
+      setFocusedIndex(-1);
+      navigate('#');
       playClick();
     });
-    // 2: Play
+    // 3: Toggle Language
     actions.push(() => {
-      playSentence();
+      setLanguage(language === 'ur' ? 'en' : 'ur');
+      playClick();
+    });
+    // 4: Settings
+    actions.push(() => {
+      navigate('#settings');
+      playClick();
     });
 
-    // 3 to 3+predictions.length-1: Predictions
-    predictions.forEach(p => actions.push(p.onClick));
+    if (route === '#') {
+      // --- Builder Group ---
+      // 5: Backspace
+      actions.push(() => {
+        setSentence(prev => prev.slice(0, -1));
+        playClick();
+      });
+      // 6: Clear
+      actions.push(() => {
+        setSentence([]);
+        playClick();
+      });
+      // 7: Play
+      actions.push(() => {
+        playSentence();
+      });
+      
+      // Predictions
+      predictions.forEach(p => actions.push(p.onClick));
+      
+      // Grid Items
+      gridItems.forEach((g: any) => actions.push(g.onClick));
+    }
+    
+    // --- Footer Group --- (Available on all pages)
+    displayCategories.forEach((cat) => {
+      actions.push(() => {
+        playClick();
+        if (route !== '#') navigate('#');
+        setCurrentCategory(cat.id === currentCategory ? null : cat.id);
+        setFocusedIndex(-1);
+        setSearchQuery('');
+      });
+    });
 
-    // Grid Items
-    gridItems.forEach((g: any) => actions.push(g.onClick));
-
-    // Footer Actions
-    actions.push(() => {
-      playClick();
-      setCurrentCategory('cat_fav' === currentCategory ? null : 'cat_fav');
-      setFocusedIndex(-1);
-      setSearchQuery('');
-    }); // fav
-    actions.push(() => {
-      playClick();
-      setCurrentCategory('khandan' === currentCategory ? null : 'khandan');
-      setFocusedIndex(-1);
-      setSearchQuery('');
-    }); // fam
     actions.push(() => {
       playClick();
       navigate('#doodle');
@@ -346,14 +439,13 @@ const AppContent = () => {
       setSentence(prev => [...prev, { id: 'sys_no', en: 'No', ur: 'نہیں', isWord: true }]);
     }); // No
 
-    // Quote
-    actions.push(handleNextQuote);
-
+    if (route === '#') {
+      // Quote
+      actions.push(handleNextQuote);
+    }
+    
     return actions;
-  }, [sentence, playSentence, predictions, gridItems, currentCategory, navigate, speak, isUrdu, handleNextQuote, playClick, setSentence, setCurrentCategory, setFocusedIndex, setSearchQuery]);
-
-  const actionHandlerRef = useRef<(action: GestureAction) => void>(undefined);
-  const { isEnabled, isRecognitionActive, toggleTracking, videoRef, isModelLoaded } = useCameraGestures((action) => actionHandlerRef.current?.(action));
+  }, [route, toggleTracking, toggleListening, setLanguage, language, navigate, playClick, sentence, playSentence, predictions, gridItems, displayCategories, currentCategory, isUrdu, handleNextQuote, setSentence, setCurrentCategory, setFocusedIndex, setSearchQuery, speak]);
 
   const handleGestureAction = useCallback((action: GestureAction) => {
     setLastGesture(action);
@@ -401,12 +493,11 @@ const AppContent = () => {
   }, [handleGestureAction]);
 
   const appContent = (
-    <div className="app-viewport">
-      <Header 
-        onOpenSettings={(tab) => navigate('#settings', tab)} 
-        isTrackingEnabled={isEnabled} 
-        isRecognitionActive={isRecognitionActive}
-        toggleTracking={toggleTracking} 
+    <div className="app-viewport" dir="rtl">
+      <Header
+        onOpenSettings={(tab) => navigate('#settings', tab)}
+        isTrackingEnabled={isEnabled}
+        isRecognitionActive={isRecognitionActive}        toggleTracking={toggleTracking} 
         hasUnsyncedChanges={hasUnsyncedChanges}
         isModelLoaded={isModelLoaded}
         onSOS={() => setShowSOS(true)}
@@ -415,6 +506,7 @@ const AppContent = () => {
         toggleListening={toggleListening}
         lastGesture={lastGesture}
         isUrdu={isUrdu}
+        focusedIndex={focusedIndex}
       />
 
 
@@ -431,10 +523,10 @@ const AppContent = () => {
             onClose={() => { setInitialEditingItem(null); setInitialSettingsTab(null); navigate('#'); }} 
           />
         ) : route === '#doodle' ? (
-          <DoodlePad 
-            config={config} 
-            onRecognize={(item: any) => { 
-              setSentence(prev => [...prev, item]); 
+          <DoodlePad
+            config={config}
+            focusedIndex={focusedIndex}
+            onRecognize={(item: any) => {              setSentence(prev => [...prev, item]); 
               wordNetwork.recordUsage(item.id); 
               navigate('#'); 
             }} 
@@ -454,28 +546,28 @@ const AppContent = () => {
                 onBackspace={() => setSentence(prev => prev.slice(0, -1))} 
                 onPlay={playSentence} 
                 focusedIndex={focusedIndex} 
-                offset={0} 
+                offset={5} 
                 searchQuery={searchQuery} 
                 setSearchQuery={setSearchQuery}
                 canAddWords={canAddWords} 
                 builderScrollRef={builderScrollRef} 
                 flashBorder={flashSentenceBuilder} 
               />
-            </div>
-
-            <div className="main-content-area">
               <PredictionScroller 
                 predictions={predictions}
                 focusedIndex={focusedIndex}
-                offset={3}
+                offset={5 + 3}
               />
+            </div>
+
+            <div className="main-content-area" ref={mainContentRef} onScroll={handleScroll}>
               <WordGrid
                 gridItems={gridItems}
                 focusedIndex={focusedIndex}
-                offset={3 + predictions.length}
+                offset={5 + 3 + predictions.length}
                 randomQuote={randomQuote}
                 onNextQuote={handleNextQuote}
-                quoteFocused={focusedIndex === 3 + predictions.length + gridItems.length + 5}
+                quoteFocused={focusedIndex === 5 + 3 + predictions.length + gridItems.length + displayCategories.length + 3}
                 onLongPressItem={(item) => toggleFavorite(item.id)}
                 favorites={config?.favorites || []}
               />            </div>
@@ -483,32 +575,31 @@ const AppContent = () => {
         )}
       </div>
 
-      {route === '#' && (
-        <Footer 
-          categories={displayCategories}
-          currentCategory={currentCategory}
-          onCategoryClick={(catId) => {
-            playClick();
-            setCurrentCategory(catId === currentCategory ? null : catId);
-            setFocusedIndex(-1);
-            setSearchQuery('');
-          }}
-          onDoodleClick={() => {
-            playClick();
-            navigate('#doodle');
-          }}
-          onYesClick={() => {
-            speak(isUrdu ? 'ہاں' : 'Yes', 'sys_yes');
-            setSentence(prev => [...prev, { id: 'sys_yes', en: 'Yes', ur: 'ہاں', isWord: true }]);
-          }}
-          onNoClick={() => {
-            speak(isUrdu ? 'نہیں' : 'No', 'sys_no');
-            setSentence(prev => [...prev, { id: 'sys_no', en: 'No', ur: 'نہیں', isWord: true }]);
-          }}
-          focusedIndex={focusedIndex}
-          offset={3 + predictions.length + gridItems.length}
-        />
-      )}
+      <Footer 
+        categories={displayCategories}
+        currentCategory={currentCategory}
+        onCategoryClick={(catId) => {
+          playClick();
+          if (route !== '#') navigate('#');
+          setCurrentCategory(catId === currentCategory ? null : catId);
+          setFocusedIndex(-1);
+          setSearchQuery('');
+        }}
+        onDoodleClick={() => {
+          playClick();
+          navigate('#doodle');
+        }}
+        onYesClick={() => {
+          speak(isUrdu ? 'ہاں' : 'Yes', 'sys_yes');
+          setSentence(prev => [...prev, { id: 'sys_yes', en: 'Yes', ur: 'ہاں', isWord: true }]);
+        }}
+        onNoClick={() => {
+          speak(isUrdu ? 'نہیں' : 'No', 'sys_no');
+          setSentence(prev => [...prev, { id: 'sys_no', en: 'No', ur: 'نہیں', isWord: true }]);
+        }}
+        focusedIndex={focusedIndex}
+        offset={route === '#' ? (5 + 3 + predictions.length + gridItems.length) : 5}
+      />
 
       {showSOS && (
         <SOSModal 

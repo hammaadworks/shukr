@@ -8,17 +8,40 @@
   flex-shrink: 0;
 }
 
-.sentence-dock-glass {
+/* --- Unified Glass Containers --- */
+.glass-container {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   border-radius: 28px;
   padding: 12px 16px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  border: 1px solid rgba(45, 90, 39, 0.1);
+  border: 1.5px solid rgba(45, 90, 39, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sentence-dock-glass {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 100%;
+}
+
+.prediction-scroller, .doodle-predictions-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  overflow: hidden !important; /* No scrolling as requested */
+  flex-wrap: wrap !important; /* Fit in two lines */
+  min-height: 120px; /* Space for 2 rows of compact cards */
+  max-height: 128px;
+  justify-content: center; /* Center them if few, fit more if many */
+}
+
+.prediction-scroller .word-card-root, 
+.doodle-predictions-bar .word-card-root {
+  flex: 0 0 auto; /* Prevent shrinking/stretching */
+  width: auto !important;
+  min-width: 80px;
 }
 
 .smart-input-area {
@@ -36,8 +59,8 @@
   gap: 8px;
   align-items: center;
   scrollbar-width: none;
-  max-height: 144px;
-  overflow-y: auto;
+  max-height: 168px; /* Approx 3 lines of cards (52px each + gaps) */
+  overflow: hidden; /* Fit maximum words, but limit lines */
 }
 .builder-scroll::-webkit-scrollbar { display: none; }
 
@@ -45,7 +68,7 @@
   flex: 1;
   border: none;
   background: transparent;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: var(--color-text);
   padding: 0;
   min-width: 80px;
@@ -93,6 +116,15 @@
   border: none;
   flex: 0 0 60%;
   box-shadow: 0 4px 10px rgba(212, 175, 55, 0.2);
+}
+
+.btn-dock-ios.focused-item {
+  box-shadow: 0 0 0 3px var(--color-primary);
+  transform: scale(0.98);
+}
+
+.btn-dock-ios.primary.focused-item {
+  box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--color-accent);
 }
 
 .sentence-dock-glass.flash-red-border {

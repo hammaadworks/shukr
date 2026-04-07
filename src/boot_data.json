@@ -1,6 +1,11 @@
 {
-  "version": 1,
-  "timestamp": 1712451857000,
+  "version": 2,
+  "timestamp": 1744017383000,
+  "emergency_contacts": [
+    { "name": "مسعود (Masood)", "phone": "9513631315" },
+    { "name": "حماد (Hammaad)", "phone": "9663527755" },
+    { "name": "Emergency", "phone": "112" }
+  ],
   "sketches": [],
   "audio": {},
   "gesture_map": {
@@ -1498,6 +1503,8 @@
             "mashallah",
             "subhanallah",
             "inshallah",
+            "allahu_akbar",
+            "lailaha_illallah",
             "reham",
             "madad_kaam",
             "alhamdulillah",
@@ -1509,6 +1516,58 @@
             "triangle"
           ],
           "roman": "allah"
+        },
+        {
+          "id": "lailaha_illallah",
+          "ur": "لا الہ الا اللہ",
+          "en": "La ilaha illallah",
+          "icon": "star",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "shukr",
+            "alhamdulillah"
+          ],
+          "tags": [
+            "star"
+          ],
+          "roman": "la ilaha illallah"
+        },
+        {
+          "id": "mashallah",
+          "ur": "ماشاء اللہ",
+          "en": "Masha Allah",
+          "icon": "sparkles",
+          "next": [
+            "allah",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah"
+          ],
+          "tags": [
+            "star"
+          ],
+          "roman": "masha allah"
+        },
+        {
+          "id": "allahu_akbar",
+          "ur": "اللہ اکبر",
+          "en": "Allahu Akbar",
+          "icon": "star",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "shukr",
+            "alhamdulillah"
+          ],
+          "tags": [
+            "star"
+          ],
+          "roman": "allahu akbar"
         },
         {
           "id": "namaz",

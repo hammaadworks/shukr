@@ -66,6 +66,7 @@
   font-weight: 800;
   cursor: pointer;
   width: 100%;
+  flex-direction: row-reverse; /* Icons on right for RTL */
 }
 
 .btn-sos-call {
@@ -76,17 +77,19 @@
 .btn-sos-call .call-text {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end; /* Align text to right in RTL */
   line-height: 1.2;
+  flex: 1;
 }
 
-.btn-sos-call .call-label { font-size: 0.75rem; opacity: 0.8; font-weight: 700; text-transform: uppercase; }
-.btn-sos-call .call-name { font-size: 1.4rem; font-family: var(--font-ur); }
+.btn-sos-call .call-label { font-size: 0.75rem; opacity: 0.8; font-weight: 700; text-transform: uppercase; margin-bottom: 2px; }
+.btn-sos-call .call-name { font-size: 1.25rem; font-family: var(--font-ur); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 .btn-sos-stop {
   background: #1c1c1e;
   color: white;
   justify-content: center;
+  flex-direction: row; /* Keep icon and text together for STOP */
 }
 
 .btn-sos-restart-simple {

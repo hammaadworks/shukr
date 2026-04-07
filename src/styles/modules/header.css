@@ -1,15 +1,18 @@
 /* --- Brand Header (Refined) --- */
 .apple-header.consistent-header {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 16px;
-  height: 60px;
+  padding: 8px 16px;
+  min-height: 60px;
+  height: auto;
   width: 100%;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   z-index: 1000;
+  direction: ltr !important;
 }
 
 .header-main-row {
@@ -19,6 +22,7 @@
   width: 100%;
   max-width: 600px;
   position: relative;
+  height: 44px;
 }
 
 .header-group-left, .header-group-right {
@@ -52,6 +56,7 @@
   border: 1.5px solid rgba(45, 90, 39, 0.1);
   color: var(--color-primary);
   box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  flex-shrink: 0;
 }
 
 /* Language Switcher Pill */
@@ -125,29 +130,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
   width: 100%;
-  padding: 6px 16px;
-  background: rgba(248, 249, 248, 0.95);
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 999;
+  padding: 8px 0 2px 0;
+  background: transparent;
   flex-wrap: wrap;
+  margin-top: 4px;
 }
 
 .gesture-item {
   display: flex;
   align-items: center;
   gap: 4px;
-  background: white;
-  padding: 4px 8px;
-  border-radius: 20px;
-  border: 1px solid rgba(45, 90, 39, 0.08);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  background: #f1f3f1;
+  padding: 4px 10px;
+  border-radius: 100px;
+  border: 1px solid rgba(45, 90, 39, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .gesture-item.gesture-active {
@@ -166,6 +165,19 @@
   font-size: 0.75rem;
   font-weight: 700;
   color: #6b7280;
+}
+
+@media screen and (max-width: 480px) {
+  .gesture-label.mobile-small-text {
+    font-size: 0.65rem;
+  }
+  .gesture-item {
+    padding: 3px 8px;
+    gap: 2px;
+  }
+  .gesture-icon {
+    font-size: 0.95rem;
+  }
 }
 
 .gesture-item.gesture-active .gesture-label {
