@@ -110,7 +110,7 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focus
       <div className="mobile-drawing-container">
         {/* Predictions Area */}
         <DoodlePredictions 
-          predictions={predictions} 
+          predictions={displayedPredictions} 
           onSelect={onRecognize} 
           focusedIndex={focusedIndex}
           offset={0}
