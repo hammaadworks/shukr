@@ -128,7 +128,7 @@ export const recognitionEngine = {
     this.matcher.addTemplate('char_z', 'z', [[{x:10,y:10}, {x:90,y:10}, {x:10,y:90}, {x:90,y:90}]], 'letter', 'Z', 'زیڈ');
   },
 
-  async recognize(strokes: Stroke[], mode: SketchRecognitionMode, _config: any): Promise<RecognitionResult[]> {
+  async recognize(strokes: Stroke[], _mode: SketchRecognitionMode, _config: any): Promise<RecognitionResult[]> {
     const normalized = normalizeStrokes(strokes);
     const templateMatches = this.matcher.recognize(normalized);
     
@@ -204,7 +204,7 @@ export const recognitionEngine = {
     return unique.slice(0, 16) as RecognitionResult[];
   },
 
-  async train(label: string, en: string, ur: string, strokes: Stroke[], mode: SketchRecognitionMode) {
+  async train(label: string, en: string, ur: string, strokes: Stroke[], _mode: SketchRecognitionMode) {
     const normalized = normalizeStrokes(strokes);
     const id = `tpl_${Date.now()}`;
     await db.templates.add({
@@ -212,10 +212,10 @@ export const recognitionEngine = {
       label,
       en,
       ur,
-      category: mode,
+      category: _mode,
       strokes: normalized,
       createdAt: Date.now()
     });
-    this.matcher.addTemplate(id, label, normalized, mode === 'contacts' ? 'contact' : 'custom', en, ur);
+    this.matcher.addTemplate(id, label, normalized, _mode === 'contacts' ? 'contact' : 'custom', en, ur);
   }
 };

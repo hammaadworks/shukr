@@ -10,6 +10,7 @@ export class HandGestureRecognizer {
     const landmarks = results.landmarks[0];
     
     // Check which fingers are up
+    const isThumbUp = landmarks[4].y < landmarks[3].y && landmarks[3].y < landmarks[2].y;
     const isIndexUp = landmarks[8].y < landmarks[6].y;
     const isMiddleUp = landmarks[12].y < landmarks[10].y;
     const isRingUp = landmarks[16].y < landmarks[14].y;
@@ -17,19 +18,29 @@ export class HandGestureRecognizer {
     
     const upCount = [isIndexUp, isMiddleUp, isRingUp, isPinkyUp].filter(Boolean).length;
 
-    // 1. Palm (Toggle Recognition) - 4 fingers up
-    if (upCount >= 4) return 'palm';
+    // 1. Palm (Clear/Home) - All 5 fingers MUST be up clearly
+    if (upCount === 4 && isThumbUp) return 'palm';
 
-    // 2. Peace Sign (Salam) - 2 fingers up (Index & Middle)
-    if (upCount === 2 && isIndexUp && isMiddleUp) return 'peace_sign';
+    // 2. Peace Sign (Salam) - Exactly Index & Middle up, others down
+    if (upCount === 2 && isIndexUp && isMiddleUp && !isRingUp && !isPinkyUp) return 'peace_sign';
 
-    // 3. One Finger (Doodle) - 1 finger up (Index)
-    if (upCount === 1 && isIndexUp) return 'one_finger';
+    // 3. Thumb Up (Yes/Select fallback) - Only thumb up
+    if (isThumbUp && upCount === 0) return 'thumb_up';
 
-    // 4. Thumb Up (Yes) - All fingers closed, thumb orientation check
-    // Mediapipe landmarks: 4 is thumb tip, 3 is IP, 2 is MCP
-    const isThumbUp = landmarks[4].y < landmarks[3].y && upCount === 0;
-    if (isThumbUp) return 'thumb_up';
+    // 4. Three Fingers (Doodle) - Index, Middle, Ring up
+    if (upCount === 3 && isIndexUp && isMiddleUp && isRingUp && !isPinkyUp) return 'three_fingers';
+
+    // 5. Two Fingers (Prev) - Index and Middle (already handled by peace_sign, but as fallback)
+    if (upCount === 2 && isIndexUp && isMiddleUp) return 'two_fingers';
+
+    // 6. One Finger (Next) - ONLY Index up
+    if (upCount === 1 && isIndexUp && !isMiddleUp && !isRingUp && !isPinkyUp) return 'one_finger';
+
+    // 7. Fist (Select) - All fingers down, including thumb
+    if (upCount === 0 && !isThumbUp) {
+      // Ensure it's actually a hand by checking landmarks distance or just rely on MP
+      return 'fist';
+    }
 
     return null;
   }
