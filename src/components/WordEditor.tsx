@@ -19,7 +19,7 @@ export const WordEditor: React.FC<WordEditorProps> = ({ item, onChange, onSave, 
 
   useEffect(() => {
     if (lastRecordedBlob) {
-      setRecordedBlob(lastRecordedBlob);
+      setTimeout(() => setRecordedBlob(lastRecordedBlob), 0);
     }
   }, [lastRecordedBlob]);
 

@@ -3,7 +3,7 @@ import { WordCard } from './WordCard';
 import { 
   Heart, 
   Users, 
-  Pencil
+  Waves
 } from 'lucide-react';
 
 interface FooterProps {
@@ -33,40 +33,8 @@ export const Footer: React.FC<FooterProps> = ({
   return (
     <div className="bottom-system-area">
       <div className="integrated-smart-bar central-dock brand-dock-style">
-        {/* Left: Collections */}
+        {/* Left: Quick Affirmations (Urdu UX: Start here) */}
         <div className="dock-section dock-left">
-          <button 
-            className={`bar-category-btn ${focusedIndex === offset ? 'focused-item' : ''}`}
-            onClick={() => onCategoryClick('favorites')}
-          >
-            <Heart size={24} />
-            <span className="dock-label">پسندیدہ</span>
-          </button>
-
-          <button 
-            className={`bar-category-btn ${focusedIndex === offset + 1 ? 'focused-item' : ''}`}
-            onClick={() => onCategoryClick('family')}
-          >
-            <Users size={24} />
-            <span className="dock-label">خاندان</span>
-          </button>
-        </div>
-
-        {/* Center: Action */}
-        <div className="dock-section dock-center">
-          <div className="doodle-btn-wrapper">
-            <button 
-              className={`big-round-doodle-btn ${focusedIndex === offset + 2 ? 'focused-item' : ''}`}
-              onClick={onDoodleClick}
-              aria-label="Draw"
-            >
-              <Pencil size={28} color="white" strokeWidth={2.5} />
-            </button>
-          </div>
-        </div>
-
-        {/* Right: Quick Affirmations */}
-        <div className="dock-section dock-right">
           <div className="footer-quick-actions">
             <WordCard
               variant={2}
@@ -83,6 +51,38 @@ export const Footer: React.FC<FooterProps> = ({
               className="no-btn footer-mini-card"
             />
           </div>
+        </div>
+
+        {/* Center: Action */}
+        <div className="dock-section dock-center">
+          <div className="doodle-btn-wrapper">
+            <button 
+              className={`big-round-doodle-btn ${focusedIndex === offset + 2 ? 'focused-item' : ''}`}
+              onClick={onDoodleClick}
+              aria-label="Draw"
+            >
+              <Waves size={28} color="white" strokeWidth={2.5} />
+            </button>
+          </div>
+        </div>
+
+        {/* Right: Collections */}
+        <div className="dock-section dock-right">
+          <button 
+            className={`bar-category-btn ${focusedIndex === offset + 1 ? 'focused-item' : ''}`}
+            onClick={() => onCategoryClick('family')}
+          >
+            <Users size={24} />
+            <span className="dock-label">خاندان</span>
+          </button>
+          
+          <button 
+            className={`bar-category-btn ${focusedIndex === offset ? 'focused-item' : ''}`}
+            onClick={() => onCategoryClick('favorites')}
+          >
+            <Heart size={24} />
+            <span className="dock-label">پسندیدہ</span>
+          </button>
         </div>
       </div>
     </div>

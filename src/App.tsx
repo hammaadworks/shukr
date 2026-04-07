@@ -344,12 +344,25 @@ const AppContent = () => {
     
     const mergedIds = Array.from(new Set([...contextualSuggestions, ...nextIds]));
     
-    return allItems
-      .filter((i: any) => mergedIds.includes(i.id))
-      .slice(0, 4)
+    let results = allItems
+      .filter((i: any) => mergedIds.includes(i.id));
+
+    // Fallback: If less than 5, add top words (usage sorted) that aren't already there
+    if (results.length < 5) {
+      const topWords = [...dbWords].sort((a, b) => (b.usageCount || 0) - (a.usageCount || 0));
+      for (const word of topWords) {
+        if (results.length >= 10) break;
+        if (!results.find(r => r.id === word.id)) {
+          results.push(word);
+        }
+      }
+    }
+
+    return results
+      .slice(0, 10) // Approx 5 per line, 2 lines max
       .map((i: any) => ({
         ...i, 
-        onClick: () => { 
+        onClick: async () => { 
           speak(isUrdu ? i.ur : i.en, i.id); 
           if (canAddWords) {
             setSentence(prev => [...prev, i]);
@@ -358,11 +371,13 @@ const AppContent = () => {
             setFlashSentenceBuilder(true);
             setTimeout(() => setFlashSentenceBuilder(false), 500); 
           }
-          wordNetwork.recordUsage(i.id);
+          await wordNetwork.recordUsage(i.id);
+          refreshWords();
           setFocusedIndex(-1);
+          setContextualSuggestions([]);
         }
       }));
-  }, [sentence, allItems, isUrdu, speak, contextualSuggestions]);
+  }, [sentence, allItems, isUrdu, speak, contextualSuggestions, dbWords, refreshWords, canAddWords]);
 
   const navigableActions = useMemo(() => {
     const actions: (() => void)[] = [];

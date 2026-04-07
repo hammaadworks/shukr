@@ -15,7 +15,7 @@ export const PredictionScroller: React.FC<PredictionScrollerProps> = ({
   if (!predictions || predictions.length === 0) return null;
 
   return (
-    <div className="prediction-scroller">
+    <div className="prediction-scroller glass-container">
       {predictions.map((item, idx) => (
         <WordCard
           variant={2}

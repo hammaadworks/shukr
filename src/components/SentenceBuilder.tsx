@@ -13,7 +13,7 @@ interface SentenceBuilderProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   canAddWords: boolean;
-  builderScrollRef: React.RefObject<HTMLDivElement>;
+  builderScrollRef: React.RefObject<HTMLDivElement | null>;
   flashBorder: boolean;
 }
 
@@ -34,7 +34,7 @@ export const SentenceBuilder: React.FC<SentenceBuilderProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className={`sentence-dock-glass ${flashBorder ? 'flash-red-border' : ''}`} onClick={() => inputRef.current?.focus()}>
+    <div className={`sentence-dock-glass glass-container ${flashBorder ? 'flash-red-border' : ''}`} onClick={() => inputRef.current?.focus()}>
       <div className="smart-input-area">
         <div className="builder-scroll" ref={builderScrollRef}>
           {words.map((w: any, i: number) => (
@@ -73,14 +73,16 @@ export const SentenceBuilder: React.FC<SentenceBuilderProps> = ({
       </div>
       <div className="dock-actions">
         <button
-          className={`btn-dock-ios backspace-btn ${focusedIndex === offset ? 'focused-item' : ''}`}
+          className={`btn-dock-ios primary ${
+            focusedIndex === offset + 2 ? 'focused-item' : ''
+          }`}
           onClick={(e) => {
             e.stopPropagation();
-            onBackspace();
+            onPlay();
           }}
-          disabled={words.length === 0}
+          disabled={!canAddWords}
         >
-          <Delete size={18} />
+          <span>{isUrdu ? 'بولیں' : 'SPEAK'}</span>
         </button>
         <button
           className={`btn-dock-ios clear-btn ${focusedIndex === offset + 1 ? 'focused-item' : ''}`}
@@ -92,16 +94,14 @@ export const SentenceBuilder: React.FC<SentenceBuilderProps> = ({
           <RotateCcw size={18} />
         </button>
         <button
-          className={`btn-dock-ios primary ${
-            focusedIndex === offset + 2 ? 'focused-item' : ''
-          }`}
+          className={`btn-dock-ios backspace-btn ${focusedIndex === offset ? 'focused-item' : ''}`}
           onClick={(e) => {
             e.stopPropagation();
-            onPlay();
+            onBackspace();
           }}
-          disabled={!canAddWords}
+          disabled={words.length === 0}
         >
-          <span>{isUrdu ? 'بولیں' : 'SPEAK'}</span>
+          <Delete size={18} />
         </button>
       </div>
     </div>

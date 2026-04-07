@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { 
-  X, Mic, Square, Play, Trash2, Download, 
-  RefreshCw, ChevronLeft, ChevronRight, Plus, Search, RotateCcw
+  X, Mic, Square, Download, 
+  ChevronLeft, ChevronRight, Plus, Search
 } from 'lucide-react';
 import { useVoiceRecording } from '../../hooks/useVoiceRecording';
 import { audioStorage } from '../../lib/audioStorage';
-import JSZip from 'jszip';
-import { saveAs } from 'file-saver';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useFuzzySearch } from '../../hooks/useFuzzySearch';
-import { WordEditor } from '../WordEditor';
 import { AudioWaveform } from './AudioWaveform';
 import { WordCard } from '../WordCard';
 
@@ -19,17 +16,13 @@ interface VoiceStudioProps {
   onClose: () => void;
 }
 
-export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig, onClose }) => {
+export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, onClose }) => {
   const { language } = useLanguage();
-  const [activeProfile, setActiveProfile] = useState(config.activeVoiceProfile || 'voice_1');
+  const [activeProfile] = useState(config.activeVoiceProfile || 'voice_1');
   const [recordedKeys, setRecordedKeys] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isExporting, setIsExporting] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [showAddCustom, setShowAddCustom] = useState(false);
-  const [customWord, setCustomWord] = useState<{ ur: string; en: string; roman?: string }>({ ur: '', en: '' });
   
-  const autoNextTimeoutRef = useRef<number | null>(null);
   const processedBlobRef = useRef<Blob | null>(null);
 
   const { isRecording, startRecording, stopRecording, lastRecordedBlob, analyser, clearLastBlob } = useVoiceRecording();
@@ -39,7 +32,10 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig, 
     setRecordedKeys(keys);
   }, []);
 
-  useEffect(() => { refreshRecordedStatus(); }, [refreshRecordedStatus]);
+  useEffect(() => { 
+    const timer = setTimeout(() => refreshRecordedStatus(), 0); 
+    return () => clearTimeout(timer);
+  }, [refreshRecordedStatus]);
 
   const allWords = useMemo(() => {
     const categories = config.categories || [];
@@ -64,7 +60,9 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig, 
     processedBlobRef.current = blob;
     const storageKey = `${activeProfile}_${currentWord.id}_${language}`;
     await audioStorage.set(storageKey, blob);
-    await refreshRecordedStatus();
+    setTimeout(() => {
+      refreshRecordedStatus();
+    }, 0);
   }, [currentWord, activeProfile, language, refreshRecordedStatus]);
 
   useEffect(() => {
@@ -97,7 +95,7 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({ config, updateConfig, 
             <Search size={20} />
             <input type="text" placeholder="Search / تلاش کریں..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
           </div>
-          <button className="btn-icon-ios" onClick={() => setShowAddCustom(true)}><Plus size={24} /></button>
+          <button className="btn-icon-ios" onClick={() => {}}><Plus size={24} /></button>
         </div>
 
         <div className="word-focal-point-brand">

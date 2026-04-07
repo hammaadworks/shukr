@@ -31,7 +31,7 @@ export const WordCard: React.FC<WordCardProps> = ({
   className = ''
 }) => {
   const { isUrdu } = useLanguage();
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<any>(null);
 
   // Helper to prevent text overflow by scaling font size based on length
   const fontSize = useMemo(() => {
@@ -51,11 +51,11 @@ export const WordCard: React.FC<WordCardProps> = ({
     }
     if (variant === 2) {
       if (isUrdu) {
-        if (len > 10) return '0.85rem';
-        return '1rem'; // Reduced to fit mini cards
+        if (len > 10) return '0.75rem';
+        return '0.85rem'; // Reduced to fit mini cards
       } else {
-        if (len > 10) return '0.8rem';
-        return '1rem';
+        if (len > 10) return '0.7rem';
+        return '0.8rem';
       }
     }
     return isUrdu ? '1.1rem' : '1rem';
@@ -116,12 +116,8 @@ export const WordCard: React.FC<WordCardProps> = ({
           <span className="card-transliteration">
             {item.roman || (isUrdu ? item.en : item.ur)}
           </span>
-          {variant === 1 && (
-            <>
-              <span className="card-divider">|</span>
-              <span className="card-translation">{isUrdu ? item.en : item.ur}</span>
-            </>
-          )}
+          <span className="card-divider">|</span>
+          <span className="card-translation">{isUrdu ? item.en : item.ur}</span>
         </div>
       )}
     </button>

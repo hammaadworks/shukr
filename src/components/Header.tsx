@@ -22,6 +22,7 @@ interface HeaderProps {
   toggleListening: () => void;
   lastGesture: string;
   isUrdu: boolean;
+  focusedIndex: number;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -35,7 +36,8 @@ export const Header: React.FC<HeaderProps> = ({
   isListening,
   toggleListening,
   lastGesture,
-  isUrdu
+  isUrdu,
+  focusedIndex
 }) => {
   const { playClick } = useAudio();
   const { setLanguage, language } = useLanguage();
@@ -52,7 +54,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Left: Functional Controls */}
         <div className="header-group-left header-gap-wide">
           <button 
-            className={`btn-icon-ios ${isTrackingEnabled ? 'active' : ''}`}
+            className={`btn-icon-ios ${isTrackingEnabled ? 'active' : ''} ${focusedIndex === 0 ? 'focused-item' : ''}`}
             onClick={() => { playClick(); toggleTracking(); }}
             aria-label="Camera"
           >
@@ -61,7 +63,7 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           <button 
-            className={`btn-icon-ios ${isListening ? 'active listening-pulse' : ''}`}
+            className={`btn-icon-ios ${isListening ? 'active listening-pulse' : ''} ${focusedIndex === 1 ? 'focused-item' : ''}`}
             onClick={() => { playClick(); toggleListening(); }}
             aria-label={isListening ? "Stop Listening" : "Start Listening"}
           >
@@ -77,13 +79,14 @@ export const Header: React.FC<HeaderProps> = ({
             playClick={playClick} 
             onOpenSettings={() => onOpenSettings('general')}
             hasUnsyncedChanges={hasUnsyncedChanges}
+            isFocused={focusedIndex === 2}
           />
         </div>
 
         {/* Right: Preference Controls */}
         <div className="header-group-right header-gap-wide">
           <button 
-            className="btn-icon-ios lang-switcher-pill"
+            className={`btn-icon-ios lang-switcher-pill ${focusedIndex === 3 ? 'focused-item' : ''}`}
             onClick={toggleLang}
             aria-label="Switch Language"
           >
@@ -94,7 +97,7 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           <button 
-            className="btn-icon-ios"
+            className={`btn-icon-ios ${focusedIndex === 4 ? 'focused-item' : ''}`}
             onClick={() => { playClick(); onOpenSettings(); }}
             aria-label="Settings"
           >

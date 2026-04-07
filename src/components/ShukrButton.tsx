@@ -6,6 +6,7 @@ interface ShukrButtonProps {
   playClick: () => void;
   onOpenSettings: () => void;
   hasUnsyncedChanges?: boolean;
+  isFocused?: boolean;
 }
 
 /**
@@ -19,7 +20,8 @@ export const ShukrButton: React.FC<ShukrButtonProps> = ({
   onHome, 
   playClick, 
   onOpenSettings, 
-  hasUnsyncedChanges 
+  hasUnsyncedChanges,
+  isFocused
 }) => {
   const [isPressing, setIsPressing] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -57,7 +59,7 @@ export const ShukrButton: React.FC<ShukrButtonProps> = ({
     setIsPressing(false);
   }, []);
 
-  const handleClick = useCallback((e: React.MouseEvent) => {
+  const handleClick = useCallback((_e: React.MouseEvent) => {
     const pressDuration = Date.now() - pressStartedRef.current;
     if (sosTriggeredRef.current || pressDuration > 800) return;
 
@@ -68,7 +70,7 @@ export const ShukrButton: React.FC<ShukrButtonProps> = ({
 
   return (
     <button 
-      className={`brand-badge-btn ${isPressing ? 'is-pressing' : ''}`}
+      className={`brand-badge-btn ${isPressing ? 'is-pressing' : ''} ${isFocused ? 'focused-item' : ''}`}
       onMouseDown={handlePressStart}
       onMouseUp={handlePressEnd}
       onMouseLeave={handlePressEnd}

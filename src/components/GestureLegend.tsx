@@ -9,13 +9,15 @@ export const GestureLegend: React.FC<GestureLegendProps> = ({ lastGesture }) => 
   const { isUrdu } = useLanguage();
 
   const gestures = [
-    { id: 'SELECT', icon: '✊', labelEn: 'Select', labelUr: 'منتخب کریں', activeKey: 'fist' },
-    { id: 'NEXT', icon: '☝️', labelEn: 'Next', labelUr: 'اگلا', activeKey: 'one_finger' },
-    { id: 'PREV', icon: '✌️', labelEn: 'Prev', labelUr: 'پچھلا', activeKey: 'two_fingers' },
-    { id: 'SPEAK', icon: '😮', labelEn: 'Speak', labelUr: 'بولیں', activeKey: 'mouth_open' },
-    { id: 'CLEAR', icon: '🖐️', labelEn: 'Clear', labelUr: 'صاف کریں', activeKey: 'palm' },
+  { id: 'SELECT', icon: '✊', labelEn: 'Select', labelUr: 'منتخب کریں' },
+  { id: 'NEXT', icon: '☝️', labelEn: 'Next', labelUr: 'اگلا' },
+  { id: 'PREV', icon: '✌️', labelEn: 'Prev', labelUr: 'پچھلا' },
+  { id: 'SALAM', icon: '✌️', labelEn: 'Salam', labelUr: 'سلام' },
+  { id: 'YES', icon: '👍', labelEn: 'Yes', labelUr: 'جی ہاں' },
+  { id: 'DOODLE', icon: '🤟', labelEn: 'Doodle', labelUr: 'ڈوڈل' },
+  { id: 'SPEAK', icon: '😮', labelEn: 'Speak', labelUr: 'بولیں' },
+  { id: 'CLEAR', icon: '🖐️', labelEn: 'Clear', labelUr: 'صاف کریں' },
   ];
-
   return (
     <div className="gesture-legend-container" dir={isUrdu ? 'rtl' : 'ltr'}>
       {gestures.map((g) => {
@@ -23,7 +25,7 @@ export const GestureLegend: React.FC<GestureLegendProps> = ({ lastGesture }) => 
         return (
           <div key={g.id} className={`gesture-item ${isActive ? 'gesture-active' : ''}`}>
             <span className="gesture-icon">{g.icon}</span>
-            <span className="gesture-label">{isUrdu ? g.labelUr : g.labelEn}</span>
+            <span className="gesture-label mobile-small-text">{isUrdu ? g.labelUr : g.labelEn}</span>
           </div>
         );
       })}

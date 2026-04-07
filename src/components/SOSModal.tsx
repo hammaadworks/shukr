@@ -20,11 +20,11 @@ export const SOSModal: React.FC<SOSModalProps> = ({ onClose, emergencyContacts }
   }, [playSOS]);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (countdown > 0 && !isSOSActive) {
+    let timer: any;
+    if (countdown > 0 && isSOSActive) {
       timer = setTimeout(() => setCountdown(prev => prev - 1), 1000);
-    } else if (countdown === 0 && !isSOSActive) {
-      startAlert();
+    } else if (countdown === 0 && isSOSActive) {
+      setTimeout(startAlert, 0);
     }
     return () => clearTimeout(timer);
   }, [countdown, isSOSActive, startAlert]);

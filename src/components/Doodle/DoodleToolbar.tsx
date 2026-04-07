@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eraser, Brain } from 'lucide-react';
+import { Eraser, Waves } from 'lucide-react';
 
 interface DoodleToolbarProps {
   onClear: () => void;
@@ -19,7 +19,7 @@ export const DoodleToolbar: React.FC<DoodleToolbarProps> = ({
         <span className={isUrdu ? 'naani-urdu-text' : ''}>{isUrdu ? 'صاف کریں' : 'Clear'}</span>
       </button>
       <button className="footer-btn primary" onClick={onTrain}>
-        <Brain size={24} />
+        <Waves size={24} />
         <span className={isUrdu ? 'naani-urdu-text' : ''}>{isUrdu ? 'سکھائیں' : 'Train'}</span>
       </button>
     </div>

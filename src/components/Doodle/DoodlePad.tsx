@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useAudio } from '../../hooks/useAudio';
 import { recognitionEngine } from '../../recognition/engine';
-import type { SketchRecognitionMode, Stroke, StrokePoint } from '../../recognition/db';
+import type { Stroke, StrokePoint } from '../../recognition/db';
 
 import { DoodleCanvas } from './DoodleCanvas';
 import { DoodlePredictions } from './DoodlePredictions';
@@ -12,9 +12,10 @@ import { TrainDoodleModal } from './modals/TrainDoodleModal';
 interface DoodlePadProps {
   config: any;
   onRecognize: (item: any) => void;
+  focusedIndex: number;
 }
 
-export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize }) => {
+export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focusedIndex }) => {
   const { isUrdu } = useLanguage();
   const { playClick, speak } = useAudio();
   
@@ -23,6 +24,22 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize }) => 
   const [isDrawing, setIsDrawing] = useState(false);
   const [predictions, setPredictions] = useState<any[]>([]);
   const [showTrainModal, setShowTrainModal] = useState(false);
+
+  // Ensure minimum 5 predictions by falling back to top words
+  const displayedPredictions = React.useMemo(() => {
+    const results = [...predictions];
+    if (results.length < 5 && config?.categories) {
+      const allWords = config.categories.flatMap((c: any) => c.items || []);
+      // Basic unique words fallback
+      for (const word of allWords) {
+        if (results.length >= 10) break;
+        if (!results.find(r => r.id === word.id)) {
+          results.push(word);
+        }
+      }
+    }
+    return results.slice(0, 10);
+  }, [predictions, config]);
 
   useEffect(() => {
     recognitionEngine.init(config);
@@ -91,12 +108,12 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize }) => 
   return (
     <div className="doodle-page-container">
       <div className="mobile-drawing-container">
-        {/* Predictions */}
+        {/* Predictions Area */}
         <DoodlePredictions 
           predictions={predictions} 
           onSelect={onRecognize} 
-          isUrdu={isUrdu} 
-          speak={speak} 
+          focusedIndex={focusedIndex}
+          offset={0}
         />
 
         {/* Canvas */}
