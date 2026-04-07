@@ -21,11 +21,44 @@ export const CONTEXTUAL_TRIGGERS: ContextTrigger[] = [
     suggest: ['alhamdulillah', 'theek', 'hun', 'shukr', 'haan']
   },
   {
-    heard: [
-      'assalamualaikum', 'salam', 'hello', 'namaste',
-      'سلام', 'اسلام علیکم', 'dua salam'
-    ],
-    suggest: ['shukriya', 'kaise', 'aap', 'theek', 'alhamdulillah']
+    heard: ['assalamualaikum', 'salam', 'hello', 'namaste', 'سلام', 'اسلام علیکم', 'dua salam'],
+    suggest: ['sys_salam', 'shukriya', 'kaise', 'alhamdulillah']
+  },
+  {
+    heard: ['la ilaha illallah', 'kalma', 'لا الہ الا اللہ'],
+    suggest: ['lailaha_illallah', 'allah', 'namaz']
+  },
+  {
+    heard: ['masha allah', 'mashallah', 'ماشاء اللہ'],
+    suggest: ['mashallah', 'alhamdulillah', 'shukr']
+  },
+  {
+    heard: ['allahu akbar', 'allah o akbar', 'اللہ اکبر'],
+    suggest: ['allahu_akbar', 'subhanallah', 'alhamdulillah']
+  },
+  {
+    heard: ['yes', 'haan', 'ji', 'ہاں', 'جی'],
+    suggest: ['sys_yes', 'haan']
+  },
+  {
+    heard: ['no', 'nahi', 'نہ', 'نہیں'],
+    suggest: ['sys_no', 'nahi']
+  },
+  {
+    heard: ['doodle', 'draw', 'drawing', 'likho', 'likhna', 'ڈوڈل', 'لکھو'],
+    suggest: ['doodle_action']
+  },
+  {
+    heard: ['next', 'aage', 'اگلا', 'آگے'],
+    suggest: ['next_action']
+  },
+  {
+    heard: ['previous', 'back', 'peechay', 'پچھلا', 'پیچھے'],
+    suggest: ['prev_action']
+  },
+  {
+    heard: ['select', 'pick', 'choice', 'choose', 'yehi', 'یہی', 'منتخب'],
+    suggest: ['select_action']
   },
 
   // --- Shingles, Skin & Pain Management (Highly Specific) ---

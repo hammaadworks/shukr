@@ -6,7 +6,7 @@ import {
   AlertTriangle, RefreshCw, ShoppingCart, Wind, BatteryLow, Snowflake, 
   ArrowRight, ArrowDown, Power, Shield, Droplet, Star, Battery, Calendar,
   Footprints, Frown, Leaf, Scissors, Shirt, Sparkles, Square,
-  Sun, Syringe, Thermometer, Wallet, X, ListPlus
+  Sun, Syringe, Thermometer, Wallet, X, ListPlus, Waves
 } from 'lucide-react';
 
 export const IconMap: Record<string, any> = {
@@ -30,5 +30,5 @@ export const IconMap: Record<string, any> = {
   frown: Frown, leaf: Leaf, scissors: Scissors, shirt: Shirt,
   sparkles: Sparkles, square: Square, syringe: Syringe,
   thermometer: Thermometer, wallet: Wallet, x: X, 'volume-2': Volume2,
-  'list-plus': ListPlus
+  'list-plus': ListPlus, 'line-squiggle': Waves
 };
