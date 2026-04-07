@@ -1,0 +1,5666 @@
+{
+  "gesture_map": {
+    "one_finger": "DOODLE",
+    "thumb_up": "YES",
+    "mouth_open": "SPEAK",
+    "five_fingers": "HOME",
+    "two_fingers": "PREV",
+    "palm_open": "ATTENTION"
+  },
+  "quotes": [
+    {
+      "ur": "بے شک مشکل کے ساتھ آسانی ہے۔",
+      "en": "Verily, with hardship comes ease.",
+      "source": "Quran 94:5"
+    },
+    {
+      "ur": "اللہ کسی جان پر اس کی طاقت سے زیادہ بوجھ نہیں ڈالتا۔",
+      "en": "Allah does not burden a soul beyond that it can bear.",
+      "source": "Quran 2:286"
+    },
+    {
+      "ur": "نہ ہمت ہارو اور نہ غمگین ہو۔",
+      "en": "Do not lose hope, nor be sad.",
+      "source": "Quran 3:139"
+    },
+    {
+      "ur": "پس آپ صبر کریں، کیسا اچھا صبر۔",
+      "en": "So be patient with gracious patience.",
+      "source": "Quran 70:5"
+    },
+    {
+      "ur": "اللہ ہی بہترین مددگار ہے اور وہ سب سے بڑھ کر رحم کرنے والا ہے۔",
+      "en": "Allah is the best of helpers, and He is the most merciful.",
+      "source": "Quran 3:150"
+    },
+    {
+      "ur": "میرے رب! میرے لیے میرا سینہ کھول دے۔",
+      "en": "My Lord, expand for me my breast [with assurance].",
+      "source": "Quran 20:25"
+    },
+    {
+      "ur": "اور جب میں بیمار ہوتا ہوں تو وہی مجھے شفا دیتا ہے۔",
+      "en": "And when I am ill, it is He who cures me.",
+      "source": "Quran 26:80"
+    }
+  ],
+  "categories": [
+    {
+      "id": "core",
+      "label_ur": "عام الفاظ",
+      "label_en": "Core Words",
+      "icon": "user",
+      "items": [
+        {
+          "id": "mai",
+          "ur": "میں",
+          "en": "I",
+          "icon": "user",
+          "next": [
+            "hun",
+            "theek",
+            "khush",
+            "udaas",
+            "thak",
+            "behtar",
+            "shukrguzar",
+            "alhamdulillah",
+            "shukr",
+            "acha",
+            "bura",
+            "tabiyat_kharab"
+          ],
+          "roman": "main"
+        },
+        {
+          "id": "mujhe",
+          "ur": "مجھے",
+          "en": "To me",
+          "icon": "hand",
+          "next": [
+            "chahiye",
+            "pani",
+            "chai",
+            "dard_mein",
+            "bukhaar",
+            "neend",
+            "bhuk",
+            "pyas",
+            "alhamdulillah",
+            "shukr",
+            "dua",
+            "dawaii"
+          ],
+          "roman": "mujhay"
+        },
+        {
+          "id": "aap",
+          "ur": "آپ",
+          "en": "You",
+          "icon": "users",
+          "next": [
+            "kaise",
+            "kab",
+            "kahan",
+            "dedo",
+            "lelo",
+            "baitho",
+            "utho",
+            "chalo",
+            "suno",
+            "bolo",
+            "khush",
+            "dua"
+          ],
+          "roman": "aap"
+        },
+        {
+          "id": "yeh",
+          "ur": "یہ",
+          "en": "This",
+          "icon": "arrow-right",
+          "next": [
+            "kya",
+            "hai",
+            "theek",
+            "acha",
+            "bura",
+            "dedo",
+            "lelo",
+            "rakho",
+            "uthao",
+            "saaf_kaam",
+            "khul",
+            "band"
+          ],
+          "roman": "yeh"
+        },
+        {
+          "id": "kya",
+          "ur": "کیا",
+          "en": "What",
+          "icon": "help-circle",
+          "next": [
+            "hai",
+            "hua",
+            "waqt",
+            "kaise",
+            "kahan",
+            "kab",
+            "kyun",
+            "bolti",
+            "suno",
+            "dikhao",
+            "pucho",
+            "batao"
+          ],
+          "roman": "kya"
+        },
+        {
+          "id": "hai",
+          "ur": "ہے",
+          "en": "Is",
+          "icon": "check-circle",
+          "next": [
+            "theek",
+            "acha",
+            "bura",
+            "kahan",
+            "kab",
+            "kyun",
+            "ab",
+            "baad",
+            "abhi",
+            "ya",
+            "aur",
+            "alhamdulillah"
+          ],
+          "roman": "hai"
+        },
+        {
+          "id": "hun",
+          "ur": "ہوں",
+          "en": "Am",
+          "icon": "check-circle",
+          "next": [
+            "theek",
+            "khush",
+            "udaas",
+            "thak",
+            "behtar",
+            "shukrguzar",
+            "alhamdulillah",
+            "shukr",
+            "itminan",
+            "sukun",
+            "acha",
+            "bura"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "hoon"
+        },
+        {
+          "id": "nahi",
+          "ur": "نہیں",
+          "en": "No",
+          "icon": "x-circle",
+          "next": [
+            "chahiye",
+            "khao",
+            "piyo",
+            "baitho",
+            "chalo",
+            "theek",
+            "hua",
+            "hai",
+            "hun",
+            "shukriya",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "nahi"
+        },
+        {
+          "id": "chahiye",
+          "ur": "چاہیے",
+          "en": "Want",
+          "icon": "heart",
+          "next": [
+            "pani",
+            "khana_core",
+            "dawaii",
+            "araam",
+            "chai",
+            "dudh",
+            "takiya",
+            "kambal",
+            "bathroom",
+            "dua",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "chahiyay"
+        },
+        {
+          "id": "shukriya",
+          "ur": "شکریہ",
+          "en": "Thank you",
+          "icon": "smile",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "aap",
+            "shukr",
+            "allah",
+            "khush",
+            "dua",
+            "alhamdulillah",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "shukriya"
+        },
+        {
+          "id": "haan",
+          "ur": "ہاں",
+          "en": "Yes",
+          "icon": "check",
+          "next": ["shukriya", "alhamdulillah", "theek"],
+          "roman": "haan"
+        },
+        {
+          "id": "leli",
+          "ur": "لے لی",
+          "en": "Took it",
+          "icon": "check-circle",
+          "next": ["shukriya", "alhamdulillah"],
+          "roman": "leli"
+        },
+        {
+          "id": "kaise",
+          "ur": "کیسے",
+          "en": "How",
+          "icon": "help-circle",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "roman": "kaisay"
+        },
+        {
+          "id": "kahan",
+          "ur": "کہاں",
+          "en": "Where",
+          "icon": "search",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "kahan"
+        },
+        {
+          "id": "kab",
+          "ur": "کب",
+          "en": "When",
+          "icon": "clock",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "kab"
+        },
+        {
+          "id": "kyun",
+          "ur": "کیوں",
+          "en": "Why",
+          "icon": "help-circle",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "roman": "kyoon"
+        },
+        {
+          "id": "waqt",
+          "ur": "وقت",
+          "en": "Time",
+          "icon": "clock",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "waqt"
+        },
+        {
+          "id": "aur",
+          "ur": "اور",
+          "en": "And",
+          "icon": "plus",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "roman": "aur"
+        },
+        {
+          "id": "lekin",
+          "ur": "لیکن",
+          "en": "But",
+          "icon": "alert-triangle",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "roman": "lekin"
+        },
+        {
+          "id": "ya",
+          "ur": "یا",
+          "en": "Or",
+          "icon": "refresh-cw",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "roman": "ya"
+        },
+        {
+          "id": "sath",
+          "ur": "ساتھ",
+          "en": "With",
+          "icon": "users",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "roman": "saath"
+        },
+        {
+          "id": "idhar",
+          "ur": "ادھر",
+          "en": "Here",
+          "icon": "arrow-left",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "idhar"
+        },
+        {
+          "id": "udhar",
+          "ur": "ادھر",
+          "en": "There",
+          "icon": "arrow-right",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "udhar"
+        },
+        {
+          "id": "abhi",
+          "ur": "ابھی",
+          "en": "Now",
+          "icon": "zap",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "abhi"
+        },
+        {
+          "id": "baad",
+          "ur": "بعد",
+          "en": "Later",
+          "icon": "clock",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "baad"
+        },
+        {
+          "id": "aaj",
+          "ur": "آج",
+          "en": "Today",
+          "icon": "calendar",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "aaj"
+        },
+        {
+          "id": "kal",
+          "ur": "کل",
+          "en": "Tomorrow",
+          "icon": "calendar",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "kal"
+        },
+        {
+          "id": "hua",
+          "ur": "ہوا",
+          "en": "Happened",
+          "icon": "check-circle",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "roman": "hua"
+        },
+        {
+          "id": "acha",
+          "ur": "اچھا",
+          "en": "Good",
+          "icon": "smile",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "acha"
+        },
+        {
+          "id": "bura",
+          "ur": "برا",
+          "en": "Bad",
+          "icon": "frown",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "bura"
+        },
+        {
+          "id": "khana_core",
+          "ur": "کھانا",
+          "en": "Food",
+          "icon": "utensils",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "roman": "khana"
+        },
+        {
+          "id": "pani_core",
+          "ur": "پانی",
+          "en": "Water",
+          "icon": "droplet",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "roman": "pani"
+        }
+      ]
+    },
+    {
+      "id": "sehat",
+      "label_ur": "صحت و آرام",
+      "label_en": "Health & Relief",
+      "icon": "activity",
+      "items": [
+        {
+          "id": "shingles",
+          "ur": "شنگلز",
+          "en": "Shingles",
+          "icon": "alert-circle",
+          "next": ["dard_mein", "khujli", "jalan", "daane", "malham", "dawaii"],
+          "roman": "shingles"
+        },
+        {
+          "id": "panadol",
+          "ur": "پیناڈول",
+          "en": "Panadol",
+          "icon": "pill",
+          "next": ["dedo", "theek", "dard_sar", "bukhaar"],
+          "roman": "panadol"
+        },
+        {
+          "id": "betaserk",
+          "ur": "بیٹاسرک",
+          "en": "Betaserk",
+          "icon": "pill",
+          "next": ["chakkar", "theek", "dawaii"],
+          "roman": "betaserk"
+        },
+        {
+          "id": "thandak",
+          "ur": "ٹھنڈک",
+          "en": "Cooling",
+          "icon": "snowflake",
+          "next": ["chahiye", "malham", "jalan"],
+          "roman": "thandak"
+        },
+        {
+          "id": "lotion",
+          "ur": "لوشن",
+          "en": "Lotion",
+          "icon": "droplets",
+          "next": ["lagao", "chahiye", "khujli"],
+          "roman": "lotion"
+        },
+        {
+          "id": "khujli",
+          "ur": "خارش",
+          "en": "Itching",
+          "icon": "fingerprint",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "khujli"
+        },
+        {
+          "id": "sojan",
+          "ur": "سوجن",
+          "en": "Swelling",
+          "icon": "loader",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "sojan"
+        },
+        {
+          "id": "surkhi",
+          "ur": "سرخی",
+          "en": "Redness",
+          "icon": "eye",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "surkhi"
+        },
+        {
+          "id": "jalan",
+          "ur": "جلن",
+          "en": "Burning",
+          "icon": "zap",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "jalan"
+        },
+        {
+          "id": "daane",
+          "ur": "دانے",
+          "en": "Blisters",
+          "icon": "droplet",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "daanay"
+        },
+        {
+          "id": "patti",
+          "ur": "پٹی",
+          "en": "Bandage",
+          "icon": "shield",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "patti"
+        },
+        {
+          "id": "malham",
+          "ur": "ملہم",
+          "en": "Ointment",
+          "icon": "droplets",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "malham"
+        },
+        {
+          "id": "tez_dard",
+          "ur": "تیز درد",
+          "en": "Sharp Pain",
+          "icon": "alert-triangle",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "tez dard"
+        },
+        {
+          "id": "kamzori",
+          "ur": "کمزوری",
+          "en": "Weakness",
+          "icon": "battery-low",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "kamzori"
+        },
+        {
+          "id": "chakkar",
+          "ur": "چکر",
+          "en": "Dizzy",
+          "icon": "refresh-cw",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "chakkar"
+        },
+        {
+          "id": "dawaii",
+          "ur": "دوائی",
+          "en": "Medicine",
+          "icon": "pill",
+          "next": [
+            "theek",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "dawaii"
+        },
+        {
+          "id": "goli",
+          "ur": "گولی",
+          "en": "Tablet",
+          "icon": "pill",
+          "next": [
+            "theek",
+            "dawaii",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "goli"
+        },
+        {
+          "id": "bp",
+          "ur": "بی پی",
+          "en": "Blood Pressure",
+          "icon": "activity",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "bp"
+        },
+        {
+          "id": "sugar",
+          "ur": "شوگر",
+          "en": "Sugar",
+          "icon": "activity",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "sugar"
+        },
+        {
+          "id": "theek",
+          "ur": "ٹھیک",
+          "en": "Better",
+          "icon": "check-circle",
+          "next": [
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "theek"
+        },
+        {
+          "id": "bukhaar",
+          "ur": "بخار",
+          "en": "Fever",
+          "icon": "thermometer",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "bukhaar"
+        },
+        {
+          "id": "khansi",
+          "ur": "کھانسی",
+          "en": "Cough",
+          "icon": "wind",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "khansi"
+        },
+        {
+          "id": "nazla",
+          "ur": "نزلہ",
+          "en": "Cold",
+          "icon": "snowflake",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "nazla"
+        },
+        {
+          "id": "dard_sar",
+          "ur": "سر درد",
+          "en": "Headache",
+          "icon": "alert-circle",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_pait",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "dard sar"
+        },
+        {
+          "id": "dard_pait",
+          "ur": "پیٹ درد",
+          "en": "Stomach Ache",
+          "icon": "alert-circle",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "dard pait"
+        },
+        {
+          "id": "dard_pith",
+          "ur": "پیٹھ درد",
+          "en": "Back Pain",
+          "icon": "alert-circle",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "dard pith"
+        },
+        {
+          "id": "dard_ghutna",
+          "ur": "گھٹنا درد",
+          "en": "Knee Pain",
+          "icon": "alert-circle",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "dard ghutna"
+        },
+        {
+          "id": "sans",
+          "ur": "سانس",
+          "en": "Breathing",
+          "icon": "wind",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "sans"
+        },
+        {
+          "id": "matli",
+          "ur": "متلی",
+          "en": "Nausea",
+          "icon": "loader",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "matli"
+        },
+        {
+          "id": "injection",
+          "ur": "انجکشن",
+          "en": "Injection",
+          "icon": "syringe",
+          "next": [
+            "theek",
+            "dawaii",
+            "goli",
+            "bp",
+            "sugar",
+            "bukhaar",
+            "khansi",
+            "nazla",
+            "dard_sar",
+            "dard_pait",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "injection"
+        },
+        {
+          "id": "doctor_sehat",
+          "ur": "ڈاکٹر",
+          "en": "Doctor",
+          "icon": "user",
+          "next": [
+            "checkup",
+            "dawaii",
+            "hospital",
+            "theek",
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "shukriya"
+          ],
+          "roman": "doctor"
+        },
+        {
+          "id": "nurse_sehat",
+          "ur": "نرس",
+          "en": "Nurse",
+          "icon": "user",
+          "next": [
+            "madad",
+            "dawaii",
+            "injection",
+            "theek",
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "shukriya"
+          ],
+          "roman": "nurse"
+        },
+        {
+          "id": "hospital",
+          "ur": "ہسپتال",
+          "en": "Hospital",
+          "icon": "home",
+          "next": [
+            "doctor",
+            "nurse",
+            "checkup",
+            "theek",
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "shukriya"
+          ],
+          "roman": "hospital"
+        },
+        {
+          "id": "checkup",
+          "ur": "چیک اپ",
+          "en": "Checkup",
+          "icon": "search",
+          "next": [
+            "doctor",
+            "nurse",
+            "hospital",
+            "theek",
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "shukriya"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "checkup"
+        },
+        {
+          "id": "dard_kan",
+          "ur": "کان درد",
+          "en": "Ear Pain",
+          "icon": "alert-circle",
+          "next": [
+            "doctor",
+            "nurse",
+            "dawaii",
+            "theek",
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "shukriya"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "dard kan"
+        }
+      ]
+    },
+    {
+      "id": "ruhani",
+      "label_ur": "روحانی سکون",
+      "label_en": "Spiritual",
+      "icon": "heart",
+      "items": [
+        {
+          "id": "allah",
+          "ur": "اللہ",
+          "en": "Allah",
+          "icon": "star",
+          "next": [
+            "shukr",
+            "dua",
+            "jannat",
+            "mashallah",
+            "subhanallah",
+            "inshallah",
+            "reham",
+            "madad_kaam",
+            "alhamdulillah",
+            "shukrguzar",
+            "sukun",
+            "itminan"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "allah"
+        },
+        {
+          "id": "namaz",
+          "ur": "نماز",
+          "en": "Namaz",
+          "icon": "home",
+          "next": [
+            "allah",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "namaz"
+        },
+        {
+          "id": "quran",
+          "ur": "قرآن",
+          "en": "Quran",
+          "icon": "book-open",
+          "next": [
+            "allah",
+            "namaz",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "quran"
+        },
+        {
+          "id": "dua",
+          "ur": "دعا",
+          "en": "Dua",
+          "icon": "hand",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "dua"
+        },
+        {
+          "id": "tasbeeh",
+          "ur": "تسبیح",
+          "en": "Tasbeeh",
+          "icon": "refresh-cw",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "tasbeeh"
+        },
+        {
+          "id": "wudu",
+          "ur": "وضو",
+          "en": "Wudu",
+          "icon": "droplets",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "wuzu"
+        },
+        {
+          "id": "sabr",
+          "ur": "صبر",
+          "en": "Patience",
+          "icon": "heart",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "sabr"
+        },
+        {
+          "id": "shukr",
+          "ur": "شکر",
+          "en": "Gratitude",
+          "icon": "heart",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "shukr"
+        },
+        {
+          "id": "alhamdulillah",
+          "ur": "الحمدللہ",
+          "en": "Alhamdulillah",
+          "icon": "smile",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "subhanallah",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "alhamdulillah"
+        },
+        {
+          "id": "subhanallah",
+          "ur": "سبحان اللہ",
+          "en": "SubhanAllah",
+          "icon": "star",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "subhanallah"
+        },
+        {
+          "id": "astagfirullah",
+          "ur": "استغفر اللہ",
+          "en": "Astagfirullah",
+          "icon": "refresh-cw",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "astagfirullah"
+        },
+        {
+          "id": "janamaz",
+          "ur": "جائے نماز",
+          "en": "Prayer Mat",
+          "icon": "square",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "janamaz"
+        },
+        {
+          "id": "fajr",
+          "ur": "فجر",
+          "en": "Fajr",
+          "icon": "sun",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "fajr"
+        },
+        {
+          "id": "maghrib",
+          "ur": "مغرب",
+          "en": "Maghrib",
+          "icon": "moon",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "maghrib"
+        },
+        {
+          "id": "rasool",
+          "ur": "رسول",
+          "en": "Prophet",
+          "icon": "user",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "rasool"
+        },
+        {
+          "id": "masjid",
+          "ur": "مسجد",
+          "en": "Masjid",
+          "icon": "home",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "masjid"
+        },
+        {
+          "id": "zuhr",
+          "ur": "ظہر",
+          "en": "Zuhr",
+          "icon": "sun",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "zuhr"
+        },
+        {
+          "id": "asr",
+          "ur": "عصر",
+          "en": "Asr",
+          "icon": "sun",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "asr"
+        },
+        {
+          "id": "isha",
+          "ur": "عشاء",
+          "en": "Isha",
+          "icon": "moon",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "isha"
+        },
+        {
+          "id": "surah",
+          "ur": "سورہ",
+          "en": "Surah",
+          "icon": "book-open",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "surah"
+        },
+        {
+          "id": "ayat",
+          "ur": "آیت",
+          "en": "Ayat",
+          "icon": "type",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "ayat"
+        },
+        {
+          "id": "inshallah",
+          "ur": "انشاء اللہ",
+          "en": "Inshallah",
+          "icon": "smile",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "inshallah"
+        },
+        {
+          "id": "mashallah",
+          "ur": "ماشاء اللہ",
+          "en": "Mashallah",
+          "icon": "smile",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "mashallah"
+        },
+        {
+          "id": "makkah",
+          "ur": "مکہ",
+          "en": "Makkah",
+          "icon": "home",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "makkah"
+        },
+        {
+          "id": "madinah",
+          "ur": "مدینہ",
+          "en": "Madinah",
+          "icon": "home",
+          "next": [
+            "allah",
+            "namaz",
+            "quran",
+            "dua",
+            "tasbeeh",
+            "wudu",
+            "sabr",
+            "shukr",
+            "alhamdulillah",
+            "subhanallah",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "madinah"
+        },
+        {
+          "id": "roza",
+          "ur": "روزہ",
+          "en": "Fast",
+          "icon": "sun",
+          "next": [
+            "allah",
+            "iftar",
+            "sehri",
+            "dua",
+            "namaz",
+            "theek",
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "roza"
+        },
+        {
+          "id": "zakat",
+          "ur": "زکوۃ",
+          "en": "Charity",
+          "icon": "heart",
+          "next": [
+            "allah",
+            "madad",
+            "dua",
+            "namaz",
+            "shukr",
+            "theek",
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "zakat"
+        },
+        {
+          "id": "hajj",
+          "ur": "حج",
+          "en": "Hajj",
+          "icon": "home",
+          "next": [
+            "allah",
+            "makkah",
+            "madinah",
+            "dua",
+            "namaz",
+            "theek",
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "hajj"
+        },
+        {
+          "id": "jannat",
+          "ur": "جنت",
+          "en": "Paradise",
+          "icon": "star",
+          "next": [
+            "allah",
+            "dua",
+            "namaz",
+            "quran",
+            "rasool",
+            "theek",
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "jannat"
+        },
+        {
+          "id": "farishta",
+          "ur": "فرشتہ",
+          "en": "Angel",
+          "icon": "star",
+          "next": [
+            "allah",
+            "dua",
+            "namaz",
+            "quran",
+            "rasool",
+            "theek",
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "farishta"
+        }
+      ]
+    },
+    {
+      "id": "zaroorat",
+      "label_ur": "ضروریات",
+      "label_en": "Needs",
+      "icon": "shopping-cart",
+      "items": [
+        {
+          "id": "pani",
+          "ur": "پانی",
+          "en": "Water",
+          "icon": "droplet",
+          "next": [
+            "dedo",
+            "piyo",
+            "chahiye",
+            "lelo",
+            "shukriya",
+            "alhamdulillah",
+            "aur",
+            "thanda",
+            "garam",
+            "acha",
+            "bura",
+            "mai"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "pani"
+        },
+        {
+          "id": "chai",
+          "ur": "چائے",
+          "en": "Tea",
+          "icon": "coffee",
+          "next": [
+            "dedo",
+            "piyo",
+            "chahiye",
+            "lelo",
+            "shukriya",
+            "alhamdulillah",
+            "aur",
+            "thanda",
+            "garam",
+            "acha",
+            "bura",
+            "mai"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "chai"
+        },
+        {
+          "id": "dudh",
+          "ur": "دودھ",
+          "en": "Milk",
+          "icon": "milk",
+          "next": [
+            "dedo",
+            "piyo",
+            "chahiye",
+            "lelo",
+            "shukriya",
+            "alhamdulillah",
+            "aur",
+            "thanda",
+            "garam",
+            "acha",
+            "bura",
+            "mai"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "dudh"
+        },
+        {
+          "id": "chashma",
+          "ur": "چشمہ",
+          "en": "Glasses",
+          "icon": "eye",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "roman": "chashma"
+        },
+        {
+          "id": "takiya",
+          "ur": "تکیہ",
+          "en": "Pillow",
+          "icon": "bed",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "takiya"
+        },
+        {
+          "id": "kambal",
+          "ur": "کمبل",
+          "en": "Blanket",
+          "icon": "square",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "kambal"
+        },
+        {
+          "id": "pankha",
+          "ur": "پنکھا",
+          "en": "Fan",
+          "icon": "wind",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "pankha"
+        },
+        {
+          "id": "ac",
+          "ur": "اے سی",
+          "en": "AC",
+          "icon": "snowflake",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "ac"
+        },
+        {
+          "id": "batti",
+          "ur": "بتی",
+          "en": "Light",
+          "icon": "zap",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "batti"
+        },
+        {
+          "id": "bathroom",
+          "ur": "باتھ روم",
+          "en": "Bathroom",
+          "icon": "bath",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "bathroom"
+        },
+        {
+          "id": "kursi",
+          "ur": "کرسی",
+          "en": "Chair",
+          "icon": "user",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "roman": "kursi"
+        },
+        {
+          "id": "lathi",
+          "ur": "لاٹھی",
+          "en": "Cane",
+          "icon": "zap",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "roman": "lathi"
+        },
+        {
+          "id": "araam",
+          "ur": "آرام",
+          "en": "Rest",
+          "icon": "bed",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "roman": "araam"
+        },
+        {
+          "id": "sona_zaroorat",
+          "ur": "سونا",
+          "en": "Sleep",
+          "icon": "moon",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "roman": "sona zaroorat"
+        },
+        {
+          "id": "juice",
+          "ur": "جوس",
+          "en": "Juice",
+          "icon": "cup",
+          "next": [
+            "dedo",
+            "piyo",
+            "chahiye",
+            "lelo",
+            "shukriya",
+            "alhamdulillah",
+            "aur",
+            "thanda",
+            "garam",
+            "acha",
+            "bura",
+            "mai"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "juice"
+        },
+        {
+          "id": "wheelchair",
+          "ur": "وھیل چیئر",
+          "en": "Wheelchair",
+          "icon": "user",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "roman": "wheelchair"
+        },
+        {
+          "id": "bistar",
+          "ur": "بستر",
+          "en": "Bed",
+          "icon": "bed",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "bistar"
+        },
+        {
+          "id": "tauliya",
+          "ur": "تولیا",
+          "en": "Towel",
+          "icon": "square",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "tauliya"
+        },
+        {
+          "id": "sabun",
+          "ur": "صابن",
+          "en": "Soap",
+          "icon": "droplets",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "sabun"
+        },
+        {
+          "id": "kapre",
+          "ur": "کپڑے",
+          "en": "Clothes",
+          "icon": "shirt",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "kapre"
+        },
+        {
+          "id": "jootay",
+          "ur": "جوتے",
+          "en": "Shoes",
+          "icon": "footprints",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "jootay"
+        },
+        {
+          "id": "moze",
+          "ur": "موزے",
+          "en": "Socks",
+          "icon": "footprints",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "moze"
+        },
+        {
+          "id": "phone_zaroorat",
+          "ur": "فون",
+          "en": "Phone",
+          "icon": "phone",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "roman": "phone zaroorat"
+        },
+        {
+          "id": "remote",
+          "ur": "ریموٹ",
+          "en": "Remote",
+          "icon": "zap",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "remote"
+        },
+        {
+          "id": "paise",
+          "ur": "پیسے",
+          "en": "Money",
+          "icon": "wallet",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "paise"
+        },
+        {
+          "id": "kangi",
+          "ur": "کنگھی",
+          "en": "Comb",
+          "icon": "scissors",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "kangi"
+        },
+        {
+          "id": "tel",
+          "ur": "تیل",
+          "en": "Oil",
+          "icon": "droplets",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "tel"
+        },
+        {
+          "id": "ayna",
+          "ur": "آئینہ",
+          "en": "Mirror",
+          "icon": "square",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "ayna"
+        },
+        {
+          "id": "ghari",
+          "ur": "گھڑی",
+          "en": "Watch",
+          "icon": "clock",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "ghari"
+        },
+        {
+          "id": "charger",
+          "ur": "چارجر",
+          "en": "Charger",
+          "icon": "battery",
+          "next": [
+            "mai",
+            "mujhe",
+            "aap",
+            "yeh",
+            "kya",
+            "hai",
+            "hun",
+            "nahi",
+            "chahiye",
+            "shukriya",
+            "theek",
+            "pani"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "charger"
+        }
+      ]
+    },
+    {
+      "id": "khandan",
+      "label_ur": "خاندان",
+      "label_en": "Family",
+      "icon": "users",
+      "items": [
+        {
+          "id": "beta",
+          "ur": "بیٹا",
+          "en": "Son",
+          "icon": "user",
+          "next": [
+            "kahan",
+            "kaise",
+            "bolo",
+            "suno",
+            "pyaar",
+            "khush",
+            "dua",
+            "idhar",
+            "udhar",
+            "ab",
+            "aaj",
+            "kal"
+          ],
+          "roman": "beta"
+        },
+        {
+          "id": "beti",
+          "ur": "بیٹی",
+          "en": "Daughter",
+          "icon": "user",
+          "next": [
+            "kahan",
+            "kaise",
+            "bolo",
+            "suno",
+            "pyaar",
+            "khush",
+            "dua",
+            "idhar",
+            "udhar",
+            "ab",
+            "aaj",
+            "kal"
+          ],
+          "roman": "beti"
+        },
+        {
+          "id": "bahu",
+          "ur": "بہو",
+          "en": "Daughter-in-law",
+          "icon": "user",
+          "next": [
+            "kahan",
+            "kaise",
+            "bolo",
+            "suno",
+            "pyaar",
+            "khush",
+            "dua",
+            "idhar",
+            "udhar",
+            "ab",
+            "aaj",
+            "kal"
+          ],
+          "roman": "bahu"
+        },
+        {
+          "id": "bacche",
+          "ur": "بچے",
+          "en": "Kids",
+          "icon": "users",
+          "next": [
+            "kahan",
+            "kaise",
+            "bolo",
+            "suno",
+            "pyaar",
+            "khush",
+            "dua",
+            "idhar",
+            "udhar",
+            "ab",
+            "aaj",
+            "kal"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "bacche"
+        },
+        {
+          "id": "pota",
+          "ur": "پوتا",
+          "en": "Grandson",
+          "icon": "user",
+          "next": [
+            "kahan",
+            "kaise",
+            "bolo",
+            "suno",
+            "pyaar",
+            "khush",
+            "dua",
+            "idhar",
+            "udhar",
+            "ab",
+            "aaj",
+            "kal"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "pota"
+        },
+        {
+          "id": "poti",
+          "ur": "پوتی",
+          "en": "Granddaughter",
+          "icon": "user",
+          "next": [
+            "kahan",
+            "kaise",
+            "bolo",
+            "suno",
+            "pyaar",
+            "khush",
+            "dua",
+            "idhar",
+            "udhar",
+            "ab",
+            "aaj",
+            "kal"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "poti"
+        },
+        {
+          "id": "masood",
+          "ur": "مسعود",
+          "en": "Masood",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "masood"
+        },
+        {
+          "id": "doctor_khandan",
+          "ur": "ڈاکٹر",
+          "en": "Doctor",
+          "icon": "activity",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "doctor khandan"
+        },
+        {
+          "id": "nurse_khandan",
+          "ur": "نرس",
+          "en": "Nurse",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "madadgar",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "nurse khandan"
+        },
+        {
+          "id": "madadgar",
+          "ur": "مددگار",
+          "en": "Helper",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "madadgar"
+        },
+        {
+          "id": "damad",
+          "ur": "داماد",
+          "en": "Son-in-law",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "damad"
+        },
+        {
+          "id": "nawasa",
+          "ur": "نواسہ",
+          "en": "Grandson",
+          "icon": "user",
+          "next": [
+            "kahan",
+            "kaise",
+            "bolo",
+            "suno",
+            "pyaar",
+            "khush",
+            "dua",
+            "idhar",
+            "udhar",
+            "ab",
+            "aaj",
+            "kal"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "nawasa"
+        },
+        {
+          "id": "nawasi",
+          "ur": "نواسی",
+          "en": "Granddaughter",
+          "icon": "user",
+          "next": [
+            "kahan",
+            "kaise",
+            "bolo",
+            "suno",
+            "pyaar",
+            "khush",
+            "dua",
+            "idhar",
+            "udhar",
+            "ab",
+            "aaj",
+            "kal"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "nawasi"
+        },
+        {
+          "id": "bhai",
+          "ur": "بھائی",
+          "en": "Brother",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "bhai"
+        },
+        {
+          "id": "behen",
+          "ur": "بہن",
+          "en": "Sister",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "behen"
+        },
+        {
+          "id": "shohar",
+          "ur": "شوہر",
+          "en": "Husband",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "shohar"
+        },
+        {
+          "id": "maa",
+          "ur": "ماں",
+          "en": "Mother",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "maa"
+        },
+        {
+          "id": "baap",
+          "ur": "باپ",
+          "en": "Father",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "baap"
+        },
+        {
+          "id": "dada",
+          "ur": "دادا",
+          "en": "Grandfather",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "dada"
+        },
+        {
+          "id": "dadi",
+          "ur": "دادی",
+          "en": "Grandmother",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "dadi"
+        },
+        {
+          "id": "nana",
+          "ur": "نانا",
+          "en": "Grandfather",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "nana"
+        },
+        {
+          "id": "nani",
+          "ur": "نانی",
+          "en": "Grandmother",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "nani"
+        },
+        {
+          "id": "chacha",
+          "ur": "چاچا",
+          "en": "Uncle",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "chacha"
+        },
+        {
+          "id": "chachi",
+          "ur": "چاچی",
+          "en": "Aunt",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "chachi"
+        },
+        {
+          "id": "khala",
+          "ur": "خالہ",
+          "en": "Aunt",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "khala"
+        },
+        {
+          "id": "mamoo",
+          "ur": "ماموں",
+          "en": "Uncle",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "mamoo"
+        },
+        {
+          "id": "mami",
+          "ur": "مامی",
+          "en": "Aunt",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "mami"
+        },
+        {
+          "id": "phupho",
+          "ur": "پھوپھو",
+          "en": "Aunt",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "phupho"
+        },
+        {
+          "id": "phupha",
+          "ur": "پھوپھا",
+          "en": "Uncle",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "phupha"
+        },
+        {
+          "id": "khaloo",
+          "ur": "خالو",
+          "en": "Uncle",
+          "icon": "user",
+          "next": [
+            "beta",
+            "beti",
+            "bahu",
+            "bacche",
+            "pota",
+            "poti",
+            "masood",
+            "doctor",
+            "nurse",
+            "madadgar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "khaloo"
+        }
+      ]
+    },
+    {
+      "id": "khana",
+      "label_ur": "کھانا پینا",
+      "label_en": "Food",
+      "icon": "utensils",
+      "items": [
+        {
+          "id": "roti",
+          "ur": "روٹی",
+          "en": "Roti",
+          "icon": "utensils",
+          "next": [
+            "khana_core",
+            "khao",
+            "dedo",
+            "chahiye",
+            "lelo",
+            "acha",
+            "bura",
+            "shukriya",
+            "alhamdulillah",
+            "aur",
+            "mazedar",
+            "garm"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "roti"
+        },
+        {
+          "id": "salan",
+          "ur": "سالن",
+          "en": "Salan",
+          "icon": "bowl",
+          "next": [
+            "khana_core",
+            "khao",
+            "dedo",
+            "chahiye",
+            "lelo",
+            "acha",
+            "bura",
+            "shukriya",
+            "alhamdulillah",
+            "aur",
+            "mazedar",
+            "garm"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "salan"
+        },
+        {
+          "id": "dal",
+          "ur": "دال",
+          "en": "Dal",
+          "icon": "bowl",
+          "next": [
+            "khana_core",
+            "khao",
+            "dedo",
+            "chahiye",
+            "lelo",
+            "acha",
+            "bura",
+            "shukriya",
+            "alhamdulillah",
+            "aur",
+            "mazedar",
+            "garm"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "dal"
+        },
+        {
+          "id": "chawal",
+          "ur": "چاول",
+          "en": "Rice",
+          "icon": "utensils",
+          "next": [
+            "khana_core",
+            "khao",
+            "dedo",
+            "chahiye",
+            "lelo",
+            "acha",
+            "bura",
+            "shukriya",
+            "alhamdulillah",
+            "aur",
+            "mazedar",
+            "garm"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "chawal"
+        },
+        {
+          "id": "khichdi",
+          "ur": "کھچڑی",
+          "en": "Khichdi",
+          "icon": "bowl",
+          "next": [
+            "khana_core",
+            "khao",
+            "dedo",
+            "chahiye",
+            "lelo",
+            "acha",
+            "bura",
+            "shukriya",
+            "alhamdulillah",
+            "aur",
+            "mazedar",
+            "garm"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "khichdi"
+        },
+        {
+          "id": "biryani",
+          "ur": "بریانی",
+          "en": "Biryani",
+          "icon": "utensils",
+          "next": [
+            "khana_core",
+            "khao",
+            "dedo",
+            "chahiye",
+            "lelo",
+            "acha",
+            "bura",
+            "shukriya",
+            "alhamdulillah",
+            "aur",
+            "mazedar",
+            "garm"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "biryani"
+        },
+        {
+          "id": "gosht",
+          "ur": "گوشت",
+          "en": "Meat",
+          "icon": "utensils",
+          "next": [
+            "khana_core",
+            "khao",
+            "dedo",
+            "chahiye",
+            "lelo",
+            "acha",
+            "bura",
+            "shukriya",
+            "alhamdulillah",
+            "aur",
+            "mazedar",
+            "garm"
+          ],
+          "roman": "gosht"
+        },
+        {
+          "id": "phal",
+          "ur": "پھل",
+          "en": "Fruit",
+          "icon": "star",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "phal"
+        },
+        {
+          "id": "seb",
+          "ur": "سیب",
+          "en": "Apple",
+          "icon": "apple",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "kela",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "seb"
+        },
+        {
+          "id": "kela",
+          "ur": "کیلا",
+          "en": "Banana",
+          "icon": "banana",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "kela"
+        },
+        {
+          "id": "biscuit",
+          "ur": "بسکٹ",
+          "en": "Biscuit",
+          "icon": "square",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "biscuit"
+        },
+        {
+          "id": "rus",
+          "ur": "رس",
+          "en": "Toast",
+          "icon": "square",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "rus"
+        },
+        {
+          "id": "murghi",
+          "ur": "مرغی",
+          "en": "Chicken",
+          "icon": "utensils",
+          "next": [
+            "khana_core",
+            "khao",
+            "dedo",
+            "chahiye",
+            "lelo",
+            "acha",
+            "bura",
+            "shukriya",
+            "alhamdulillah",
+            "aur",
+            "mazedar",
+            "garm"
+          ],
+          "roman": "murghi"
+        },
+        {
+          "id": "machli",
+          "ur": "مچھلی",
+          "en": "Fish",
+          "icon": "utensils",
+          "next": [
+            "khana_core",
+            "khao",
+            "dedo",
+            "chahiye",
+            "lelo",
+            "acha",
+            "bura",
+            "shukriya",
+            "alhamdulillah",
+            "aur",
+            "mazedar",
+            "garm"
+          ],
+          "roman": "machli"
+        },
+        {
+          "id": "sabzi",
+          "ur": "سبزی",
+          "en": "Vegetable",
+          "icon": "leaf",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "sabzi"
+        },
+        {
+          "id": "aam",
+          "ur": "آم",
+          "en": "Mango",
+          "icon": "star",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "aam"
+        },
+        {
+          "id": "malta",
+          "ur": "مالٹا",
+          "en": "Orange",
+          "icon": "star",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "malta"
+        },
+        {
+          "id": "cake",
+          "ur": "کیک",
+          "en": "Cake",
+          "icon": "utensils",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "square"
+          ],
+          "roman": "cake"
+        },
+        {
+          "id": "mithai",
+          "ur": "مٹھائی",
+          "en": "Sweets",
+          "icon": "utensils",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "mithai"
+        },
+        {
+          "id": "namak",
+          "ur": "نمک",
+          "en": "Salt",
+          "icon": "utensils",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "namak"
+        },
+        {
+          "id": "cheeni",
+          "ur": "چینی",
+          "en": "Sugar",
+          "icon": "utensils",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "cheeni"
+        },
+        {
+          "id": "masala",
+          "ur": "مصالحہ",
+          "en": "Spice",
+          "icon": "zap",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "masala"
+        },
+        {
+          "id": "achaar",
+          "ur": "اچار",
+          "en": "Pickle",
+          "icon": "bowl",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "achaar"
+        },
+        {
+          "id": "dahi",
+          "ur": "دہی",
+          "en": "Yogurt",
+          "icon": "bowl",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "dahi"
+        },
+        {
+          "id": "anda",
+          "ur": "انڈا",
+          "en": "Egg",
+          "icon": "utensils",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "anda"
+        },
+        {
+          "id": "halwa",
+          "ur": "حلوا",
+          "en": "Halwa",
+          "icon": "utensils",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "halwa"
+        },
+        {
+          "id": "kheer",
+          "ur": "کھیر",
+          "en": "Kheer",
+          "icon": "bowl",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "kheer"
+        },
+        {
+          "id": "pakora",
+          "ur": "پکوڑا",
+          "en": "Pakora",
+          "icon": "utensils",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "pakora"
+        },
+        {
+          "id": "samosa",
+          "ur": "سموسہ",
+          "en": "Samosa",
+          "icon": "utensils",
+          "next": [
+            "roti",
+            "salan",
+            "dal",
+            "chawal",
+            "khichdi",
+            "biryani",
+            "gosht",
+            "phal",
+            "seb",
+            "kela",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "circle"
+          ],
+          "roman": "samosa"
+        },
+        {
+          "id": "lassi",
+          "ur": "لسی",
+          "en": "Lassi",
+          "icon": "cup",
+          "next": [
+            "dedo",
+            "piyo",
+            "chahiye",
+            "lelo",
+            "shukriya",
+            "alhamdulillah",
+            "aur",
+            "thanda",
+            "garam",
+            "acha",
+            "bura",
+            "roti"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "lassi"
+        }
+      ]
+    },
+    {
+      "id": "kaam",
+      "label_ur": "کام",
+      "label_en": "Actions",
+      "icon": "play",
+      "items": [
+        {
+          "id": "dedo",
+          "ur": "دے دو",
+          "en": "Give",
+          "icon": "hand",
+          "next": [
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "dedo"
+        },
+        {
+          "id": "lelo",
+          "ur": "لے لو",
+          "en": "Take",
+          "icon": "hand",
+          "next": [
+            "dedo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "lelo"
+        },
+        {
+          "id": "baitho",
+          "ur": "بیٹھو",
+          "en": "Sit",
+          "icon": "user",
+          "next": [
+            "dedo",
+            "lelo",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "baitho"
+        },
+        {
+          "id": "kharray",
+          "ur": "کھڑے ہو",
+          "en": "Stand",
+          "icon": "user",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "kharray"
+        },
+        {
+          "id": "chalo",
+          "ur": "چلو",
+          "en": "Go",
+          "icon": "arrow-right",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "chalo"
+        },
+        {
+          "id": "ruko",
+          "ur": "رکو",
+          "en": "Stop",
+          "icon": "stop-circle",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "ruko"
+        },
+        {
+          "id": "jaldi",
+          "ur": "جلدی",
+          "en": "Quickly",
+          "icon": "zap",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "jaldi"
+        },
+        {
+          "id": "dheere",
+          "ur": "دھیرے",
+          "en": "Slowly",
+          "icon": "loader",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "khul",
+            "band",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "dheere"
+        },
+        {
+          "id": "khul",
+          "ur": "کھولو",
+          "en": "Open",
+          "icon": "plus",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "band",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "khul"
+        },
+        {
+          "id": "band",
+          "ur": "بند کرو",
+          "en": "Close",
+          "icon": "x",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "band"
+        },
+        {
+          "id": "so_jao",
+          "ur": "سو جاؤ",
+          "en": "Sleep",
+          "icon": "moon",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "so jao"
+        },
+        {
+          "id": "utho",
+          "ur": "اٹھو",
+          "en": "Wake up",
+          "icon": "sun",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "utho"
+        },
+        {
+          "id": "khao",
+          "ur": "کھاؤ",
+          "en": "Eat",
+          "icon": "utensils",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "khao"
+        },
+        {
+          "id": "piyo",
+          "ur": "پیو",
+          "en": "Drink",
+          "icon": "cup",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "piyo"
+        },
+        {
+          "id": "parho",
+          "ur": "پڑھو",
+          "en": "Read",
+          "icon": "book-open",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "parho"
+        },
+        {
+          "id": "likho",
+          "ur": "لکھو",
+          "en": "Write",
+          "icon": "type",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "likho"
+        },
+        {
+          "id": "suno",
+          "ur": "سنو",
+          "en": "Listen",
+          "icon": "volume-2",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "suno"
+        },
+        {
+          "id": "bolo",
+          "ur": "بولو",
+          "en": "Speak",
+          "icon": "volume-2",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "bolo"
+        },
+        {
+          "id": "dekho",
+          "ur": "دیکھو",
+          "en": "Watch",
+          "icon": "eye",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "dekho"
+        },
+        {
+          "id": "phone_karo",
+          "ur": "فون کرو",
+          "en": "Call",
+          "icon": "phone",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "phone karo"
+        },
+        {
+          "id": "intezar",
+          "ur": "انتظار",
+          "en": "Wait",
+          "icon": "clock",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "intezar"
+        },
+        {
+          "id": "madad_kaam",
+          "ur": "مدد",
+          "en": "Help",
+          "icon": "help-circle",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "madad kaam"
+        },
+        {
+          "id": "saaf_kaam",
+          "ur": "صاف",
+          "en": "Clean",
+          "icon": "sparkles",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "saaf kaam"
+        },
+        {
+          "id": "dho_lo",
+          "ur": "دھو لو",
+          "en": "Wash",
+          "icon": "droplets",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "dho lo"
+        },
+        {
+          "id": "pukao",
+          "ur": "پکاؤ",
+          "en": "Cook",
+          "icon": "utensils",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "pukao"
+        },
+        {
+          "id": "pucho",
+          "ur": "پوچھو",
+          "en": "Ask",
+          "icon": "help-circle",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "pucho"
+        },
+        {
+          "id": "batao",
+          "ur": "بتاؤ",
+          "en": "Tell",
+          "icon": "volume-2",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "batao"
+        },
+        {
+          "id": "dikhao",
+          "ur": "دکھاؤ",
+          "en": "Show",
+          "icon": "eye",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "dikhao"
+        },
+        {
+          "id": "rakho",
+          "ur": "رکھو",
+          "en": "Put",
+          "icon": "hand",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "rakho"
+        },
+        {
+          "id": "uthao",
+          "ur": "اٹھاؤ",
+          "en": "Pick up",
+          "icon": "hand",
+          "next": [
+            "dedo",
+            "lelo",
+            "baitho",
+            "kharray",
+            "chalo",
+            "ruko",
+            "jaldi",
+            "dheere",
+            "khul",
+            "band",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "uthao"
+        }
+      ]
+    },
+    {
+      "id": "jazbaat",
+      "label_ur": "جذبات",
+      "label_en": "Feelings",
+      "icon": "smile",
+      "items": [
+        {
+          "id": "khush",
+          "ur": "خوش",
+          "en": "Happy",
+          "icon": "smile",
+          "next": [
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "khush"
+        },
+        {
+          "id": "udaas",
+          "ur": "اداس",
+          "en": "Sad",
+          "icon": "frown",
+          "next": [
+            "khush",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "udaas"
+        },
+        {
+          "id": "gussa",
+          "ur": "غصہ",
+          "en": "Angry",
+          "icon": "alert-circle",
+          "next": [
+            "khush",
+            "udaas",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "gussa"
+        },
+        {
+          "id": "thak",
+          "ur": "تھک",
+          "en": "Tired",
+          "icon": "battery-low",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "thak"
+        },
+        {
+          "id": "neend",
+          "ur": "نیند",
+          "en": "Sleepy",
+          "icon": "moon",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "neend"
+        },
+        {
+          "id": "bhuk",
+          "ur": "بھوک",
+          "en": "Hungry",
+          "icon": "utensils",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "bhuk"
+        },
+        {
+          "id": "pyas",
+          "ur": "پیاس",
+          "en": "Thirsty",
+          "icon": "droplet",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "pyas"
+        },
+        {
+          "id": "bore",
+          "ur": "بور",
+          "en": "Bored",
+          "icon": "loader",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "bore"
+        },
+        {
+          "id": "dar",
+          "ur": "ڈر",
+          "en": "Scared",
+          "icon": "alert-triangle",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "dar"
+        },
+        {
+          "id": "pur_josh",
+          "ur": "پرجوش",
+          "en": "Excited",
+          "icon": "zap",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "pur josh"
+        },
+        {
+          "id": "pareshan",
+          "ur": "پریشان",
+          "en": "Worried",
+          "icon": "help-circle",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "pareshan"
+        },
+        {
+          "id": "sukun",
+          "ur": "سکون",
+          "en": "Peaceful",
+          "icon": "heart",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "sukun"
+        },
+        {
+          "id": "itminan",
+          "ur": "اطمینان",
+          "en": "Content",
+          "icon": "check-circle",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "behtar",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "itminan"
+        },
+        {
+          "id": "tanha",
+          "ur": "تنھا",
+          "en": "Lonely",
+          "icon": "user",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "tanha"
+        },
+        {
+          "id": "thand",
+          "ur": "ٹھنڈ",
+          "en": "Cold",
+          "icon": "snowflake",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "thand"
+        },
+        {
+          "id": "garmi",
+          "ur": "گرمی",
+          "en": "Hot",
+          "icon": "sun",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "garmi"
+        },
+        {
+          "id": "dard_mein",
+          "ur": "درد میں",
+          "en": "Painful",
+          "icon": "alert-triangle",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "dard mein"
+        },
+        {
+          "id": "behtar",
+          "ur": "بہتر",
+          "en": "Better",
+          "icon": "smile",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "mai",
+            "mujhe",
+            "aap"
+          ],
+          "roman": "behtar"
+        },
+        {
+          "id": "tabiyat_kharab",
+          "ur": "طبیعت خراب",
+          "en": "Worse",
+          "icon": "frown",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "tabiyat kharab"
+        },
+        {
+          "id": "ghabrahat",
+          "ur": "گھبراہٹ",
+          "en": "Nervous",
+          "icon": "refresh-cw",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "ghabrahat"
+        },
+        {
+          "id": "fakhar",
+          "ur": "فخر",
+          "en": "Proud",
+          "icon": "star",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "fakhar"
+        },
+        {
+          "id": "shukrguzar",
+          "ur": "شکر گزار",
+          "en": "Thankful",
+          "icon": "heart",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "shukrguzar"
+        },
+        {
+          "id": "pyaar",
+          "ur": "پیار",
+          "en": "Loved",
+          "icon": "heart",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "pyaar"
+        },
+        {
+          "id": "kamzor_jazbaat",
+          "ur": "کمزور",
+          "en": "Weak",
+          "icon": "battery-low",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "kamzor jazbaat"
+        },
+        {
+          "id": "himmat_jazbaat",
+          "ur": "ہمت",
+          "en": "Brave",
+          "icon": "shield",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "triangle"
+          ],
+          "roman": "himmat jazbaat"
+        },
+        {
+          "id": "sharm",
+          "ur": "شرم",
+          "en": "Shy",
+          "icon": "user",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "sharm"
+        },
+        {
+          "id": "afsos",
+          "ur": "افسوس",
+          "en": "Regret",
+          "icon": "frown",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "afsos"
+        },
+        {
+          "id": "umeed",
+          "ur": "امید",
+          "en": "Hope",
+          "icon": "star",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "wave"
+          ],
+          "roman": "umeed"
+        },
+        {
+          "id": "mayoos",
+          "ur": "مایوس",
+          "en": "Hopeless",
+          "icon": "frown",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "roman": "mayoos"
+        },
+        {
+          "id": "hairan",
+          "ur": "حیران",
+          "en": "Surprised",
+          "icon": "zap",
+          "next": [
+            "khush",
+            "udaas",
+            "gussa",
+            "thak",
+            "neend",
+            "bhuk",
+            "pyas",
+            "sukun",
+            "itminan",
+            "behtar",
+            "mai",
+            "mujhe"
+          ],
+          "tags": [
+            "zigzag"
+          ],
+          "roman": "hairan"
+        }
+      ]
+    }
+  ],
+  "quick_actions": [
+    {
+      "id": "ji_haan",
+      "ur": "ہاں",
+      "en": "Yes",
+      "type": "phrase",
+      "icon": "check-circle",
+      "status": "positive"
+    },
+    {
+      "id": "ji_nahi",
+      "ur": "نہیں",
+      "en": "No",
+      "type": "phrase",
+      "icon": "x-circle",
+      "status": "negative"
+    },
+    {
+      "id": "alhamdulillah_qa",
+      "ur": "الحمدللہ",
+      "en": "Alhamdulillah",
+      "type": "phrase",
+      "icon": "smile",
+      "status": "neutral"
+    },
+    {
+      "id": "madad_qa",
+      "ur": "مدد",
+      "en": "Help",
+      "type": "word",
+      "icon": "hand",
+      "status": "urgent",
+      "isWord": true
+    },
+    {
+      "id": "acha_qa",
+      "ur": "اچھا",
+      "en": "Good",
+      "type": "phrase",
+      "icon": "smile",
+      "status": "positive"
+    }
+  ]
+}
