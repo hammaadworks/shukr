@@ -4,62 +4,76 @@ interface AudioWaveformProps {
   analyser: AnalyserNode | null;
   isRecording: boolean;
   color?: string;
+  isReviewing?: boolean;
 }
 
 export const AudioWaveform: React.FC<AudioWaveformProps> = ({ 
   analyser, 
   isRecording, 
-  color = '#ff3b30' 
+  color = '#ff3b30',
+  isReviewing = false
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!isRecording || !analyser || !canvasRef.current) {
-      if (animationRef.current !== null) cancelAnimationFrame(animationRef.current);
-      // Clear canvas when not recording
-      const canvas = canvasRef.current;
-      if (canvas) {
-        const ctx = canvas.getContext('2d');
-        if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }
-      return;
-    }
-
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const bufferLength = analyser.frequencyBinCount;
+    if (!isRecording && !isReviewing) {
+      if (animationRef.current !== null) cancelAnimationFrame(animationRef.current);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Draw a flat line
+      ctx.strokeStyle = '#e5e5ea';
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(0, canvas.height / 2);
+      ctx.lineTo(canvas.width, canvas.height / 2);
+      ctx.stroke();
+      return;
+    }
+
+    const bufferLength = analyser?.frequencyBinCount || 64;
     const dataArray = new Uint8Array(bufferLength);
 
     const draw = () => {
       animationRef.current = requestAnimationFrame(draw);
-      analyser.getByteTimeDomainData(dataArray);
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.lineWidth = 3;
-      ctx.strokeStyle = color;
-      ctx.beginPath();
-
-      const sliceWidth = (canvas.width * 1.0) / bufferLength;
-      let x = 0;
-
-      for (let i = 0; i < bufferLength; i++) {
-        const v = dataArray[i] / 128.0;
-        const y = (v * canvas.height) / 2;
-
-        if (i === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-
-        x += sliceWidth;
+      
+      if (analyser) {
+        analyser.getByteFrequencyData(dataArray);
+      } else if (isReviewing) {
+        // Mock data for reviewing if no analyser (though we could pass one from a player)
+        for(let i=0; i<bufferLength; i++) dataArray[i] = Math.random() * 50 + 20;
       }
 
-      ctx.lineTo(canvas.width, canvas.height / 2);
-      ctx.stroke();
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      const barWidth = (canvas.width / (bufferLength / 2)) * 2.5;
+      let x = 0;
+
+      for (let i = 0; i < bufferLength / 2; i++) {
+        // Scale the bar height based on the data
+        const barHeight = (dataArray[i] / 255) * canvas.height * 0.8;
+        
+        ctx.fillStyle = color;
+        
+        // Draw symmetrical bars from center
+        const yPos = (canvas.height - barHeight) / 2;
+        
+        // Rounded rectangle for bar
+        ctx.beginPath();
+        if (ctx.roundRect) {
+            ctx.roundRect(x, yPos, barWidth - 2, barHeight, 4);
+        } else {
+            ctx.rect(x, yPos, barWidth - 2, barHeight);
+        }
+        ctx.fill();
+
+        x += barWidth;
+      }
     };
 
     draw();
@@ -67,14 +81,15 @@ export const AudioWaveform: React.FC<AudioWaveformProps> = ({
     return () => {
       if (animationRef.current !== null) cancelAnimationFrame(animationRef.current);
     };
-  }, [isRecording, analyser, color]);
+  }, [isRecording, isReviewing, analyser, color]);
 
   return (
     <canvas 
       ref={canvasRef} 
-      width={300} 
-      height={100} 
-      style={{ width: '100%', height: '100px', borderRadius: '12px' }}
+      width={320} 
+      height={80} 
+      className="apple-waveform-canvas"
+      style={{ width: '100%', height: '80px' }}
     />
   );
 };
