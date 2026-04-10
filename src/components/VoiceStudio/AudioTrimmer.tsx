@@ -125,7 +125,7 @@ export const AudioTrimmer: React.FC<AudioTrimmerProps> = ({
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
-        style={{ position: 'relative', width: '100%', height: '100px', cursor: isDragging ? 'ew-resize' : 'default' }}
+        style={{ position: 'relative', width: '100%', height: '100%', cursor: isDragging ? 'ew-resize' : 'default' }}
     >
       <canvas 
         ref={canvasRef} 

@@ -71,8 +71,10 @@ export const PromptDialog: React.FC<PromptDialogProps> = ({
 
   useEffect(() => {
     if (isOpen) {
-      setValue(defaultValue);
-      setTimeout(() => inputRef.current?.focus(), 100);
+      setTimeout(() => {
+        setValue(defaultValue);
+        inputRef.current?.focus();
+      }, 0);
     }
   }, [isOpen, defaultValue]);
 

@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {Save, Trash2} from 'lucide-react';
-import {translator} from '../lib/translator';
+// import {translator} from '../lib/translator';
 import { ConfirmDialog } from './modals/Dialogs';
 
 interface WordEditorProps {
@@ -11,11 +11,11 @@ interface WordEditorProps {
     isNew?: boolean;
 }
 
-export const WordEditor: React.FC<WordEditorProps> = ({item, onChange, onSave, onDelete, isNew}) => {
-    const [isTranslating, setIsTranslating] = useState(false);
+export const WordEditor: React.FC<WordEditorProps> = ({item, /* onChange, */ onSave, onDelete, isNew}) => {
+    // const [isTranslating, setIsTranslating] = useState(false);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
-    const handleEnChange = async (en: string) => {
+    /* const handleEnChange = async (en: string) => {
         onChange({...item, en});
         if (en.length > 2) {
             setIsTranslating(true);
@@ -25,7 +25,7 @@ export const WordEditor: React.FC<WordEditorProps> = ({item, onChange, onSave, o
             }
             setIsTranslating(false);
         }
-    };
+    }; */
 
     return (<div className="word-editor-container">
             {/* (rest of form code) */}
