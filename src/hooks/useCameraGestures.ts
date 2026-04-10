@@ -11,10 +11,12 @@ import { FaceGestureRecognizer } from '../recognition/gestures/FaceGestureRecogn
  * 2. CPU Throttling (20 FPS)
  * 3. WASM Memory Isolation
  */
-export const useCameraGestures = (onAction: (action: GestureAction) => void) => {
+export const useCameraGestures = (onAction: (action: GestureAction) => void, forceDisabled: boolean = false) => {
   const [isEnabled, setIsEnabled] = useState(true);
   const [isRecognitionActive, setIsRecognitionActive] = useState(true);
   const [isModelLoaded, setIsModelLoaded] = useState(false);
+  
+  const effectiveEnabled = isEnabled && !forceDisabled;
   
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);

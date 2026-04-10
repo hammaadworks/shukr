@@ -32,15 +32,27 @@
   display: flex;
   gap: 8px;
   align-content: flex-start;
-  overflow: hidden !important;
+  overflow: hidden !important; /* NOT scrollable, exactly uncut */
   flex-wrap: wrap !important;
-  min-height: auto;
-  max-height: 180px; /* ~2 lines of V2 cards + padding */
   justify-content: flex-start;
-  padding: 8px 12px 8px 12px;
+  padding: 12px;
   border-radius: 24px !important;
-  scrollbar-width: none;
+  max-height: 100px; /* Default: 1 row */
+  box-sizing: border-box;
 }
+
+@media (min-height: 600px) {
+  .prediction-scroller, .doodle-predictions-bar, .word-predictions-container {
+    max-height: 186px; /* 2 rows */
+  }
+}
+
+@media (min-height: 1000px) {
+  .prediction-scroller, .doodle-predictions-bar, .word-predictions-container {
+    max-height: 277px; /* 3 rows */
+  }
+}
+
 .prediction-scroller::-webkit-scrollbar, .doodle-predictions-bar::-webkit-scrollbar, .word-predictions-container::-webkit-scrollbar { display: none; }
 
 .prediction-scroller .word-card-root,
@@ -49,7 +61,7 @@
   flex: 0 0 auto;
   width: auto !important;
   min-width: 72px;
-  margin-bottom: 4px;
+  margin-bottom: 0; /* Rely on gap for exact layout */
 }
 .smart-input-area {
   display: flex;

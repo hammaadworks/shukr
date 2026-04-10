@@ -163,7 +163,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(8px, 1.5vh, 16px);
+  gap: clamp(12px, 2vh, 24px);
   width: 100%;
 }
 
@@ -214,7 +214,7 @@
   gap: clamp(16px, 3vh, 32px);
   align-items: center;
   animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  margin-top: 8px; /* Safe distance from waveform */
+  margin-top: clamp(16px, 2vh, 32px); /* More margin to clear waveform */
 }
 
 .review-btn {
@@ -244,7 +244,7 @@
 }
 
 .waveform-container-brand {
-  height: clamp(48px, 7vh, 80px);
+  height: clamp(64px, 10vh, 100px); /* Taller to fit AudioTrimmer handles and waves */
   width: 100%;
   max-width: 320px;
   background: rgba(255, 255, 255, 0.6);

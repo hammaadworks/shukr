@@ -62,14 +62,24 @@
 
 .settings-content {
   flex: 1;
-  overflow-y: auto;
-  padding: 16px 16px 120px 16px;
+  overflow: hidden;
+  padding: clamp(12px, 2vh, 24px);
+  display: flex;
+  flex-direction: column;
+}
+
+.gestures-settings-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
 }
 
 .list-group {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(12px, 2vh, 20px);
+  width: 100%;
 }
 
 .massive-item {
