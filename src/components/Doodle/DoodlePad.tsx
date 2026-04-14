@@ -1,36 +1,84 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { Search, X, Plus } from 'lucide-react';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useAudio } from '../../hooks/useAudio';
+import { useFuzzySearch } from '../../hooks/useFuzzySearch';
 import { recognitionEngine } from '../../recognition/engine';
+import { wordNetwork } from '../../lib/wordNetwork';
 import type { Stroke, StrokePoint } from '../../recognition/db';
 
 import { DoodleCanvas } from './DoodleCanvas';
 import { WordPredictions } from '../WordPredictions';
 import { DoodleToolbar } from './DoodleToolbar';
 import { TrainDoodleModal } from './modals/TrainDoodleModal';
+import { CustomKeyboard } from './CustomKeyboard';
 
 interface DoodlePadProps {
   config: any;
   onRecognize: (item: any) => void;
   focusedIndex: number;
+  onOpenAddWord?: (initial?: string) => void;
+  sentence: any[];
 }
 
-export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focusedIndex }) => {
-  const { isPrimary } = useLanguage();
+export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focusedIndex, onOpenAddWord, sentence }) => {
+  const { isPrimary, language } = useLanguage();
   const { playClick, speak } = useAudio();
   
   const [currentStrokes, setCurrentStrokes] = useState<Stroke[]>([]);
   const [currentPoints, setCurrentPoints] = useState<StrokePoint[]>([]);
   const [isDrawing, setIsDrawing] = useState(false);
   const [predictions, setPredictions] = useState<any[]>([]);
+  const [contextPredictions, setContextPredictions] = useState<any[]>([]);
   const [showTrainModal, setShowTrainModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+  const allWords = useMemo(() => {
+    if (!config?.categories) return [];
+    return config.categories.flatMap((c: any) => c.items || []);
+  }, [config]);
+
+  useEffect(() => {
+    const updateContextPredictions = async () => {
+      if (allWords.length === 0) return;
+      const ranked = await wordNetwork.rankPredictions(allWords, sentence);
+      setContextPredictions(ranked.slice(0, 10));
+    };
+    updateContextPredictions();
+  }, [sentence, allWords]);
+
+  const searchResults = useFuzzySearch(allWords, searchQuery);
 
   // Ensure minimum 5 predictions by falling back to top words
-  const displayedPredictions = React.useMemo(() => {
+  const displayedPredictions = useMemo(() => {
+    if (searchQuery.trim().length > 0) {
+      if (searchResults.length === 0) {
+        const addLabel = language === 'ur' ? 'نیا لفظ؟' : 'Add Word?';
+        return [{ 
+          id: 'doodle_add_prompt', 
+          ur: addLabel, 
+          en: 'Add Word?', 
+          icon: 'list-plus', 
+          isPrompt: true, 
+          onClick: () => onOpenAddWord?.(searchQuery)
+        }];
+      }
+      return (searchResults as any[]).slice(0, 10);
+    }
+
     const results = [...predictions];
-    if (results.length < 5 && config?.categories) {
-      const allWords = config.categories.flatMap((c: any) => c.items || []);
-      // Basic unique words fallback
+    
+    // Add contextually ranked predictions
+    for (const word of contextPredictions) {
+      if (results.length >= 10) break;
+      if (!results.find(r => r.id === word.id)) {
+        results.push(word);
+      }
+    }
+
+    // Basic unique words fallback if still < 10
+    if (results.length < 10 && config?.categories) {
       for (const word of allWords) {
         if (results.length >= 10) break;
         if (!results.find(r => r.id === word.id)) {
@@ -39,7 +87,7 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focus
       }
     }
     return results.slice(0, 10);
-  }, [predictions, config]);
+  }, [predictions, config, searchQuery, searchResults, allWords, language, onOpenAddWord, contextPredictions]);
 
   useEffect(() => {
     recognitionEngine.init(config);
@@ -57,7 +105,6 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focus
   }, []);
 
   const moveDrawing = useCallback((e: React.MouseEvent | React.TouchEvent) => {
-    // Check if isDrawing from state - this is fine as isDrawing is stable once drawing starts
     if (!isDrawing) return;
     
     const target = e.currentTarget as HTMLCanvasElement;
@@ -95,6 +142,7 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focus
     setCurrentStrokes([]);
     setCurrentPoints([]);
     setPredictions([]);
+    setSearchQuery('');
     playClick();
   }, [playClick]);
 
@@ -111,34 +159,85 @@ export const DoodlePad: React.FC<DoodlePadProps> = ({ config, onRecognize, focus
         {/* Predictions Area */}
         <WordPredictions 
           predictions={displayedPredictions} 
-          onSelect={onRecognize} 
+          onSelect={(item) => {
+            if (item.isPrompt && item.onClick) {
+              item.onClick();
+              return;
+            }
+            onRecognize(item);
+            if (searchQuery) setSearchQuery('');
+            clearCanvas();
+          }} 
           focusedIndex={focusedIndex}
           offset={0}
           className="doodle-predictions-bar"
         />
 
-        {/* Canvas */}
-        <DoodleCanvas 
-          strokes={currentStrokes} 
-          activeStroke={currentPoints} 
-          onStart={startDrawing} 
-          onMove={moveDrawing} 
-          onEnd={stopDrawing} 
-        />
+        {/* Search Bar */}
+        <div className="doodle-search-wrap">
+          <div className="doodle-search-inner">
+            <Search size={18} className="doodle-search-icon" />
+            <input 
+              type="text" 
+              placeholder={isPrimary ? "لفظ تلاش کریں..." : "Search for a word..."}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onClick={() => setIsKeyboardVisible(true)}
+              onFocus={(e) => { e.target.blur(); setIsKeyboardVisible(true); }}
+              inputMode="none"
+              readOnly
+              className="doodle-search-input"
+            />
+            <div className="doodle-search-actions">
+              {searchQuery && (
+                <button className="doodle-search-clear" onClick={() => { setSearchQuery(''); setIsKeyboardVisible(false); }}>
+                  <X size={16} />
+                </button>
+              )}
+              <button 
+                className="doodle-search-add" 
+                onClick={() => onOpenAddWord?.(searchQuery)}
+                title={isPrimary ? "نیا لفظ شامل کریں" : "Add New Word"}
+              >
+                <Plus size={18} />
+              </button>
+            </div>
+          </div>
+        </div>
 
-        {/* Toolbar */}
-        <DoodleToolbar 
-          onClear={clearCanvas} 
-          onTrain={() => {
-            if (currentStrokes.length === 0) {
-              speak(isPrimary ? "پہلے کچھ ڈرا کریں!" : "Draw something first!");
-              return;
-            }
-            setShowTrainModal(true);
-            playClick();
-          }} 
-          isPrimary={isPrimary} 
-        />
+        {/* Dynamic Area: Keyboard or Canvas */}
+        {isKeyboardVisible ? (
+          <CustomKeyboard 
+            onKeyPress={(key) => setSearchQuery(prev => prev + key)}
+            onBackspace={() => setSearchQuery(prev => prev.slice(0, -1))}
+            onClose={() => setIsKeyboardVisible(false)}
+          />
+        ) : (
+          <>
+            {/* Canvas */}
+            <DoodleCanvas 
+              strokes={currentStrokes} 
+              activeStroke={currentPoints} 
+              onStart={startDrawing} 
+              onMove={moveDrawing} 
+              onEnd={stopDrawing} 
+            />
+
+            {/* Toolbar */}
+            <DoodleToolbar 
+              onClear={clearCanvas} 
+              onTrain={() => {
+                if (currentStrokes.length === 0) {
+                  speak(isPrimary ? "پہلے کچھ ڈرا کریں!" : "Draw something first!");
+                  return;
+                }
+                setShowTrainModal(true);
+                playClick();
+              }} 
+              isPrimary={isPrimary} 
+            />
+          </>
+        )}
       </div>
 
       {showTrainModal && (
