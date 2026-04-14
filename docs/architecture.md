@@ -18,8 +18,8 @@ Shukr is a modern, offline-first PWA built using React and TypeScript. This docu
 Handles all gesture-based interactions using **MediaPipe**.
 *   **Input:** Camera feed processed via Face Landmarker and Hand Landmarker.
 *   **Processing:** Maps raw landmarks (e.g., mouth open, index finger up) to application actions.
-*   **Actions:** `NEXT`, `PREV`, `SELECT`, `CLEAR`, `HOME`, `ATTENTION`.
-*   **Hooks:** `useCameraGestures.ts`, `useFaceTracking.ts`.
+*   **Actions:** `NEXT`, `SELECT`, `CLEAR`, `YES`.
+*   **Hooks:** `useCameraGestures.ts`.
 
 ### B. Adaptive Word Network (`/src/lib/wordNetwork.ts`)
 Manages relationships between words, categories, and frequencies.

@@ -6,14 +6,13 @@ Shukr is designed to be fully navigable without touching the screen. We use **Me
 
 ## 🖐️ Hand Gestures
 
-Hand gestures are primarily used for navigation and clearing the current state.
+Hand gestures are primarily used for navigation and specific confirmations.
 
 | Gesture | Action | Description |
 | :--- | :--- | :--- |
 | **Index Finger Up (1)** | `NEXT` | Move the focus to the next word/category in the grid. |
-| **Peace Sign (2)** | `PREV` | Move the focus to the previous word/category. |
-| **Open Palm** | `CLEAR / HOME` | Clear the current sentence builder or go back to the home screen. |
-| **Palm + Mouth Open** | `ATTENTION` | Trigger a visual flash and an audio alert to get someone's attention. |
+| **Open Palm** | `CLEAR` | Clear the current sentence builder or go back to the home screen. |
+| **Fist** | `YES` | Quickly speak "Yes" (ہاں) and show a visual confirmation. |
 
 ---
 
@@ -24,8 +23,6 @@ Face gestures are used for selection and triggering specific actions.
 | Gesture | Action | Description |
 | :--- | :--- | :--- |
 | **Mouth Open** | `SELECT` | Select the currently focused word or category. |
-| **Blink (Both Eyes)** | `ACTIVATE` | Can be configured as a secondary `SELECT` or to trigger a specific SOS action. |
-| **Smile** | `CONFIRM` | Used to confirm a choice in a modal or dialog. |
 
 ---
 
@@ -37,9 +34,6 @@ Since every user has different mobility and lighting conditions, Shukr allows fo
 In the **Settings Panel**, you can adjust the sensitivity (threshold) for each gesture:
 *   **Mouth Open Threshold:** How wide you need to open your mouth to trigger a selection.
 *   **Finger Recognition Confidence:** How clearly the app needs to "see" your fingers before acting.
-
-### Feedback Overlay
-When gesture recognition is active, a small, non-intrusive overlay appears in the corner of the screen. This provides real-time feedback on what the app is seeing, which helps in learning the gestures.
 
 ---
 
