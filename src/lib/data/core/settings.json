@@ -34,33 +34,12 @@
     "secondary": "en"
   },
   "favorites": [],
-  "voiceProfiles": [
-    {
-      "id": "voice_1775802743199",
-      "name": "Hammaad"
-    }
-  ],
-  "activeVoiceProfile": "",
-  "family": [
-    "father",
-    "kids",
-    "daughter-in-law",
-    "sister",
-    "son",
-    "daughter",
-    "brother",
-    "uncle",
-    "aunt",
-    "grandfather",
-    "grandmother",
-    "son-in-law",
-    "doctor",
-    "mother",
-    "helper",
-    "masood",
-    "grandson",
-    "granddaughter",
-    "nurse",
-    "husband"
-  ]
+  "activeVoiceProfile": "en_voice_hammaad",
+  "ai_config": {
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent",
+    "apiKey": "",
+    "model": "gemini-1.5-flash",
+    "authType": "none"
+  },
+  "family": []
 }

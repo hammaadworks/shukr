@@ -1,7 +1,6 @@
 [
   {
-    "id": "tpl_1775324747930",
-    "category": "auto",
+    "id": "glasses_1776438204998",
     "strokes": [
       [
         {
@@ -716,12 +715,10 @@
         }
       ]
     ],
-    "createdAt": 1775324747930,
     "wordId": "glasses"
   },
   {
-    "id": "tpl_1775733874766",
-    "category": "auto",
+    "id": "food_1776438204998",
     "strokes": [
       [
         {
@@ -2664,7 +2661,6 @@
         }
       ]
     ],
-    "createdAt": 1775733874766,
     "wordId": "food"
   }
 ]
