@@ -8,6 +8,9 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      workbox: {
+        maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10MB
+      },
       includeAssets: ['favicon.svg', 'icons.svg', 'src/lib/data/core/*.json', 'src/lib/data/i18n/*.json'],
       manifest: {
         name: 'Shukr - Adaptive AAC',

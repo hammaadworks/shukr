@@ -63,7 +63,7 @@ export const Footer: React.FC<FooterProps> = React.memo(({
                     className={`bar-category-btn favorite-btn ${focusedIndex === offset + 3 ? 'focused-item' : ''} ${currentCategory === 'favorite' ? 'active-category' : ''}`}
                     onClick={() => onCategoryClick('favorite')}
                 >
-                    <Heart size={24} fill="var(--color-danger)"/>
+                    <Heart size={24} fill="currentColor"/>
                     <span className="dock-label">پسندیدہ</span>
                 </button>
 
@@ -72,7 +72,7 @@ export const Footer: React.FC<FooterProps> = React.memo(({
                     className={`bar-category-btn family-btn ${focusedIndex === offset + 4 ? 'focused-item' : ''} ${currentCategory === 'family' ? 'active-category' : ''}`}
                     onClick={() => onCategoryClick('family')}
                 >
-                    <Users size={24} fill="var(--color-primary)"/>
+                    <Users size={24} fill="currentColor"/>
                     <span className="dock-label">خاندان</span>
                 </button>
             </div>
