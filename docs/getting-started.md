@@ -1,70 +1,67 @@
 # Getting Started with Shukr
 
-Shukr is designed to be accessible and easy to set up for everyone, whether you're a user, a caregiver, or a developer.
+Shukr is an adaptive AAC (Augmentative and Alternative Communication) platform designed to be universally accessible. Whether you're a user, a caregiver, or a developer, getting started is straightforward.
 
 ---
 
 ## 📱 For Users (Installation)
 
-The best way to use Shukr is as a **Progressive Web App (PWA)**. This ensures that all features (including offline access) work seamlessly on your device.
+Shukr is a **Progressive Web App (PWA)**. It runs in your browser but installs like a native app, providing full offline access and a dedicated home screen icon.
 
 ### Installation Steps
 
-1.  **Open the App:** Navigate to [shukr.vercel.app](https://shukr.vercel.app) using a modern browser (Chrome on Android, Safari on iOS).
+1.  **Open the App:** Navigate to the Shukr deployment URL using a modern browser (Chrome, Safari, or Edge).
 2.  **Add to Home Screen:**
-    *   **iOS (iPhone/iPad):** Tap the **Share** button (the square with an arrow) and select **Add to Home Screen**.
-    *   **Android:** Tap the three dots menu (top-right) or look for an **Install App** banner at the bottom.
-3.  **Launch from Home Screen:** Shukr will now appear as an icon on your home screen. Open it to start using it without browser UI bars.
+    *   **iOS (iPhone/iPad):** Tap the **Share** button and select **Add to Home Screen**.
+    *   **Android:** Tap the browser menu (three dots) and select **Install App** or **Add to Home Screen**.
+3.  **Launch:** Open the Shukr icon from your home screen. It will launch in a standalone, immersive window.
 
-### System Requirements
-*   **Camera Access:** Required for gesture recognition.
-*   **Microphone Access:** Required for Voice Studio and Ambient Listener.
-*   **Storage:** At least 100MB of free space for local recordings and configuration.
+### Initial Configuration
+On first launch, you will be prompted to select your **Language Pair**:
+- **Primary Language:** The language used by the speaker.
+- **Secondary Language:** The language used by the caregiver (shown in dual-mode).
+- **Supported:** Urdu, English, Spanish, Arabic, Hindi, Chinese, French.
 
 ---
 
 ## 💻 For Developers (Setup)
 
-If you're looking to contribute to the code or run a local version for development, follow these steps.
+Shukr is an open-source project. We welcome contributors to help expand our gesture models and language support.
 
 ### Prerequisites
-*   [Node.js](https://nodejs.org/) (v18 or higher)
-*   [pnpm](https://pnpm.io/) (Recommended) or `npm`/`yarn`
+*   [Node.js](https://nodejs.org/) (v18+)
+*   [pnpm](https://pnpm.io/) (Highly Recommended)
 
 ### Setup Steps
 
-1.  **Clone the Repository:**
+1.  **Clone & Install:**
     ```bash
     git clone https://github.com/hammaadworks/shukr.git
     cd shukr
-    ```
-
-2.  **Install Dependencies:**
-    ```bash
     pnpm install
     ```
 
-3.  **Launch Development Server:**
+2.  **Launch Development Server:**
     ```bash
     pnpm dev
     ```
-    The app will be available at `http://localhost:5173`.
 
-4.  **Run Build (Optional):**
-    To test the production build locally:
+3.  **Build for Production:**
     ```bash
     pnpm build
     ```
 
-### Recommended Tools
-*   **VS Code:** With ESLint and Prettier extensions.
-*   **Chrome DevTools:** Use the **Lighthouse** tab to test PWA and Accessibility performance.
+### Environment Variables
+For AI features (automated word fixes), you can set defaults in a `.env` file:
+*   `VITE_AI_ENDPOINT`: Your AI provider URL.
+*   `VITE_AI_API_KEY`: Your API key.
+*   `VITE_AI_MODEL`: Target model (e.g., `gemini-1.5-flash`).
 
 ---
 
 ## 🛡️ Privacy & Security
 
-Shukr is **offline-first** by design.
-*   **No Cloud Storage:** Your recordings, custom words, and usage patterns never leave your device.
-*   **Local ML:** All gesture and voice recognition happens locally using your browser's CPU/GPU via MediaPipe.
-*   **Open Source:** Our entire code is public, ensuring full transparency about how your data is handled.
+Shukr is **Offline-First and Local-Only**.
+*   **Privacy by Design:** Your voice recordings, custom words, and camera data never touch a server.
+*   **Local AI:** All gesture recognition happens on your local GPU/CPU.
+*   **No Tracking:** We do not include any third-party tracking or telemetry.
