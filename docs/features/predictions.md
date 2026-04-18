@@ -61,11 +61,11 @@ wordNetwork.recordTransition(previousWordId, currentWordId);
 ```
 
 ### Time-Based Weights
-The engine applies a multiplier to words tagged with specific times in `boot_data.json`:
+The engine applies a multiplier to words tagged with specific times in `vocabulary.json`:
 ```json
 {
   "id": "breakfast",
-  "text": "Breakfast",
+  "translations": { "en": "Breakfast" },
   "timeHint": "07:00-10:00"
 }
 ```

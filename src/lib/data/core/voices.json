@@ -2,11 +2,13 @@
   {
     "id": "en_voice_hammaad",
     "name": "Hammaad",
-    "language": "en"
+    "language": "en",
+    "editable": false
   },
   {
     "id": "ur_voice_hammaad",
     "name": "Hammaad",
-    "language": "ur"
+    "language": "ur",
+    "editable": false
   }
 ]

@@ -1,55 +1,44 @@
 # Voice Studio Guide
 
-The **Voice Studio** allows family members or caregivers to record their own voices for the words and phrases in Shukr. This makes communication feel more personal and familiar for the user.
+The **Voice Studio** allows family members or caregivers to record their own voices for every word in the Shukr dictionary. This makes communication feel more personal and familiar for the user.
 
 ---
 
-## 🎙️ Recording a New Voice
+## 🎙️ Recording Interface
 
-### Steps to Record
+Voice Studio is an isolated, high-focus environment that operates independently of the main app language.
 
-1.  **Open Settings:** Tap the **Settings** icon (gear) in the top-right corner.
-2.  **Select Voice Studio:** Find the **Voice Studio** tab or section.
-3.  **Choose a Word:** Browse the categories and select the word you want to record.
-4.  **Press Record:** Tap the **Record** button and speak the word clearly.
-5.  **Review & Save:** Listen to your recording. If it sounds good, tap **Save**. If not, tap **Retake**.
-
-### Best Practices for Recording
-*   **Quiet Environment:** Record in a room without background noise (fans, TV, traffic).
-*   **Consistency:** Try to maintain a consistent volume and tone for all recordings.
-*   **Clarity:** Speak slowly and enunciate each syllable clearly.
-*   **Distance:** Hold the microphone about 6-8 inches away from your mouth to avoid "popping" sounds.
+### Dual Language Logic
+1.  **Recording Language:** The language you are currently speaking into the microphone. This changes the word labels and recording prompts.
+2.  **Info Language:** The language used for the UI labels, navigation, and phonetic info tags. This can be switched via the main header.
 
 ---
 
-## 📁 Managing Recordings
+## 📁 Voice Profiles
 
-### How it Works
-*   **Local Storage:** All recordings are stored as **Blobs** in your browser's **IndexedDB**. They are never uploaded to a server.
-*   **Fallback Logic:** If a word doesn't have a custom recording, Shukr will fall back to the default bundled audio file (if available) or use the browser's built-in Text-to-Speech (TTS).
+Shukr supports multiple voice profiles (e.g., "Mama's Voice (UR)", "Brother's Voice (EN)").
 
-### Exporting & Syncing
-If you record voices on one device (e.g., a phone) and want to use them on another (e.g., a tablet):
-1.  Go to **Settings > Universe Porter**.
-2.  Tap **Export Configuration**. This will create a `.json` file containing all your settings and recordings.
-3.  Transfer the file to the new device and use the **Import Configuration** feature.
+### System vs. Custom Voices
+*   **System Voices:** Pre-loaded audio assets that are **Locked**. They cannot be renamed, deleted, or overwritten to ensure a stable baseline.
+*   **Custom Voices:** User-created profiles. These are fully editable. You can rename the profile at any time, and every recording will automatically map to the new name via its unique ID.
 
 ---
 
-## 🛠️ Technical Details (For Developers)
+## 🛠️ Data & Storage
 
-### Data Flow
-1.  `useVoiceRecording.ts` handles the `MediaRecorder` API interaction.
-2.  Recorded audio is converted to a `Blob` and then a `base64` string (or stored directly as a Blob in Dexie).
-3.  `audioStorage.ts` provides the interface for saving and retrieving recordings from IndexedDB.
-4.  `WordCard.tsx` uses the `useAudio` hook to play the correct sound based on the available sources.
+### Naming Convention
+Audio recordings are stored using a strictly structured composite key:
+`[lang]_voice_[voiceName]_[wordId]`
 
-### Storage Structure
-The recordings are stored in the `recordings` table in the Shukr database:
-```typescript
-{
-  wordId: string;    // ID of the word this recording is for
-  blob: Blob;        // The audio data
-  timestamp: number; // When it was recorded
-}
-```
+Example: `ur_voice_naani_paani`
+
+### Storage Integrity
+*   **IndexedDB:** All recordings are stored as raw binary `.wav` files in the `audio` table.
+*   **Export Protection:** When you export your configuration, all custom voices are converted to "System Voices" (`editable: false`) to prevent accidental deletion on the target device.
+
+---
+
+## 💡 Best Practices
+1.  **Quiet Environment:** Record in a room without background noise (fans, TV).
+2.  **Clarity First:** Speak slowly and enunciate each syllable.
+3.  **Info Mode:** Use the **Info Language** feature to see phonetic pronunciations in your own language while you record words in another language.
