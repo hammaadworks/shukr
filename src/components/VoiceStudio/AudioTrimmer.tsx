@@ -36,7 +36,8 @@ export const AudioTrimmer: React.FC<AudioTrimmerProps> = ({
       setDisplayTrim({ start: 0, end: 1 });
       onTrimChange(0, 1);
     }
-  }, [audioBuffer, onTrimChange]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [audioBuffer]);
 
   const drawWaveform = useCallback(() => {
     const canvas = canvasRef.current;
@@ -56,9 +57,10 @@ export const AudioTrimmer: React.FC<AudioTrimmerProps> = ({
     const height = rect.height;
     ctx.clearRect(0, 0, width, height);
 
-    const barWidth = (width / waveData.length) * 0.8;
-    const gap = (width / waveData.length) * 0.2;
-    let x = 0;
+    const targetGap = 2.5; // Minimum gap in pixels
+    const barWidth = Math.max(1, (width - (waveData.length * targetGap)) / waveData.length);
+    const actualGap = (width - (waveData.length * barWidth)) / waveData.length;
+    let x = actualGap / 2;
 
     const { start, end } = trimRef.current;
 
@@ -86,7 +88,7 @@ export const AudioTrimmer: React.FC<AudioTrimmerProps> = ({
          ctx.fill();
       }
 
-      x += barWidth + gap;
+      x += barWidth + actualGap;
     }
   }, [waveData, color, playbackProgress]);
 

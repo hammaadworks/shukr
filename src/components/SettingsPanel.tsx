@@ -12,7 +12,7 @@ import { SUPPORTED_LANGS } from '../lib/languages';
 interface SettingsPanelProps {
     config: any;
     updateConfig: (newConfig: any) => void;
-    onOpenVoiceStudio: () => void;
+    onOpenVoiceStudio: (wordId?: string, language?: string) => void;
     onShowLanding?: () => void;
     onClose: () => void;
     initialTab?: TabType;
@@ -722,6 +722,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 onSave={handleSave}
                 onDelete={handleDelete}
                 existingWords={(config?.categories || []).flatMap((c: any) => c.items || [])}
+                onOpenVoiceStudio={onOpenVoiceStudio}
             />)}
         </div>
 

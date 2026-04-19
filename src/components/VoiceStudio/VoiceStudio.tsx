@@ -96,6 +96,7 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
   const audioCtxRef = useRef<AudioContext | null>(null);
   const sourceNodeRef = useRef<AudioBufferSourceNode | null>(null);
   const animationRef = useRef<number | null>(null);
+  const loopTimeoutRef = useRef<any>(null);
 
   const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
   const [trimStart, setTrimStart] = useState(0);
@@ -116,6 +117,10 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
     if (animationRef.current) {
       cancelAnimationFrame(animationRef.current);
       animationRef.current = null;
+    }
+    if (loopTimeoutRef.current) {
+      clearTimeout(loopTimeoutRef.current);
+      loopTimeoutRef.current = null;
     }
     setIsPlaying(false);
     setPlaybackProgress(0);
@@ -162,6 +167,8 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
     return audioCtxRef.current;
   };
 
+  const playReviewAudioRef = useRef<() => void>(undefined);
+
   const playReviewAudio = useCallback(() => {
     if (!audioBuffer) return;
     stopReviewAudio();
@@ -176,19 +183,29 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
     sourceNodeRef.current = source;
     setIsPlaying(true);
     const startSysTime = ctx.currentTime;
+    
     const updateProgress = () => {
+      if (sourceNodeRef.current !== source) return;
       const elapsed = ctx.currentTime - startSysTime;
       if (elapsed >= playDuration) {
-        setIsPlaying(false);
         setPlaybackProgress(trimStart);
+        loopTimeoutRef.current = setTimeout(() => {
+          if (sourceNodeRef.current === source && playReviewAudioRef.current) {
+            playReviewAudioRef.current();
+          }
+        }, 800);
         return;
       }
-      setPlaybackProgress((startTime + elapsed) / duration);
+      setPlaybackProgress(trimStart + (elapsed / duration));
       animationRef.current = requestAnimationFrame(updateProgress);
     };
     updateProgress();
-    source.onended = () => { if (sourceNodeRef.current === source) { setIsPlaying(false); setPlaybackProgress(trimStart); } };
+    source.onended = () => {};
   }, [audioBuffer, trimStart, trimEnd, stopReviewAudio]);
+
+  useEffect(() => {
+    playReviewAudioRef.current = playReviewAudio;
+  }, [playReviewAudio]);
 
   useEffect(() => {
     if (lastRecordedBlob && !isRecording && recordingState === 'recording') {
@@ -203,6 +220,13 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
       initBuffer();
     }
   }, [lastRecordedBlob, isRecording, recordingState]);
+
+  useEffect(() => {
+    if (recordingState === 'reviewing' && audioBuffer && !isPlaying) {
+      playReviewAudio();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [recordingState, audioBuffer]);
 
   const handleNext = useCallback(() => {
     stopReviewAudio();
@@ -307,8 +331,12 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
   const isCurrentRecorded = currentWord && recordedKeys.includes(generateAudioStorageKey(currentWord.id, getActiveVoiceId()));
 
   const handleGoHome = () => {
-    window.location.hash = '#';
-    playReviewAudio();
+    stopReviewAudio();
+    if (onClose) {
+       onClose();
+    } else {
+       window.location.hash = '#';
+    }
   };
 
   const handleSaveWord = async (word: any) => {
@@ -501,6 +529,7 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
                           audioBuffer={audioBuffer}
                           onTrimChange={(s, e) => { setTrimStart(s); setTrimEnd(e); }}
                           onDragStart={stopReviewAudio}
+                          onDragEnd={() => playReviewAudioRef.current?.()}
                           playbackProgress={playbackProgress}
                           color="var(--color-primary)"
                       />
@@ -516,7 +545,7 @@ export const VoiceStudio: React.FC<VoiceStudioProps> = ({
                       <button className="review-btn btn-redo" onClick={handleRedo} title="Redo">
                         <RotateCcw size={32} strokeWidth={2.5} />
                       </button>
-                      <button className="review-btn btn-play" onClick={playReviewAudio} style={{ background: '#f2f2f7', color: 'var(--color-primary)' }}>
+                      <button className="review-btn btn-play" onClick={isPlaying ? stopReviewAudio : () => playReviewAudioRef.current?.()} style={{ background: '#f2f2f7', color: 'var(--color-primary)' }}>
                         <Play size={36} fill={isPlaying ? "var(--color-primary)" : "none"} />
                       </button>
                       {isEditable && (

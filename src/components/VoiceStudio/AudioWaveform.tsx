@@ -81,7 +81,7 @@ export const AudioWaveform: React.FC<AudioWaveformProps> = ({
       width={320} 
       height={80} 
       className="apple-waveform-canvas"
-      style={{ width: '100%', height: '80px' }}
+      style={{ width: '100%', height: '100%', display: 'block' }}
     />
   );
 };

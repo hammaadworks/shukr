@@ -61,8 +61,8 @@
   align-items: center;
   flex: 1;
   overflow: hidden;
-  gap: clamp(8px, 2vh, 16px);
-  justify-content: space-between;
+  gap: clamp(12px, 3vh, 24px);
+  justify-content: center;
 }
 
 /* Ensure fixed areas don't expand */
@@ -274,15 +274,102 @@
 }
 
 .waveform-container-brand {
-  height: 60px;
+  height: clamp(70px, 12vh, 100px);
   width: 100%;
-  max-width: 300px;
+  max-width: 400px;
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(5px);
-  border-radius: 20px;
-  padding: 0 16px;
+  border-radius: 24px;
+  padding: 0 20px;
   position: relative;
   border: 1px solid rgba(45, 90, 39, 0.05);
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 8px;
+}
+
+/* Audio Trimmer Handles */
+.trim-handle {
+  position: absolute;
+  top: -20px;
+  bottom: -20px;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  cursor: ew-resize;
+  z-index: 10;
+  transition: transform 0.1s ease;
+}
+
+.trim-handle.start-handle {
+  margin-left: -20px;
+  justify-content: flex-end;
+}
+
+.trim-handle.end-handle {
+  margin-left: 0;
+  justify-content: flex-start;
+}
+
+.trim-handle .handle-line {
+  width: 5px;
+  height: 100%;
+  border-radius: 2px;
+  z-index: 5;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.trim-handle.start-handle .handle-line { 
+  background-color: var(--color-accent);
+}
+
+.trim-handle.end-handle .handle-line { 
+  background-color: var(--color-primary);
+}
+
+.trim-handle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 60px;
+  transform: translateY(-50%);
+  background-color: white;
+  border: 3px solid var(--color-primary);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  z-index: 2;
+}
+
+.trim-handle.start-handle::after {
+  right: 0;
+  border-radius: 20px 4px 4px 20px;
+  border-color: var(--color-accent);
+}
+
+.trim-handle.end-handle::after {
+  left: 0;
+  border-radius: 4px 20px 20px 4px;
+  border-color: var(--color-primary);
+}
+
+.trim-handle:active {
+  transform: scaleY(1.05);
+}
+
+.trim-handle::before {
+  content: '⋮';
+  position: absolute;
+  z-index: 6;
+  color: #ccc;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.trim-handle.start-handle::before {
+  right: 10px;
+}
+
+.trim-handle.end-handle::before {
+  left: 10px;
 }
 
 .focal-nav-brand {
@@ -305,7 +392,6 @@
   box-shadow: var(--shadow-soft);
   transition: all 0.2s ease;
   cursor: pointer;
-  border: none;
 }
 
 .nav-btn-brand.small-btn {

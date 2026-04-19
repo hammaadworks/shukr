@@ -152,21 +152,28 @@ const AppContent = () => {
     refreshWords();
   }, [refreshWords, config]);
 
+  const [previousRoute, setPreviousRoute] = useState<string>('#');
+
   useEffect(() => {
-    const handleHashChange = () => setRoute(window.location.hash || '#');
+    const handleHashChange = () => {
+      setPreviousRoute(route);
+      setRoute(window.location.hash || '#');
+    };
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+  }, [route]);
 
   const navigate = useCallback((newRoute: string, tab?: string) => {
     if (tab) setInitialSettingsTab(tab);
+    setPreviousRoute(route);
     window.location.hash = newRoute;
-  }, []);
+  }, [route]);
 
   const navigateVoiceStudio = useCallback((params: { wordId?: string, voiceId?: string, language?: string }) => {
     setVoiceParams(params);
+    setPreviousRoute(route);
     window.location.hash = '#voices';
-  }, []);
+  }, [route]);
 
   const toggleSentenceBuilder = useCallback(() => {
     setIsSentenceBuilderActive((prev) => !prev);
@@ -595,15 +602,14 @@ const AppContent = () => {
 
       <div className="main-content-wrapper" style={{ flex: 1, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         {route === '#voices' ? (
-          <VoiceStudio 
-            config={config} 
-            updateConfig={updateConfig} 
-            onClose={() => { setVoiceParams(null); navigate('#settings'); }}
+          <VoiceStudio
+            config={config}
+            updateConfig={updateConfig}
+            onClose={() => { setVoiceParams(null); navigate(previousRoute !== '#voices' ? previousRoute : '#'); }}
             initialWordId={voiceParams?.wordId}
             initialVoiceId={voiceParams?.voiceId}
             initialLanguage={voiceParams?.language}
-          />
-        ) : route === '#words' ? (
+          />        ) : route === '#words' ? (
           <WordManager 
             onClose={() => navigate('#')} 
             onRecord={navigateVoiceStudio}
@@ -612,7 +618,7 @@ const AppContent = () => {
           <SettingsPanel
             config={config} updateConfig={updateConfig}
             initialTab={initialSettingsTab} initialEditingItem={initialEditingItem}
-            onOpenVoiceStudio={() => navigate('#voices')}
+            onOpenVoiceStudio={(wordId?: string, language?: string) => navigateVoiceStudio({ wordId, language })}
             onShowLanding={() => { setIsAppStarted(false); navigate('#'); }}
             onClose={() => { setInitialEditingItem(null); setInitialSettingsTab(null); navigate('#'); }}
           />
